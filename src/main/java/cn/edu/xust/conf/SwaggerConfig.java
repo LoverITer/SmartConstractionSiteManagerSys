@@ -19,6 +19,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 public class SwaggerConfig {
 	
+	/**
+	 * swagger2的配置文件，这里可以配置swagger2的一些基本的内容，比如扫描的包等等
+	 * @return  Docket
+	 */
 	@Bean
     public Docket createRestApi(){
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
@@ -27,6 +31,10 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any()).build();
     }
 
+	/**
+	 *   构建API文档的信息
+	 * @return  ApiInfo
+	 */
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
                 .title("Smart Constraction Site Monitor&Manager System API Doc")
