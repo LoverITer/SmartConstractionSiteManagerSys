@@ -18,8 +18,12 @@ import static cn.edu.xust.sdc.sdk.HWPuSDK.LAYER_THREE_TYPE_E.*;
  * SDK interface after JNA mechanism conversion
  */
 public interface HWPuSDK extends Library {
+	
+	
     HWPuSDK SSL_INSTANCE = Native.load((Platform.isWindows() ? "lib\\HWPuSDK" : "ssl"), HWPuSDK.class);
     HWPuSDK INSTANCE = Native.load((Platform.isWindows() ? "lib\\HWPuSDK" : "hwpusdk"), HWPuSDK.class);
+    
+    
     public static class LLong extends IntegerType {
         private static final long serialVersionUID = 1L;
 
