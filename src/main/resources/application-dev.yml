@@ -1,0 +1,67 @@
+#开发环境配置
+linux-host: 192.168.124.132
+server:
+  port: 9090
+  tomcat:
+    threads:      max: 200              #tomcat最大线程数
+      min-spare: 100        #tomcat初始化加载的线程数
+    accept-count: 1000        #tomcat任务队列容量
+    max-connections: 2000    #最大连接数
+    connection-timeout: 5000 #最长等待时间，如果没有数据进来，等待一段时间后断开连接，释放线程
+#logging
+logging:
+  config: classpath:logback-spring.xml
+  file: scs-dev.log
+  level:
+    root: DEBUG
+    cn.edu.xust: DEBUG 
+debug: true             
+spring:
+  profiles: dev
+  datasource:
+    #指定使用Druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${linux-host}:3306/security_monitoring_sys?autoReconnect=true&useSSL=false&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: root #用户名
+    password: 95162437hx$ #密码
+    druid:
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-password: 123456
+        login-username: Admin
+        reset-enable: false
+      web-stat-filter:
+        enabled: true
+        exclusions: .js,.css,.html,/druid/*
+        url-pattern: /*
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,logback
+      # 初始化连接池的连接数量 大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭,如果想用SQL防火墙 建议打开
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      use-global-data-source-stat: true
+      # 通过connectProperties属性来打开mergeSql功能
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      #热启动
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      additional-paths: src/main/java
+

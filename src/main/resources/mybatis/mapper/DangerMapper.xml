@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.xust.mapper.DangerMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.xust.entity.po.Danger">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="danger_name" jdbcType="VARCHAR" property="dangerName" />
+    <result column="parent_danger_name" jdbcType="VARCHAR" property="parentDangerName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, danger_name, parent_danger_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from danger
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from danger
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.xust.entity.po.Danger">
+    insert into danger (id, danger_name, parent_danger_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{dangerName,jdbcType=VARCHAR}, #{parentDangerName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.xust.entity.po.Danger">
+    insert into danger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="dangerName != null">
+        danger_name,
+      </if>
+      <if test="parentDangerName != null">
+        parent_danger_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dangerName != null">
+        #{dangerName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentDangerName != null">
+        #{parentDangerName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.entity.po.Danger">
+    update danger
+    <set>
+      <if test="dangerName != null">
+        danger_name = #{dangerName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentDangerName != null">
+        parent_danger_name = #{parentDangerName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.entity.po.Danger">
+    update danger
+    set danger_name = #{dangerName,jdbcType=VARCHAR},
+      parent_danger_name = #{parentDangerName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,10 @@
+#开发环境配置
+server:
+  port: 9090
+  tomcat:
+    max-threads: 200         #tomcat最大线程数
+    min-spare-threads: 100    #tomcat初始化加载的线程数
+    accept-count: 1000        #tomcat任务队列容量
+    max-connections: 2000    #最大连接数
+    connection-timeout: 5000 #最长等待时间，如果没有数据进来，等待一段时间后断开连接，释放线程
+   

@@ -1,23 +1,17 @@
-server:
-  port: 9090
-  tomcat:
-    max-threads: 200         #tomcat最大线程数
-    min-spare-threads: 100    #tomcat初始化加载的线程数
-    accept-count: 1000        #tomcat任务队列容量
-    max-connections: 2000    #最大连接数
-    connection-timeout: 5000 #最长等待时间，如果没有数据进来，等待一段时间后断开连接，释放线程
-
-debug: true
-#logging
+spring:
+  profiles:
+    active: dev
+#mybatis配置    
+mybatis:
+  config-location: classpath:/mybatis/mybatis-config.xml
+  mapper-locations: classpath:/mybatis/mapper/*.xml
+#日志文件配置
 logging:
   config: classpath:logback-spring.xml
-  file: log
-  level:
-    root: ERROR
-    cn.edu.xust: DEBUG
-#热启动
-devtools:
-    livereload:
-      enabled: true
-    restart:
-      additional-paths: src/main/java
+  
+#七牛云图床配置
+qiniucloud:
+  accessKey: vRxHtqsnLfzK2h2DTGcEfFlLLDDNgqAvoZf0H08D
+  secretKey: 5No0lIzPOv2pYDX9wPkFFh_kE99lvpPia0nA0ZPH
+  domain: scss.easyblog.top
+  bucket-name: scs-pro
