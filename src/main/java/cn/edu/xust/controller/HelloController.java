@@ -50,6 +50,11 @@ public class HelloController {
 		return CommonResponse.create(AppResponseCode.SUCCESS, modelMap);
 	}
 
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
 	@ApiOperation(value = "CRUD测试", notes = "用于测试程序是否可以正常的走通整个CRUD流程 : controller<-->service<-->mapper<-->database")
 	@ApiResponses({ @ApiResponse(code = 200, message = "正确", response = Danger.class) })
 	@ResponseBody

@@ -1,5 +1,7 @@
 package cn.edu.xust.mapper;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import cn.edu.xust.entity.po.Danger;
@@ -35,6 +37,13 @@ public interface DangerMapper {
 	 * @return
 	 */
 	int insertSelective(Danger record);
+
+	/**
+	 * 查询全部
+	 * 
+	 * @return
+	 */
+	List<Danger> selectAll();
 
 	/**
 	 * 根据主键ID查询一条记录

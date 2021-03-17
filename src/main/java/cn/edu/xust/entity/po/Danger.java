@@ -1,9 +1,22 @@
 package cn.edu.xust.entity.po;
 
-import io.swagger.annotations.ApiModel;
+import java.io.Serializable;
 
+import io.swagger.annotations.ApiModel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 @ApiModel(value = "Danger", description = "危险分类实体类，此对象用于个数据库交互")
-public class Danger {
+public class Danger implements Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 4067603036182167037L;
 
 	/**
 	 * 危险分类编号
@@ -20,27 +33,4 @@ public class Danger {
 	 */
 	private String parentDangerName;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getDangerName() {
-		return dangerName;
-	}
-
-	public void setDangerName(String dangerName) {
-		this.dangerName = dangerName == null ? null : dangerName.trim();
-	}
-
-	public String getParentDangerName() {
-		return parentDangerName;
-	}
-
-	public void setParentDangerName(String parentDangerName) {
-		this.parentDangerName = parentDangerName == null ? null : parentDangerName.trim();
-	}
 }

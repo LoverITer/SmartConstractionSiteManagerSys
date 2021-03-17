@@ -1,17 +1,29 @@
 package cn.edu.xust.entity.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 实体类 ：Attendance用户考勤
- * 
+ *
  * @author Administrator
  *
  */
+@Getter
+@Setter
+@ToString
 @ApiModel(value = "Attendance", description = "考勤实体类，此对象用于个数据库交互")
-public class Attendance {
+public class Attendance implements Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 735705418924384683L;
 
 	/**
 	 * 主键id
@@ -43,51 +55,51 @@ public class Attendance {
 	 */
 	private Integer afterWorkDeviceId;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public Date getStarkWorkTime() {
-		return starkWorkTime;
-	}
-
-	public void setStarkWorkTime(Date starkWorkTime) {
-		this.starkWorkTime = starkWorkTime;
+	public Integer getAfterWorkDeviceId() {
+		return afterWorkDeviceId;
 	}
 
 	public Date getAfterWorkTime() {
 		return afterWorkTime;
 	}
 
-	public void setAfterWorkTime(Date afterWorkTime) {
-		this.afterWorkTime = afterWorkTime;
+	public Integer getId() {
+		return id;
 	}
 
 	public Integer getStarkWorkDeviceId() {
 		return starkWorkDeviceId;
 	}
 
-	public void setStarkWorkDeviceId(Integer starkWorkDeviceId) {
-		this.starkWorkDeviceId = starkWorkDeviceId;
+	public Date getStarkWorkTime() {
+		return starkWorkTime;
 	}
 
-	public Integer getAfterWorkDeviceId() {
-		return afterWorkDeviceId;
+	public Integer getUserId() {
+		return userId;
 	}
 
 	public void setAfterWorkDeviceId(Integer afterWorkDeviceId) {
 		this.afterWorkDeviceId = afterWorkDeviceId;
+	}
+
+	public void setAfterWorkTime(Date afterWorkTime) {
+		this.afterWorkTime = afterWorkTime;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setStarkWorkDeviceId(Integer starkWorkDeviceId) {
+		this.starkWorkDeviceId = starkWorkDeviceId;
+	}
+
+	public void setStarkWorkTime(Date starkWorkTime) {
+		this.starkWorkTime = starkWorkTime;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 }

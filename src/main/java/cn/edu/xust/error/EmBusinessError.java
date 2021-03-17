@@ -1,7 +1,7 @@
 package cn.edu.xust.error;
 
 /**
- * @author Huangxin
+ * @author HuangXin
  * @Date 2020/3/9 3:29 下午
  */
 public enum EmBusinessError implements CommonError {

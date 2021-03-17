@@ -1,11 +1,23 @@
 package cn.edu.xust.entity.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @ApiModel(value = "DangerBehavior", description = "危险行为记录实体类，此对象用于个数据库交互")
-public class DangerBehavior {
+public class DangerBehavior implements Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -6971206228041434455L;
 
 	/**
 	 * 主键ID
@@ -32,43 +44,4 @@ public class DangerBehavior {
 	 */
 	private Integer regionId;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getBehaviorPic() {
-		return behaviorPic;
-	}
-
-	public void setBehaviorPic(String behaviorPic) {
-		this.behaviorPic = behaviorPic == null ? null : behaviorPic.trim();
-	}
-
-	public Integer getBehaviorType() {
-		return behaviorType;
-	}
-
-	public void setBehaviorType(Integer behaviorType) {
-		this.behaviorType = behaviorType;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Integer getRegionId() {
-		return regionId;
-	}
-
-	public void setRegionId(Integer regionId) {
-		this.regionId = regionId;
-	}
 }

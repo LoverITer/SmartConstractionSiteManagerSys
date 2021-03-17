@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class SmartConstractionSiteManagerSysApplicationTests {
 
 	@Test
-	void contextLoads() {
-	}
+	public void testMapper() {
 
+	}
 }

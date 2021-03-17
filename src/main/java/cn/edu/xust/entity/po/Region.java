@@ -1,9 +1,22 @@
 package cn.edu.xust.entity.po;
 
-import io.swagger.annotations.ApiModel;
+import java.io.Serializable;
 
+import io.swagger.annotations.ApiModel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 @ApiModel(value = "Region", description = "区域实体类，此对象用于个数据库交互")
-public class Region {
+public class Region implements Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 3658097471071643460L;
 
 	/**
 	 * 区域ID
@@ -15,19 +28,4 @@ public class Region {
 	 */
 	private String regionName;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getRegionName() {
-		return regionName;
-	}
-
-	public void setRegionName(String regionName) {
-		this.regionName = regionName == null ? null : regionName.trim();
-	}
 }

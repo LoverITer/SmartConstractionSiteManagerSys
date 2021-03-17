@@ -1,11 +1,23 @@
 package cn.edu.xust.entity.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import io.swagger.annotations.ApiModel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @ApiModel(value = "FaceLib", description = "人脸库实体类，此对象用于个数据库交互")
-public class FaceLib {
+public class FaceLib implements Serializable {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 8698247745281784139L;
 
 	/**
 	 * 主键ID
@@ -27,35 +39,4 @@ public class FaceLib {
 	 */
 	private String memo;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFacePic() {
-		return facePic;
-	}
-
-	public void setFacePic(String facePic) {
-		this.facePic = facePic == null ? null : facePic.trim();
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public String getMemo() {
-		return memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo == null ? null : memo.trim();
-	}
 }

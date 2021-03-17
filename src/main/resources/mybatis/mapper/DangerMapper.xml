@@ -9,22 +9,32 @@
   <sql id="Base_Column_List">
     id, danger_name, parent_danger_name
   </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from danger
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+     select 
+        <include refid="Base_Column_List" />
+     from danger;
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from danger
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="cn.edu.xust.entity.po.Danger">
     insert into danger (id, danger_name, parent_danger_name
       )
     values (#{id,jdbcType=INTEGER}, #{dangerName,jdbcType=VARCHAR}, #{parentDangerName,jdbcType=VARCHAR}
       )
   </insert>
+  
   <insert id="insertSelective" parameterType="cn.edu.xust.entity.po.Danger">
     insert into danger
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -50,6 +60,7 @@
       </if>
     </trim>
   </insert>
+  
   <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.entity.po.Danger">
     update danger
     <set>
@@ -62,6 +73,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="cn.edu.xust.entity.po.Danger">
     update danger
     set danger_name = #{dangerName,jdbcType=VARCHAR},
