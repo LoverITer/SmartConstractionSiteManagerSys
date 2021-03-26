@@ -132,6 +132,20 @@
             <version>0.1.4</version>
             <scope>compile</scope>
         </dependency>
+        <!-- findbugs: 静态分析源代码中可能会出现Bug的Eclipse插件工具-->
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>2.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>annotations</artifactId>
+            <version>2.0.2</version>
+            <scope>compile</scope>
+        </dependency>
 	</dependencies>
 
 	<build>

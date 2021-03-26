@@ -148,7 +148,7 @@ public class QiNiuCloudService {
 	 * @return 返回文件的外链URL
 	 * @throws IOException
 	 */
-	public String uploadByFileLocalPath(String filePath, String fileName) {
+	public String uploadByFileLocalPath(String filePath, String fileName) throws IOException {
 		try {
 			Auth auth = Auth.create(qiNiuCloudProperties.getAccessKey(), qiNiuCloudProperties.getSecretKey());
 			String token = auth.uploadToken(qiNiuCloudProperties.getBucketName());
@@ -185,18 +185,14 @@ public class QiNiuCloudService {
 	 * @param multipartFile 前端提交过来的文件数据
 	 * @return 返回图片直接可访问的URL
 	 */
-	public String uploadByMultipartFile(MultipartFile multipartFile) {
+	public String uploadByMultipartFile(MultipartFile multipartFile) throws IOException {
 		// 解析文件后缀名
 		String originalFilename = multipartFile.getOriginalFilename();
 		assert originalFilename != null;
 		String suffix = originalFilename.substring(originalFilename.lastIndexOf("."), originalFilename.length());
 		String key = System.currentTimeMillis() + UUID.randomUUID().toString() + suffix;
-		try {
-			byte[] uploadBytes = multipartFile.getBytes();
-			uploadByByteArray(uploadBytes, key);
-		} catch (IOException e) {
-			throw new RuntimeException("上传图片失败");
-		}
+		byte[] uploadBytes = multipartFile.getBytes();
+		uploadByByteArray(uploadBytes, key);
 		return qiNiuCloudProperties.getStyle() == null ? ("http://" + qiNiuCloudProperties.getDomain() + "/" + key)
 				: ("http://" + qiNiuCloudProperties.getDomain() + "/" + key + "?" + qiNiuCloudProperties.getStyle());
 	}

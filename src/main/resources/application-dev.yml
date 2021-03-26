@@ -1,5 +1,5 @@
 #开发环境配置
-linux-host: 192.168.124.132
+linux-host: 192.168.124.135
 server:
   port: 9090
   tomcat:

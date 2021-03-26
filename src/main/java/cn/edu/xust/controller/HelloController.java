@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.edu.xust.CommonResponse;
 import cn.edu.xust.entity.po.Danger;
 import cn.edu.xust.error.AppResponseCode;
-import cn.edu.xust.sdc.sdk.HWPuSDK;
+import cn.edu.xust.sdc.core.HWPuSDK;
 import cn.edu.xust.service.IDangerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

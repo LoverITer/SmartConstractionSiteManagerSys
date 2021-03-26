@@ -81,10 +81,15 @@ public class QiNiuCloudPicServiceTest {
 	@Test
 	public void uploadByFileLocalPath() {
 		String imageName = System.currentTimeMillis() + UUID.randomUUID().toString() + ".jpg";
-		String imgUrl = qiNiuCloudService
-				.uploadByFileLocalPath("C:\\Users\\Administrator\\Pictures\\IMAGE\\微信图片_20210125141655.jpg", imageName);
+		String imgUrl;
+		try {
+			imgUrl = qiNiuCloudService.uploadByFileLocalPath(
+					"C:\\Users\\Administrator\\Pictures\\IMAGE\\微信图片_20210125141655.jpg", imageName);
+			System.out.println(imgUrl);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		System.out.println(imgUrl);
 	}
 
 }
