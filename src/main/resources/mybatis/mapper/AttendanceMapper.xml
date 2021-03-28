@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.edu.xust.mapper.AttendanceMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.xust.entity.po.Attendance">
+<mapper namespace="cn.edu.xust.iot.mapper.AttendanceMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.xust.iot.entity.po.Attendance">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="stark_work_time" jdbcType="TIMESTAMP" property="starkWorkTime" />
@@ -22,7 +22,7 @@
     delete from attendance
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.xust.entity.po.Attendance">
+  <insert id="insert" parameterType="cn.edu.xust.iot.entity.po.Attendance">
     insert into attendance (id, user_id, stark_work_time, 
       after_work_time, stark_work_device_id, after_work_device_id
       )
@@ -30,7 +30,7 @@
       #{afterWorkTime,jdbcType=TIMESTAMP}, #{starkWorkDeviceId,jdbcType=INTEGER}, #{afterWorkDeviceId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.xust.entity.po.Attendance">
+  <insert id="insertSelective" parameterType="cn.edu.xust.iot.entity.po.Attendance">
     insert into attendance
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -73,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.entity.po.Attendance">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.entity.po.Attendance">
     update attendance
     <set>
       <if test="userId != null">
@@ -94,7 +94,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.entity.po.Attendance">
+  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.entity.po.Attendance">
     update attendance
     set user_id = #{userId,jdbcType=INTEGER},
       stark_work_time = #{starkWorkTime,jdbcType=TIMESTAMP},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.edu.xust.mapper.CameraMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.xust.entity.po.Camera">
+<mapper namespace="cn.edu.xust.iot.mapper.CameraMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.xust.iot.entity.po.Camera">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
     <result column="device_status" jdbcType="CHAR" property="deviceStatus" />
@@ -29,7 +29,7 @@
     delete from camera
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.xust.entity.po.Camera">
+  <insert id="insert" parameterType="cn.edu.xust.iot.entity.po.Camera">
     insert into camera (id, device_name, device_status, 
       region_id, algorithm, ip, 
       port, user_name, password, 
@@ -41,7 +41,7 @@
       #{model,jdbcType=VARCHAR}, #{macAddress,jdbcType=VARCHAR}, #{sdcVersion,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.xust.entity.po.Camera">
+  <insert id="insertSelective" parameterType="cn.edu.xust.iot.entity.po.Camera">
     insert into camera
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -120,7 +120,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.entity.po.Camera">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.entity.po.Camera">
     update camera
     <set>
       <if test="deviceName != null">
@@ -159,7 +159,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.entity.po.Camera">
+  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.entity.po.Camera">
     update camera
     set device_name = #{deviceName,jdbcType=VARCHAR},
       device_status = #{deviceStatus,jdbcType=CHAR},
