@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Video.js | HTML5 Video Player</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/video.js/7.9.2/alt/video-js-cdn.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/video.js/7.9.2/video.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/videojs-flash/2.2.1/videojs-flash.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <style type="text/css">
+        .play_btn .stop_btn {
+            width: max-content;
+            color: #fff;
+            height: 32px;
+            margin: 100px;
+            border: dodgerblue;
+            border-radius: 5px;
+            cursor: pointer;
+            background: dodgerblue;
+        }
+
+        .play_btn:hover {
+            background-color: #2a6496;
+            border: #2a6496;
+        }
+
+        .stop_btn:hover {
+            background-color: darkred;
+            border: darkred;
+        }
+    </style>
+</head>
+<body>
+
+<div style="margin-top: 100px; margin-left: 70px">
+    <h1>实时预览</h1>
+    <video id="example_video_1" class="video-js vjs-default-skin" controls
+           preload="auto" width="640px" height="480px" data-setup="{}"
+           style="float: left;margin: 0 auto">
+        <source id="video1" src="rtmp://127.0.0.1/live/stream" type="rtmp/flv">
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+    </video>
+    <input type="hidden" class="video1_token" value="">
+    <button style="margin: 15px" class="play_btn">预览实时监控</button>
+    <button class="stop_btn" style="background-color: firebrick;border: firebrick" type="submit">停止播放监控</button>
+</div>
+<div style="margin-left: 70px;margin-bottom: 100px">
+    <h1 style="clear: left; padding-top: 100px">历史回放</h1>
+    <video id="example_video_6" class="video-js vjs-default-skin" controls
+           preload="auto" width="640px" height="480px" data-setup="{}"
+           style="float: left">
+        <source src="rtmp://127.0.0.1:1935/history/stream33" type="rtmp/flv">
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading
+            to a web browser that <a
+                href="http://videojs.com/html5-video-support/" target="_blank">supports
+            HTML5 video</a>
+        </p>
+    </video>
+
+
+</div>
+<script src="http://vjs.zencdn.net/5.20.1/video.js"></script>
+<script type="text/javascript">
+
+
+    var cameraInfo = {
+        "username": "admin",
+        "password": "HuaWei123",
+        "ip": "192.168.0.120",
+        "channel": "ch1",
+        "stream": "Media1"
+    };
+
+    var options = {
+        width: 600, //视频播放器显示的宽度
+        height: 400, //视频播放器显示的高度
+        autoplay: false, //自动播放
+        poster: "", //视频开始播放前显示的图像的URL
+        src: "", //要嵌入的视频资源的url
+        preload: "none", //预加载
+        techOrder: ["html5", "flash"],
+        loop: false, //是否循环播放
+        controls: true //可否控制进度条、音量
+    };
+
+    //初始化video播放器
+    var myPlayer = videojs('example_video_1', options, function onPlayerReady() {
+        console.log('播放器已经准备好了!');
+    });
+
+
+    $('.play_btn').click(function () {
+        $.ajax({
+            url: "/cameras/live",
+            method: "POST",
+            contentType: "application/json",
+            sync: false,
+            data: JSON.stringify(cameraInfo),
+            dataType: "json",
+            success: function (response) {
+                if (response.code == 201) {
+                    console.log("设置新的rtmp播放地址："+response.data.rtmp);
+                    $('.video1_token').attr("value", response.data.token);
+                    //加载rtmp流，开始播放
+                    myPlayer.src({
+                        type: "rtmp/flv",
+                        src: response.data.rtmp
+                    });
+                    myPlayer.load(response.data.rtmp);
+                    myPlayer.play();
+                }else{
+                    confirm(response.message)
+                }
+            },
+            error: function () {
+                console.log("出异常了")
+            }
+        });
+    });
+
+    $('.stop_btn').click(function () {
+        var token = $('.video1_token').attr("value");
+        $.ajax({
+            url: "/cameras/close/" + token,
+            method: "GET",
+            sync: false,
+            dataType: "json",
+            success: function (response) {
+                if (response.code == 200) {
+                    myPlayer.pause();
+                    confirm("关闭播放成功");
+                }
+            },
+            error: function () {
+                console.log("出异常了")
+            }
+        });
+    });
+</script>
+</body>
+</html>

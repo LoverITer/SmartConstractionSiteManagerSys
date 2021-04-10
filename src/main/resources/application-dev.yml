@@ -3,7 +3,8 @@ linux-host: 192.168.124.135
 server:
   port: 9090
   tomcat:
-    threads:      max: 200              #tomcat最大线程数
+    threads:
+      max: 200              #tomcat最大线程数
       min-spare: 100        #tomcat初始化加载的线程数
     accept-count: 1000        #tomcat任务队列容量
     max-connections: 2000    #最大连接数
@@ -11,13 +12,22 @@ server:
 #logging
 logging:
   config: classpath:logback-spring.xml
-  file: scs-dev.log
   level:
-    root: DEBUG
-    cn.edu.xust: DEBUG 
+    root: INFO
+    cn.edu.xust: DEBUG
+  file:
+    name: scs-dev.log
 debug: true             
 spring:
-  profiles: dev
+  config:
+    activate:
+      on-profile: dev
+  #热启动
+  devtools:
+    livereload:
+      enabled: false
+    restart:
+      additional-paths: src/main/java
   datasource:
     #指定使用Druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
@@ -52,16 +62,40 @@ spring:
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-      # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭,如果想用SQL防火墙 建议打开
+      # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下关闭,如果想用SQL防火墙 建议打开
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 20
       use-global-data-source-stat: true
       # 通过connectProperties属性来打开mergeSql功能
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-      #热启动
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      additional-paths: src/main/java
-
+camera:
+  config:
+    #直播推流时间（分钟）  -1 表示永久推流
+    keepalive: -1
+    #nginx推送地址
+    push_host: 127.0.0.1
+    #额外推送地址
+    host_extra: 127.0.0.1
+    #nginx推送端口
+    push_port: 1935
+    #主码流最大码率
+    main_code: 5120
+    #子码流最大码率
+    sub_code: 1024
+    #编译版本信息
+    version: '@COMMIT_REV@.@BUILD_DATE@'
+#FFmpeg配置
+ffmpeg:
+  config:
+     #ffmpeg执行路径，一般为ffmpeg的安装目录，该路径只能是目录，不能为具体文件路径，否则会报错
+     path: D://JavaProject\smart_security_monitoring_and_early_warning_platform\src\main\resources\ffmpeg\bin\
+     #存放任务的默认Map的初始化大小
+     size: 10
+     #事件回调通知接口地址
+     callback: http://127.0.0.1/callback
+     #网络超时设置（毫秒）
+     timeout: 300
+     #开启保活线程
+     keepalive: true
+     #是否输出debug消息
+     debug: true

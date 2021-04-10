@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author HuangXin
  * @since 2021/03/17 13:56
  */
-@Api(value = "FileUploadController", description = "文件上传接口")
+@Api(value = "FileUploadController", tags = "文件上传接口")
 @Slf4j
 @RestController
 @RequestMapping("/upload")

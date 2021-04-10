@@ -1,68 +1,84 @@
 package cn.edu.xust.iot.error;
 
 /**
+ * 程序处理响应码，参照Http响应码设计
+ * 1xx 表示一些提示信息
+ * 2xx 表示成功
+ * 4xx 表示用户请求参数有误
+ * 5xx  表示处理过程中服务器出现错误
+ *
  * @author HuangXin
  * @Date 2020/3/9 3:29 下午
  */
-
 public enum AppResponseCode {
 
-	/**
-	 * 程序正常处理并返回正确结果
-	 */
-	SUCCESS(true, 200, "正确"),
+    CAMERA_STREAM_CLOSING_ALTER_TYPE1(true,100,"设备正在结束回放,请稍后再试"),
+    CAMERA_STREAM_CLOSING_ALTER_TYPE2(true,101,"设备正在结束回放,请稍后再试"),
 
-	/**
-	 * 请求资源不存在
-	 */
-	NOT_FOUND(false, 404, "请求资源不存在"),
+    /**
+     * 程序正常处理并返回正确结果
+     */
+    SUCCESS(true, 200, "成功"),
+    CAMERA_OPEN_VIDEO_STREAM_SUCCESS(true,201,"打开视频流成功"),
 
-	/**
-	 * 请求参数有误
-	 */
-	REQUEST_PARAMETER_VALID(false, 405, "请求参数有误"),
+    /**
+     * 请求资源不存在
+     */
+    NOT_FOUND(false, 404, "请求资源不存在"),
 
-	/**
-	 * 程序处理异常，发生未知错误
-	 */
-	FAIL(false, 500, "错误");
+    /**
+     * 通用请求参数有误
+     */
+    REQUEST_PARAMETER_VALID(false, 405, "请求参数有误"),
 
-	Boolean success;
-	Integer code;
-	String message;
 
-	AppResponseCode(Boolean success, Integer code, String message) {
-		this.success = success;
-		this.code = code;
-		this.message = message;
-	}
+	CAMERA_REQUEST_PARAMETER_VALID(false, 4051,"摄像机直播流请求参数不完整" ),
+    CAMERA_REQUEST_IP_VALID(false,4052,"摄像机直播流ip格式输入错误"),
+    CAMERA_REQUEST_START_TIME_VALID(false,4053,"摄像机直播流start time格式输入错误"),
+    CAMERA_REQUEST_END_TIME_VALID(false,4054,"摄像机直播流end time格式输入错误"),
 
-	public Integer getCode() {
-		return code;
-	}
+    /**
+     * 程序处理异常，发生未知错误
+     */
+    FAIL(false, 500, "错误"),
+    CAMERA_OPEN_VIDEO_STREAM_FAIL(true,501,"打开视频流失败");
 
-	public String getMessage() {
-		return message;
-	}
+    Boolean success;
+    Integer code;
+    String message;
 
-	public Boolean getSuccess() {
-		return success;
-	}
+    AppResponseCode(Boolean success, Integer code, String message) {
+        this.success = success;
+        this.code = code;
+        this.message = message;
+    }
 
-	public void setCode(Integer code) {
-		this.code = code;
-	}
+    public Integer getCode() {
+        return code;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public String getMessage() {
+        return message;
+    }
 
-	public void setSuccess(Boolean success) {
-		this.success = success;
-	}
+    public Boolean getSuccess() {
+        return success;
+    }
 
-	@Override
-	public String toString() {
-		return "ShopCode{" + "success=" + success + ", code=" + code + ", message='" + message + '\'' + '}';
-	}
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    @Override
+    public String toString() {
+        return "ShopCode{" + "success=" + success + ", code=" + code + ", message='" + message + '\'' + '}';
+    }
 }

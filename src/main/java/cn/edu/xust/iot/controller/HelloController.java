@@ -23,7 +23,7 @@ import java.util.Map;
  * @author HuangXin
  *
  */
-@Api(value = "HelloController", description = "演示接口")
+@Api(value = "HelloController", tags = "演示接口")
 @Controller
 public class HelloController {
 

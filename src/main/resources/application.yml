@@ -1,6 +1,16 @@
 spring:
   profiles:
     active: dev
+  thymeleaf:
+    enabled: true
+    #默认是classpath:/templates/
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
 #mybatis配置    
 mybatis:
   config-location: classpath:/mybatis/mybatis-config.xml

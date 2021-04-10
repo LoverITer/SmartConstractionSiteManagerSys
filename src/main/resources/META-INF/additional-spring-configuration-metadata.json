@@ -1,0 +1,68 @@
+{
+  "properties": [
+    {
+      "name": "camera.config.keepalive",
+      "type": "java.lang.String",
+      "description": "Description for camera.config.keepalive."
+    },
+    {
+      "name": "camera.config.push_host",
+      "type": "java.lang.String",
+      "description": "Description for camera.config.push_host."
+    },
+    {
+      "name": "camera.config.host_extra",
+      "type": "java.lang.String",
+      "description": "Description for camera.config.host_extra."
+    },
+    {
+      "name": "camera.config.push_port",
+      "type": "java.lang.String",
+      "description": "Description for camera.config.push_port."
+    },
+    {
+      "name": "camera.config.main_code",
+      "type": "java.lang.String",
+      "description": "Description for camera.config.main_code."
+    },
+    {
+      "name": "camera.config.sub_code",
+      "type": "java.lang.String",
+      "description": "Description for camera.config.sub_code."
+    },
+    {
+      "name": "camera.config.version",
+      "type": "java.lang.String",
+      "description": "Description for camera.config.version."
+    },
+    {
+      "name": "ffmpeg.config.path",
+      "type": "java.lang.String",
+      "description": "Description for ffmpeg.path."
+    },
+    {
+      "name": "ffmpeg.config.size",
+      "type": "java.lang.String",
+      "description": "Description for ffmpeg.size."
+    },
+    {
+      "name": "ffmpeg.config.callback",
+      "type": "java.lang.String",
+      "description": "Description for ffmpeg.callback."
+    },
+    {
+      "name": "ffmpeg.config.keepalive",
+      "type": "java.lang.String",
+      "description": "Description for ffmpeg.keepalive."
+    },
+    {
+      "name": "ffmpeg.config.debug",
+      "type": "java.lang.String",
+      "description": "Description for ffmpeg.debug."
+    },
+    {
+      "name": "ffmpeg.config.timeout",
+      "type": "java.lang.String",
+      "description": "Description for ffmpeg.config.timeout."
+    }
+  ] }

@@ -30,6 +30,7 @@
       #{afterWorkTime,jdbcType=TIMESTAMP}, #{starkWorkDeviceId,jdbcType=INTEGER}, #{afterWorkDeviceId,jdbcType=INTEGER}
       )
   </insert>
+
   <insert id="insertSelective" parameterType="cn.edu.xust.iot.entity.po.Attendance">
     insert into attendance
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -73,6 +74,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.entity.po.Attendance">
     update attendance
     <set>
@@ -94,6 +96,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.entity.po.Attendance">
     update attendance
     set user_id = #{userId,jdbcType=INTEGER},

@@ -18,6 +18,10 @@ target/
 *.iws
 *.iml
 *.ipr
+*/ffmpeg/
+.log
+
+
 
 ### NetBeans ###
 /nbproject/private/
