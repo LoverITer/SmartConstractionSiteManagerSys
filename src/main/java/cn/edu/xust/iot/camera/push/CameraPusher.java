@@ -65,8 +65,10 @@ public class CameraPusher {
         String token = cameraInfo.getToken();
         /*
          *优化到2s的推流命令:
-         *  ffmpeg -re -thread_queue_size 1024 -i rtsp://admin:HuaWei123@192.168.0.120/LiveMedia/ch1/Media1/trackID=1 -vcodec copy -map 0:0 -preset ultrafast -tune zerolatency -g 5 -max_interleave_delta 2  -f flv rtmp://127.0.0.1:1935/live
-         */
+ffmpeg  -re -thread_queue_size 1024 -i rtsp://admin:HuaWei123@192.168.0.120/LiveMedia/ch1/Media1/trackID=1
+-vcodec copy -map 0:0 -preset ultrafast -tune zerolatency -g 5 -max_interleave_delta 2 -s 1920*1080
+-f flv rtmp://127.0.0.1:1935/live
+          */
         //流式命令行组装执行
         try {
             manager.start(token, CommandBuilderFactory.createBuilder()
@@ -78,11 +80,10 @@ public class CameraPusher {
                     .add("-map", "0:0")
                     .add("-preset", "ultrafast")
                     .add("-tune", "zerolatency")
-                    .add("-sc_threshold", "499")
-                    .add("-max_interleave_delta", " 2")
-                    .add("profile","high")
-                    .add("-an")
                     .add("-g", "5")
+                    .add("-max_interleave_delta", " 2")
+                    /*.add("-an")*/
+                    .add("-s", "1920*1080")
                     .add("-f", "flv")
                     .add(output));
             log.info("启动推流成功");

@@ -14,7 +14,7 @@
 
 
 
-![](http://image.easyblog.top/16169396410336d68662e-33ef-401e-9dc9-bacfc1012a30.jpg)
+<img src="https://camo.githubusercontent.com/1d6a6f31d4eec326ad11c2b7b5d0b39378e8e207515fe2a1abcf96ddc89b0b39/687474703a2f2f696d6167652e65617379626c6f672e746f702f3136313639333936343130333336643638363632652d333365662d343031652d396463392d6261636663313031326133302e6a7067" alt="" data-canonical-src="http://image.easyblog.top/16169396410336d68662e-33ef-401e-9dc9-bacfc1012a30.jpg" style="width: 60%;">
 
 
 ##### 项目使用到的技术
@@ -30,7 +30,8 @@
 
 **三种常见的视频流协议介绍（RTMP、RTSP、HLS）**
 
-![](https://img-blog.csdnimg.cn/20200628161338388.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2VndWlkXzE=,size_16,color_FFFFFF,t_70)
+<img src="https://camo.githubusercontent.com/3efce8227bee2324785e92ba8c19a49744a6e1e515d1a4cd308a1a694e3d9648/68747470733a2f2f696d672d626c6f672e6373646e696d672e636e2f32303230303632383136313333383338382e706e673f782d6f73732d70726f636573733d696d6167652f77617465726d61726b2c747970655f5a6d46755a33706f5a57356e6147567064476b2c736861646f775f31302c746578745f6148523063484d364c7939696247396e4c6d4e7a5a473475626d56304c32566e64576c6b587a453d2c73697a655f31362c636f6c6f725f4646464646462c745f3730" alt="" data-canonical-src="https://img-blog.csdnimg.cn/20200628161338388.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2VndWlkXzE=,size_16,color_FFFFFF,t_70" style="width: 48%;">
+
 
 **（1）RTMP（Real Time Messaging Protocol）实时消息传输协议**
 
@@ -137,13 +138,16 @@ dll，但是JNA在加载的时候只会从系统或项目定义的类路径下�
 加到库路径中，好让JNA来加载dll，配置方法如下：
 
 （1）点击Project Struct.... --->  Libraries  点击图中所示的“+”号
+
 ![](http://image.easyblog.top/16169418403029dc9b0dd-1ed6-4569-a2ed-bd20305608f4.png)
 
 （2）选择Java库，并且选中项目下的libs目录
-![](http://image.easyblog.top/1616941866306b432a8de-08c5-423b-b503-b11021aae9ac.png)
+
+<img src="https://camo.githubusercontent.com/1c8408ed6df2712106c586091d8c61f2d66a060519c3a0fb9f392dd0f4fcab16/687474703a2f2f696d6167652e65617379626c6f672e746f702f3136313639343138363633303662343332613864652d303863352d343233622d623530332d6231313032316161653961632e706e67" alt="" data-canonical-src="http://image.easyblog.top/1616941866306b432a8de-08c5-423b-b503-b11021aae9ac.png" style="width: 50%;">
 
 （3）检查Modules中是否选中依赖
-![](http://image.easyblog.top/161694190127161a28e18-1f3c-45d3-a4dc-252eeb54d798.png)
+
+<img src="https://camo.githubusercontent.com/d8e6e2f10f7a56eef21c557dc6662e28b5c2c9fb072a35e693b850f8c203bd23/687474703a2f2f696d6167652e65617379626c6f672e746f702f3136313639343139303132373136316132386531382d316633632d343564332d613464632d3235326565623534643739382e706e67" alt="" data-canonical-src="http://image.easyblog.top/161694190127161a28e18-1f3c-45d3-a4dc-252eeb54d798.png" style="width: 80%;">
 
 做完这些步骤后你的代码中应该就可以正常加载dll库并获取dll的实例对象了
 
@@ -159,4 +163,6 @@ dll，但是JNA在加载的时候只会从系统或项目定义的类路径下�
 * 2021年3月25      调用相机SDK接口实现初始化SDK、清理SDK初始化、登陆相机、退出相机功能
 * 2021年3月28      将工程开发平台迁移到IDEA上（不得不说，用了IDEA后真的回不去eclipse了，eclipse用起来真的非常不顺手）
 * 2021年3月31      构建并调试FFmpeg+Nginx-RTMP流媒体服务器将网络摄像头的RTSP视频流数据推送成可以直接在浏览器上直接播放的RTMP格式视频流数据
-* 2021年4月07      引入JavaCV，使用JavaCV
+* 2021年4月07      引入JavaCV，使用JavaCV FFMPEG推流摄像机RTSP视频流到nginx-rtmp
+* 2021年4月11      JavaCV推流效果太差，转变思路直接使用Java调用本地FFmpeg执行有关命令来进行推流，显示效果大大提高，但视频播放有3秒左右的延迟，后续有待优化
+
