@@ -1,6 +1,6 @@
 package cn.edu.xust.iot.sdc.service;
 
-import cn.edu.xust.iot.sdc.service.impl.BussinessUserImpl;
+import cn.edu.xust.iot.service.impl.BusinessUserServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class BusinessUserImplTest {
 
-    private static BussinessUserImpl businessUser = null;
+    private static BusinessUserServiceImpl businessUser = null;
 
     @After
     public void after() {
@@ -33,7 +33,7 @@ public class BusinessUserImplTest {
     @Before
     public void before() {
         if (businessUser == null) {
-            businessUser = new BussinessUserImpl();
+            businessUser = new BusinessUserServiceImpl();
         }
         businessUser.init();
     }
@@ -41,7 +41,7 @@ public class BusinessUserImplTest {
 
     @Test
     public void testInitSDK() {
-        businessUser = new BussinessUserImpl();
+        businessUser = new BusinessUserServiceImpl();
         boolean init = businessUser.init();
         System.out.println(init);
     }

@@ -1,6 +1,6 @@
 package cn.edu.xust.iot.mapper;
 
-import cn.edu.xust.iot.entity.po.DangerBehavior;
+import cn.edu.xust.iot.model.entity.DangerBehavior;
 import org.springframework.stereotype.Repository;
 
 

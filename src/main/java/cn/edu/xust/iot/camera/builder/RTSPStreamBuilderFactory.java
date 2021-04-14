@@ -2,7 +2,7 @@ package cn.edu.xust.iot.camera.builder;
 
 import cn.edu.xust.iot.camera.builder.impl.HIKVisionRTSPStreamBuilder;
 import cn.edu.xust.iot.camera.builder.impl.HuaWeiRTSPStreamBuilder;
-import cn.edu.xust.iot.camera.pojo.CameraInfo;
+import cn.edu.xust.iot.model.CameraInfoModel;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
@@ -15,15 +15,15 @@ import java.util.Objects;
 @Slf4j
 public class RTSPStreamBuilderFactory {
 
-    public static String generateRTSPStreamURL(CameraType type, CameraInfo cameraInfo){
+    public static String generateRTSPStreamURL(CameraType type, CameraInfoModel cameraInfoModel){
         if(Objects.isNull(type)){
             throw new RuntimeException("相机类型不能为空");
         }
         switch (type){
             case AXIS: return "";
             case Canon: return "";
-            case HUAWEI: return new HuaWeiRTSPStreamBuilder().builder(cameraInfo);
-            case HIKVISION: return new HIKVisionRTSPStreamBuilder().builder(cameraInfo);
+            case HUAWEI: return new HuaWeiRTSPStreamBuilder().builder(cameraInfoModel);
+            case HIKVISION: return new HIKVisionRTSPStreamBuilder().builder(cameraInfoModel);
             default: return null;
         }
     }

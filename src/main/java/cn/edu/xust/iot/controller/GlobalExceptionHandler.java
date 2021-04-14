@@ -1,9 +1,9 @@
 package cn.edu.xust.iot.controller;
 
-import cn.edu.xust.iot.CommonResponse;
 import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.error.BusinessException;
 import cn.edu.xust.iot.error.EmBusinessError;
+import cn.edu.xust.iot.model.CommonResponse;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -1,7 +1,9 @@
 package cn.edu.xust.iot.mapper;
 
-import cn.edu.xust.iot.entity.po.Camera;
+import cn.edu.xust.iot.model.entity.Camera;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 /**
@@ -44,6 +46,12 @@ public interface CameraMapper {
 	 * @return 摄像机信息
 	 */
 	Camera selectByPrimaryKey(Integer id);
+
+	/**
+	 * 查询所有的摄像头数据
+	 * @return
+	 */
+	List<Camera>  selectAll();
 
 	/**
 	 * 更新传入对象中某条摄像机记录

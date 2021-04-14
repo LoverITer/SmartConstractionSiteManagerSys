@@ -1,8 +1,8 @@
 package cn.edu.xust.iot.controller;
 
-import cn.edu.xust.iot.CommonResponse;
 import cn.edu.xust.iot.conf.qiniu.QiNiuCloudService;
 import cn.edu.xust.iot.error.AppResponseCode;
+import cn.edu.xust.iot.model.CommonResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiResponse;
@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author HuangXin
  * @since 2021/03/17 13:56
  */
-@Api(value = "FileUploadController", tags = "文件上传接口")
+@Api(tags="文件上传接口")
 @Slf4j
 @RestController
 @RequestMapping("/upload")
@@ -40,7 +40,7 @@ public class FileUploadController {
 			result.setMsg("请选择图片");
 			return result;
 		}
-		log.info("上传图片 '%s',大小 %d bytes", picFile.getOriginalFilename(), picFile.getSize());
+		log.info("上传图片 '{}',大小 {} bytes", picFile.getOriginalFilename(), picFile.getSize());
 		try {
 			String imageUrl = qiNiuCloudService.uploadByMultipartFile(picFile);
 			result.setCode(AppResponseCode.SUCCESS.getCode());

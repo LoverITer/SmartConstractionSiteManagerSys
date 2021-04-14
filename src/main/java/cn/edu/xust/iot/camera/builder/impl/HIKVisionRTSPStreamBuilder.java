@@ -1,7 +1,7 @@
 package cn.edu.xust.iot.camera.builder.impl;
 
 import cn.edu.xust.iot.camera.builder.RTSPStreamBuilder;
-import cn.edu.xust.iot.camera.pojo.CameraInfo;
+import cn.edu.xust.iot.model.CameraInfoModel;
 
 /**
  * @author HuangXin
@@ -9,12 +9,12 @@ import cn.edu.xust.iot.camera.pojo.CameraInfo;
  */
 public class HIKVisionRTSPStreamBuilder implements RTSPStreamBuilder {
     @Override
-    public String builder(CameraInfo cameraInfo) {
-        if(cameraInfo==null){
+    public String builder(CameraInfoModel cameraInfoModel) {
+        if(cameraInfoModel ==null){
             throw new RuntimeException("相机配置不可为空");
         }
-        return "rtsp://" + cameraInfo.getUsername() + ":" + cameraInfo.getPassword() + "@" +
-                cameraInfo.getIp() + ":554/h264/ch" + cameraInfo.getChannel() + "/" + cameraInfo.getStream()
+        return "rtsp://" + cameraInfoModel.getUsername() + ":" + cameraInfoModel.getPassword() + "@" +
+                cameraInfoModel.getIp() + ":554/h264/ch" + cameraInfoModel.getChannel() + "/" + cameraInfoModel.getStream()
                 + "/av_stream";
     }
 }

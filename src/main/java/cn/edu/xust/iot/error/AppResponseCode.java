@@ -20,6 +20,8 @@ public enum AppResponseCode {
      */
     SUCCESS(true, 200, "成功"),
     CAMERA_OPEN_VIDEO_STREAM_SUCCESS(true,201,"打开视频流成功"),
+    USER_LOGIN_SUCCESS(true,202,"用户登陆成功"),
+
 
     /**
      * 请求资源不存在
@@ -30,8 +32,6 @@ public enum AppResponseCode {
      * 通用请求参数有误
      */
     REQUEST_PARAMETER_VALID(false, 405, "请求参数有误"),
-
-
 	CAMERA_REQUEST_PARAMETER_VALID(false, 4051,"摄像机直播流请求参数不完整" ),
     CAMERA_REQUEST_IP_VALID(false,4052,"摄像机直播流ip格式输入错误"),
     CAMERA_REQUEST_START_TIME_VALID(false,4053,"摄像机直播流start time格式输入错误"),
@@ -41,7 +41,10 @@ public enum AppResponseCode {
      * 程序处理异常，发生未知错误
      */
     FAIL(false, 500, "错误"),
-    CAMERA_OPEN_VIDEO_STREAM_FAIL(true,501,"打开视频流失败");
+    CAMERA_OPEN_VIDEO_STREAM_FAIL(false,501,"打开视频流失败"),
+    USER_LOGIN_REPEAT(false,502,"用户重复登录"),
+    USER_LOGIN_FAIL(false,503,"用户登陆失败"),
+    USER_NOT_FOUND(false,504,"用户还未注册");
 
     Boolean success;
     Integer code;

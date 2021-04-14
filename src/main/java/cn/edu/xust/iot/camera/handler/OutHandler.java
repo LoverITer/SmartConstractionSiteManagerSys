@@ -16,16 +16,16 @@ import java.io.InputStreamReader;
 public class OutHandler extends Thread {
 
     /**控制状态 */
-    private volatile boolean desstatus = true;
+    private volatile boolean status = true;
 
     /**读取输出流*/
-    private BufferedReader br = null;
+    private BufferedReader outputReader = null;
 
     /**任务ID*/
     private String id = null;
 
     /**消息处理方法*/
-    private OutHandlerMethod ohm;
+    private OutHandlerMethod messageHandler;
 
     /**
      * 创建输出线程（默认立即开启线程）
@@ -53,26 +53,26 @@ public class OutHandler extends Thread {
         return out;
     }
 
-    public void setOhm(OutHandlerMethod ohm) {
-        this.ohm = ohm;
+    public void setMessageHandler(OutHandlerMethod messageHandler) {
+        this.messageHandler = messageHandler;
     }
 
     public void setDesStatus(boolean desStatus) {
-        this.desstatus = desStatus;
+        this.status = desStatus;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public OutHandlerMethod getOhm() {
-        return ohm;
+    public OutHandlerMethod getMessageHandler() {
+        return messageHandler;
     }
 
-    public OutHandler(InputStream is, String id,OutHandlerMethod ohm) {
-        br = new BufferedReader(new InputStreamReader(is));
+    public OutHandler(InputStream is, String id,OutHandlerMethod messageHandler) {
+        outputReader = new BufferedReader(new InputStreamReader(is));
         this.id = id;
-        this.ohm=ohm;
+        this.messageHandler = messageHandler;
     }
 
     /**
@@ -93,9 +93,9 @@ public class OutHandler extends Thread {
             if (CommandManagerImpl.config.isDebug()) {
                 log.info(id + "开始推流！");
             }
-            while (desstatus && (msg = br.readLine()) != null) {
-                ohm.parse(id,msg);
-                if(ohm.isInterrupted()) {
+            while (status && (msg = outputReader.readLine()) != null) {
+                messageHandler.parse(id,msg);
+                if(messageHandler.isInterrupted()) {
                     log.error("检测到中断，提交重启任务给保活处理器");
                     //如果发生异常中断，立即进行保活
                     //把中断的任务交给保活处理器进行进一步处理

@@ -1,6 +1,6 @@
 package cn.edu.xust.iot.mapper;
 
-import cn.edu.xust.iot.entity.po.FaceLib;
+import cn.edu.xust.iot.model.entity.FaceLib;
 import org.springframework.stereotype.Repository;
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.xust.iot.mapper.FaceLibMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.xust.iot.entity.po.FaceLib">
+  <resultMap id="BaseResultMap" type="cn.edu.xust.iot.model.entity.FaceLib">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="face_pic" jdbcType="VARCHAR" property="facePic" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -20,13 +20,13 @@
     delete from face_lib
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.edu.xust.iot.entity.po.FaceLib">
+  <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.FaceLib">
     insert into face_lib (id, face_pic, create_time, 
       memo)
     values (#{id,jdbcType=BIGINT}, #{facePic,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{memo,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.xust.iot.entity.po.FaceLib">
+  <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.FaceLib">
     insert into face_lib
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.entity.po.FaceLib">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.model.entity.FaceLib">
     update face_lib
     <set>
       <if test="facePic != null">
@@ -72,7 +72,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.entity.po.FaceLib">
+  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.model.entity.FaceLib">
     update face_lib
     set face_pic = #{facePic,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

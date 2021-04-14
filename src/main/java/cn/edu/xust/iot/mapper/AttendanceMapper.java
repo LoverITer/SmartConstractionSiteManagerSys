@@ -1,6 +1,6 @@
 package cn.edu.xust.iot.mapper;
 
-import cn.edu.xust.iot.entity.po.Attendance;
+import cn.edu.xust.iot.model.entity.Attendance;
 import org.springframework.stereotype.Repository;
 
 

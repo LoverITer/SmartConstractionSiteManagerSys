@@ -101,7 +101,7 @@ public class ExecUtil {
             String id = task.getId(), command = task.getCommand();
             OutHandlerMethod ohm = null;
             if (task.getThread() != null) {
-                ohm = task.getThread().getOhm();
+                ohm = task.getThread().getMessageHandler();
             }
 
             //安全销毁命令行进程和输出子线程

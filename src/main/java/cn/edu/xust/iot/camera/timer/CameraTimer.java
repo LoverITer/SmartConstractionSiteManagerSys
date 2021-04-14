@@ -1,7 +1,7 @@
 package cn.edu.xust.iot.camera.timer;
 
-import cn.edu.xust.iot.camera.CameraWorkerCache;
 import cn.edu.xust.iot.camera.conf.CameraRTSPToHttpFlvConfig;
+import cn.edu.xust.iot.camera.data.CameraWorkerCache;
 import cn.edu.xust.iot.controller.CameraController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +59,8 @@ public class CameraTimer implements CommandLineRunner {
 										+ CameraWorkerCache.START_MAP.get(key).getEndTime() + " rtsp:"
 										+ CameraWorkerCache.START_MAP.get(key).getRtsp() + " url:"
 										+ CameraWorkerCache.START_MAP.get(key).getUrl() + "]");
+								//当使用人数为的时候停止推送
+								CameraWorkerCache.PUSH_MAP.get(key).stopPublish();
 							} else if (-1!=Integer.parseInt(config.getKeepalive())&&
 									null == CameraWorkerCache.START_MAP.get(key).getStartTime() &&
 									(newTime - openTime) / 1000 / 60 >= Integer.parseInt(config.getKeepalive())) {

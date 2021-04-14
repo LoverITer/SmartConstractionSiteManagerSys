@@ -1,8 +1,8 @@
 package cn.edu.xust.iot.controller;
 
-import cn.edu.xust.iot.CommonResponse;
-import cn.edu.xust.iot.entity.po.Danger;
 import cn.edu.xust.iot.error.AppResponseCode;
+import cn.edu.xust.iot.model.CommonResponse;
+import cn.edu.xust.iot.model.entity.Danger;
 import cn.edu.xust.iot.sdc.core.HWPuSDK;
 import cn.edu.xust.iot.service.IDangerService;
 import io.swagger.annotations.Api;
@@ -23,7 +23,7 @@ import java.util.Map;
  * @author HuangXin
  *
  */
-@Api(value = "HelloController", tags = "演示接口")
+@Api(tags = "HelloController")
 @Controller
 public class HelloController {
 

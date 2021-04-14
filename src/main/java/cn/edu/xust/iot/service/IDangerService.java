@@ -1,7 +1,7 @@
 package cn.edu.xust.iot.service;
 
 
-import cn.edu.xust.iot.entity.po.Danger;
+import cn.edu.xust.iot.model.entity.Danger;
 
 /**
  * @author HuangXin

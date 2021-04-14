@@ -17,11 +17,13 @@ logging:
     cn.edu.xust: DEBUG
   file:
     name: scs-dev.log
-debug: true             
+debug: true
 spring:
   config:
     activate:
       on-profile: dev
+  thymeleaf:
+    cache: off
   #热启动
   devtools:
     livereload:
@@ -68,6 +70,19 @@ spring:
       use-global-data-source-stat: true
       # 通过connectProperties属性来打开mergeSql功能
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  redis:
+    host: ${linux-host}
+    port: 6379
+    database: 0
+    timeout: 10000
+    #springBoot 2.x建议配置lettuce作为Redis客户端  Spring1.x配置jedis
+    lettuce:
+      pool:
+        max-active: 8
+        min-idle: 0
+        max-idle: 8
+        max-wait: 5000ms
+      shutdown-timeout: 100ms
 camera:
   config:
     #直播推流时间（分钟）  -1 表示永久推流
@@ -87,15 +102,15 @@ camera:
 #FFmpeg配置
 ffmpeg:
   config:
-     #ffmpeg执行路径，一般为ffmpeg的安装目录，该路径只能是目录，不能为具体文件路径，否则会报错
-     path: D://JavaProject\smart_security_monitoring_and_early_warning_platform\src\main\resources\ffmpeg\bin\
-     #存放任务的默认Map的初始化大小
-     size: 10
-     #事件回调通知接口地址
-     callback: http://127.0.0.1/callback
-     #网络超时设置（毫秒）
-     timeout: 300
-     #开启保活线程
-     keepalive: true
-     #是否输出debug消息
-     debug: true
+    #ffmpeg执行路径，一般为ffmpeg的安装目录，该路径只能是目录，不能为具体文件路径，否则会报错
+    path: D://JavaProject\smart_security_monitoring_and_early_warning_platform\src\main\resources\ffmpeg\bin\
+    #存放任务的默认Map的初始化大小
+    size: 10
+    #事件回调通知接口地址
+    callback: http://127.0.0.1/callback
+    #网络超时设置（毫秒）
+    timeout: 300
+    #开启保活线程
+    keepalive: true
+    #是否输出debug消息
+    debug: true

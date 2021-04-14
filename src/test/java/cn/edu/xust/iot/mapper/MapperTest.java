@@ -1,6 +1,6 @@
 package cn.edu.xust.iot.mapper;
 
-import cn.edu.xust.iot.entity.po.Danger;
+import cn.edu.xust.iot.model.entity.Danger;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

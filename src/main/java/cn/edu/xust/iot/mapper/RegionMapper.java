@@ -1,7 +1,9 @@
 package cn.edu.xust.iot.mapper;
 
-import cn.edu.xust.iot.entity.po.Region;
+import cn.edu.xust.iot.model.entity.Region;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 /**
@@ -28,13 +30,6 @@ public interface RegionMapper {
 	 */
 	int insert(Region record);
 
-	/**
-	 * 向区域信息表中新增一条记录，但是只有不为null的字段才会保存值
-	 *
-	 * @param record
-	 * @return
-	 */
-	int insertSelective(Region record);
 
 	/**
 	 * 根据主键ID查询一条记录
@@ -43,6 +38,13 @@ public interface RegionMapper {
 	 * @return 区域信息
 	 */
 	Region selectByPrimaryKey(Integer id);
+
+	/**
+	 * 根据区域名查询数据
+	 * @param regionName
+	 * @return
+	 */
+	List<Region> selectByRegionName(String regionName);
 
 	/**
 	 * 更新传入对象中某区域信息记录

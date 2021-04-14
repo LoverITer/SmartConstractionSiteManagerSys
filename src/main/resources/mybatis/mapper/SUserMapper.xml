@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.xust.iot.mapper.SUserMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.xust.iot.entity.po.SUser">
+  <resultMap id="BaseResultMap" type="cn.edu.xust.iot.model.entity.SUser">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="face_lib_id" jdbcType="BIGINT" property="faceLibId" />
     <result column="gender" jdbcType="CHAR" property="gender" />
@@ -31,7 +31,7 @@
     delete from s_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.xust.iot.entity.po.SUser">
+  <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.SUser">
     insert into s_user (id, face_lib_id, gender, 
       name, age, birth, 
       address, certificate_type, certificate_no, 
@@ -43,12 +43,9 @@
       #{job,jdbcType=VARCHAR}, #{isManager,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{memo,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.xust.iot.entity.po.SUser">
+  <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.SUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
     insert into s_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="faceLibId != null">
         face_lib_id,
       </if>
@@ -87,9 +84,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="faceLibId != null">
         #{faceLibId,jdbcType=BIGINT},
       </if>
@@ -128,7 +122,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.entity.po.SUser">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.model.entity.SUser">
     update s_user
     <set>
       <if test="faceLibId != null">
@@ -170,7 +164,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.entity.po.SUser">
+  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.model.entity.SUser">
     update s_user
     set face_lib_id = #{faceLibId,jdbcType=BIGINT},
       gender = #{gender,jdbcType=CHAR},

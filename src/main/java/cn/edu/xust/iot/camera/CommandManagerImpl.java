@@ -4,6 +4,7 @@ import cn.edu.xust.iot.camera.builder.CommandAssembly;
 import cn.edu.xust.iot.camera.builder.CommandAssemblyImpl;
 import cn.edu.xust.iot.camera.builder.CommandBuilder;
 import cn.edu.xust.iot.camera.conf.FFmpegConfig;
+import cn.edu.xust.iot.camera.data.CameraWorkerCache;
 import cn.edu.xust.iot.camera.data.CommandTask;
 import cn.edu.xust.iot.camera.data.TaskDao;
 import cn.edu.xust.iot.camera.data.TaskDaoImpl;

@@ -1,6 +1,6 @@
 package cn.edu.xust.iot.camera.builder;
 
-import cn.edu.xust.iot.camera.pojo.CameraInfo;
+import cn.edu.xust.iot.model.CameraInfoModel;
 
 /**
  * RSTP流工厂，根据使用的摄像机类型自动生成对应的RSTP流格式
@@ -13,6 +13,6 @@ public interface RTSPStreamBuilder {
      * 构建RSTP流格式
      * @return
      */
-    String builder(CameraInfo cameraInfo);
+    String builder(CameraInfoModel cameraInfoModel);
 
 }

@@ -1,7 +1,7 @@
 package cn.edu.xust.iot.camera.builder.impl;
 
 import cn.edu.xust.iot.camera.builder.RTSPStreamBuilder;
-import cn.edu.xust.iot.camera.pojo.CameraInfo;
+import cn.edu.xust.iot.model.CameraInfoModel;
 
 /**
  * 生成华为摄像机RSTP流URL的工厂类
@@ -15,7 +15,7 @@ public class HuaWeiRTSPStreamBuilder implements RTSPStreamBuilder {
      * @return
      */
     @Override
-    public String builder(CameraInfo camera) {
+    public String builder(CameraInfoModel camera) {
         if(camera==null){
             throw new RuntimeException("相机配置不可为空");
         }

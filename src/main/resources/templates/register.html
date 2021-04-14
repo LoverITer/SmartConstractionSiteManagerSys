@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员注册-智慧工地后台管理系统 - v1.0</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="../static/css/font.css" th:src="@{/static/css/font.css}">
+    <link rel="stylesheet" href="../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
+    <script src="../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+
+</head>
+<body class="login-bg">
+
+<div class="login">
+    <div class="message">WeAdmin 1.0-管理员注册</div>
+    <div id="darkbannerwrap"></div>
+
+    <form method="post" class="layui-form">
+        <input name="username" placeholder="用户名" type="text" lay-verify="required" class="layui-input">
+        <hr class="hr15">
+        <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input">
+        <hr class="hr15">
+        <input class="loginin" value="注册" lay-submit lay-filter="register" style="width:100%;" type="submit">
+        <hr class="hr20">
+        <div>
+            智慧工地管理系统，请输入用户密码注册。<a style="color: #1E9FFF" th:href="@{/login.html}">返回登陆</a>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    layui.extend({
+        admin: '{/}./static/js/admin'
+    });
+    layui.use(['form','layer','jquery'], function () {
+        var form = layui.form;
+        var layer = layui.layer;
+        var $$ = layui.jquery;
+        //监听提交
+        form.on('submit(register)', function (data) {
+            $$.ajax({
+                url: "/user/register",
+                method: "post",
+                contentType: "application/json",
+                sync: false,
+                data: JSON.stringify(data.field),
+                success: function (response) {
+                    if (response.code == 200) {
+                        layer.msg('注册成功',function () {
+                            window.location.href = '/login.html';
+                        });
+                    }else{
+                        layer.msg(response.msg);
+                    }
+                },
+                error: function (response) {
+                    layer.open({
+                        type: 1,
+                        title: '出错啦！',
+                        content: response.msg,
+                    });
+                }
+            });
+            return false;
+        });
+    });
+</script>
+<!-- 底部结束 -->
+</body>
+</html>

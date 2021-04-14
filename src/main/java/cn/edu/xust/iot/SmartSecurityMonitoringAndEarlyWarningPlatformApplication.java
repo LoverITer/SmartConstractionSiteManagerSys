@@ -1,7 +1,7 @@
 package cn.edu.xust.iot;
 
-import cn.edu.xust.iot.camera.CameraWorkerCache;
 import cn.edu.xust.iot.camera.CommandManagerImpl;
+import cn.edu.xust.iot.camera.data.CameraWorkerCache;
 import cn.edu.xust.iot.camera.handler.CameraThread;
 import cn.edu.xust.iot.camera.push.CameraPusher;
 import cn.edu.xust.iot.camera.timer.CameraTimer;
@@ -11,7 +11,6 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.annotation.PreDestroy;
 import java.util.Date;
@@ -19,7 +18,6 @@ import java.util.Set;
 
 @Slf4j
 @MapperScan("cn.edu.xust.iot.mapper")
-@EnableWebMvc
 @SpringBootApplication
 public class SmartSecurityMonitoringAndEarlyWarningPlatformApplication {
 

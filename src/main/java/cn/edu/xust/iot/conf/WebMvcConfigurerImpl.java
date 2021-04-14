@@ -1,10 +1,9 @@
 package cn.edu.xust.iot.conf;
 
+import cn.edu.xust.iot.interceptor.LoginInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 
 /**
@@ -16,9 +15,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 
+
+	@Autowired
+	private LoginInterceptor loginInterceptor;
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-    
+		InterceptorRegistration registration = registry.addInterceptor(loginInterceptor);
+		//只对包含/admin路径的请求拦截
+		registration.addPathPatterns("/admin/**");
+		registration.excludePathPatterns("/admin/member/list.html");
+		registration.excludePathPatterns("/admin/device/list.html");
+		registration.excludePathPatterns("/admin/administrator/list.html");
+
 	}
 
 	@Override
@@ -34,13 +43,18 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addRedirectViewController("/api", "/swagger-ui.html");
 		registry.addRedirectViewController("/docs", "/doc.html");
-		// 登录
-		/*
-		 * registry.addViewController("/login.html").setViewName("login");
-		 * registry.addViewController("/getitem.html").setViewName("getitem");
-		 * registry.addViewController("/getotp.html").setViewName("getotp");
-		 * registry.addViewController("/register.html").setViewName("register");
-		 */
+		registry.addViewController("/login.html").setViewName("login");
+		registry.addViewController("/register.html").setViewName("register");
+		registry.addViewController("/welcome.html").setViewName("welcome");
+		registry.addViewController("/admin/member/list.html").setViewName("/member/list");
+		registry.addViewController("/admin/member/add.html").setViewName("/member/add");
+		registry.addViewController("/admin/member/edit.html").setViewName("/member/edit");
+		registry.addViewController("/admin/member/del.html").setViewName("/member/del");
+		registry.addViewController("/admin/device/list.html").setViewName("/device/list");
+		registry.addViewController("/admin/device/category.html").setViewName("/device/category");
+		registry.addViewController("/admin/device/category-add.html").setViewName("/device/category-add");
+		registry.addViewController("/admin/device/category-edit.html").setViewName("/device/category-edit");
+		registry.addViewController("/admin/administrator/list.html").setViewName("/administrator/list");
 	}
 
 }

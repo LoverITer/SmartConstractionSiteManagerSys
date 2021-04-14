@@ -4,7 +4,7 @@ import cn.edu.xust.iot.camera.CommandManager;
 import cn.edu.xust.iot.camera.CommandManagerImpl;
 import cn.edu.xust.iot.camera.builder.CommandBuilderFactory;
 import cn.edu.xust.iot.camera.conf.CameraRTSPToHttpFlvConfig;
-import cn.edu.xust.iot.camera.pojo.CameraInfo;
+import cn.edu.xust.iot.model.CameraInfoModel;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FFmpegFrameRecorder;
@@ -30,7 +30,7 @@ public class CameraPusher {
     /**
      * 设备信息
      */
-    private CameraInfo cameraInfo;
+    private CameraInfoModel cameraInfoModel;
     /**
      * 解码器
      */
@@ -41,8 +41,8 @@ public class CameraPusher {
     private FFmpegFrameGrabber grabber;
 
 
-    public CameraPusher(CameraInfo cameraInfo) {
-        this.cameraInfo = cameraInfo;
+    public CameraPusher(CameraInfoModel cameraInfoModel) {
+        this.cameraInfoModel = cameraInfoModel;
     }
 
 
@@ -58,11 +58,11 @@ public class CameraPusher {
     public void publish() {
         manager = new CommandManagerImpl(10);
         //视频流源地址
-        String input = cameraInfo.getRtsp();
+        String input = cameraInfoModel.getRtsp();
         //视频流推动目的地址
-        String output = cameraInfo.getRtmp();
+        String output = cameraInfoModel.getRtmp();
         //设备随机生成的token作为应用名
-        String token = cameraInfo.getToken();
+        String token = cameraInfoModel.getToken();
         /*
          *优化到2s的推流命令:
 ffmpeg  -re -thread_queue_size 1024 -i rtsp://admin:HuaWei123@192.168.0.120/LiveMedia/ch1/Media1/trackID=1
@@ -97,7 +97,7 @@ ffmpeg  -re -thread_queue_size 1024 -i rtsp://admin:HuaWei123@192.168.0.120/Live
      * 结束推送
      */
     public void stopPublish() {
-        manager.stop(cameraInfo.getToken());//停止
+        manager.stop(cameraInfoModel.getToken());//停止
         //用于销毁保活线程等
         manager.destroy();
     }

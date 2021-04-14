@@ -1,6 +1,6 @@
 package cn.edu.xust.iot.mapper;
 
-import cn.edu.xust.iot.entity.po.RegionCamera;
+import cn.edu.xust.iot.model.entity.RegionCamera;
 import org.springframework.stereotype.Repository;
 
 
