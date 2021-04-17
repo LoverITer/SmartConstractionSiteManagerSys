@@ -11,13 +11,19 @@
     <link rel="stylesheet" href="../../static/css/font.css" th:src="@{/static/css/font.css}">
     <link rel="stylesheet" href="../../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
     <script src="../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
-    <script src="../../static/js/common.js" th:src="@{/static/js/common.js}"></script>
-    <script src="../../static/js/eleDel.js" th:src="@{/static/js/eleDel.js}" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/js/common.js" charset="utf-8" th:src="@{/static/js/common.js}"></script>
+    <script src="../../static/js/eleDel.js" charset="utf-8" th:src="@{/static/js/eleDel.js}"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+        th,td{
+           text-align: center !important;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,7 +32,8 @@
 				<a href="javascript:void(0);">首页</a> <a href="javascript:;">人员管理</a>
 				<a href="javascript:void(0);"> <cite>人员列表</cite></a>
 			</span>
-    <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+    <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon layui-icon-refresh"></i>
     </a>
 </div>
@@ -36,13 +43,13 @@
         <form class="layui-form layui-col-md12 we-search">
             人员搜索：
             <div class="layui-inline">
-                <input class="layui-input" placeholder="开始日" name="start" id="start"/>
+                <input class="layui-input" placeholder="加入开始日" name="start" id="start"/>
             </div>
             <div class="layui-inline">
-                <input class="layui-input" placeholder="截止日" name="end" id="end"/>
+                <input class="layui-input" placeholder="加入截止日" name="end" id="end"/>
             </div>
             <div class="layui-inline">
-                <input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input"/>
+                <input type="text" name="username" placeholder="请输入姓名进行查询" autocomplete="off" class="layui-input"/>
             </div>
             <button class="layui-btn" lay-submit="" lay-filter="sreach">
                 <i class="layui-icon layui-icon-search"></i>
@@ -53,12 +60,12 @@
         <button class="layui-btn layui-btn-danger" onclick="delAll()">
             <i class="layui-icon layui-icon-delete"></i>批量删除
         </button>
-        <button class="layui-btn" onclick="WeAdminShow('添加用户','./add.html',600,400)">
+        <button class="layui-btn" onclick="WeAdminShow('添加用户','./add.html',800,520)">
             <i class="layui-icon layui-icon-add-circle-fine"></i>添加
         </button>
-        <span class="fr" style="line-height:40px">共有数据：88 条</span>
+        <span class="fr" style="line-height:40px">共有数据：<span id="data-cols"></span> 条</span>
     </div>
-    <table class="layui-table" id="memberList">
+    <table class="layui-table" lay-filter="memberList" id="memberList">
         <thead>
         <tr>
             <th>
@@ -66,89 +73,193 @@
                     <i class="layui-icon">&#xe605;</i>
                 </div>
             </th>
-            <th>ID</th>
-            <th>用户名</th>
+            <th>编号</th>
+            <th>姓名</th>
             <th>性别</th>
+            <th>出生日期</th>
             <th>手机</th>
-            <th>邮箱</th>
             <th>地址</th>
             <th>加入时间</th>
-            <th>状态</th>
+            <th>证件号</th>
+            <th>是否管理层</th>
+            <th>职位/工种</th>
+            <th>人脸头像</th>
+            <th>备注信息</th>
             <th>操作</th>
         </tr>
         </thead>
-        <tbody>
-        <tr data-id="1">
-            <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="1">
-                    <i class="layui-icon">&#xe605;</i>
-                </div>
-            </td>
-            <td>1</td>
-            <td>小张</td>
-            <td>男</td>
-            <td>17600000000</td>
-            <td>admin@mail.com</td>
-            <td>北京市 海淀区</td>
-            <td>2017-01-01 11:11:42</td>
-            <td class="td-status">
-                <span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span>
-            </td>
-            <td class="td-manage">
-                <a onclick="member_stop(this,'10001')" href="javascript:;" title="启用">
-                    <i class="layui-icon layui-icon-download-circle"></i>
-                </a>
-                <a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 1, 600, 400)" href="javascript:;">
-                    <i class="layui-icon layui-icon-edit"></i>
-                </a>
-                <a onclick="WeAdminShow('修改密码','./password.html',600,400)" title="修改密码" href="javascript:;">
-                    <i class="layui-icon layui-icon-util"></i>
-                </a>
-                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                    <i class="layui-icon layui-icon-delete"></i>
-                </a>
-            </td>
-        </tr>
-        <tr data-id="2">
-            <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="2">
-                    <i class="layui-icon">&#xe605;</i>
-                </div>
-            </td>
-            <td>2</td>
-            <td>小明</td>
-            <td>女</td>
-            <td>13000000000</td>
-            <td>admin@mail.com</td>
-            <td>北京市 海淀区</td>
-            <td>2017-01-01 11:11:42</td>
-            <td class="td-status">
-                <span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span>
-            </td>
-            <td class="td-manage">
-                <a onclick="member_stop(this,'10001')" href="javascript:;" title="启用">
-                    <i class="layui-icon layui-icon-download-circle"></i>
-                </a>
-                <a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 2, 600, 400)" href="javascript:;">
-                    <i class="layui-icon layui-icon-edit"></i>
-                </a>
-                <a onclick="WeAdminShow('修改密码','./password.html',600,400)" title="修改密码" href="javascript:;">
-                    <i class="layui-icon layui-icon-util"></i>
-                </a>
-                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                    <i class="layui-icon layui-icon-delete"></i>
-                </a>
-            </td>
-        </tr>
+        <tbody id="table-data">
         </tbody>
     </table>
-    <div class="page">
-        <div>
-            <a class="prev" href="">&lt;&lt;</a> <a class="num" href="">1</a>
-            <span class="current">2</span> <a class="num" href="">3</a>
-            <a class="num" href="">489</a> <a class="next" href="">&gt;&gt;</a>
-        </div>
+    <!--分页-->
+    <div id="page">
     </div>
 </div>
 </body>
+<script type="text/javascript">
+
+
+    //将数据填充到表格中
+    function appendData2Table(data) {
+        //清空初始化表格
+        $('#table-data').empty();
+        $.each(data, function () {
+            var userId = this.userId;
+            var username = this.name;
+            var address = this.address;
+            var userAvatarUrl = this.userAvatarUrl;
+            var phone = this.phone;
+            var memo = this.memo;
+            var manager = this.isManager?"是":"否";
+            var job = this.job;
+            var createTime = this.createTime;
+            var certificateNo = this.certificateNo;
+            var birth = this.birth;
+            var sex = this.gender;
+
+            $('#table-data').append("<tr data-id="+userId+">\n" +
+                "            <td>\n" +
+                "                <div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\" data-id="+userId+">\n" +
+                "                    <i class=\"layui-icon\">&#xe605;</i>\n" +
+                "                </div>\n" +
+                "            </td>\n" +
+                "            <td>" + userId + "</td>\n" +
+                "            <td>" + username + "</td>\n" +
+                "            <td>" + sex + "</td>\n" +
+                "            <td>" + birth + "</td>\n" +
+                "            <td>" + phone + "</td>\n" +
+                "            <td>" + address + "</td>\n" +
+                "            <td>" + createTime + "</td>\n" +
+                "            <td>" + certificateNo + "</td>\n" +
+                "            <td>" + manager + "</td>\n" +
+                "            <td>" + job + "</td>\n" +
+                "            <td><img style='max-width: 60px;min-height: 60px;' src='"+userAvatarUrl+"'/></td>\n" +
+                "            <td class=\"td-status\">"+ memo +"</td>\n" +
+                "            <td class=\"td-manage\">\n" +
+                "                <a title=\"编辑\" onclick=\"WeAdminEdit('编辑','./edit.html', "+userId+", 800, 520)\" href=\"javascript:;\">\n" +
+                "                    <i class=\"layui-icon layui-icon-edit\"></i>\n" +
+                "                </a>\n" +
+                "                <a title=\"删除\" onclick=\"member_del(this,"+userId+")\" href=\"javascript:;\">\n" +
+                "                    <i class=\"layui-icon layui-icon-delete\"></i>\n" +
+                "                </a>\n" +
+                "            </td>\n" +
+                "        </tr>")
+
+        });
+    }
+
+    //加载表格数据
+    function loadTable(pageNo,pageSize){
+        if(undefined===pageNo){
+            pageNo=1;
+        }
+        if(undefined===pageSize){
+            pageSize=5;
+        }
+        $.ajax({
+            //请求获得所有的工人数据
+            url: "/admin/members/list?page="+pageNo+"&pageSize="+pageSize+"&token=" + localStorage.getItem(USER_LOGIN_TOKEN),
+            method: "get",
+            contentType: "application/json",
+            sync: false,
+            success: function (response) {
+                if (response.code == 200) {
+                    console.log(response.data);
+                    var pageInfo=response.data;
+                    var dataArr=pageInfo.list;
+                    appendData2Table(dataArr);
+                } else {
+                    layer.msg(response.msg, {icon: 2});
+                }
+            },
+            error: function (response) {
+                layer.msg(response.msg, {icon: 2});
+            }
+        });
+    }
+
+
+    layui.use(['form', 'layer', 'jquery','admin','laypage'], function () {
+        var form = layui.form,
+            admin= layui.admin,
+            layer = layui.layer,
+             table=layui.table;
+
+        var laypage = layui.laypage;
+
+        var total=0;
+
+        //页面加载成功之后随即向后端服务器发送ajax请求，请求人员数据
+        $(function () {
+            total=getMembersNum();
+        });
+
+        function getMembersNum(){
+            let count=0;
+            $.ajax({
+                //请求获得所有的工人数据
+                url: "/admin/members/count?token=" + localStorage.getItem(USER_LOGIN_TOKEN),
+                method: "get",
+                contentType: "application/json",
+                async: false,
+                success: function (response) {
+                    if (response.code == 200) {
+                        count=response.data;
+                        $('#data-cols').text(count);
+                    } else {
+                        layer.msg(response.msg, {icon: 2});
+                    }
+                },
+                error: function (response) {
+                    layer.msg(response.msg, {icon: 2});
+                }
+            });
+            return count;
+        }
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'page', //注意，这里的 test1 是 ID，不用加 # 号
+            count: total, //数据总数，从服务端得到
+            limit: 5, //每一页显示的数据量
+            limits:[5,10,15,20,50,100,'全部'],
+            layout: ['prev', 'page', 'next', 'limit',  'skip'],
+            groups:5,  //在屏幕上显示的页面个数
+            jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
+                if(obj.limit==='全部'){
+                    obj.limit=-1; //后端会把他理解为全部查询
+                }
+                loadTable(obj.curr,obj.limit);
+            }
+        });
+
+        //监听提交
+        form.on('submit(login)', function (data) {
+            $.ajax({
+                url: "/user/login",
+                method: "post",
+                contentType: "application/json",
+                sync: false,
+                data: JSON.stringify(data.field),
+                success: function (response) {
+                    if (response.code == 202) {
+                        layer.msg("退出成功！", {icon: 2});
+                        localStorage.setItem(USER_LOGIN_TOKEN, response.data);
+                        window.location.href = '/admin/index?token=' + localStorage.getItem(USER_LOGIN_TOKEN);
+                    } else {
+                        layer.msg(response.msg, {icon: 2});
+                    }
+                },
+                error: function (response) {
+                    layer.msg(response.msg, {icon: 2});
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
 </html>

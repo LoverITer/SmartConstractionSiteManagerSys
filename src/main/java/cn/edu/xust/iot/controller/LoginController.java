@@ -5,7 +5,7 @@ import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.model.AdminUserModel;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.entity.AdminUser;
-import cn.edu.xust.iot.service.IAdminService;
+import cn.edu.xust.iot.service.IAdminUserService;
 import cn.edu.xust.iot.service.impl.RedisService;
 import cn.edu.xust.iot.utils.CommonUtils;
 import com.alibaba.fastjson.JSON;
@@ -35,7 +35,7 @@ public class LoginController {
      */
     private static final long MAX_USER_LOGIN_STATUS_KEEP_TIME = 3600;
     @Autowired
-    private IAdminService adminService;
+    private IAdminUserService adminService;
 
     @Autowired
     private RedisService redisService;

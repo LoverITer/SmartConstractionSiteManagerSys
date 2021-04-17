@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>设备列表-智慧工地后台管理系统 - v1.0</title>
     <meta name="Description" content="基于layUI数据表格操作"/>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<link rel="stylesheet" href="../../static/css/font.css" th:src="@{/static/css/font.css}">
-	<link rel="stylesheet" href="../../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
-	<script src="../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
-	<script src="../../static/js/common.js" th:src="@{/static/js/common.js}"></script>
-	<script src="list.js" th:src="@{/static/templates/device/list.js}" type="text/javascript" charset="utf-8"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../static/css/font.css" th:src="@{/static/css/font.css}">
+    <link rel="stylesheet" href="../../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
+    <script src="../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script src="../../static/js/common.js" th:src="@{/static/js/common.js}"></script>
+    <script src="list.js" th:src="@{/static/templates/device/list.js}" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/js/eleDel.js" th:src="@{/static/js/eleDel.js}" type="text/javascript"
+            charset="utf-8"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -39,7 +42,7 @@
         <a href="">首页</a>
         <a href="">设备管理</a>
         <a>
-          <cite>设备列表</cite></a>
+          <cite>监控摄像机管理</cite></a>
       </span>
     <a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right"
        href="javascript:location.replace(location.href);" title="刷新">
@@ -51,10 +54,17 @@
             设备搜索：
             <div class="layui-input-inline">
                 <select name="cateid">
-                    <option>请选择设备区域</option>
-                    <option>文章</option>
-                    <option>会员</option>
-                    <option>权限</option>
+                    <option value="0">请选择设备区域</option>
+                    <option value="1">区域1</option>
+                    <option value="2">区域2</option>
+                    <option value="3">区域3</option>
+                    <option value="4">区域4</option>
+                    <option value="5">区域5</option>
+                    <option value="6">区域6</option>
+                    <option value="7">区域7</option>
+                    <option value="8">区域8</option>
+                    <option value="9">区域9</option>
+                    <option value="10">区域10</option>
                 </select>
             </div>
             <div class="layui-inline">
@@ -64,7 +74,7 @@
                 <input class="layui-input" placeholder="截止日" name="end" id="end">
             </div>
             <div class="layui-inline">
-                <input type="text" name="keyword" placeholder="请输入关键字" autocomplete="off" class="layui-input">
+                <input type="text" name="keyword" placeholder="请输入区域查询摄像机" autocomplete="off" class="layui-input">
             </div>
             <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -72,41 +82,213 @@
     <div class="weadmin-block demoTable">
         <button class="layui-btn layui-btn-danger" data-type="getCheckData"><i class="layui-icon">&#xe640;</i>批量删除
         </button>
-        <button class="layui-btn" data-type="Recommend"><i class="layui-icon">&#xe6c6;</i>推荐</button>
-        <button class="layui-btn" data-type="Top"><i class="layui-icon">&#xe619;</i>置顶</button>
-        <button class="layui-btn" data-type="Review"><i class="layui-icon">&#xe6b2;</i>审核</button>
-        <button class="layui-btn" onclick="WeAdminShow('添加用户','./add.html',600,400)"><i class="layui-icon">&#xe61f;</i>添加
+        <button class="layui-btn" onclick="WeAdminShow('添加监控摄像头','./add.html',800,500)"><i class="layui-icon">&#xe61f;</i>添加
         </button>
-        <span class="fr" style="line-height:40px">共有数据：88 条</span>
+        <span class="fr" style="line-height:40px">共有数据：<span id="camera-total"></span> 条</span>
     </div>
-    <table class="layui-hide" id="articleList"></table>
+    <table class="layui-table" id="camerasList" lay-filter="camerasList">
+
+        <thead>
+        <tr>
+            <th>
+                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary">
+                    <i class="layui-icon">&#xe605;</i>
+                </div>
+            </th>
+            <th>编号</th>
+            <th>设备名称</th>
+            <th>设备状态</th>
+            <th>设备所属区域</th>
+            <th>识别算法</th>
+            <th>IP地址</th>
+            <th>MAC地址</th>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>型号</th>
+            <th>SDC版本</th>
+            <th>备注信息</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="table-data">
+        </tbody>
+
+    </table>
 
 
-    <script type="text/html" id="recommendTpl">
-        <input type="checkbox" name="zzz" lay-skin="switch" lay-text="已推荐|未推荐" {{d.recommend}}>
-    </script>
-    <script type="text/html" id="topTpl">
-        <input type="checkbox" name="show" lay-skin="switch" lay-text="已置顶|未置顶" {{d.top}}>
-    </script>
-    <script type="text/html" id="reviewTpl">
-        <!-- 这里的 checked 的状态只是演示 -->
-        <input type="checkbox" name="lock" value="{{d.id}}" title="锁定" lay-filter="lockDemo" {{ d.id== 1
-               ? 'checked' : '' }}>
-    </script>
-
-    <script type="text/html" id="operateTpl">
-        <a title="编辑" onclick="WeAdminEdit('编辑','./edit.html', 2, 600, 400)" href="javascript:;">
-            <i class="layui-icon">&#xe642;</i>
-        </a>
-        <a title="查看" onclick="WeAdminShow('查看文章','./show.html',600,400)" href="javascript:;">
-            <i class="layui-icon">&#xe63c;</i>
-        </a>
-        <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-            <i class="layui-icon">&#xe640;</i>
-        </a>
-    </script>
+    <!--分页-->
+    <div id="page">
+    </div>
 
 </div>
 </body>
+<script type="text/javascript">
+
+    //将数据填充到表格中
+    function appendData2Table(data) {
+        //清空初始化表格
+        $('#table-data').empty();
+        $.each(data, function () {
+            var userId = this.userId;
+            var username = this.name;
+            var address = this.address;
+            var userAvatarUrl = this.userAvatarUrl;
+            var phone = this.phone;
+            var memo = this.memo;
+            var manager = this.isManager?"是":"否";
+            var job = this.job;
+            var createTime = this.createTime;
+            var certificateNo = this.certificateNo;
+            var birth = this.birth;
+            var sex = this.gender;
+
+            $('#table-data').append("<tr data-id="+userId+">\n" +
+                "            <td>\n" +
+                "                <div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\" data-id="+userId+">\n" +
+                "                    <i class=\"layui-icon\">&#xe605;</i>\n" +
+                "                </div>\n" +
+                "            </td>\n" +
+                "            <td>" + userId + "</td>\n" +
+                "            <td>" + username + "</td>\n" +
+                "            <td>" + sex + "</td>\n" +
+                "            <td>" + birth + "</td>\n" +
+                "            <td>" + phone + "</td>\n" +
+                "            <td>" + address + "</td>\n" +
+                "            <td>" + createTime + "</td>\n" +
+                "            <td>" + certificateNo + "</td>\n" +
+                "            <td>" + manager + "</td>\n" +
+                "            <td>" + job + "</td>\n" +
+                "            <td><img style='max-width: 60px;min-height: 60px;' src='"+userAvatarUrl+"'/></td>\n" +
+                "            <td class=\"td-status\">"+ memo +"</td>\n" +
+                "            <td class=\"td-manage\">\n" +
+                "                <a title=\"编辑\" onclick=\"WeAdminEdit('编辑','./edit.html', "+userId+", 800, 520)\" href=\"javascript:;\">\n" +
+                "                    <i class=\"layui-icon layui-icon-edit\"></i>\n" +
+                "                </a>\n" +
+                "                <a title=\"删除\" onclick=\"member_del(this,"+userId+")\" href=\"javascript:;\">\n" +
+                "                    <i class=\"layui-icon layui-icon-delete\"></i>\n" +
+                "                </a>\n" +
+                "            </td>\n" +
+                "        </tr>")
+
+        });
+    }
+
+    //加载表格数据
+    function loadTable(pageNo,pageSize){
+        if(undefined===pageNo){
+            pageNo=1;
+        }
+        if(undefined===pageSize){
+            pageSize=5;
+        }
+        $.ajax({
+            //请求获得所有的工人数据
+            url: "/admin/members/list?page="+pageNo+"&pageSize="+pageSize+"&token=" + localStorage.getItem(USER_LOGIN_TOKEN),
+            method: "get",
+            contentType: "application/json",
+            sync: false,
+            success: function (response) {
+                if (response.code == 200) {
+                    console.log(response.data);
+                    var pageInfo=response.data;
+                    var dataArr=pageInfo.list;
+                    appendData2Table(dataArr);
+                } else {
+                    layer.msg(response.msg, {icon: 2});
+                }
+            },
+            error: function (response) {
+                layer.msg(response.msg, {icon: 2});
+            }
+        });
+    }
+
+
+    layui.use(['form', 'layer', 'jquery','admin','laypage'], function () {
+        var form = layui.form,
+            admin= layui.admin,
+            layer = layui.layer,
+            table=layui.table;
+
+        var laypage = layui.laypage;
+
+        var total=0;
+
+        //页面加载成功之后随即向后端服务器发送ajax请求，请求人员数据
+        $(function () {
+            total=getMembersNum();
+        });
+
+        function getMembersNum(){
+            let count=0;
+            $.ajax({
+                //请求获得所有的工人数据
+                url: "/admin/members/count?token=" + localStorage.getItem(USER_LOGIN_TOKEN),
+                method: "get",
+                contentType: "application/json",
+                async: false,
+                success: function (response) {
+                    if (response.code == 200) {
+                        count=response.data;
+                        $('#data-cols').text(count);
+                    } else {
+                        layer.msg(response.msg, {icon: 2});
+                    }
+                },
+                error: function (response) {
+                    layer.msg(response.msg, {icon: 2});
+                }
+            });
+            return count;
+        }
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'page', //注意，这里的 test1 是 ID，不用加 # 号
+            count: total, //数据总数，从服务端得到
+            limit: 5, //每一页显示的数据量
+            limits:[5,10,15,20,50,100,'全部'],
+            layout: ['prev', 'page', 'next', 'limit',  'skip'],
+            groups:5,  //在屏幕上显示的页面个数
+            jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
+                if(obj.limit==='全部'){
+                    obj.limit=-1; //后端会把他理解为全部查询
+                }
+                loadTable(obj.curr,obj.limit);
+            }
+        });
+
+        //监听提交
+        form.on('submit(login)', function (data) {
+            $.ajax({
+                url: "/user/login",
+                method: "post",
+                contentType: "application/json",
+                sync: false,
+                data: JSON.stringify(data.field),
+                success: function (response) {
+                    if (response.code == 202) {
+                        layer.msg("退出成功！", {icon: 2});
+                        localStorage.setItem(USER_LOGIN_TOKEN, response.data);
+                        window.location.href = '/admin/index?token=' + localStorage.getItem(USER_LOGIN_TOKEN);
+                    } else {
+                        layer.msg(response.msg, {icon: 2});
+                    }
+                },
+                error: function (response) {
+                    layer.msg(response.msg, {icon: 2});
+                }
+            });
+            return false;
+        });
+
+    });
+
+
+
+</script>
 
 </html>

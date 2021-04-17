@@ -10,14 +10,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.PreDestroy;
 import java.util.Date;
 import java.util.Set;
 
 @Slf4j
+@EnableTransactionManagement
 @MapperScan("cn.edu.xust.iot.mapper")
+@ServletComponentScan(basePackages = "cn.edu.xust.iot.conf.http")
 @SpringBootApplication
 public class SmartSecurityMonitoringAndEarlyWarningPlatformApplication {
 

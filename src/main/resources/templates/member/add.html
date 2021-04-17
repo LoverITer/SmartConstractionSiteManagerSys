@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>添加会员-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+    <title>添加人员-智慧工地后台管理系统 1.0</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="../../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
     <script src="../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
     <script src="../../static/js/common.js" th:src="@{/static/js/common.js}"></script>
+    <script src="../../static/js/eleDel.js" th:src="@{/static/js/eleDel.js}" type="text/javascript"
+            charset="utf-8"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -23,151 +25,231 @@
 <div class="weadmin-body">
     <form class="layui-form">
         <div class="layui-form-item">
-            <label for="L_username" class="layui-form-label">
-                <span class="we-red">*</span>登录名
+            <label for="username" class="layui-form-label">
+                <span class="we-red">*</span>姓名
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_username" name="username" lay-verify="required|nikename" autocomplete="off"
+                <input type="text" id="username" name="username" lay-verify="required|nikename" autocomplete="off"
                        class="layui-input">
             </div>
-            <div class="layui-form-mid layui-word-aux">
-                请设置至少5个字符，将会成为您唯一的登录名
+        </div>
+        <div class="layui-form-item">
+            <label for="sex" class="layui-form-label">性别</label>
+            <div class="layui-input-block" id="sex">
+                <input type="radio" name="sex" value="0" title="男" checked>
+                <input type="radio" name="sex" value="1" title="女">
+                <input type="radio" name="sex" value="-1" title="未知">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="L_sex" class="layui-form-label">性别</label>
-            <div class="layui-input-block" id="L_sex">
-                <input type="radio" name="sex" value="男" title="男" checked>
-                <input type="radio" name="sex" value="女" title="女">
-                <input type="radio" name="sex" value="未知" title="未知">
+            <label for="birth" class="layui-form-label">
+                <span class="we-red">*</span>出生日期
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="birth" name="birth" autocomplete="" class="layui-input">
             </div>
         </div>
-
         <div class="layui-form-item">
-            <label for="L_email" class="layui-form-label">
+            <label for="phone" class="layui-form-label">
                 <span class="we-red">*</span>手机
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_phone" name="phone" lay-verify="required|phone" autocomplete=""
+                <input type="text" id="phone" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="address" class="layui-form-label">
+                <span class="we-red">*</span>地址
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="address" name="address" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="create_time" class="layui-form-label">
+                <span class="we-red">*</span>加入时间
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="create_time" name="create_time" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="cert_no" class="layui-form-label">
+                <span class="we-red">*</span>证件号
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="cert_no" name="cert_no" lay-verify="required|identity" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="L_email" class="layui-form-label">
-                <span class="we-red">*</span>邮箱
+            <label for="is_manager" class="layui-form-label">
+                <span class="we-red">*</span>是否管理层
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_email" name="email" autocomplete="off" class="layui-input">
-            </div>
-
-        </div>
-        <div class="layui-form-item">
-            <label for="L_pass" class="layui-form-label">
-                <span class="we-red">*</span>密码
-            </label>
-            <div class="layui-input-inline">
-                <input type="password" id="L_pass" name="pass" lay-verify="required|pass" autocomplete="off"
-                       class="layui-input">
-            </div>
-            <div class="layui-form-mid layui-word-aux">
-                6到16个字符
+                <select name="is_manager" id="is_manager">
+                    <option value="0">请选择</option>
+                    <option value="1">是</option>
+                    <option value="2">否</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="L_repass" class="layui-form-label">
-                <span class="we-red">*</span>确认密码
+            <label for="job" class="layui-form-label">
+                <span class="we-red">*</span>职位/工种
             </label>
             <div class="layui-input-inline">
-                <input type="password" id="L_repass" name="repass" lay-verify="required|repass" autocomplete="off"
-                       class="layui-input">
+                <input type="text" id="job" name="job" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="L_repass" class="layui-form-label">
+            <label for="face_pic" class="layui-form-label">
+                <span class="we-red">*</span>人脸头像
             </label>
+            <div class="layui-input-inline" style="width: 500px">
+                <input type="hidden" id="face_pic" name="face_pic" autocomplete="off" class="layui-input">
+                <button type="button" class="layui-btn" id="upload_face_pic_btn">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+                <a href="" id="face_pic_show" style="color: #1E9FFF"></a>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="memo" class="layui-form-label">
+                <span class="we-red"></span>备注
+            </label>
+            <div class="layui-input-inline">
+                <textarea id="memo" name="memo" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="dataId" class="layui-form-label"></label>
             <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+            <input type="hidden" name="dataId" id="dataId" value=""/>
         </div>
     </form>
 </div>
 
 <script>
-    layui.extend({
-        admin: '{/}../../static/js/admin'
-    });
-    layui.use(['form', 'jquery', 'util', 'admin', 'layer'], function () {
+
+    layui.use(['form', 'jquery', 'admin', 'layer', 'laydate', 'layedit', 'upload'], function () {
         var form = layui.form,
             $ = layui.jquery,
-            util = layui.util,
             admin = layui.admin,
-            layer = layui.layer;
+            layer = layui.layer,
+            date = layui.laydate,
+            editor = layui.layedit,
+            uploader = layui.upload;
 
-        //自定义验证规则
-        form.verify({
-            nikename: function (value) {
-                if (value.length < 5) {
-                    return '昵称至少得5个字符啊';
-                }
-            },
-            pass: [/(.+){6,12}$/, '密码必须6到12位'],
-            repass: function (value) {
-                if ($('#L_pass').val() != $('#L_repass').val()) {
-                    return '两次密码不一致';
+        $(function () {
+            $('.layui-input-inline').css('width', '280px');
+        });
+
+        //执行实例
+        uploader.render({
+            elem: '#upload_face_pic_btn' //绑定元素
+            , url: '/upload/default' //上传接口
+            , accept: 'images'
+            , done: function (response) {
+                //上传完毕回调
+                if (response.code == 203) {
+                    layer.msg("上传成功");
+                    $('input[name="face_pic"]').val(response.data);
+                    $('#face_pic_show').text(response.data);
+                    $('#face_pic_show').attr('href', response.data);
+                } else {
+                    layer.open({
+                        title: '出错啦！',
+                        content: response.msg,
+                    });
                 }
             }
+            , error: function (response) {
+                //请求异常回调
+                layer.open({
+                    title: '出错啦！',
+                    content: response.msg,
+                });
+            }
         });
-        //失去焦点时判断值为空不验证，一旦填写必须验证
-        $('input[name="email"]').blur(function () {
-            //这里是失去焦点时的事件
-            if ($('input[name="email"]').val()) {
-                $('input[name="email"]').attr('lay-verify', 'email');
-            } else {
-                $('input[name="email"]').removeAttr('lay-verify');
+
+        date.render({
+            elem: '#birth' //指定元素
+        });
+        date.render({
+            elem: '#create_time' //指定元素
+        });
+        editor.build('memom', {
+            height: 40,
+            hideTool: [
+                'strong' //加粗
+                , 'italic' //斜体
+                , 'underline' //下划线
+                , 'del' //删除线
+
+                , '|' //分割线
+
+                , 'left' //左对齐
+                , 'center' //居中对齐
+                , 'right' //右对齐
+                , 'link' //超链接
+                , 'unlink' //清除链接
+                , 'face' //表情
+                , 'image' //插入图片
+                , 'help' //帮助
+            ]
+        });
+        //自定义验证规则
+        form.verify({
+            username: function (value) {
+                let regexp = /^[\u4e00-\u9fa5]{1,6}(·[\u4e00-\u9fa5]{1,6}){0,2}$/;
+                if (!regexp.test(value)) {
+                    return '请输入正确的姓名';
+                }
             }
         });
 
         //监听提交
         form.on('submit(add)', function (data) {
-            //console.log(data.field);
-            var f = data.field;
-            //console.log(f.username);
-            //console.log(f.sex);
-            //var sex = $('input:radio[name="sex"]:checked').val();
-
-            //发异步，把数据提交给php
-            layer.alert("增加成功", {
-                icon: 6
-            }, function () {
-                //获取提交成功的时间
-                var time = new Date();
-                var timeNow = util.toDateString(time);
-                // 获得frame索引
-                var index = parent.layer.getFrameIndex(window.name);
-
-                var _len = parent.$('#memberList tr').length;
-                alert(_len);
-                parent.$('#memberList').append(
-                    '<tr data-id="' + _len + '">' +
-                    '<td>' +
-                    '<div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="' + _len + '"><i class="layui-icon">&#xe605;</i></div>' +
-                    '</td>' +
-                    '<td>' + _len + '</td>' +
-                    '<td>' + f.username + '</td>' +
-                    '<td>' + f.sex + '</td>' +
-                    '<td>' + f.phone + '</td>' +
-                    '<td>' + f.email + '</td>' +
-                    '<td>北京市西城区</td>' +
-                    '<td>' + timeNow + '</td>' +
-                    '<td class="td-status"><span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span></td>' +
-                    '<td class="td-manage">' +
-                    '<a onclick="member_stop(this,\'10001\')" href="javascript:;" title="启用"><i class="layui-icon">&#xe601;</i></a>' +
-                    '<a title="编辑" onclick="WeAdminShow(\'编辑\',\'./edit.html\',600,400)" href="javascript:;"><i class="layui-icon">&#xe642;</i></a>' +
-                    '<a onclick="WeAdminShow(\'修改密码\',\'./password.html\',600,400)" title="修改密码" href="javascript:;"><i class="layui-icon">&#xe631;</i></a>' +
-                    '<a title="删除" onclick="member_del(this,\'要删除的id\')" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>' +
-                    '</td>' +
-                    '</tr>'
-                );
-                //关闭当前frame
-                parent.layer.close(index);
+            var formDate = data.field;
+            console.log(formDate);
+            $.ajax({
+                //请求获得所有的工人数据
+                url: "/admin/members/add",
+                method: "post",
+                contentType: "application/json",
+                sync: false,
+                data: JSON.stringify({
+                    "token": localStorage.getItem(USER_LOGIN_TOKEN),
+                    "gender": formDate.sex,
+                    "name": formDate.username,
+                    "phone": formDate.phone,
+                    "job": formDate.job,
+                    "birth": formDate.birth,
+                    "address": formDate.address,
+                    "certificateNo": formDate.cert_no,
+                    "isManager": formDate.is_manager,
+                    "createTime": formDate.create_time,
+                    "memo": formDate.memo,
+                    "userAvatarUrl":formDate.face_pic
+                }),
+                success: function (response) {
+                    if (response.code == 200) {
+                        layer.msg("添加成功",{icon:1});
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //清空表格数据区的数据
+                        //parent.$('#table-data').empty();
+                        //关闭当前frame
+                        parent.layer.close(index);
+                        parent.loadTable();
+                    } else {
+                        layer.msg(response.msg,{icon:2})
+                    }
+                },
+                error: function (response) {
+                    layer.msg(response.msg,{icon:2})
+                }
             });
             return false;
         });

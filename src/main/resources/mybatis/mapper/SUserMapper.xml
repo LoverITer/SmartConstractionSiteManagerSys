@@ -1,183 +1,212 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.xust.iot.mapper.SUserMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.xust.iot.model.entity.SUser">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="face_lib_id" jdbcType="BIGINT" property="faceLibId" />
-    <result column="gender" jdbcType="CHAR" property="gender" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="age" jdbcType="INTEGER" property="age" />
-    <result column="birth" jdbcType="TIMESTAMP" property="birth" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="certificate_type" jdbcType="CHAR" property="certificateType" />
-    <result column="certificate_no" jdbcType="VARCHAR" property="certificateNo" />
-    <result column="job" jdbcType="VARCHAR" property="job" />
-    <result column="is_manager" jdbcType="CHAR" property="isManager" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="memo" jdbcType="VARCHAR" property="memo" />
-  </resultMap>
-  
-  <sql id="Base_Column_List">
-    id, face_lib_id, gender, name, age, birth, address, certificate_type, certificate_no, 
+    <resultMap id="BaseResultMap" type="cn.edu.xust.iot.model.entity.SUser">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="face_lib_id" jdbcType="BIGINT" property="faceLibId"/>
+        <result column="gender" jdbcType="CHAR" property="gender"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="birth" jdbcType="TIMESTAMP" property="birth"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="certificate_type" jdbcType="CHAR" property="certificateType"/>
+        <result column="certificate_no" jdbcType="VARCHAR" property="certificateNo"/>
+        <result column="job" jdbcType="VARCHAR" property="job"/>
+        <result column="is_manager" jdbcType="CHAR" property="isManager"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, face_lib_id, gender, name, phone, birth, address, certificate_type, certificate_no,
     job, is_manager, create_time, memo
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from s_user
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from s_user
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.SUser">
-    insert into s_user (id, face_lib_id, gender, 
-      name, age, birth, 
-      address, certificate_type, certificate_no, 
-      job, is_manager, create_time, 
-      memo)
-    values (#{id,jdbcType=INTEGER}, #{faceLibId,jdbcType=BIGINT}, #{gender,jdbcType=CHAR}, 
-      #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{birth,jdbcType=TIMESTAMP}, 
-      #{address,jdbcType=VARCHAR}, #{certificateType,jdbcType=CHAR}, #{certificateNo,jdbcType=VARCHAR}, 
-      #{job,jdbcType=VARCHAR}, #{isManager,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{memo,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.SUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-    insert into s_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="faceLibId != null">
-        face_lib_id,
-      </if>
-      <if test="gender != null">
-        gender,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="age != null">
-        age,
-      </if>
-      <if test="birth != null">
-        birth,
-      </if>
-      <if test="address != null">
-        address,
-      </if>
-      <if test="certificateType != null">
-        certificate_type,
-      </if>
-      <if test="certificateNo != null">
-        certificate_no,
-      </if>
-      <if test="job != null">
-        job,
-      </if>
-      <if test="isManager != null">
-        is_manager,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="memo != null">
-        memo,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="faceLibId != null">
-        #{faceLibId,jdbcType=BIGINT},
-      </if>
-      <if test="gender != null">
-        #{gender,jdbcType=CHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="age != null">
-        #{age,jdbcType=INTEGER},
-      </if>
-      <if test="birth != null">
-        #{birth,jdbcType=TIMESTAMP},
-      </if>
-      <if test="address != null">
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="certificateType != null">
-        #{certificateType,jdbcType=CHAR},
-      </if>
-      <if test="certificateNo != null">
-        #{certificateNo,jdbcType=VARCHAR},
-      </if>
-      <if test="job != null">
-        #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="isManager != null">
-        #{isManager,jdbcType=CHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="memo != null">
-        #{memo,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.model.entity.SUser">
-    update s_user
-    <set>
-      <if test="faceLibId != null">
-        face_lib_id = #{faceLibId,jdbcType=BIGINT},
-      </if>
-      <if test="gender != null">
-        gender = #{gender,jdbcType=CHAR},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="age != null">
-        age = #{age,jdbcType=INTEGER},
-      </if>
-      <if test="birth != null">
-        birth = #{birth,jdbcType=TIMESTAMP},
-      </if>
-      <if test="address != null">
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="certificateType != null">
-        certificate_type = #{certificateType,jdbcType=CHAR},
-      </if>
-      <if test="certificateNo != null">
-        certificate_no = #{certificateNo,jdbcType=VARCHAR},
-      </if>
-      <if test="job != null">
-        job = #{job,jdbcType=VARCHAR},
-      </if>
-      <if test="isManager != null">
-        is_manager = #{isManager,jdbcType=CHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="memo != null">
-        memo = #{memo,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.model.entity.SUser">
-    update s_user
-    set face_lib_id = #{faceLibId,jdbcType=BIGINT},
-      gender = #{gender,jdbcType=CHAR},
-      name = #{name,jdbcType=VARCHAR},
-      age = #{age,jdbcType=INTEGER},
-      birth = #{birth,jdbcType=TIMESTAMP},
-      address = #{address,jdbcType=VARCHAR},
-      certificate_type = #{certificateType,jdbcType=CHAR},
-      certificate_no = #{certificateNo,jdbcType=VARCHAR},
-      job = #{job,jdbcType=VARCHAR},
-      is_manager = #{isManager,jdbcType=CHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      memo = #{memo,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    </sql>
+    <sql id="User_VO_List">
+        s_user.id as user_id,gender,name,phone,birth,address,certificate_no,job,is_manager,s_user.create_time,
+   s_user.memo,face_pic as user_avatar_url
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from s_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultType="cn.edu.xust.iot.model.SUserModel">
+        SELECT
+        <include refid="User_VO_List"/>
+        From s_user
+        LEFT JOIN face_lib
+        ON s_user.face_lib_id = face_lib.id
+    </select>
+
+    <select id="countMembers" resultType="java.lang.Integer">
+        select count(*) from s_user left join face_lib on s_user.face_lib_id = face_lib.id
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from s_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
+        delete from s_user
+        where id in
+        <foreach collection="idList" item="userId" open="("  separator="," close=")" >
+            #{userId}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.SUser">
+        insert into s_user (id, face_lib_id, gender,
+                            name, phone, birth,
+                            address, certificate_type, certificate_no,
+                            job, is_manager, create_time,
+                            memo)
+        values (#{id,jdbcType=INTEGER}, #{faceLibId,jdbcType=BIGINT}, #{gender,jdbcType=CHAR},
+                #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{birth,jdbcType=TIMESTAMP},
+                #{address,jdbcType=VARCHAR}, #{certificateType,jdbcType=CHAR}, #{certificateNo,jdbcType=VARCHAR},
+                #{job,jdbcType=VARCHAR}, #{isManager,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{memo,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.SUser" useGeneratedKeys="true"
+            keyColumn="id" keyProperty="id">
+        insert into s_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="faceLibId != null">
+                face_lib_id,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="birth != null">
+                birth,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="certificateType != null">
+                certificate_type,
+            </if>
+            <if test="certificateNo != null">
+                certificate_no,
+            </if>
+            <if test="job != null">
+                job,
+            </if>
+            <if test="isManager != null">
+                is_manager,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="memo != null">
+                memo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="faceLibId != null">
+                #{faceLibId,jdbcType=BIGINT},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=CHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="birth != null">
+                #{birth,jdbcType=TIMESTAMP},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="certificateType != null">
+                #{certificateType,jdbcType=CHAR},
+            </if>
+            <if test="certificateNo != null">
+                #{certificateNo,jdbcType=VARCHAR},
+            </if>
+            <if test="job != null">
+                #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="isManager != null">
+                #{isManager,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.model.entity.SUser">
+        update s_user
+        <set>
+            <if test="faceLibId != null">
+                face_lib_id = #{faceLibId,jdbcType=BIGINT},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=CHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="birth != null">
+                birth = #{birth,jdbcType=TIMESTAMP},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="certificateType != null">
+                certificate_type = #{certificateType,jdbcType=CHAR},
+            </if>
+            <if test="certificateNo != null">
+                certificate_no = #{certificateNo,jdbcType=VARCHAR},
+            </if>
+            <if test="job != null">
+                job = #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="isManager != null">
+                is_manager = #{isManager,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.model.entity.SUser">
+        update s_user
+        set face_lib_id      = #{faceLibId,jdbcType=BIGINT},
+            gender           = #{gender,jdbcType=CHAR},
+            name             = #{name,jdbcType=VARCHAR},
+            phone            = #{phone,jdbcType=VARCHAR},
+            birth            = #{birth,jdbcType=TIMESTAMP},
+            address          = #{address,jdbcType=VARCHAR},
+            certificate_type = #{certificateType,jdbcType=CHAR},
+            certificate_no   = #{certificateNo,jdbcType=VARCHAR},
+            job              = #{job,jdbcType=VARCHAR},
+            is_manager       = #{isManager,jdbcType=CHAR},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            memo             = #{memo,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

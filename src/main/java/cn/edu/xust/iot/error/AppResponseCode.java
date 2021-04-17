@@ -21,6 +21,7 @@ public enum AppResponseCode {
     SUCCESS(true, 200, "成功"),
     CAMERA_OPEN_VIDEO_STREAM_SUCCESS(true,201,"打开视频流成功"),
     USER_LOGIN_SUCCESS(true,202,"用户登陆成功"),
+    UPLOAD_SUCCESS(true,203,"上传成功"),
 
 
     /**
@@ -44,7 +45,8 @@ public enum AppResponseCode {
     CAMERA_OPEN_VIDEO_STREAM_FAIL(false,501,"打开视频流失败"),
     USER_LOGIN_REPEAT(false,502,"用户重复登录"),
     USER_LOGIN_FAIL(false,503,"用户登陆失败"),
-    USER_NOT_FOUND(false,504,"用户还未注册");
+    USER_NOT_FOUND(false,504,"用户还未注册"),
+    UPLOAD_FAIL(false,505,"上传失败");
 
     Boolean success;
     Integer code;

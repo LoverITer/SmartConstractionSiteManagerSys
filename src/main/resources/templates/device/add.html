@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>添加分类-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+    <title>添加监控摄像头-智慧工地后台管理系统 1.0</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="../../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
     <script src="../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
     <script src="../../static/js/common.js" th:src="@{/static/js/common.js}"></script>
-    <script src="list.js" th:src="@{/static/templates/device/list.js}" type="text/javascript" charset="utf-8"></script>
+    <script src="../../static/js/eleDel.js" th:src="@{/static/js/eleDel.js}" type="text/javascript"
+            charset="utf-8"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -24,51 +25,235 @@
 <div class="weadmin-body">
     <form class="layui-form">
         <div class="layui-form-item">
-            <label for="categoryWeight" class="layui-form-label">栏目权重</label>
-            <div class="layui-input-inline">
-                <input type="text" id="weight" name="weight" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="categoryName" class="layui-form-label">栏目名称</label>
-            <div class="layui-input-inline">
-                <input type="text" id="categoryName" name="categoryName" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-
-
-        <div class="layui-form-item">
             <label for="username" class="layui-form-label">
-                <span class="we-red">*</span>父级栏目
+                <span class="we-red">*</span>姓名
             </label>
             <div class="layui-input-inline">
-                <select name="contrller">
-                    <option>支付方式</option>
-                    <option>支付宝</option>
-                    <option>微信</option>
-                    <option>货到付款</option>
+                <input type="text" id="username" name="username" lay-verify="required|nikename" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="sex" class="layui-form-label">性别</label>
+            <div class="layui-input-block" id="sex">
+                <input type="radio" name="sex" value="0" title="男" checked>
+                <input type="radio" name="sex" value="1" title="女">
+                <input type="radio" name="sex" value="-1" title="未知">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="birth" class="layui-form-label">
+                <span class="we-red">*</span>出生日期
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="birth" name="birth" autocomplete="" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="phone" class="layui-form-label">
+                <span class="we-red">*</span>手机
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="phone" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="address" class="layui-form-label">
+                <span class="we-red">*</span>地址
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="address" name="address" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="create_time" class="layui-form-label">
+                <span class="we-red">*</span>加入时间
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="create_time" name="create_time" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="cert_no" class="layui-form-label">
+                <span class="we-red">*</span>证件号
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="cert_no" name="cert_no" lay-verify="required|identity" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="is_manager" class="layui-form-label">
+                <span class="we-red">*</span>是否管理层
+            </label>
+            <div class="layui-input-inline">
+                <select name="is_manager" id="is_manager">
+                    <option value="0">请选择</option>
+                    <option value="1">是</option>
+                    <option value="2">否</option>
                 </select>
             </div>
         </div>
+        <div class="layui-form-item">
+            <label for="job" class="layui-form-label">
+                <span class="we-red">*</span>职位/工种
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="job" name="job" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="face_pic" class="layui-form-label">
+                <span class="we-red">*</span>人脸头像
+            </label>
+            <div class="layui-input-inline" style="width: 500px">
+                <input type="hidden" id="face_pic" name="face_pic" autocomplete="off" class="layui-input">
+                <button type="button" class="layui-btn" id="upload_face_pic_btn">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+                <a href="" id="face_pic_show" style="color: #1E9FFF"></a>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="memo" class="layui-form-label">
+                <span class="we-red"></span>备注
+            </label>
+            <div class="layui-input-inline">
+                <textarea id="memo" name="memo" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="dataId" class="layui-form-label"></label>
+            <button class="layui-btn" lay-filter="add" lay-submit="">确定</button>
+            <input type="hidden" name="dataId" id="dataId" value=""/>
+        </div>
     </form>
 </div>
+
 <script>
-    layui.use(['form', 'layer'], function () {
+
+    layui.use(['form', 'jquery', 'admin', 'layer', 'laydate', 'layedit', 'upload'], function () {
         var form = layui.form,
-            layer = layui.layer;
+            $ = layui.jquery,
+            admin = layui.admin,
+            layer = layui.layer,
+            date = layui.laydate,
+            editor = layui.layedit,
+            uploader = layui.upload;
+
+        $(function () {
+            $('.layui-input-inline').css('width', '280px');
+        });
+
+        //执行实例
+        uploader.render({
+            elem: '#upload_face_pic_btn' //绑定元素
+            , url: '/upload/default' //上传接口
+            , accept: 'images'
+            , done: function (response) {
+                //上传完毕回调
+                if (response.code == 203) {
+                    layer.msg("上传成功");
+                    $('input[name="face_pic"]').val(response.data);
+                    $('#face_pic_show').text(response.data);
+                    $('#face_pic_show').attr('href', response.data);
+                } else {
+                    layer.open({
+                        title: '出错啦！',
+                        content: response.msg,
+                    });
+                }
+            }
+            , error: function (response) {
+                //请求异常回调
+                layer.open({
+                    title: '出错啦！',
+                    content: response.msg,
+                });
+            }
+        });
+
+        date.render({
+            elem: '#birth' //指定元素
+        });
+        date.render({
+            elem: '#create_time' //指定元素
+        });
+        editor.build('memom', {
+            height: 40,
+            hideTool: [
+                'strong' //加粗
+                , 'italic' //斜体
+                , 'underline' //下划线
+                , 'del' //删除线
+
+                , '|' //分割线
+
+                , 'left' //左对齐
+                , 'center' //居中对齐
+                , 'right' //右对齐
+                , 'link' //超链接
+                , 'unlink' //清除链接
+                , 'face' //表情
+                , 'image' //插入图片
+                , 'help' //帮助
+            ]
+        });
+        //自定义验证规则
+        form.verify({
+            username: function (value) {
+                let regexp = /^[\u4e00-\u9fa5]{1,6}(·[\u4e00-\u9fa5]{1,6}){0,2}$/;
+                if (!regexp.test(value)) {
+                    return '请输入正确的姓名';
+                }
+            }
+        });
 
         //监听提交
         form.on('submit(add)', function (data) {
-            console.log(data);
-            //发异步，把数据提交给php
-            layer.alert("增加成功", {icon: 6}, function () {
-                // 获得frame索引
-                var index = parent.layer.getFrameIndex(window.name);
-                //关闭当前frame
-                parent.layer.close(index);
+            var formDate = data.field;
+            console.log(formDate);
+            $.ajax({
+                //请求获得所有的工人数据
+                url: "/admin/members/add",
+                method: "post",
+                contentType: "application/json",
+                sync: false,
+                data: JSON.stringify({
+                    "token": localStorage.getItem(USER_LOGIN_TOKEN),
+                    "gender": formDate.sex,
+                    "name": formDate.username,
+                    "phone": formDate.phone,
+                    "job": formDate.job,
+                    "birth": formDate.birth,
+                    "address": formDate.address,
+                    "certificateNo": formDate.cert_no,
+                    "isManager": formDate.is_manager,
+                    "createTime": formDate.create_time,
+                    "memo": formDate.memo,
+                    "userAvatarUrl":formDate.face_pic
+                }),
+                success: function (response) {
+                    if (response.code == 200) {
+                        layer.msg("添加成功",{icon:1});
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //清空表格数据区的数据
+                        //parent.$('#table-data').empty();
+                        //关闭当前frame
+                        parent.layer.close(index);
+                        parent.loadTable();
+                    } else {
+                        layer.msg(response.msg,{icon:2})
+                    }
+                },
+                error: function (response) {
+                    layer.msg(response.msg,{icon:2})
+                }
             });
             return false;
         });
+
     });
 </script>
 </body>

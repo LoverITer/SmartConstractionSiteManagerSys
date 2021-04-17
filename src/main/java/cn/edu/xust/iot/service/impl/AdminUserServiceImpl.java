@@ -7,7 +7,7 @@ import cn.edu.xust.iot.model.AdminUserModel;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.entity.AdminUser;
 import cn.edu.xust.iot.model.entity.SUser;
-import cn.edu.xust.iot.service.IAdminService;
+import cn.edu.xust.iot.service.IAdminUserService;
 import cn.edu.xust.iot.utils.EncryptUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class AdminServiceImpl implements IAdminService {
+public class AdminUserServiceImpl implements IAdminUserService {
 
     @Autowired
     private AdminUserMapper adminUserMapper;
@@ -71,7 +71,7 @@ public class AdminServiceImpl implements IAdminService {
                 adminUser.setUserId(sUser.getId());
                 int res2 = adminUserMapper.insert(adminUser);
                 if (res2 > 0) {
-                    log.error("管理员注册 新增管理员用户 {} 成功",userModel.getUsername());
+                    log.debug("管理员注册 新增管理员用户 {} 成功",userModel.getUsername());
                     return CommonResponse.create(AppResponseCode.SUCCESS,"新管理员注册成功");
                 }
             }

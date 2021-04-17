@@ -25,3 +25,8 @@ qiniucloud:
   secretKey: 5No0lIzPOv2pYDX9wPkFFh_kE99lvpPia0nA0ZPH
   domain: scss.easyblog.top
   bucket-name: scs-pro
+#分页插件
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  pageSizeZero: true

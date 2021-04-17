@@ -1,6 +1,9 @@
 package cn.edu.xust.iot.interceptor;
 
+import cn.edu.xust.iot.conf.http.RequestWrapper;
 import cn.edu.xust.iot.service.impl.RedisService;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -30,8 +33,16 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("登陆拦截器 拦截到请求：{}", request.getRequestURL());
-        String token = request.getParameter("token");
+        String token ="";
+        String method = request.getMethod();
+        log.info("登陆拦截器 拦截到 {} 请求：{}",method.toUpperCase(), request.getRequestURL());
+        if("GET".equals(method.toUpperCase())){
+            token = request.getParameter("token");
+        }else{
+            RequestWrapper requestWrapper = new RequestWrapper(request);
+            JSONObject jsonObject = JSON.parseObject(requestWrapper.getBody());
+            token =(String) jsonObject.get("token");
+        }
         if (null != token) {
             Boolean exists = redisService.exists(token, RedisService.RedisDataBaseSelector.DB_0);
             String url = request.getRequestURL().toString();

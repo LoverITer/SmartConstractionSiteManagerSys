@@ -19,7 +19,7 @@
 <!-- 顶部开始 -->
 <div class="container">
     <div class="logo">
-        <a th:href="@{/admin/index(token=${token})}">WeAdmin v1.0</a>
+        <a th:href="@{/admin/index(token=${token})}">智慧工地后台管理系统</a>
     </div>
     <div class="left_open">
         <!-- <i title="展开左侧栏" class="iconfont">&#xe699;</i> -->
@@ -103,12 +103,12 @@
 <!-- 中部结束 -->
 <!-- 底部开始 -->
 <div class="footer">
-    <div class="copyright">Copyright ©2018 WeAdmin v1.0 All Rights Reserved</div>
+    <div class="copyright">Copyright ©2021 智慧工地后台管理系统 v1.0 All Rights Reserved</div>
 </div>
 <!-- 底部结束 -->
 <script type="text/javascript">
 
-    var TOKEN=localStorage.getItem(USER_LOGIN_TOKEN)
+    var TOKEN=localStorage.getItem(USER_LOGIN_TOKEN);
 
     layui.config({
         base: '../static/js/'

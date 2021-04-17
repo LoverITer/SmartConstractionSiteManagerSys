@@ -22,6 +22,10 @@ spring:
   config:
     activate:
       on-profile: dev
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: on
   thymeleaf:
     cache: off
   #热启动

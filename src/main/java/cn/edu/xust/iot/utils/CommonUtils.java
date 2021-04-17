@@ -32,6 +32,8 @@ public class CommonUtils {
 		return UUID.randomUUID().toString().trim().replaceAll(H_LINE, NULL_STRING);
 	}
 
+
+
 	/**
 	 * @Title: IpConvert
 	 * @Description:域名转ip

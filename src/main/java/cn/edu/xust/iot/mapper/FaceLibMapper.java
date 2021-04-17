@@ -19,7 +19,7 @@ public interface FaceLibMapper {
 	 * @param id
 	 * @return 受影响的行数 1 表示删除成功 ， 0 表示删除失败
 	 */
-	int deleteByPrimaryKey(Integer id);
+	int deleteByPrimaryKey(Long id);
 
 	/**
 	 * 向人脸库表中新增一条记录

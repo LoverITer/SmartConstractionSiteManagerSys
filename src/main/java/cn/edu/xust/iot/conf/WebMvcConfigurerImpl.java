@@ -24,9 +24,9 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 		InterceptorRegistration registration = registry.addInterceptor(loginInterceptor);
 		//只对包含/admin路径的请求拦截
 		registration.addPathPatterns("/admin/**");
-		registration.excludePathPatterns("/admin/member/list.html");
-		registration.excludePathPatterns("/admin/device/list.html");
-		registration.excludePathPatterns("/admin/administrator/list.html");
+		registration.excludePathPatterns("/admin/member/*");
+		registration.excludePathPatterns("/admin/device/*");
+		registration.excludePathPatterns("/admin/administrator/*");
 
 	}
 
@@ -49,7 +49,6 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 		registry.addViewController("/admin/member/list.html").setViewName("/member/list");
 		registry.addViewController("/admin/member/add.html").setViewName("/member/add");
 		registry.addViewController("/admin/member/edit.html").setViewName("/member/edit");
-		registry.addViewController("/admin/member/del.html").setViewName("/member/del");
 		registry.addViewController("/admin/device/list.html").setViewName("/device/list");
 		registry.addViewController("/admin/device/category.html").setViewName("/device/category");
 		registry.addViewController("/admin/device/category-add.html").setViewName("/device/category-add");

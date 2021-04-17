@@ -20,18 +20,15 @@
     delete from face_lib
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.FaceLib">
+  <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.FaceLib" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     insert into face_lib (id, face_pic, create_time, 
       memo)
     values (#{id,jdbcType=BIGINT}, #{facePic,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{memo,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.FaceLib">
+  <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.FaceLib" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     insert into face_lib
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="facePic != null">
         face_pic,
       </if>
@@ -43,9 +40,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="facePic != null">
         #{facePic,jdbcType=VARCHAR},
       </if>

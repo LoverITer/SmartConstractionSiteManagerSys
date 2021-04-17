@@ -289,7 +289,6 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 	});
 
 	/*
-	 * @todo 弹出层，弹窗方法
 	 * layui.use 加载layui.define 定义的模块，当外部 js 或 onclick调用 use 内部函数时，需要在 use 中定义 window 函数供外部引用
 	 * http://blog.csdn.net/xcmonline/article/details/75647144 
 	 */
@@ -324,7 +323,7 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 			title: title,
 			content: url
 		});
-	}
+	};
 	/*弹出层+传递ID参数*/
 	window.WeAdminEdit = function(title, url, id, w, h) {
 		if(title == null || title == '') {
@@ -352,10 +351,9 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 				//向iframe页的id=house的元素传值  // 参考 https://yq.aliyun.com/ziliao/133150
 				var body = layer.getChildFrame('body', index);
 				body.contents().find("#dataId").val(id);
-				console.log(id);
 			},
 			error: function(layero, index) {
-				alert("aaa");
+				alert("发生错误");
 			}
 		});
 	}

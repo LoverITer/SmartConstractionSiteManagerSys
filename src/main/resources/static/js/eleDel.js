@@ -8,13 +8,37 @@
  * | 有改用时直接复制到对应页面也不影响使用
  * +----------------------------------------------------------------------
  */
+var $="";
+
 layui.extend({
 	admin: '{/}../../static/js/admin'
 });
+//删除表格中的用户数据
+function deleteTableItem(userId){
+	$.ajax({
+		//请求获得所有的工人数据
+		url: "/admin/members/remove?token="+localStorage.getItem(USER_LOGIN_TOKEN)+"&userIds="+userId,
+		method: "get",
+		contentType: "application/json",
+		sync: false,
+		success: function (response) {
+			if (response.code == 200) {
+				layer.msg('删除成功!', {icon: 1});
+				//重新加载table
+				loadTable();
+			} else {
+				layer.msg(response.msg, {icon: 2});
+			}
+		},
+		error: function (response) {
+			layer.msg(response.msg, {icon: 2});
+		}
+	});
+}
 layui.use(['laydate', 'jquery', 'admin'], function() {
 	var laydate = layui.laydate,
-		$ = layui.jquery,
 		admin = layui.admin;
+	$ = layui.jquery;
 	//执行一个laydate实例
 	laydate.render({
 		elem: '#start' //指定元素
@@ -23,54 +47,25 @@ layui.use(['laydate', 'jquery', 'admin'], function() {
 	laydate.render({
 		elem: '#end' //指定元素
 	});
-	/*用户-停用*/
-	window.member_stop = function (obj, id) {
-		layer.confirm('确认要停用吗？', function(index) {
-			if($(obj).attr('title') == '启用') {
 
-				//发异步把用户状态进行更改
-				$(obj).attr('title', '停用')
-				$(obj).find('i').html('&#xe62f;');
 
-				$(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-				layer.msg('已停用!', {
-					icon: 5,
-					time: 1000
-				});
-
-			} else {
-				$(obj).attr('title', '启用')
-				$(obj).find('i').html('&#xe601;');
-
-				$(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-				layer.msg('已启用!', {
-					icon: 5,
-					time: 1000
-				});
-			}
+	window.member_del = function (obj, userId) {
+		console.log("删除的id:"+userId);
+		layer.confirm('确认要删除吗？', function() {
+			deleteTableItem(userId);
 		});
-	}
+	};
 
-	/*用户-删除*/
-	window.member_del = function (obj, id) {
-		layer.confirm('确认要删除吗？', function(index) {
-			//发异步删除数据
-			$(obj).parents("tr").remove();
-			layer.msg('已删除!', {
-				icon: 1,
-				time: 1000
-			});
-		});
-	}
-
-	window.delAll = function (argument) {
+	window.delAll = function () {
 		var data = tableCheck.getData();
+		console.log("批量删除:"+data);
+		if(data.length<=0){
+			layer.msg("请选中需要删除的数据",{icon:3});
+			return;
+		}
 		layer.confirm('确认要删除吗？' + data, function(index) {
 			//捉到所有被选中的，发异步进行删除
-			layer.msg('删除成功', {
-				icon: 1
-			});
-			$(".layui-form-checked").not('.header').parents('tr').remove();
+			deleteTableItem(data);
 		});
 	}
 	

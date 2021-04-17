@@ -10,7 +10,7 @@ import cn.edu.xust.iot.model.entity.AdminUser;
  * @author HuangXin
  * @since 2021/4/13 13:12
  */
-public interface IAdminService {
+public interface IAdminUserService {
 
 
     /**

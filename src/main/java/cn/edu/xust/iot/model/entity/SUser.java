@@ -34,7 +34,7 @@ public class SUser  {
 	/**
 	 * 年龄
 	 */
-	private Integer age;
+	private String phone;
 
 	/**
 	 * 出生日期
