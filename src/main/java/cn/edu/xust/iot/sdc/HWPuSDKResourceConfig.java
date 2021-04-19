@@ -11,7 +11,7 @@ import java.io.IOException;
  * @author HuangXin
  * @since 2021/3/28 20:28
  */
-public class LibraryPath {
+public class HWPuSDKResourceConfig {
 
     /**
      * 在项目中已经将libs目录设置为本地类库了
@@ -35,10 +35,14 @@ public class LibraryPath {
     public enum CertificateType {
         CERT_CA_CERT(0), CERT_CERT(1), CERT_KEY(2);
 
-        private int typeId;
+        private final int typeId;
 
         CertificateType(final int typeId) {
             this.typeId = typeId;
+        }
+
+        public int getTypeId() {
+            return typeId;
         }
     }
 
@@ -58,12 +62,12 @@ public class LibraryPath {
     }
 
     /**
-     * 获取认证证书的公钥、秘钥以及CA
+     * 获取CA认证证书的公钥、秘钥
      *
      * @param type
      * @return
      */
-    public static String getCertificatePath(CertificateType type) throws IOException {
+    public static String getCAPath(CertificateType type) throws IOException {
         if (type == null) {
             throw new NullPointerException("type can not be null or empty");
         }

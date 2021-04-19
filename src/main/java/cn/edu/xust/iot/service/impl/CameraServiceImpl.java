@@ -9,24 +9,30 @@ import cn.edu.xust.iot.camera.push.CameraPusher;
 import cn.edu.xust.iot.controller.CameraController;
 import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.mapper.CameraMapper;
+import cn.edu.xust.iot.mapper.RegionCameraMapper;
 import cn.edu.xust.iot.mapper.RegionMapper;
+import cn.edu.xust.iot.mapper.pagehelper.PageParam;
 import cn.edu.xust.iot.model.CameraInfoModel;
 import cn.edu.xust.iot.model.CameraModel;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.entity.Camera;
 import cn.edu.xust.iot.model.entity.Region;
+import cn.edu.xust.iot.model.entity.RegionCamera;
+import cn.edu.xust.iot.model.vo.CameraVO;
 import cn.edu.xust.iot.service.ICameraService;
+import cn.edu.xust.iot.service.IHWPuSDKService;
 import cn.edu.xust.iot.utils.CommonUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 提供摄像机的相关操作，比如打开视频实时监控，关闭视频实时监控，管理摄像机设备等功能
@@ -47,6 +53,12 @@ public class CameraServiceImpl implements ICameraService {
 
     @Autowired
     private RegionMapper regionMapper;
+
+    @Autowired
+    private RegionCameraMapper regionCameraMapper;
+
+    @Autowired
+    private IHWPuSDKService hwPuSDKService;
 
     @Override
     public CommonResponse<Object> openCamera(CameraInfoModel cameraInfoModel) {
@@ -90,7 +102,6 @@ public class CameraServiceImpl implements ICameraService {
     }
 
 
-
     /**
      * openStream()方法内先判断是否存在starttime参数（是否为null），如果有则说明该流为历史流；在判断是否存在endtime，
      * 若无endtime则使用starttime前后各加一分钟作为历史流的开始时间和结束时间。若无starttime则视为该流为直播流。
@@ -106,7 +117,7 @@ public class CameraServiceImpl implements ICameraService {
     private Map<String, Object> openStream(CameraInfoModel cameraInfoModel, String openTime) {
         Map<String, Object> map = new HashMap<>();
         // 生成token
-        String token = CommonUtils.getRandomStr();
+        String token = CommonUtils.getRandomString();
         String rtsp = "";
         String rtmp = "";
         String IP = CommonUtils.IpConvert(cameraInfoModel.getIp());
@@ -185,43 +196,188 @@ public class CameraServiceImpl implements ICameraService {
         return false;
     }
 
-    @Override
-    public int addNewCamera(CameraModel cameraModel) {
-        Camera camera = new Camera();
-        camera.setDeviceName(cameraModel.getDeviceName());
-        camera.setUserName(cameraModel.getUserName());
-        camera.setIp(cameraModel.getIp());
-        camera.setPassword(cameraModel.getPassword());
-        camera.setPort(cameraModel.getPort());
-        try{
-            Region region=null;
-            List<Region> regions = regionMapper.selectByRegionName(cameraModel.getRegionName());
-            if(regions==null){
-                region = new Region(cameraModel.getRegionName());
-                int insertRes = regionMapper.insert(region);
-                if(insertRes<=0){
-                    log.error("插入新区域失败");
-                    return 0;
-                }
-            }
-            //如果存在已有区域信息默认取第一个
-            if(region==null){
-                region=regions.get(0);
-            }
-            camera.setRegionId(region.getId());
-            int selective = cameraMapper.insertSelective(camera);
-            if(selective>0){
-                //返回新增的主键ID
-                return camera.getId();
-            }
-        }catch (Exception e){
-            log.error(e.getMessage());
-        }
-        return 0;
-    }
 
     @Override
     public List<Camera> getAllCamera() {
         return cameraMapper.selectAll();
+    }
+
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
+    @Override
+    public CommonResponse<String> addNewCamera(CameraModel cameraModel) {
+        Camera camera = cameraModel.convertCameraModel2Camera();
+        CameraModel deviceInfo = null;
+        try {
+            Region region = regionMapper.selectByRegionName(cameraModel.getRegionName());
+            if (region == null) {
+                //还不存在此区域，就插入新区域
+                region = new Region(cameraModel.getRegionName());
+                int insertRes = regionMapper.insert(region);
+                if (insertRes <= 0) {
+                    log.error("新增监控摄像机 插入新区域失败");
+                    return CommonResponse.create(AppResponseCode.FAIL);
+                }
+
+            }
+            camera.setRegionId(region.getId());
+
+            if (checkSDKLogin(camera)) {
+                //调用SDK获取摄像机当前状态
+                deviceInfo = hwPuSDKService.getDeviceInfo(cameraModel.getIp());
+                if (deviceInfo == null) {
+                    //表示调用SDK发生异常
+                    return CommonResponse.create(AppResponseCode.NOT_FOUND_NEW_CAMERA);
+                }
+                //调动摄像机的SDK获取摄像机的软件版本
+                camera.setSdcVersion(deviceInfo.getSdcVersion());
+                //调用摄像机SDK获取摄像的物理地址
+                camera.setMacAddress(deviceInfo.getMacAddress());
+                //调用摄像机SDK获取摄像的型号
+                camera.setModel(deviceInfo.getModel());
+                camera.setDeviceStatus(deviceInfo.getDeviceStatus());
+            }
+
+            int selective = cameraMapper.insertSelective(camera);
+            if (selective > 0) {
+                RegionCamera regionCamera = new RegionCamera(camera.getId(), region.getId());
+                int insert = regionCameraMapper.insert(regionCamera);
+                if (insert > 0) {
+                    //返回新增的主键ID
+                    return CommonResponse.create(AppResponseCode.SUCCESS);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+        return CommonResponse.create(AppResponseCode.FAIL);
+    }
+
+
+    @Override
+    public PageInfo<CameraVO> getCameraList(PageParam pageParam) {
+        PageInfo<CameraVO> pages = null;
+        try {
+            PageHelper.startPage(pageParam.getPage(), pageParam.getPageSize());
+            List<Camera> cameras = cameraMapper.selectAll();
+            List<CameraVO> list = new ArrayList<>();
+            for (Camera camera : cameras) {
+                CameraVO cameraVO = camera.conventCamera2CameraVO();
+                if (checkSDKLogin(camera)) {
+                    CameraModel deviceInfo = hwPuSDKService.getDeviceInfo(camera.getIp());
+                    if (deviceInfo != null) {
+                        cameraVO.setSdcVersion(deviceInfo.getSdcVersion());
+                        cameraVO.setModel(deviceInfo.getModel());
+                        cameraVO.setMacAddress(deviceInfo.getMacAddress());
+                        cameraVO.setDeviceStatus("在线");
+                    }
+                } else {
+                    log.error("登陆摄像机 {} 发生错误", camera.getIp() + ":" + camera.getPort());
+                    cameraVO.setDeviceStatus("离线");
+                }
+                cameraVO.setRegionName("NA");
+                Region region = regionMapper.selectByPrimaryKey(camera.getRegionId());
+                if (null != region) {
+                    cameraVO.setRegionName(region.getRegionName());
+                }
+                list.add(cameraVO);
+            }
+            pages = new PageInfo<>(list);
+            return pages;
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public CommonResponse<Integer> getAllCamerasSize() {
+        int camerasSize = 0;
+        try {
+            camerasSize = cameraMapper.countCameras();
+            return CommonResponse.create(AppResponseCode.SUCCESS, camerasSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CommonResponse.create(AppResponseCode.FAIL, camerasSize);
+    }
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
+    @Override
+    public CommonResponse<String> editCameraInfo(CameraModel cameraModel) {
+        Camera camera = cameraModel.convertCameraModel2Camera();
+        try {
+            Region region = regionMapper.selectByRegionName(cameraModel.getRegionName());
+            if (region == null) {
+                //修改提交了新区域，增加新区域
+                region = new Region(cameraModel.getRegionName());
+                int insertRes = regionMapper.insert(region);
+                if (insertRes <= 0) {
+                    log.error("修改监控摄像机 插入新区域失败");
+                    return CommonResponse.create(AppResponseCode.FAIL);
+                }
+            }
+            //设置RegionId
+            camera.setRegionId(region.getId());
+            if (checkSDKLogin(camera)) {
+                CameraModel deviceInfo = hwPuSDKService.getDeviceInfo(camera.getIp());
+                if (deviceInfo != null) {
+                    camera.setSdcVersion(deviceInfo.getSdcVersion());
+                    camera.setModel(deviceInfo.getModel());
+                    camera.setMacAddress(deviceInfo.getMacAddress());
+                    camera.setDeviceStatus("1");
+                }
+            }
+            int rows = cameraMapper.updateByPrimaryKeySelective(camera);
+            if (rows > 0) {
+                return CommonResponse.create(AppResponseCode.SUCCESS);
+            }
+        } catch (Exception e) {
+            log.error("修改监控摄像机 修改监控摄像的信息发生错误：{}", e.getMessage());
+        }
+        log.error("修改监控摄像机 更新摄像机信息失败");
+        return CommonResponse.create(AppResponseCode.FAIL);
+    }
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
+    @Override
+    public CommonResponse<String> removeCameraBatch(List<Integer> userIdList) {
+        try{
+            for (Integer cameraId : userIdList) {
+                regionMapper.deleteByCameraId(cameraId);
+            }
+            int rows = cameraMapper.batchDeleteByPrimaryKey(userIdList);
+            if(rows<=0){
+                log.error("删除监控摄像机时发生错误");
+                return CommonResponse.create(AppResponseCode.FAIL);
+            }
+            return CommonResponse.create(AppResponseCode.SUCCESS);
+        }catch (Exception e){
+            log.error("删除监控摄像机时发生错误，详细：{}",e.getMessage());
+            return CommonResponse.create(AppResponseCode.FAIL);
+        }
+    }
+
+
+
+    /**
+     * 检查是都已经登陆了摄像机
+     *
+     * @param camera
+     * @return
+     */
+    private boolean checkSDKLogin(Camera camera) {
+        if(camera==null||camera.getIp()==null){
+            throw new NullPointerException("参数camera不能为null");
+        }
+        Map<String, Long> loginMap = HWPuSDKServiceImpl.CAMERAS_LOGIN_MAP;
+        Long login = loginMap.get(camera.getIp());
+        if (null == login || login <= 0) {
+            //相机未登陆需要登陆
+            login = hwPuSDKService.login(camera.getIp(), camera.getPort(), camera.getUserName(), camera.getPassword());
+        }
+        return login > 0;
     }
 }

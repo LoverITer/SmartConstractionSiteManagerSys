@@ -35,9 +35,13 @@ function deleteTableItem(userId){
 		}
 	});
 }
-layui.use(['laydate', 'jquery', 'admin'], function() {
+
+
+
+layui.use(['laydate', 'jquery', 'admin','form'], function() {
 	var laydate = layui.laydate,
-		admin = layui.admin;
+		admin = layui.admin,
+	    form=layui.form;
 	$ = layui.jquery;
 	//执行一个laydate实例
 	laydate.render({
@@ -56,6 +60,7 @@ layui.use(['laydate', 'jquery', 'admin'], function() {
 		});
 	};
 
+
 	window.delAll = function () {
 		var data = tableCheck.getData();
 		console.log("批量删除:"+data);
@@ -67,6 +72,30 @@ layui.use(['laydate', 'jquery', 'admin'], function() {
 			//捉到所有被选中的，发异步进行删除
 			deleteTableItem(data);
 		});
-	}
+	};
+
+	//监听提交
+	form.on('submit(login)', function (data) {
+		$.ajax({
+			url: "/user/login",
+			method: "post",
+			contentType: "application/json",
+			sync: false,
+			data: JSON.stringify(data.field),
+			success: function (response) {
+				if (response.code == 202) {
+					layer.msg("退出成功！", {icon: 2});
+					localStorage.setItem(USER_LOGIN_TOKEN, response.data);
+					window.location.href = '/admin/index?token=' + localStorage.getItem(USER_LOGIN_TOKEN);
+				} else {
+					layer.msg(response.msg, {icon: 2});
+				}
+			},
+			error: function (response) {
+				layer.msg(response.msg, {icon: 2});
+			}
+		});
+		return false;
+	});
 	
 });

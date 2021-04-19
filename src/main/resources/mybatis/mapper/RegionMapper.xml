@@ -25,6 +25,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
+  <delete id="deleteByCameraId" parameterType="java.lang.Integer">
+    delete from region where camera_id=#{cameraId,jdbcType=INTEGER}
+  </delete>
+
   <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.Region" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
     insert into region (region_name)
     values (#{regionName,jdbcType=VARCHAR})

@@ -20,17 +20,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.RegionCamera">
-    insert into region_camera (id, camera_id, region_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{cameraId,jdbcType=INTEGER}, #{regionId,jdbcType=INTEGER}
-      )
+    insert into region_camera (camera_id, region_id)
+    values ( #{cameraId,jdbcType=INTEGER}, #{regionId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.RegionCamera">
     insert into region_camera
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="cameraId != null">
         camera_id,
       </if>
@@ -39,9 +34,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="cameraId != null">
         #{cameraId,jdbcType=INTEGER},
       </if>

@@ -166,3 +166,6 @@ dll，但是JNA在加载的时候只会从系统或项目定义的类路径下�
 * 2021年4月07      引入JavaCV，使用JavaCV FFMPEG推流摄像机RTSP视频流到nginx-rtmp
 * 2021年4月11      JavaCV推流效果太差，转变思路直接使用Java调用本地FFmpeg执行有关命令来进行推流，显示效果大大提高，但视频播放有3秒左右的延迟，后续有待优化
 * 2021年4月13      增加后台管理界面以及实现了管理员用户的注册和登陆（分布式Session登陆）
+* 2021年4月16      后台管理系统——完成人员管理模块的前后端代码的编写以及调试
+* 2021年4月17      后台管理系统——引入PageHelper分页插件，实现完成人员管理模块的分页功能
+* 2021年4月18      整合并完善之前`BusinessRealPlayServiceImpl`和`BusinessUserServiceImpl`两个服务中的逻辑代码统一到IHWPuSDKService接口中，并在新接口中获取相机信息的方法

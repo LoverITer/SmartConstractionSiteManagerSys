@@ -1,6 +1,6 @@
 package cn.edu.xust.iot.sdc.core;
 
-import cn.edu.xust.iot.sdc.LibraryPath;
+import cn.edu.xust.iot.sdc.HWPuSDKResourceConfig;
 import com.sun.jna.*;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinDef.BOOL;
@@ -26,7 +26,7 @@ public interface HWPuSDK extends Library {
      * 使用JNA框架加载dll库并返回实例化对象
      */
     //HWPuSDK SSL_INSTANCE = Native.load((Platform.isWindows() ? "libs\\HWPuSDK" : "ssl"), HWPuSDK.class);
-    HWPuSDK INSTANCE = Native.load(LibraryPath.getSdkRootPath(), HWPuSDK.class);
+    HWPuSDK INSTANCE = Native.load(HWPuSDKResourceConfig.getSdkRootPath(), HWPuSDK.class);
 
     public static class AERADTC_LIST extends Structure {
         public long ulAreaNum;
@@ -57,17 +57,17 @@ public interface HWPuSDK extends Library {
     }
 
     public interface BACKLIGHT_MODE {
-        public static final int VIDEO_MODE_AVERAGE = 0; // Use the default setting for the backlight area.
-        public static final int VIDEO_MODE_CENTER = 1; // The backlight area is the central area in the image.
-        public static final int VIDEO_MODE_UP = 2; // The backlight area is the upper part of the image (this variable
+        int VIDEO_MODE_AVERAGE = 0; // Use the default setting for the backlight area.
+        int VIDEO_MODE_CENTER = 1; // The backlight area is the central area in the image.
+        int VIDEO_MODE_UP = 2; // The backlight area is the upper part of the image (this variable
         // is reserved).
-        public static final int VIDEO_MODE_DOWN = 3; // The backlight area is the lower part of the image (this variable
+        int VIDEO_MODE_DOWN = 3; // The backlight area is the lower part of the image (this variable
         // is reserved).
-        public static final int VIDEO_MODE_LEFT = 4; // The backlight area is the left part of the image (this variable
+        int VIDEO_MODE_LEFT = 4; // The backlight area is the left part of the image (this variable
         // is reserved).
-        public static final int VIDEO_MODE_RIGHT = 5; // The backlight area is the right part of the image (this
+        int VIDEO_MODE_RIGHT = 5; // The backlight area is the right part of the image (this
         // variable is reserved).
-        public static final int VIDEO_MODE_USER = 6; // The backlight area is a customized area.
+        int VIDEO_MODE_USER = 6; // The backlight area is a customized area.
     }
 
     // Focus control parameters.
@@ -193,619 +193,619 @@ public interface HWPuSDK extends Library {
         public final int PU_ERROR_CODE_VLPR_WATERMARK_INVALID = 24; // Incorrect REST packet format.
         public final int PU_ERROR_CODE_REST_PKG_TYPE_ERROR = 25; //
         // API invoking error.
-        public static final int PU_ERROR_CODE_SDKINIT_LINK_MODE_ERROR = 101; // A connection mode error occurred during
+        int PU_ERROR_CODE_SDKINIT_LINK_MODE_ERROR = 101; // A connection mode error occurred during
         // SDK initialization.
-        public static final int PU_ERROR_CODE_SDKINIT_LOCALIP_ERROR = 102; // A local IP address error occurred during
+        int PU_ERROR_CODE_SDKINIT_LOCALIP_ERROR = 102; // A local IP address error occurred during
         // SDK initialization.
-        public static final int PU_ERROR_CODE_SDKLOGIN_PARA_ERROR = 103; // Login parameter error.
-        public static final int PU_ERROR_CODE_CODE_IS_INVALID = 104; // Invalid error code.
-        public static final int PU_ERROR_CODE_SDKGETVERSION_PARA_ERROR = 105; // An error occurred when obtaining the
+        int PU_ERROR_CODE_SDKLOGIN_PARA_ERROR = 103; // Login parameter error.
+        int PU_ERROR_CODE_CODE_IS_INVALID = 104; // Invalid error code.
+        int PU_ERROR_CODE_SDKGETVERSION_PARA_ERROR = 105; // An error occurred when obtaining the
         // version.
-        public static final int PU_ERROR_CODE_IDENTIFYID_ERROR = 106; // Incorrect user ID.
-        public static final int PU_ERROR_CODE_SDKGETDEVICE_PARA_ERROR = 107; // An error occurred when obtaining the
+        int PU_ERROR_CODE_IDENTIFYID_ERROR = 106; // Incorrect user ID.
+        int PU_ERROR_CODE_SDKGETDEVICE_PARA_ERROR = 107; // An error occurred when obtaining the
         // device parameter settings.
-        public static final int PU_ERROR_CODE_ALARMREPORT_CB_IS_NULL = 108; // The alarm reporting callback function is
+        int PU_ERROR_CODE_ALARMREPORT_CB_IS_NULL = 108; // The alarm reporting callback function is
         // empty.
-        public static final int PU_ERROR_CODE_VOICETB_CB_IS_NULL = 109; // The voice intercom callback function is
+        int PU_ERROR_CODE_VOICETB_CB_IS_NULL = 109; // The voice intercom callback function is
         // empty.
-        public static final int PU_ERROR_CODE_REALPLAY_CB_IS_NULL = 110; // The live video viewing callback function is
+        int PU_ERROR_CODE_REALPLAY_CB_IS_NULL = 110; // The live video viewing callback function is
         // empty.
-        public static final int PU_ERROR_CODE_LOAD_PLAYDLL_ERROR = 111; // An error occurred when loading the video
+        int PU_ERROR_CODE_LOAD_PLAYDLL_ERROR = 111; // An error occurred when loading the video
         // library.
-        public static final int PU_ERROR_CODE_CFGFILE_ERROR = 112; // The configuration is incorrect.
-        public static final int PU_ERROR_CODE_UNSUPPORT_ALARM_TYPE = 113; // Unknown alarm type.
-        public static final int PU_ERROR_CODE_SDKUPGRADE_PARA_ERROR = 114; // Upgrade parameter error.
-        public static final int PU_ERROR_CODE_SDKUPGRADE_ERROR = 115; // Upgrade error.
-        public static final int PU_ERROR_CODE_SDKUPGRADE_FILE_ERROR = 116; // Incorrect upgrade file.
-        public static final int PU_ERROR_CODE_UNSUPPORT_PLATFORM_TYPE = 117; // Unknown platform type.
-        public static final int PU_ERROR_CODE_SDKSETPLATFORM_PARA_ERROR = 118; // An error occurred when setting
+        int PU_ERROR_CODE_CFGFILE_ERROR = 112; // The configuration is incorrect.
+        int PU_ERROR_CODE_UNSUPPORT_ALARM_TYPE = 113; // Unknown alarm type.
+        int PU_ERROR_CODE_SDKUPGRADE_PARA_ERROR = 114; // Upgrade parameter error.
+        int PU_ERROR_CODE_SDKUPGRADE_ERROR = 115; // Upgrade error.
+        int PU_ERROR_CODE_SDKUPGRADE_FILE_ERROR = 116; // Incorrect upgrade file.
+        int PU_ERROR_CODE_UNSUPPORT_PLATFORM_TYPE = 117; // Unknown platform type.
+        int PU_ERROR_CODE_SDKSETPLATFORM_PARA_ERROR = 118; // An error occurred when setting
         // platform parameters.
-        public static final int PU_ERROR_CODE_UNSUPPORT_ENCODE_TYPE = 119; // Unknown audio and video encoding type.
-        public static final int PU_ERROR_CODE_UNSUPPORT_STREAM_TYPE = 120; // Unknown stream type.
-        public static final int PU_ERROR_CODE_UNSUPPORT_BITRATE_TYPE = 121; // Unknown bit rate type.
-        public static final int PU_ERROR_CODE_UNSUPPORT_PTZ_CMD = 122; // Unknown PTZ control command.
-        public static final int PU_ERROR_CODE_CRUISE_PARA_ERROR = 123; // Tour parameter error.
-        public static final int PU_ERROR_CODE_ALARM_TMP_PARA_ERROR = 124; // Temperature alarm parameter error.
-        public static final int PU_ERROR_CODE_ALARM_MOTION_DETEC_PARA_ERROR = 125; // Motion detection alarm parameter
+        int PU_ERROR_CODE_UNSUPPORT_ENCODE_TYPE = 119; // Unknown audio and video encoding type.
+        int PU_ERROR_CODE_UNSUPPORT_STREAM_TYPE = 120; // Unknown stream type.
+        int PU_ERROR_CODE_UNSUPPORT_BITRATE_TYPE = 121; // Unknown bit rate type.
+        int PU_ERROR_CODE_UNSUPPORT_PTZ_CMD = 122; // Unknown PTZ control command.
+        int PU_ERROR_CODE_CRUISE_PARA_ERROR = 123; // Tour parameter error.
+        int PU_ERROR_CODE_ALARM_TMP_PARA_ERROR = 124; // Temperature alarm parameter error.
+        int PU_ERROR_CODE_ALARM_MOTION_DETEC_PARA_ERROR = 125; // Motion detection alarm parameter
         // error.
-        public static final int PU_ERROR_CODE_ALARM_INPUT_PARA_ERROR = 126; // Boolean value input alarm parameter
+        int PU_ERROR_CODE_ALARM_INPUT_PARA_ERROR = 126; // Boolean value input alarm parameter
         // error.
-        public static final int PU_ERROR_CODE_ALARM_HIDE_PARA_ERROR = 127; // Lens blocking alarm parameter error.
-        public static final int PU_ERROR_CODE_ALARM_INVADE_PARA_ERROR = 128; // Intrusion detection alarm parameter
+        int PU_ERROR_CODE_ALARM_HIDE_PARA_ERROR = 127; // Lens blocking alarm parameter error.
+        int PU_ERROR_CODE_ALARM_INVADE_PARA_ERROR = 128; // Intrusion detection alarm parameter
         // error.
-        public static final int PU_ERROR_CODE_ALARM_COUNT_PARA_ERROR = 129; // Object counting alarm parameter error.
-        public static final int PU_ERROR_CODE_ALARM_DISTURB_PARA_ERROR = 130; // Interference alarm parameter error.
-        public static final int PU_ERROR_CODE_PRIVACY_PARA_ERROR = 131; // Privacy mask parameter error.
-        public static final int PU_ERROR_CODE_OSD_PARA_ERROR = 132; // OSD parameter error.
-        public static final int PU_ERROR_CODE_PTZ_PARA_ERROR = 133; // PTZ control parameter error.
-        public static final int PU_ERROR_CODE_SDKGUARD_PARA_ERROR = 134; // Alert deployment and withdrawal parameter
+        int PU_ERROR_CODE_ALARM_COUNT_PARA_ERROR = 129; // Object counting alarm parameter error.
+        int PU_ERROR_CODE_ALARM_DISTURB_PARA_ERROR = 130; // Interference alarm parameter error.
+        int PU_ERROR_CODE_PRIVACY_PARA_ERROR = 131; // Privacy mask parameter error.
+        int PU_ERROR_CODE_OSD_PARA_ERROR = 132; // OSD parameter error.
+        int PU_ERROR_CODE_PTZ_PARA_ERROR = 133; // PTZ control parameter error.
+        int PU_ERROR_CODE_SDKGUARD_PARA_ERROR = 134; // Alert deployment and withdrawal parameter
         // error.
-        public static final int PU_ERROR_CODE_SDKGETALARAM_PARA_ERROR = 135; // An error occurred when obtaining alarm
+        int PU_ERROR_CODE_SDKGETALARAM_PARA_ERROR = 135; // An error occurred when obtaining alarm
         // parameter settings.
-        public static final int PU_ERROR_CODE_PARA_ERROR = 136; // Parameter error.
-        public static final int PU_ERROR_CODE_PLAYER_FUNC_ERROR = 137; // An error occurred when invoking the video
+        int PU_ERROR_CODE_PARA_ERROR = 136; // Parameter error.
+        int PU_ERROR_CODE_PLAYER_FUNC_ERROR = 137; // An error occurred when invoking the video
         // library function.
-        public static final int PU_ERROR_CODE_SDKSAVEREALDATA_ERROR = 138; // Save live video data.
-        public static final int PU_ERROR_CODE_SDKGETGUARDSTATE_PARA_ERROR = 139; // An error occurred when obtaining the
+        int PU_ERROR_CODE_SDKSAVEREALDATA_ERROR = 138; // Save live video data.
+        int PU_ERROR_CODE_SDKGETGUARDSTATE_PARA_ERROR = 139; // An error occurred when obtaining the
         // alert deployment status
         // parameter.
-        public static final int PU_ERROR_CODE_MUTUALLYEXCLUSIVE_RELATIONSHIP = 140; // The setting fails because of
+        int PU_ERROR_CODE_MUTUALLYEXCLUSIVE_RELATIONSHIP = 140; // The setting fails because of
         // mutual exclusion.
-        public static final int PU_ERROR_CODE_DEVICE_RELOGIN = 141; // You have logged in to the device.
-        public static final int PU_ERROR_CODE_INVALID_CONFIG_FILE = 142; // The configuration file is invalid.
-        public static final int PU_ERROR_CODE_WRONG_RSP_TYPE = 143; // The response message type is incorrect.
-        public static final int PU_ERROR_CODE_RSP_MEG_PARSE_ERROR = 144; // Failed to parse the response message.
-        public static final int PU_ERROR_CODE_MISMATCH_PWD_COMPLEXITY = 145; // The password does not meet the
+        int PU_ERROR_CODE_DEVICE_RELOGIN = 141; // You have logged in to the device.
+        int PU_ERROR_CODE_INVALID_CONFIG_FILE = 142; // The configuration file is invalid.
+        int PU_ERROR_CODE_WRONG_RSP_TYPE = 143; // The response message type is incorrect.
+        int PU_ERROR_CODE_RSP_MEG_PARSE_ERROR = 144; // Failed to parse the response message.
+        int PU_ERROR_CODE_MISMATCH_PWD_COMPLEXITY = 145; // The password does not meet the
         // complexity requirements.
-        public static final int PU_ERROR_CODE_ALARM_AUDIO_UP_PARA_ERROR = 146; // Sudden volume increase alarm parameter
+        int PU_ERROR_CODE_ALARM_AUDIO_UP_PARA_ERROR = 146; // Sudden volume increase alarm parameter
         // error.
-        public static final int PU_ERROR_CODE_ALARM_AUDIO_DOWN_PARA_ERROR = 147; // Sudden volume decrease alarm
+        int PU_ERROR_CODE_ALARM_AUDIO_DOWN_PARA_ERROR = 147; // Sudden volume decrease alarm
         // parameter error.
-        public static final int PU_ERROR_CODE_TRANSPARENT_CHANNEL_DATA_CB_IS_NULL = 148; // The data callback function
+        int PU_ERROR_CODE_TRANSPARENT_CHANNEL_DATA_CB_IS_NULL = 148; // The data callback function
         // of the transparent
         // channel is empty.
-        public static final int PU_ERROR_CODE_NO_ENOUGH_CONTINUOUS_MEM = 149; // Insufficient continuous memory.*/
-        public static final int PU_ERROR_CODE_IRCMODE_PARA_ERROR = 150; // Incorrect IR Cut type.*/
-        public static final int PU_ERROR_CODE_CERT_PARA_ERROR = 151; // Incorrect certificate path.*/
-        public static final int PU_ERROR_CODE_IMPORT_FACELIBRARY_ERROR = 152; // An error occurred when importing face
+        int PU_ERROR_CODE_NO_ENOUGH_CONTINUOUS_MEM = 149; // Insufficient continuous memory.*/
+        int PU_ERROR_CODE_IRCMODE_PARA_ERROR = 150; // Incorrect IR Cut type.*/
+        int PU_ERROR_CODE_CERT_PARA_ERROR = 151; // Incorrect certificate path.*/
+        int PU_ERROR_CODE_IMPORT_FACELIBRARY_ERROR = 152; // An error occurred when importing face
         // images into the face library.*/
-        public static final int PU_ERROR_CODE_IMPORTING_FACELIB_ERROR = 153; // Importing face images into a face
+        int PU_ERROR_CODE_IMPORTING_FACELIB_ERROR = 153; // Importing face images into a face
         // library...*/
-        public static final int PU_ERROR_CODE_UNKNOWN_SV_TYPE = 154; // Unknown service type.*/
-        public static final int PU_ERROR_CODE_NOT_OPEN_TLS = 155; // Operations related to the face library cannot be
+        int PU_ERROR_CODE_UNKNOWN_SV_TYPE = 154; // Unknown service type.*/
+        int PU_ERROR_CODE_NOT_OPEN_TLS = 155; // Operations related to the face library cannot be
         // performed because the TLS is not enabled.*/
-        public static final int PU_ERROR_INVALID_UPDATEFILE_NUM = 156; // The number of upgrade files exceeded the
+        int PU_ERROR_INVALID_UPDATEFILE_NUM = 156; // The number of upgrade files exceeded the
         // maximum.*/
-        public static final int PU_ERROR_USER_CANCEL_UPGRADE = 157; // Upgrade canceled.*/
-        public static final int PU_ERROR_NOT_ENOUGH_MEMORY_ALLOCATED = 160; // JSON data cannot be loaded because the
+        int PU_ERROR_USER_CANCEL_UPGRADE = 157; // Upgrade canceled.*/
+        int PU_ERROR_NOT_ENOUGH_MEMORY_ALLOCATED = 160; // JSON data cannot be loaded because the
         // input receive cache is too small.*/
 
         // Decoder error codes
-        public static final int PU_ERROR_CODE_DEC_INITDEC_ERROR = 1001; // Decoding initialization failure.
-        public static final int PU_ERROR_CODE_DEC_STARTDEC_ERROR = 1002; // Failed to start decoding.
-        public static final int PU_ERROR_CODE_DEC_STOPDEC_ERROR = 1003; // Failed to stop decoding.
-        public static final int PU_ERROR_CODE_DEC_TOO_MANY_CHANNEL = 1004; // There are too many decoding channels.
-        public static final int PU_ERROR_CODE_DEC_ERROR_PORT_NUM = 1005; // Incorrect port quantity.
-        public static final int PU_ERROR_CODE_DEC_ERROR_DEC_HANDEL = 1006; // Incorrect decoding handle.
-        public static final int PU_ERROR_CODE_DEC_ERROR_UNSUPPORT_DECODE_TYPE = 1007; // Unsupported decoding type.
-        public static final int PU_ERROR_CODE_DEC_ERROR_INVALID_CHANNEL_ID = 1008; // Invalid channel ID.
+        int PU_ERROR_CODE_DEC_INITDEC_ERROR = 1001; // Decoding initialization failure.
+        int PU_ERROR_CODE_DEC_STARTDEC_ERROR = 1002; // Failed to start decoding.
+        int PU_ERROR_CODE_DEC_STOPDEC_ERROR = 1003; // Failed to stop decoding.
+        int PU_ERROR_CODE_DEC_TOO_MANY_CHANNEL = 1004; // There are too many decoding channels.
+        int PU_ERROR_CODE_DEC_ERROR_PORT_NUM = 1005; // Incorrect port quantity.
+        int PU_ERROR_CODE_DEC_ERROR_DEC_HANDEL = 1006; // Incorrect decoding handle.
+        int PU_ERROR_CODE_DEC_ERROR_UNSUPPORT_DECODE_TYPE = 1007; // Unsupported decoding type.
+        int PU_ERROR_CODE_DEC_ERROR_INVALID_CHANNEL_ID = 1008; // Invalid channel ID.
 
         // Server error codes
-        public static final int PU_ERROR_CODE_SERVER_COMMON_ERROR = 10001; // Common error.
-        public static final int PU_ERROR_CODE_SYNTAX_ERROR = 10002; // Configuration syntax error.
-        public static final int PU_ERROR_CODE_UNSUPPORT_ERROR = 10003; // Unsupported request.
-        public static final int PU_ERROR_CODE_PARAMETER_ERROR = 10004; // Parameter error.
-        public static final int PU_ERROR_CODE_INVALID_VCU_ID = 10005; // Incorrect device ID.
-        public static final int PU_ERROR_CODE_INVALID_CHANNEL = 10006; // Incorrect channel ID.
-        public static final int PU_ERROR_CODE_INVALID_SERIAL_NO = 10007; // Incorrect serial port number.
-        public static final int PU_ERROR_CODE_INVALID_ALARM_NO = 10008; // Incorrect alarm port number.
-        public static final int PU_ERROR_CODE_UNSUPPORTED_MEDIA_TYPE = 10009; // Unsupported media type.
-        public static final int PU_ERROR_CODE_PARTLY_SUPPORT = 10011; // Only some parameters are set successfully.
-        public static final int PU_ERROR_CODE_TOO_MANY_PLANS = 10012; // The number of plans exceeded the maximum.
-        public static final int PU_ERROR_CODE_NO_DISK = 10013; // The device does not have a hard disk.
-        public static final int PU_ERROR_CODE_OPEN_SOUND_FAIL = 10014; // Failed to enable the audio device.
-        public static final int PU_ERROR_CODE_VOICE_OPEND = 10015; // The server's voice intercom is in use.
-        public static final int PU_ERROR_CODE_DEVICE_BUSY = 10016; // The device is busy.
-        public static final int PU_ERROR_CODE_OPERATE_FLASH_ERROR = 10019; // Flash error.
-        public static final int PU_ERROR_CODE_UNSUPPORTED_VIDEO_FORMAT = 10020; // Unsupported video standard.
-        public static final int PU_ERROR_CODE_IP_ADDRESS_CONFLICT = 10022; // IP address conflict.
-        public static final int PU_ERROR_CODE_LTE_DHCP_CONFLICT = 10023; // LTH setting conflicts with DHCP setting.
-        public static final int PU_ERROR_CODE_SIP_STACK_ERROR = 10024; // SIP protocol stack error.
-        public static final int PU_ERROR_CODE_NULL_ELEMENT = 10101; // The XML file does not have the corresponding
+        int PU_ERROR_CODE_SERVER_COMMON_ERROR = 10001; // Common error.
+        int PU_ERROR_CODE_SYNTAX_ERROR = 10002; // Configuration syntax error.
+        int PU_ERROR_CODE_UNSUPPORT_ERROR = 10003; // Unsupported request.
+        int PU_ERROR_CODE_PARAMETER_ERROR = 10004; // Parameter error.
+        int PU_ERROR_CODE_INVALID_VCU_ID = 10005; // Incorrect device ID.
+        int PU_ERROR_CODE_INVALID_CHANNEL = 10006; // Incorrect channel ID.
+        int PU_ERROR_CODE_INVALID_SERIAL_NO = 10007; // Incorrect serial port number.
+        int PU_ERROR_CODE_INVALID_ALARM_NO = 10008; // Incorrect alarm port number.
+        int PU_ERROR_CODE_UNSUPPORTED_MEDIA_TYPE = 10009; // Unsupported media type.
+        int PU_ERROR_CODE_PARTLY_SUPPORT = 10011; // Only some parameters are set successfully.
+        int PU_ERROR_CODE_TOO_MANY_PLANS = 10012; // The number of plans exceeded the maximum.
+        int PU_ERROR_CODE_NO_DISK = 10013; // The device does not have a hard disk.
+        int PU_ERROR_CODE_OPEN_SOUND_FAIL = 10014; // Failed to enable the audio device.
+        int PU_ERROR_CODE_VOICE_OPEND = 10015; // The server's voice intercom is in use.
+        int PU_ERROR_CODE_DEVICE_BUSY = 10016; // The device is busy.
+        int PU_ERROR_CODE_OPERATE_FLASH_ERROR = 10019; // Flash error.
+        int PU_ERROR_CODE_UNSUPPORTED_VIDEO_FORMAT = 10020; // Unsupported video standard.
+        int PU_ERROR_CODE_IP_ADDRESS_CONFLICT = 10022; // IP address conflict.
+        int PU_ERROR_CODE_LTE_DHCP_CONFLICT = 10023; // LTH setting conflicts with DHCP setting.
+        int PU_ERROR_CODE_SIP_STACK_ERROR = 10024; // SIP protocol stack error.
+        int PU_ERROR_CODE_NULL_ELEMENT = 10101; // The XML file does not have the corresponding
         // node.
-        public static final int PU_ERROR_CODE_INVALID_VERIFICATION = 10102; // Incorrect user name or password.
-        public static final int PU_ERROR_CODE_INVALID_VERSION_FILE = 10103; // Failed to verify the version file.
-        public static final int PU_ERROR_CODE_INVALID_KERNEL_FILE = 10104; // Failed to verify the kernel upgrade file.
-        public static final int PU_ERROR_CODE_INVALID_ROOTFS_FILE = 10105; // Failed to verify the file system upgrade
+        int PU_ERROR_CODE_INVALID_VERIFICATION = 10102; // Incorrect user name or password.
+        int PU_ERROR_CODE_INVALID_VERSION_FILE = 10103; // Failed to verify the version file.
+        int PU_ERROR_CODE_INVALID_KERNEL_FILE = 10104; // Failed to verify the kernel upgrade file.
+        int PU_ERROR_CODE_INVALID_ROOTFS_FILE = 10105; // Failed to verify the file system upgrade
         // file.
-        public static final int PU_ERROR_CODE_FIRST_LOGIN = 10106; // First login.
-        public static final int PU_ERROR_CODE_CLIENT_ALREADY_LOGIN = 10107; // A client has logged in.
-        public static final int PU_ERROR_CODE_USER_LOCKED = 10108; // The user is locked.
-        public static final int PU_ERROR_CODE_MANY_USER = 10109; // The number of users exceeded the maximum.
-        public static final int PU_ERROR_CODE_USER_NAME_CONFLICT = 10110; // Duplicate user name.
-        public static final int PU_ERROR_CODE_NO_USER_NAME = 10111; // The user does not exist.
-        public static final int PU_ERROR_CODE_USER_NOPOWER = 10112; // The user does not have the permission.
-        public static final int PU_ERROR_CODE_NOT_NEED_UPDATE = 10113; // No upgrade is required because the versions
+        int PU_ERROR_CODE_FIRST_LOGIN = 10106; // First login.
+        int PU_ERROR_CODE_CLIENT_ALREADY_LOGIN = 10107; // A client has logged in.
+        int PU_ERROR_CODE_USER_LOCKED = 10108; // The user is locked.
+        int PU_ERROR_CODE_MANY_USER = 10109; // The number of users exceeded the maximum.
+        int PU_ERROR_CODE_USER_NAME_CONFLICT = 10110; // Duplicate user name.
+        int PU_ERROR_CODE_NO_USER_NAME = 10111; // The user does not exist.
+        int PU_ERROR_CODE_USER_NOPOWER = 10112; // The user does not have the permission.
+        int PU_ERROR_CODE_NOT_NEED_UPDATE = 10113; // No upgrade is required because the versions
         // are consistent.
-        public static final int PU_ERROR_CODE_NOT_SUPPORT_ABILITY = 10114; // The capability parameter is not supported.
-        public static final int PU_ERROR_CODE_PRESET_IN_GUARD_POSITION = 10115; // The preset position has been
+        int PU_ERROR_CODE_NOT_SUPPORT_ABILITY = 10114; // The capability parameter is not supported.
+        int PU_ERROR_CODE_PRESET_IN_GUARD_POSITION = 10115; // The preset position has been
         // configured as the home position.
-        public static final int PU_ERROR_CODE_PRESET_IN_CRUISE_TRACK = 10116; // The preset position has been added to
+        int PU_ERROR_CODE_PRESET_IN_CRUISE_TRACK = 10116; // The preset position has been added to
         // the tour.
-        public static final int PU_ERROR_CODE_SET_ETHPHY_OUTPUT_TYPE_ERROR = 10117; // Failed to set the network port
+        int PU_ERROR_CODE_SET_ETHPHY_OUTPUT_TYPE_ERROR = 10117; // Failed to set the network port
         // type.
-        public static final int PU_ERROR_CODE_SET_ETHMODE_ERROR = 10118; // Failed to set the network port rate.
-        public static final int PU_ERROR_CODE_UPLOAD_CONFIG_TYPE_ERROR = 10119; // The type of the configuration file to
+        int PU_ERROR_CODE_SET_ETHMODE_ERROR = 10118; // Failed to set the network port rate.
+        int PU_ERROR_CODE_UPLOAD_CONFIG_TYPE_ERROR = 10119; // The type of the configuration file to
         // upload is incorrect.
-        public static final int PU_ERROR_CODE_DNS_SERVER_UNREACH = 10120; // The DNS server is unreachable.
-        public static final int PU_ERROR_CODE_DNS_SERVER_NO_DOMAIN = 10121; // The DNS server failed to obtain the
+        int PU_ERROR_CODE_DNS_SERVER_UNREACH = 10120; // The DNS server is unreachable.
+        int PU_ERROR_CODE_DNS_SERVER_NO_DOMAIN = 10121; // The DNS server failed to obtain the
         // domain name.
-        public static final int PU_ERROR_CODE_THE_CRUISE_IS_RUNNING = 10122; // The tour is being executed.
-        public static final int PU_ERROR_CODE_SD_FORMATTING = 10124; // The SD card is being formatted.
-        public static final int PU_ERROR_CODE_UPDATE = 10125; // The system is being upgraded.
-        public static final int PU_ERROR_CODE_REBOOT = 10126; // The system is being restarted.
-        public static final int PU_ERROR_CODE_RESTORE = 10127; // The device is restoring default settings.
-        public static final int PU_ERROR_CODE_RECOVER_OPRATE_FORBIDDEN = 10128; // Configuration operations cannot be
+        int PU_ERROR_CODE_THE_CRUISE_IS_RUNNING = 10122; // The tour is being executed.
+        int PU_ERROR_CODE_SD_FORMATTING = 10124; // The SD card is being formatted.
+        int PU_ERROR_CODE_UPDATE = 10125; // The system is being upgraded.
+        int PU_ERROR_CODE_REBOOT = 10126; // The system is being restarted.
+        int PU_ERROR_CODE_RESTORE = 10127; // The device is restoring default settings.
+        int PU_ERROR_CODE_RECOVER_OPRATE_FORBIDDEN = 10128; // Configuration operations cannot be
         // performed during default setting
         // restoration.
-        public static final int PU_ERROR_CODE_ROI_ERROR_BY_MJPEG = 10129; // Failed to set the ROI in the MJPEG
+        int PU_ERROR_CODE_ROI_ERROR_BY_MJPEG = 10129; // Failed to set the ROI in the MJPEG
         // standard.
-        public static final int PU_ERROR_CODE_ROI_ERROR_BY_NOSUBSTREAM = 10130; // The ROI failed to be set for the
+        int PU_ERROR_CODE_ROI_ERROR_BY_NOSUBSTREAM = 10130; // The ROI failed to be set for the
         // secondary stream when only the
         // primary stream is available.
-        public static final int PU_ERROR_CODE_TZ_ERROR_BY_CONFLICT = 10131; // A conflict occurred when tripwire
+        int PU_ERROR_CODE_TZ_ERROR_BY_CONFLICT = 10131; // A conflict occurred when tripwire
         // crossing detection is enabled.
-        public static final int PU_ERROR_CODE_OC_ERROR_BY_CONFLICT = 10132; // A conflict occurred when object counting
+        int PU_ERROR_CODE_OC_ERROR_BY_CONFLICT = 10132; // A conflict occurred when object counting
         // is enabled.
-        public static final int PU_ERROR_CODE_MD_ERROR_BY_CONFLICT = 10133; // A conflict occurred when motion detection
+        int PU_ERROR_CODE_MD_ERROR_BY_CONFLICT = 10133; // A conflict occurred when motion detection
         // is enabled.
-        public static final int PU_ERROR_CODE_TW_ERROR_BY_CONFLICT = 10134; // A conflict occurred when tripwire
+        int PU_ERROR_CODE_TW_ERROR_BY_CONFLICT = 10134; // A conflict occurred when tripwire
         // crossing detection is enabled.
-        public static final int PU_ERROR_CODE_AREA_ERROR_BY_CONFLICT = 10135; // A conflict occurred when intrusion
+        int PU_ERROR_CODE_AREA_ERROR_BY_CONFLICT = 10135; // A conflict occurred when intrusion
         // detection, abandoned object
         // detection, or removed object
         // detection is enabled.
-        public static final int PU_ERROR_CODE_VD_ERROR_BY_CONFLICT = 10136; // A conflict occurred when video
+        int PU_ERROR_CODE_VD_ERROR_BY_CONFLICT = 10136; // A conflict occurred when video
         // interference detection is enabled.
-        public static final int PU_ERROR_CODE_IGT_ENABLE_CONFLICT = 10137; // Failed to enable illumination enhancement
+        int PU_ERROR_CODE_IGT_ENABLE_CONFLICT = 10137; // Failed to enable illumination enhancement
         // or lens blocking detection because the
         // intelligent analysis function has been
         // enabled.
-        public static final int PU_ERROR_CODE_ILLUMINATION_ENABLE_CONFLICT = 10138; // Failed to enable intelligent
+        int PU_ERROR_CODE_ILLUMINATION_ENABLE_CONFLICT = 10138; // Failed to enable intelligent
         // analysis or lens blocking
         // detection because the
         // illumination enhancement function
         // has been enabled.
-        public static final int PU_ERROR_CODE_VIDEOBLOCK_ENABLE_CONFLICT = 10139; // Failed to enable intelligent
+        int PU_ERROR_CODE_VIDEOBLOCK_ENABLE_CONFLICT = 10139; // Failed to enable intelligent
         // analysis or illumination
         // enhancement because the lens
         // blocking detection function has
         // been enabled.
-        public static final int PU_ERROR_CODE_IGT_FAIL_BY_SWITCHOFF = 10140; // Failed to set the intelligent service
+        int PU_ERROR_CODE_IGT_FAIL_BY_SWITCHOFF = 10140; // Failed to set the intelligent service
         // because the intelligent analysis
         // function is not enabled.
-        public static final int PU_ERROR_CODE_TW_ERROR_BY_OVER_NUM = 10141; // The number of tripwires exceeded the
+        int PU_ERROR_CODE_TW_ERROR_BY_OVER_NUM = 10141; // The number of tripwires exceeded the
         // maximum.
-        public static final int PU_ERROR_CODE_AREA_ERROR_BY_OVER_NUM = 10142; // The number of areas exceeded the
+        int PU_ERROR_CODE_AREA_ERROR_BY_OVER_NUM = 10142; // The number of areas exceeded the
         // maximum value, 4.
-        public static final int PU_ERROR_CODE_AREA_ERROR_BY_OVER_TOTAL_NUM = 10143; // The number of areas exceeded the
+        int PU_ERROR_CODE_AREA_ERROR_BY_OVER_TOTAL_NUM = 10143; // The number of areas exceeded the
         // maximum value, 10.
-        public static final int PU_ERROR_CODE_AREA_ERROR_BY_ZERO_NUM = 10144; // The number of areas is 0.
-        public static final int PU_ERROR_CODE_AREA_POINT_ERROR_BY_OVER_NUM = 10145; // The number of area vertexes
+        int PU_ERROR_CODE_AREA_ERROR_BY_ZERO_NUM = 10144; // The number of areas is 0.
+        int PU_ERROR_CODE_AREA_POINT_ERROR_BY_OVER_NUM = 10145; // The number of area vertexes
         // exceeded the maximum.
-        public static final int PU_ERROR_CODE_AREA_ABN_ERROR_BY_CONFLICT = 10146; // A conflict occurred when abandoned
+        int PU_ERROR_CODE_AREA_ABN_ERROR_BY_CONFLICT = 10146; // A conflict occurred when abandoned
         // object detection is enabled. The
         // removed object detection has been
         // enabled.
-        public static final int PU_ERROR_CODE_AREA_RMV_ERROR_BY_CONFLICT = 10147; // A conflict occurred when removed
+        int PU_ERROR_CODE_AREA_RMV_ERROR_BY_CONFLICT = 10147; // A conflict occurred when removed
         // object detection is enabled. The
         // abandoned object detection has
         // been enabled.
-        public static final int PU_ERROR_CODE_VIM_GLOBAL_PARA_ERROR = 10148; // Failed to set global parameters for the
+        int PU_ERROR_CODE_VIM_GLOBAL_PARA_ERROR = 10148; // Failed to set global parameters for the
         // intelligent analysis algorithm.
-        public static final int PU_ERROR_CODE_AREA_NOTSURPORT_ERROR = 10149; // Invalid intelligent analysis area.
-        public static final int PU_ERROR_CODE_PRIVACY_MASK_AREA_BEYOND = 10150; // The privacy mask area exceeds the
+        int PU_ERROR_CODE_AREA_NOTSURPORT_ERROR = 10149; // Invalid intelligent analysis area.
+        int PU_ERROR_CODE_PRIVACY_MASK_AREA_BEYOND = 10150; // The privacy mask area exceeds the
         // total area.
-        public static final int PU_ERROR_CODE_MEDIA_ADAPT_BW_MUTEX = 10151; // The adaptive bandwidth function conflicts
+        int PU_ERROR_CODE_MEDIA_ADAPT_BW_MUTEX = 10151; // The adaptive bandwidth function conflicts
         // with the encoding type or bit rate type.
-        public static final int PU_ERROR_CODE_IP_FILTER_RULE_SAME = 10152; // Duplicate IP address filtering rule.
-        public static final int PU_ERROR_CODE_WD_FRAME_CONFLICT = 10153; // If the WDR mode is set to manual or auto,
+        int PU_ERROR_CODE_IP_FILTER_RULE_SAME = 10152; // Duplicate IP address filtering rule.
+        int PU_ERROR_CODE_WD_FRAME_CONFLICT = 10153; // If the WDR mode is set to manual or auto,
         // the collection frame rate cannot be set
         // to 50 or 60 fps.
-        public static final int PU_ERROR_CODE_FRAME_WD_CONFLICT = 10154; // If the collection frame rate is set to 50 or
+        int PU_ERROR_CODE_FRAME_WD_CONFLICT = 10154; // If the collection frame rate is set to 50 or
         // 60 fps, the WDR mode cannot be set to
         // manual or auto.
-        public static final int PU_ERROR_CODE_CONFLICT_VIDEOBLOCK_OR_IGT_IS_ENABLE = 10155; // Failed to set the
+        int PU_ERROR_CODE_CONFLICT_VIDEOBLOCK_OR_IGT_IS_ENABLE = 10155; // Failed to set the
         // illuminance enhancement
         // because the lens blocking
         // detection or behavior
         // analysis function is
         // enabled.
-        public static final int PU_ERROR_CODE_BUSY_CURISE = 10156; // Failed to set tour parameters during a tour.
-        public static final int PU_ERROR_CODE_DEVICE_CLOSE = 10157; // The device is not started.
-        public static final int PU_ERROR_CODE_BUSY_PRESET = 10158; // Failed to delete the preset position in use.
-        public static final int PU_ERROR_CODE_INVALID_IGT_AREA_ID = 10159; // The intelligent analysis area does not
+        int PU_ERROR_CODE_BUSY_CURISE = 10156; // Failed to set tour parameters during a tour.
+        int PU_ERROR_CODE_DEVICE_CLOSE = 10157; // The device is not started.
+        int PU_ERROR_CODE_BUSY_PRESET = 10158; // Failed to delete the preset position in use.
+        int PU_ERROR_CODE_INVALID_IGT_AREA_ID = 10159; // The intelligent analysis area does not
         // exist.
-        public static final int PU_ERROR_CODE_INVALID_IGT_LINE_ID = 10160; // The intelligent analysis line does not
+        int PU_ERROR_CODE_INVALID_IGT_LINE_ID = 10160; // The intelligent analysis line does not
         // exist.
-        public static final int PU_ERROR_CODE_INVALID_PRIVACY_ID = 10161; // The privacy mask area does not exist.
-        public static final int PU_ERROR_CODE_IN_USER_DEFINE_SCAN = 10162; // Pattern scan is in progress (many
+        int PU_ERROR_CODE_INVALID_PRIVACY_ID = 10161; // The privacy mask area does not exist.
+        int PU_ERROR_CODE_IN_USER_DEFINE_SCAN = 10162; // Pattern scan is in progress (many
         // functions are unavailable).
-        public static final int PU_ERROR_CODE_SET_DRC_BACKLIGHT_CONFLICT = 10163; // The backlight compensation and DRC
+        int PU_ERROR_CODE_SET_DRC_BACKLIGHT_CONFLICT = 10163; // The backlight compensation and DRC
         // functions cannot be enabled at
         // the same time.
-        public static final int PU_ERROR_CODE_CURISE_IN_GUARD_POSITION = 10164; // A preset position in the tour has
+        int PU_ERROR_CODE_CURISE_IN_GUARD_POSITION = 10164; // A preset position in the tour has
         // been configured as the home position.
-        public static final int PU_ERROR_CODE_DISK_ABNORMAL = 10165; // SD card exception.
-        public static final int PU_ERROR_CODE_PRIVACYMASK_REGION_INTERSECT = 10166; // Privacy mask areas overlapped.
-        public static final int PU_ERROR_CODE_INVALID_SAMEPASSWD = 10167; // The new password must be different from the
+        int PU_ERROR_CODE_DISK_ABNORMAL = 10165; // SD card exception.
+        int PU_ERROR_CODE_PRIVACYMASK_REGION_INTERSECT = 10166; // Privacy mask areas overlapped.
+        int PU_ERROR_CODE_INVALID_SAMEPASSWD = 10167; // The new password must be different from the
         // old password.
-        public static final int PU_ERROR_CODE_NOT_SUPPORTED_UPDATE = 10168; // The version of the upgrade file is too
+        int PU_ERROR_CODE_NOT_SUPPORTED_UPDATE = 10168; // The version of the upgrade file is too
         // early. Upgrade the file to a later
         // version.
-        public static final int PU_ERROR_CODE_MANY_RECORD_FILES = 10169; // Too many recording files.
-        public static final int PU_ERROR_CODE_CONFLICT_WITH_MOSAIC = 10170; // The operation conflicts with the mosaic
+        int PU_ERROR_CODE_MANY_RECORD_FILES = 10169; // Too many recording files.
+        int PU_ERROR_CODE_CONFLICT_WITH_MOSAIC = 10170; // The operation conflicts with the mosaic
         // setting.
-        public static final int PU_ERROR_CODE_CONFLICT_WITH_OSD = 10171; // The operation conflicts with the OSD
+        int PU_ERROR_CODE_CONFLICT_WITH_OSD = 10171; // The operation conflicts with the OSD
         // setting.
-        public static final int PU_ERROR_CODE_CONFLICT_WITH_PIC = 10172; // The operation conflicts with image overlay.
-        public static final int PU_ERROR_CODE_VIDEO_ENC_CLOSE = 10173; // The video encoder is not started.
-        public static final int PU_ERROR_CODE_ISP_PARA_CONFLICT = 10174; // ISP parameter conflict.
-        public static final int PU_ERROR_CODE_WB_HIGH_TEMP_LOWER = 10175; // The lower limit of the color temperature
+        int PU_ERROR_CODE_CONFLICT_WITH_PIC = 10172; // The operation conflicts with image overlay.
+        int PU_ERROR_CODE_VIDEO_ENC_CLOSE = 10173; // The video encoder is not started.
+        int PU_ERROR_CODE_ISP_PARA_CONFLICT = 10174; // ISP parameter conflict.
+        int PU_ERROR_CODE_WB_HIGH_TEMP_LOWER = 10175; // The lower limit of the color temperature
         // must be less than the upper limit in
         // automatic tracking white balance mode.
-        public static final int PU_ERROR_CODE_MJPEG_UNSUPPORT_WATERMARK = 10176; // The MJPEG does not support the
+        int PU_ERROR_CODE_MJPEG_UNSUPPORT_WATERMARK = 10176; // The MJPEG does not support the
         // digital watermark function.
-        public static final int PU_ERROR_CODE_ISP_CONFLICT_WITH_FRAMERATE = 10177; // WDR or backlight compensation is
+        int PU_ERROR_CODE_ISP_CONFLICT_WITH_FRAMERATE = 10177; // WDR or backlight compensation is
         // mutually exclusive with the full
         // frame rate.
-        public static final int PU_ERROR_CODE_FRAMERATE_CONFLICT_WITH_ISP = 10178; // Full frame rate is mutually
+        int PU_ERROR_CODE_FRAMERATE_CONFLICT_WITH_ISP = 10178; // Full frame rate is mutually
         // exclusive with WDR or backlight
         // compensation.
-        public static final int PU_ERROR_CODE_OSD_STRING_LEN_ERR = 10179; // The OSD character length is incorrect.
-        public static final int PU_ERROR_CODE_DISK_MOUNT_ERROR = 10183; // The disk is not mounted.
-        public static final int PU_ERROR_CODE_IMPORTING_FACE_LIB = 10184; // Importing data into the face library...
+        int PU_ERROR_CODE_OSD_STRING_LEN_ERR = 10179; // The OSD character length is incorrect.
+        int PU_ERROR_CODE_DISK_MOUNT_ERROR = 10183; // The disk is not mounted.
+        int PU_ERROR_CODE_IMPORTING_FACE_LIB = 10184; // Importing data into the face library...
         // Please wait.
-        public static final int PU_ERROR_CODE_ADDING_ONE_FACE = 10185; // Adding faces... Please wait.
-        public static final int PU_ERROR_CODE_AUDIO_DETECT_MIC_NOT_SUPPORT = 10200; // Audio exception detection is not
+        int PU_ERROR_CODE_ADDING_ONE_FACE = 10185; // Adding faces... Please wait.
+        int PU_ERROR_CODE_AUDIO_DETECT_MIC_NOT_SUPPORT = 10200; // Audio exception detection is not
         // supported in the case of MIC
         // connection.
-        public static final int PU_ERROR_CODE_CIF_CONFLICT = 10202; // The CIF cannot be set because it is mutually
+        int PU_ERROR_CODE_CIF_CONFLICT = 10202; // The CIF cannot be set because it is mutually
         // exclusive with the corridor mode.
-        public static final int PU_ERROR_CODE_CORRIDOR_CONFLICT = 10203; // The corridor cannot be set because it is
+        int PU_ERROR_CODE_CORRIDOR_CONFLICT = 10203; // The corridor cannot be set because it is
         // mutually exclusive with the CIF.
-        public static final int PU_RESULT_ERR_POINT_OUTOF_RANGE = 10211;
-        public static final int PU_RESULT_ERR_LINE_BECOME_POINT = 10212;
-        public static final int PU_RESULT_ERR_LINE_CROSS = 10213;
-        public static final int PU_ERROR_ISP_AE_MANUAL_CONFLICT_WD = 10214; // Manual exposure and WDR are mutually
+        int PU_RESULT_ERR_POINT_OUTOF_RANGE = 10211;
+        int PU_RESULT_ERR_LINE_BECOME_POINT = 10212;
+        int PU_RESULT_ERR_LINE_CROSS = 10213;
+        int PU_ERROR_ISP_AE_MANUAL_CONFLICT_WD = 10214; // Manual exposure and WDR are mutually
         // exclusive.
-        public static final int PU_ERROR_ISP_AE_MANUAL_CONFLICT_FLICKER = 10215; // The manual exposure and background
+        int PU_ERROR_ISP_AE_MANUAL_CONFLICT_FLICKER = 10215; // The manual exposure and background
         // frequency are mutually exclusive.
-        public static final int PU_ERROR_ISP_AE_MANUAL_CONFLICT_HLC = 10216; // Manual exposure and highlight
+        int PU_ERROR_ISP_AE_MANUAL_CONFLICT_HLC = 10216; // Manual exposure and highlight
         // compensation are mutually exclusive.
-        public static final int PU_ERROR_ISP_AE_SHUTPRI_CONFLICT_WD = 10217; // Manual exposure and WDR are mutually
+        int PU_ERROR_ISP_AE_SHUTPRI_CONFLICT_WD = 10217; // Manual exposure and WDR are mutually
         // exclusive.
-        public static final int PU_ERROR_ISP_AE_SHUTPRI_CONFLICT_FLICKER = 10218; // The shutter priority exposure mode
+        int PU_ERROR_ISP_AE_SHUTPRI_CONFLICT_FLICKER = 10218; // The shutter priority exposure mode
         // and background frequency are
         // mutually exclusive.
-        public static final int PU_ERROR_ISP_AE_SHUTPRI_CONFLICT_HLC = 10219; // The shutter priority exposure mode and
+        int PU_ERROR_ISP_AE_SHUTPRI_CONFLICT_HLC = 10219; // The shutter priority exposure mode and
         // highlight compensation are mutually
         // exclusive.
-        public static final int PU_ERROR_ISP_BACKLIGHT_CONFLICT_WD = 10220; // Backlight compensation and WDR are
+        int PU_ERROR_ISP_BACKLIGHT_CONFLICT_WD = 10220; // Backlight compensation and WDR are
         // mutually exclusive.
-        public static final int PU_ERROR_ISP_BACKLIGHT_CONFLICT_HLC = 10221; // Backlight compensation and highlight
+        int PU_ERROR_ISP_BACKLIGHT_CONFLICT_HLC = 10221; // Backlight compensation and highlight
         // compensation are mutually exclusive.
-        public static final int PU_ERROR_ISP_WD_CONFLICT_HLC = 10222; // WDR and highlight compensation are mutually
+        int PU_ERROR_ISP_WD_CONFLICT_HLC = 10222; // WDR and highlight compensation are mutually
         // exclusive.
-        public static final int PU_ERROR_ISP_DEFOG_CONFLICT_WD = 10223; // The defogging mode and WDR are mutually
+        int PU_ERROR_ISP_DEFOG_CONFLICT_WD = 10223; // The defogging mode and WDR are mutually
         // exclusive.
-        public static final int PU_ERROR_ISP_HLC_CONFLICT_FRAMERATE = 10224; // Highlight compensation is mutually
+        int PU_ERROR_ISP_HLC_CONFLICT_FRAMERATE = 10224; // Highlight compensation is mutually
         // exclusive with the frame rate of 50
         // or 60 fps.
-        public static final int PU_ERROR_ISP_WD_CONFLICT_FRAMERATE = 10225; // WDR is mutually exclusive with the frame
+        int PU_ERROR_ISP_WD_CONFLICT_FRAMERATE = 10225; // WDR is mutually exclusive with the frame
         // rate of 50 or 60 fps.
-        public static final int PU_ERROR_ISP_AE_MANUAL_CONFLICT_BACKLIGHT = 10226; // Manual exposure and backlight
+        int PU_ERROR_ISP_AE_MANUAL_CONFLICT_BACKLIGHT = 10226; // Manual exposure and backlight
         // compensation are mutually
         // exclusive.
-        public static final int PU_ERROR_ISP_HLC_CONFLICT_SLOW_SHUTTER = 10227; // Highlight compensation and slow
+        int PU_ERROR_ISP_HLC_CONFLICT_SLOW_SHUTTER = 10227; // Highlight compensation and slow
         // shutter are mutually exclusive.
-        public static final int PU_ERROR_ISP_WD_CONFLICT_SLOW_SHUTTER = 10228; // WDR and slow shutter are mutually
+        int PU_ERROR_ISP_WD_CONFLICT_SLOW_SHUTTER = 10228; // WDR and slow shutter are mutually
         // exclusive.
-        public static final int PU_ERROR_CODE_DOWNLOAD_FILE_ERROR = 10300; // File download failed.
-        public static final int PU_ERROR_CODE_CONNECTION_SERVER_INTERRUPTED = 10301; // Disconnected from the server.
-        public static final int PU_ERROR_CODE_REQUEST_OVERTIME = 10302; // Request timeout.
-        public static final int PU_ERROR_CODE_CONNECTION_SERVER_FAIL = 10303; // Server connection failure.
-        public static final int PU_ERROR_CODE_CONNECTION_NOT_FOUND = 10304; // The connection is not found.
-        public static final int PU_ERROR_CODE_RECONNECTING_TO_SERVER = 10305; // Reconnecting to the server...
-        public static final int PU_ERROR_CODE_FILE_NOT_EXIST = 10306; // The file does not exist.
-        public static final int PU_ERROR_CODE_INVALID_UPDATEFILE = 10310; // Invalid upgrade file.
-        public static final int PU_ERROR_CODE_UPDATEFILE_BAD = 10311; // The file is corrupted.
-        public static final int PU_ERROR_CODE_INVALID_FILE_FORMAT = 10312; // Incorrect file format.
-        public static final int PU_ERROR_CODE_UPGRADE_TYPE_ERR = 10350; // The upgrade file type does not match the
+        int PU_ERROR_CODE_DOWNLOAD_FILE_ERROR = 10300; // File download failed.
+        int PU_ERROR_CODE_CONNECTION_SERVER_INTERRUPTED = 10301; // Disconnected from the server.
+        int PU_ERROR_CODE_REQUEST_OVERTIME = 10302; // Request timeout.
+        int PU_ERROR_CODE_CONNECTION_SERVER_FAIL = 10303; // Server connection failure.
+        int PU_ERROR_CODE_CONNECTION_NOT_FOUND = 10304; // The connection is not found.
+        int PU_ERROR_CODE_RECONNECTING_TO_SERVER = 10305; // Reconnecting to the server...
+        int PU_ERROR_CODE_FILE_NOT_EXIST = 10306; // The file does not exist.
+        int PU_ERROR_CODE_INVALID_UPDATEFILE = 10310; // Invalid upgrade file.
+        int PU_ERROR_CODE_UPDATEFILE_BAD = 10311; // The file is corrupted.
+        int PU_ERROR_CODE_INVALID_FILE_FORMAT = 10312; // Incorrect file format.
+        int PU_ERROR_CODE_UPGRADE_TYPE_ERR = 10350; // The upgrade file type does not match the
         // request type.
-        public static final int PU_ERROR_CODE_UPGRADE_PARAM_NULL = 10351; // The upgrade parameter is empty.
-        public static final int PU_ERROR_CODE_UPGRADE_NOT_UPLOAD = 10352; // The upgrade file is not uploaded.
-        public static final int PU_ERROR_CODE_UPGRADE_VERIFY_FAIL = 10353; // Failed to verify the integrity of the
+        int PU_ERROR_CODE_UPGRADE_PARAM_NULL = 10351; // The upgrade parameter is empty.
+        int PU_ERROR_CODE_UPGRADE_NOT_UPLOAD = 10352; // The upgrade file is not uploaded.
+        int PU_ERROR_CODE_UPGRADE_VERIFY_FAIL = 10353; // Failed to verify the integrity of the
         // upgrade file.
-        public static final int PU_ERROR_CODE_UPGRADE_SIGN_FAIL = 10354; // Failed to verify the digital signature of
+        int PU_ERROR_CODE_UPGRADE_SIGN_FAIL = 10354; // Failed to verify the digital signature of
         // the upgrade file.
-        public static final int PU_ERROR_CODE_UPGRADE_SPACE_FULL = 10355; // The upgrade storage space is full.
-        public static final int PU_ERROR_CODE_UPGRADE_DEVICE_FAIL = 10356; // Failed to adapt the device list.
-        public static final int PU_ERROR_RESULT_ALG_VER_ERR_U = 10357; // The algorithm package version is incorrect.
+        int PU_ERROR_CODE_UPGRADE_SPACE_FULL = 10355; // The upgrade storage space is full.
+        int PU_ERROR_CODE_UPGRADE_DEVICE_FAIL = 10356; // Failed to adapt the device list.
+        int PU_ERROR_RESULT_ALG_VER_ERR_U = 10357; // The algorithm package version is incorrect.
         // The algorithm package version must be
         // consistent with the VRC version of the
         // software package.
-        public static final int PU_ERROR_RESULT_ALG_VER_NEED_UPGRADE_U = 10358; // The algorithm package needs to be
+        int PU_ERROR_RESULT_ALG_VER_NEED_UPGRADE_U = 10358; // The algorithm package needs to be
         // upgraded after the version package is
         // upgraded.
-        public static final int PU_ERROR_SD_NOT_FORMAT = 10601; // The SD card is not formatted.
-        public static final int PU_ERROR_CODE_CUSTOM_PACKAGE_UNDEFINED = 10602; // The customized profile is not
+        int PU_ERROR_SD_NOT_FORMAT = 10601; // The SD card is not formatted.
+        int PU_ERROR_CODE_CUSTOM_PACKAGE_UNDEFINED = 10602; // The customized profile is not
         // defined.
-        public static final int PU_ERROR_CODE_PTZ_BUSY = 10603; // The PTZ is not stopped.
-        public static final int PU_ERROR_CODE_OSDI_AREA_NOT_EXIST = 10700; // The area does not exist. The index value
+        int PU_ERROR_CODE_PTZ_BUSY = 10603; // The PTZ is not stopped.
+        int PU_ERROR_CODE_OSDI_AREA_NOT_EXIST = 10700; // The area does not exist. The index value
         // is incorrect.
-        public static final int PU_ERROR_CODE_OSDI_AREA_TOO_LARGE = 10701; // The horizontal width of the area exceeds
+        int PU_ERROR_CODE_OSDI_AREA_TOO_LARGE = 10701; // The horizontal width of the area exceeds
         // 180 degrees.
-        public static final int PU_ERROR_CODE_OSDI_AREA_INVALID_VERDEGREE = 10702; // The area coordinate does not
+        int PU_ERROR_CODE_OSDI_AREA_INVALID_VERDEGREE = 10702; // The area coordinate does not
         // comply with the lower-left and
         // upper-right rules.
-        public static final int PU_ERROR_CODE_OSDI_INDEX_AlREADY_EXIST = 10705; // The index number of the new area is
+        int PU_ERROR_CODE_OSDI_INDEX_AlREADY_EXIST = 10705; // The index number of the new area is
         // invalid. The index already exists.
-        public static final int PU_ERROR_CODE_OSDI_HOR_OR_VER_EQUAL = 10708; // The horizontal coordinate and vertical
+        int PU_ERROR_CODE_OSDI_HOR_OR_VER_EQUAL = 10708; // The horizontal coordinate and vertical
         // coordinate of the area are the same.
-        public static final int PU_ERROR_CODE_OSDI_INDEX_INVALID = 10709; // The area index number is invalid. It must
+        int PU_ERROR_CODE_OSDI_INDEX_INVALID = 10709; // The area index number is invalid. It must
         // be smaller than 1.
-        public static final int PU_ERROR_CODE_OSDI_INDEX_EQUAL = 10710; // Duplicate index number of the area.
-        public static final int PU_ERROR_CODE_DST_ALREADY_OPEN = 10800; // The DST has been enabled.
-        public static final int PU_STABILIZER_CONFLICT_AREA_CROP = 10900; // Failed to enable the electronic image
+        int PU_ERROR_CODE_OSDI_INDEX_EQUAL = 10710; // Duplicate index number of the area.
+        int PU_ERROR_CODE_DST_ALREADY_OPEN = 10800; // The DST has been enabled.
+        int PU_STABILIZER_CONFLICT_AREA_CROP = 10900; // Failed to enable the electronic image
         // stabilization function. This function is
         // mutually exclusive with area cropping.
-        public static final int PU_AREA_CROP_CONFLICT_STABILIZER = 10901; // Failed to enable area cropping. This
+        int PU_AREA_CROP_CONFLICT_STABILIZER = 10901; // Failed to enable area cropping. This
         // function is mutually exclusive with the
         // electronic image stabilization function.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_POINT_NULL = 10950; // Null pointer.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_READ_FILE = 10951; // Failed to read the file.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_XML_PARSER = 10952; // XML parsing.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_IMG_TPYE = 10953; // Image type.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_RESOLUTION_DIFF = 10954; // The resolution is different from
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_POINT_NULL = 10950; // Null pointer.
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_READ_FILE = 10951; // Failed to read the file.
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_XML_PARSER = 10952; // XML parsing.
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_IMG_TPYE = 10953; // Image type.
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_RESOLUTION_DIFF = 10954; // The resolution is different from
         // the initial resolution.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_VERTEX_ILLEGAL = 10955; // Improper coordinates.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_RESOLUTION_UNSUPPORT = 10956; // Unsupported resolution.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_PARAM_ERR = 10957; // Parameter error.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_MALLOC_FAILED = 10958; // Memory allocation failed.
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_VERTEX_ILLEGAL = 10955; // Improper coordinates.
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_RESOLUTION_UNSUPPORT = 10956; // Unsupported resolution.
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_PARAM_ERR = 10957; // Parameter error.
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_MALLOC_FAILED = 10958; // Memory allocation failed.
         // Control error.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_NOT_CONFIG = 10961; // Configuration error.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_PARAM_SET = 10962; // The parameter is set incorrectly.
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_NOT_CONFIG = 10961; // Configuration error.
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_PARAM_SET = 10962; // The parameter is set incorrectly.
         // Incorrect lane line.
-        public static final int PU_ERROR_CODE_ITGT_IMRS_ERR_LANE_OVERLAP = 10963; // Incorrect lane line.
-        public static final int PU_ERROR_RESULT_VLPR_ERR_LINE_OUTOF_RANGE = 10964; // Setting failed. The detection line
+        int PU_ERROR_CODE_ITGT_IMRS_ERR_LANE_OVERLAP = 10963; // Incorrect lane line.
+        int PU_ERROR_RESULT_VLPR_ERR_LINE_OUTOF_RANGE = 10964; // Setting failed. The detection line
         // is out of the lane line.
-        public static final int PU_ERROR_CODE_SHORT_KEY = 11001; // The certificate key is too short.
-        public static final int PU_ERROR_CODE_WEAK_CERT = 11002; // The certificate key is too weak.
-        public static final int PU_ERROR_CODE_GET_TEMPERTURE_VW_RET_FAIL = 11024; // Failed to invoke the VM interface.
+        int PU_ERROR_CODE_SHORT_KEY = 11001; // The certificate key is too short.
+        int PU_ERROR_CODE_WEAK_CERT = 11002; // The certificate key is too weak.
+        int PU_ERROR_CODE_GET_TEMPERTURE_VW_RET_FAIL = 11024; // Failed to invoke the VM interface.
         // For example, the driver is
         // invoked to obtain the
         // temperature.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LANE_TYPE = 11100; // The lane line type is out of range.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LANE_NUM = 11101; // The number of lanes is out of range.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LANE_DIR = 11102; // Invalid lane direction.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LANE_DRV_DIR = 11103; // Invalid regulated driving direction
+        int PU_RESULT_ITS_ERR_INVALID_LANE_TYPE = 11100; // The lane line type is out of range.
+        int PU_RESULT_ITS_ERR_INVALID_LANE_NUM = 11101; // The number of lanes is out of range.
+        int PU_RESULT_ITS_ERR_INVALID_LANE_DIR = 11102; // Invalid lane direction.
+        int PU_RESULT_ITS_ERR_INVALID_LANE_DRV_DIR = 11103; // Invalid regulated driving direction
         // of the lane.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LANE_PURPOSE = 11104; // Invalid lane usage.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LANE_ATTR = 11105; // Invalid lane attribute.
-        public static final int PU_RESULT_ITS_ERR_INVALID_CAR_DRV_DIR = 11106; // Invalid driving direction.
-        public static final int PU_RESULT_ITS_ERR_INVALID_SIGN_DIR = 11107; // Invalid marked direction.
-        public static final int PU_RESULT_ITS_ERR_INVALID_NORMAL_SIGN_SPEED = 11108; // Invalid marked speed for small
+        int PU_RESULT_ITS_ERR_INVALID_LANE_PURPOSE = 11104; // Invalid lane usage.
+        int PU_RESULT_ITS_ERR_INVALID_LANE_ATTR = 11105; // Invalid lane attribute.
+        int PU_RESULT_ITS_ERR_INVALID_CAR_DRV_DIR = 11106; // Invalid driving direction.
+        int PU_RESULT_ITS_ERR_INVALID_SIGN_DIR = 11107; // Invalid marked direction.
+        int PU_RESULT_ITS_ERR_INVALID_NORMAL_SIGN_SPEED = 11108; // Invalid marked speed for small
         // vehicles.
-        public static final int PU_RESULT_ITS_ERR_INVALID_NORMAL_LOW_SPEED = 11109; // Invalid lower speed limit for
+        int PU_RESULT_ITS_ERR_INVALID_NORMAL_LOW_SPEED = 11109; // Invalid lower speed limit for
         // small vehicles.
-        public static final int PU_RESULT_ITS_ERR_INVALID_NORMAL_HIGH_SPEED = 11110; // Invalid upper speed limit for
+        int PU_RESULT_ITS_ERR_INVALID_NORMAL_HIGH_SPEED = 11110; // Invalid upper speed limit for
         // small vehicles.
-        public static final int PU_RESULT_ITS_ERR_INVALID_BIGVEHICLE_SIGN_SPEED = 11111; // Invalid marked speed for
+        int PU_RESULT_ITS_ERR_INVALID_BIGVEHICLE_SIGN_SPEED = 11111; // Invalid marked speed for
         // large vehicles.
-        public static final int PU_RESULT_ITS_ERR_INVALID_BIGVEHICLE_LOW_SPEED = 11112; // Invalid lower speed limit for
+        int PU_RESULT_ITS_ERR_INVALID_BIGVEHICLE_LOW_SPEED = 11112; // Invalid lower speed limit for
         // large vehicles.
-        public static final int PU_RESULT_ITS_ERR_INVALID_BIGVEHICLE_HIGH_SPEED = 11113; // Invalid upper speed limit
+        int PU_RESULT_ITS_ERR_INVALID_BIGVEHICLE_HIGH_SPEED = 11113; // Invalid upper speed limit
         // for large vehicles.
-        public static final int PU_RESULT_ITS_ERR_INVALID_EXTERN_LAMP_BITMAP = 11114; // Invalid external illuminator
+        int PU_RESULT_ITS_ERR_INVALID_EXTERN_LAMP_BITMAP = 11114; // Invalid external illuminator
         // association.
-        public static final int PU_RESULT_ITS_ERR_INVALID_SNAP_INTERVAL = 11115; // The snapshot interval is out of
+        int PU_RESULT_ITS_ERR_INVALID_SNAP_INTERVAL = 11115; // The snapshot interval is out of
         // range.
-        public static final int PU_RESULT_ITS_ERR_INVALID_DT_TYPE = 11116; // The detection mode is out of range.
-        public static final int PU_RESULT_ITS_ERR_INVALID_REGULATION_NUM = 11117; // The number of violations exceeded
+        int PU_RESULT_ITS_ERR_INVALID_DT_TYPE = 11116; // The detection mode is out of range.
+        int PU_RESULT_ITS_ERR_INVALID_REGULATION_NUM = 11117; // The number of violations exceeded
         // the maximum.
-        public static final int PU_RESULT_ITS_ERR_INVALID_REGULATION_TYPE = 11118; // Invalid violation type.
-        public static final int PU_RESULT_ITS_ERR_INVALID_SNAP_NUM = 11119; // The number of traffic violation snapshots
+        int PU_RESULT_ITS_ERR_INVALID_REGULATION_TYPE = 11118; // Invalid violation type.
+        int PU_RESULT_ITS_ERR_INVALID_SNAP_NUM = 11119; // The number of traffic violation snapshots
         // is out of range.
-        public static final int PU_RESULT_ITS_ERR_INVALID_RUNNINGRED_PRIORITY = 11120; // Invalid red-light-running
+        int PU_RESULT_ITS_ERR_INVALID_RUNNINGRED_PRIORITY = 11120; // Invalid red-light-running
         // detection priority.
-        public static final int PU_RESULT_ITS_ERR_INVALID_OVER_LANE_SENSITIVITY = 11121; // The sensitivity for
+        int PU_RESULT_ITS_ERR_INVALID_OVER_LANE_SENSITIVITY = 11121; // The sensitivity for
         // detecting marked lanes
         // violations is invalid.
-        public static final int PU_RESULT_ITS_ERR_INVALID_VINBIKELANE_STAYTIME = 11122; // The dwell duration for
+        int PU_RESULT_ITS_ERR_INVALID_VINBIKELANE_STAYTIME = 11122; // The dwell duration for
         // detecting motor vehicles on
         // non-motor vehicle lanes is
         // invalid.
-        public static final int PU_RESULT_ITS_ERR_INVALID_OVER_BUSLANE_STAYTIME = 11123; // Invalid bus lane occupation
+        int PU_RESULT_ITS_ERR_INVALID_OVER_BUSLANE_STAYTIME = 11123; // Invalid bus lane occupation
         // time.
-        public static final int PU_RESULT_ITS_ERR_INVALID_PARKINGTIME = 11124; // Invalid dwell duration for detecting
+        int PU_RESULT_ITS_ERR_INVALID_PARKINGTIME = 11124; // Invalid dwell duration for detecting
         // parking in yellow zones.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LIGHT_DT_TYPE = 11125; // The traffic light access mode is out
+        int PU_RESULT_ITS_ERR_INVALID_LIGHT_DT_TYPE = 11125; // The traffic light access mode is out
         // of range.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LIGHT_AREA_NUM = 11126; // Invalid number of traffic light
+        int PU_RESULT_ITS_ERR_INVALID_LIGHT_AREA_NUM = 11126; // Invalid number of traffic light
         // areas.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LIGHT_NUM = 11127; // Invalid number of traffic lights.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LIGHT_ARRANGE_TYPE = 11128; // Invalid traffic light
+        int PU_RESULT_ITS_ERR_INVALID_LIGHT_NUM = 11127; // Invalid number of traffic lights.
+        int PU_RESULT_ITS_ERR_INVALID_LIGHT_ARRANGE_TYPE = 11128; // Invalid traffic light
         // direction.
-        public static final int PU_RESULT_ITS_ERR_INVALID_YELLOW_TIME = 11129; // Invalid duration of the yellow light.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LIGHT_AREA = 11130; // Invalid traffic light area.
-        public static final int PU_RESULT_ITS_ERR_LINE_OUTOF_RANGE = 11131; // The detection line or stop line is out of
+        int PU_RESULT_ITS_ERR_INVALID_YELLOW_TIME = 11129; // Invalid duration of the yellow light.
+        int PU_RESULT_ITS_ERR_INVALID_LIGHT_AREA = 11130; // Invalid traffic light area.
+        int PU_RESULT_ITS_ERR_LINE_OUTOF_RANGE = 11131; // The detection line or stop line is out of
         // the lane line or right boundary line
         // range.
-        public static final int PU_RESULT_ITS_ERR_INVALID_NORMAL_SPEED_RANGE_CONFIG = 11132; // If the lower speed limit
+        int PU_RESULT_ITS_ERR_INVALID_NORMAL_SPEED_RANGE_CONFIG = 11132; // If the lower speed limit
         // for small vehicles is
         // greater than the
         // upper speed limit, an
         // error is returned.
-        public static final int PU_RESULT_ITS_ERR_INVALID_NORMAL_SIGN_SPEED_CONFIG = 11133; // If the marked speed for
+        int PU_RESULT_ITS_ERR_INVALID_NORMAL_SIGN_SPEED_CONFIG = 11133; // If the marked speed for
         // small vehicles is out of
         // range, an error is
         // returned.
-        public static final int PU_RESULT_ITS_ERR_INVALID_BIGVEHICLE_SPEED_RANGE_CONFIG = 11134; // If the lower speed
+        int PU_RESULT_ITS_ERR_INVALID_BIGVEHICLE_SPEED_RANGE_CONFIG = 11134; // If the lower speed
         // limit for large
         // vehicles is
         // greater than the
         // upper speed
         // limit, an error
         // is returned.
-        public static final int PU_RESULT_ITS_ERR_INVALID_BIGVEHICLE_SIGN_SPEED_CONFIG = 11135; // If the marked speed
+        int PU_RESULT_ITS_ERR_INVALID_BIGVEHICLE_SIGN_SPEED_CONFIG = 11135; // If the marked speed
         // for large vehicles is
         // out of range, an
         // error is returned.
-        public static final int PU_RESULT_ITS_ERR_INVALID_RETURNDATA = 11136;
-        public static final int PU_RESULT_ITS_ERR_INVALID_CONGESTION_THRESHOLD = 11137;
-        public static final int PU_RESULT_ITS_ERR_INVALID_SNAP_INTERVAL_TYPE = 11138; // Invalid snapshot interval type.
-        public static final int PU_RESULT_ITS_ERR_INVALID_ADAPT_SNAP_LOWSPEED = 11139; // The maximum low speed of the
+        int PU_RESULT_ITS_ERR_INVALID_RETURNDATA = 11136;
+        int PU_RESULT_ITS_ERR_INVALID_CONGESTION_THRESHOLD = 11137;
+        int PU_RESULT_ITS_ERR_INVALID_SNAP_INTERVAL_TYPE = 11138; // Invalid snapshot interval type.
+        int PU_RESULT_ITS_ERR_INVALID_ADAPT_SNAP_LOWSPEED = 11139; // The maximum low speed of the
         // adaptive snapshot interval is
         // invalid.
-        public static final int PU_RESULT_ITS_ERR_INVALID_ADAPT_SNAP_MIDSPEED = 11140; // The maximum medium speed of
+        int PU_RESULT_ITS_ERR_INVALID_ADAPT_SNAP_MIDSPEED = 11140; // The maximum medium speed of
         // the adaptive snapshot
         // interval is invalid.
-        public static final int PU_RESULT_ITS_ERR_INVALID_ADAPT_LOWSPEED_INTERVAL = 11141; // The adaptive low-speed
+        int PU_RESULT_ITS_ERR_INVALID_ADAPT_LOWSPEED_INTERVAL = 11141; // The adaptive low-speed
         // snapshot interval is
         // invalid.
-        public static final int PU_RESULT_ITS_ERR_INVALID_ADAPT_MIDSPEED_INTERVAL = 11142; // The adaptive medium-speed
+        int PU_RESULT_ITS_ERR_INVALID_ADAPT_MIDSPEED_INTERVAL = 11142; // The adaptive medium-speed
         // snapshot interval is
         // invalid.
-        public static final int PU_RESULT_ITS_ERR_INVALID_ADAPT_HISPEED_INTERVAL = 11143; // The adaptive high-speed
+        int PU_RESULT_ITS_ERR_INVALID_ADAPT_HISPEED_INTERVAL = 11143; // The adaptive high-speed
         // snapshot interval is
         // invalid.
-        public static final int PU_RESULT_ITS_ERR_INVALID_LANE_ORDER = 11144; // Setting failed. Draw lane lines and the
+        int PU_RESULT_ITS_ERR_INVALID_LANE_ORDER = 11144; // Setting failed. Draw lane lines and the
         // right lane boundary from left to
         // right in sequence.
 
         // Algorithm conflict error codes
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_LRPR = 12000; // Failed to set license plate recognition
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_LRPR = 12000; // Failed to set license plate recognition
         // because it conflicts with facial
         // recognition, behavior analysis, or
         // parking detection.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_FD = 12001; // Failed to set face detection because it
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_FD = 12001; // Failed to set face detection because it
         // conflicts with license plate recognition
         // or parking detection.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_CD = 12002; // Failed to set parking detection because it
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_CD = 12002; // Failed to set parking detection because it
         // conflicts with facial recognition,
         // license plate recognition, or behavior
         // analysis.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_VA = 12003; // Failed to set behavior analysis because it
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_VA = 12003; // Failed to set behavior analysis because it
         // conflicts with license plate recognition
         // or behavior analysis.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_HC = 12004; // Failed to set head counting because it
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_HC = 12004; // Failed to set head counting because it
         // conflicts with license plate recognition,
         // facial recognition, parking detection, or
         // automatic tracking.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_AT = 12005; // Failed to set automatic tracking because it
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_AT = 12005; // Failed to set automatic tracking because it
         // conflicts with license plate recognition,
         // facial recognition, parking detection, or
         // head counting.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_VHD = 12006; // Disable the object classification function
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_VHD = 12006; // Disable the object classification function
         // first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_ITS = 12007; // Disable the ITS function first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_QD = 12008; // Disable the queue detection function first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_CDD = 12009; // Disable the crowd density detection
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_ITS = 12007; // Disable the ITS function first.
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_QD = 12008; // Disable the queue detection function first.
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_CDD = 12009; // Disable the crowd density detection
         // function first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_IBALL = 12010; // Disable the traffic violation detection
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_IBALL = 12010; // Disable the traffic violation detection
         // of the PTZ dome camera first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_VHDFACE = 12011; // Disable the full intelligence mode
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_VHDFACE = 12011; // Disable the full intelligence mode
         // first.
-        public static final int PU_RESULT_ITGT_MODE_NOTSUPPORT_ALG = 12012; // This algorithm is not supported in the
+        int PU_RESULT_ITGT_MODE_NOTSUPPORT_ALG = 12012; // This algorithm is not supported in the
         // current mode.
-        public static final int PU_RESULT_TGT_VHD_DETECTION_ERR_WRONG_VIDEO_MODE = 12013; // Object classification does
+        int PU_RESULT_TGT_VHD_DETECTION_ERR_WRONG_VIDEO_MODE = 12013; // Object classification does
         // not support the corridor
         // mode. Disable the
         // corridor mode first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_BEH = 12014; // Disable the behavior analysis function in
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_BEH = 12014; // Disable the behavior analysis function in
         // enhanced mode.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_CAMPUS_TRAFFICEVENT = 12015; // Disable vehicle detection
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_CAMPUS_TRAFFICEVENT = 12015; // Disable vehicle detection
         // at entrances and exits
         // first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_CAMPUS_ALG_TYPE = 12016; // The vehicle detection at
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_CAMPUS_ALG_TYPE = 12016; // The vehicle detection at
         // entrances and exits supports
         // only Chinese license plate
         // recognition algorithms.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_MD = 12017; // Disable the motion detection function
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_MD = 12017; // Disable the motion detection function
         // first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_OD = 12018; // Disable the lens blocking detection
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_OD = 12018; // Disable the lens blocking detection
         // function first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_SC = 12019; // Disable the scene change detection
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_SC = 12019; // Disable the scene change detection
         // function.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_OOD = 12020; // Disable the defocus detection function
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_OOD = 12020; // Disable the defocus detection function
         // first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_CA = 12021; // Disable the crowd gathering detection
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_CA = 12021; // Disable the crowd gathering detection
         // function first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_HM = 12022; // Disable the heat map function first.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_TRAFFICEVENT_CAMPUS = 12023; // Disable all vehicle event
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_HM = 12022; // Disable the heat map function first.
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_TRAFFICEVENT_CAMPUS = 12023; // Disable all vehicle event
         // detection functions.
-        public static final int PU_RESULT_TGT_FUNCTION_MUTUAL_TRAFFIC_STATISTIC_CAMPUS = 12024; // Disable the traffic
+        int PU_RESULT_TGT_FUNCTION_MUTUAL_TRAFFIC_STATISTIC_CAMPUS = 12024; // Disable the traffic
         // flow statistics
         // function first.
 
         // Error codes related to face images and face libraries
-        public static final int PU_RESULT_ITGT_ERR_FACE_SUCCESS = 12100; // Face library imported successfully.
-        public static final int PU_RESULT_ITGT_ERR_FACEREC_DISABLE = 12101; // Facial recognition is not enabled.
-        public static final int PU_RESULT_ITGT_ERR_DATA_UPDATE = 12102; // Failed to update the data.
-        public static final int PU_RESULT_ITGT_ERR_OPREATION_NOTSUPPORT = 12103; // The operation is not supported.
-        public static final int PU_RESULT_ITGT_ERR_OPREATION_UNFINISHED = 12104; // The batch import operation is not
+        int PU_RESULT_ITGT_ERR_FACE_SUCCESS = 12100; // Face library imported successfully.
+        int PU_RESULT_ITGT_ERR_FACEREC_DISABLE = 12101; // Facial recognition is not enabled.
+        int PU_RESULT_ITGT_ERR_DATA_UPDATE = 12102; // Failed to update the data.
+        int PU_RESULT_ITGT_ERR_OPREATION_NOTSUPPORT = 12103; // The operation is not supported.
+        int PU_RESULT_ITGT_ERR_OPREATION_UNFINISHED = 12104; // The batch import operation is not
         // complete.
-        public static final int PU_RESULT_ITGT_ERR_FACELIB_OVERSIZE = 12105; // The number of face libraries exceeds the
+        int PU_RESULT_ITGT_ERR_FACELIB_OVERSIZE = 12105; // The number of face libraries exceeds the
         // upper limit.
-        public static final int PU_RESULT_ITGT_ERR_FACinterface_OVERSIZE = 12106; // The number of faces exceeds the
+        int PU_RESULT_ITGT_ERR_FACinterface_OVERSIZE = 12106; // The number of faces exceeds the
         // upper limit.
-        public static final int PU_RESULT_ITGT_ERR_DB_ERROR = 12107; // Failed to operate the database.
-        public static final int PU_RESULT_ITGT_ERR_FACELIST_REPAT = 12108; // Duplicate face library.
-        public static final int PU_RESULT_ITGT_ERR_FACEPIC_OVERSIZE = 12109; // The image width or height is out of
+        int PU_RESULT_ITGT_ERR_DB_ERROR = 12107; // Failed to operate the database.
+        int PU_RESULT_ITGT_ERR_FACELIST_REPAT = 12108; // Duplicate face library.
+        int PU_RESULT_ITGT_ERR_FACEPIC_OVERSIZE = 12109; // The image width or height is out of
         // range.
-        public static final int PU_RESULT_ITGT_ERR_FACE_DECODE = 12110; // Image decoding failure.
-        public static final int PU_RESULT_ITGT_ERR_FACE_DETECTION = 12111; // Face detection failure.
-        public static final int PU_RESULT_ITGT_ERR_FACE_FEATURE = 12112; // Failed to extract facial features.
-        public static final int PU_RESULT_ITGT_ERR_FACE_DAO = 12113; // Failed to write face data into the database.
-        public static final int PU_RESULT_ITGT_ERR_FACE_FILE = 12114; // Failed to write face data into the file.
-        public static final int PU_RESULT_ITGT_ERR_FACE_ALGDISABLE = 12115; // The face-related algorithm is disabled.
-        public static final int PU_RESULT_ITGT_ERR_FACE_NOFEATURE = 12116; // There is no feature in the face library.
-        public static final int PU_RESULT_ITGT_ERR_FACE_UZIP = 12117; // Failed to decompress the ZIP package.
-        public static final int PU_RESULT_ITGT_ERR_FACE_CSV = 12118; // Failed to parse the CSV file.
-        public static final int PU_RESULT_ITGT_ERR_FACE_ENCRYPT = 12119; // Failed to encrypt or decrypt face data.
-        public static final int PU_RESULT_ITGT_ERR_FACE_TASKUNKNOW = 12120; // The task is not processed.
-        public static final int PU_RESULT_ITGT_ERR_FEATURE_EXTRACT_SUCCESS = 12121; // Features extracted successfully.
-        public static final int PU_RESULT_ITGT_ERR_FEATURE_EXTRACTED = 12122; // Features extracted.
-        public static final int PU_RESULT_ITGT_ERR_FACEREC_ENABLE_FAIL = 12123; // The facial recognition function fails
+        int PU_RESULT_ITGT_ERR_FACE_DECODE = 12110; // Image decoding failure.
+        int PU_RESULT_ITGT_ERR_FACE_DETECTION = 12111; // Face detection failure.
+        int PU_RESULT_ITGT_ERR_FACE_FEATURE = 12112; // Failed to extract facial features.
+        int PU_RESULT_ITGT_ERR_FACE_DAO = 12113; // Failed to write face data into the database.
+        int PU_RESULT_ITGT_ERR_FACE_FILE = 12114; // Failed to write face data into the file.
+        int PU_RESULT_ITGT_ERR_FACE_ALGDISABLE = 12115; // The face-related algorithm is disabled.
+        int PU_RESULT_ITGT_ERR_FACE_NOFEATURE = 12116; // There is no feature in the face library.
+        int PU_RESULT_ITGT_ERR_FACE_UZIP = 12117; // Failed to decompress the ZIP package.
+        int PU_RESULT_ITGT_ERR_FACE_CSV = 12118; // Failed to parse the CSV file.
+        int PU_RESULT_ITGT_ERR_FACE_ENCRYPT = 12119; // Failed to encrypt or decrypt face data.
+        int PU_RESULT_ITGT_ERR_FACE_TASKUNKNOW = 12120; // The task is not processed.
+        int PU_RESULT_ITGT_ERR_FEATURE_EXTRACT_SUCCESS = 12121; // Features extracted successfully.
+        int PU_RESULT_ITGT_ERR_FEATURE_EXTRACTED = 12122; // Features extracted.
+        int PU_RESULT_ITGT_ERR_FACEREC_ENABLE_FAIL = 12123; // The facial recognition function fails
         // to be enabled because the algorithm
         // package does not exist or the version
         // does not match.
-        public static final int PU_RESULT_ITGT_ERR_FACE_FEATURE_LOAD_PROCESSING = 12124; // Facial recognition has
+        int PU_RESULT_ITGT_ERR_FACE_FEATURE_LOAD_PROCESSING = 12124; // Facial recognition has
         // historical alert
         // deployment. Features need
         // to be loaded when the
         // system is started.
-        public static final int PU_RESULT_ITGT_ERR_FACE_FEATURE_PAC_IMPORT_PROCESSING = 12125; // The feature package is
+        int PU_RESULT_ITGT_ERR_FACE_FEATURE_PAC_IMPORT_PROCESSING = 12125; // The feature package is
         // being imported.
-        public static final int PU_RESULT_ITGT_ERR_FACE_PIC_PAC_IMPORT_PROCESSING = 12126; // The image package is being
+        int PU_RESULT_ITGT_ERR_FACE_PIC_PAC_IMPORT_PROCESSING = 12126; // The image package is being
         // imported.
-        public static final int PU_RESULT_ITGT_ERR_FACE_FEATURE_GET_PROCESSING = 12127; // Features are being exported.
-        public static final int PU_RESULT_ITGT_ERR_FACE_FEATURE_EXTRACT_PROCESSING = 12128; // Features are being
+        int PU_RESULT_ITGT_ERR_FACE_FEATURE_GET_PROCESSING = 12127; // Features are being exported.
+        int PU_RESULT_ITGT_ERR_FACE_FEATURE_EXTRACT_PROCESSING = 12128; // Features are being
         // extracted.
 
         // Parking detection error codes
-        public static final int PU_RESULT_TGT_CAR_DATECTION_ERR_WRONG_VIDEO_MODE = 12200; // When parking detection is
+        int PU_RESULT_TGT_CAR_DATECTION_ERR_WRONG_VIDEO_MODE = 12200; // When parking detection is
         // enabled, the corridor
         // mode and mirroring mode
         // must be disabled.
-        public static final int PU_RESULT_ITGT_VHD_ERR_WRONG_VIDEO_MODE = 12201; // The object classification and the
+        int PU_RESULT_ITGT_VHD_ERR_WRONG_VIDEO_MODE = 12201; // The object classification and the
         // corridor mode cannot be enabled
         // at the same time.
-        public static final int PU_RESULT_ITGT_VLPR_ERR_WRONG_VIDEO_MODE = 12202; // The vehicle recognition and the
+        int PU_RESULT_ITGT_VLPR_ERR_WRONG_VIDEO_MODE = 12202; // The vehicle recognition and the
         // corridor mode cannot be enabled
         // at the same time.
-        public static final int PU_RESULT_ITGT_NOT_FACE_DETETION_MODE_ERR_WRONG_VIDEO_MODE = 12203; // (The corridor
+        int PU_RESULT_ITGT_NOT_FACE_DETETION_MODE_ERR_WRONG_VIDEO_MODE = 12203; // (The corridor
         // mode must be
         // disabled for -H
         // camera models in
@@ -817,58 +817,58 @@ public interface HWPuSDK extends Library {
         // micro checkpoint,
         // and behavior
         // analysis modes).)
-        public static final int PU_RESULT_LIC_INVALID = 12300; // Failed to obtain the license content due to the
+        int PU_RESULT_LIC_INVALID = 12300; // Failed to obtain the license content due to the
         // invalid license.
-        public static final int PU_RESULT_LIC_REPEATED_ESN_VER_MISMATCH = 12301; // The ESN cannot be loaded repeatedly
+        int PU_RESULT_LIC_REPEATED_ESN_VER_MISMATCH = 12301; // The ESN cannot be loaded repeatedly
         // or the license file that does not
         // match the device version cannot
         // be loaded.
-        public static final int PU_RESULT_LIC_FORMAT_ERROR = 12302; // Invalid license file.
-        public static final int PU_RESULT_LIC_NO_PRD_FEATURES_PRESENT = 12303; // The license file does not contain the
+        int PU_RESULT_LIC_FORMAT_ERROR = 12302; // Invalid license file.
+        int PU_RESULT_LIC_NO_PRD_FEATURES_PRESENT = 12303; // The license file does not contain the
         // product feature segment.
-        public static final int PU_RESULT_LIC_PRODUCT_INVALID = 12304; // Invalid product name.
-        public static final int PU_RESULT_LIC_EXPIRED = 12305; // The license file has expired.
-        public static final int PU_RESULT_LIC_GET_CONFIG_ERROR = 12306; // Failed to obtain the control item
+        int PU_RESULT_LIC_PRODUCT_INVALID = 12304; // Invalid product name.
+        int PU_RESULT_LIC_EXPIRED = 12305; // The license file has expired.
+        int PU_RESULT_LIC_GET_CONFIG_ERROR = 12306; // Failed to obtain the control item
         // configuration.
-        public static final int PU_RESULT_LIC_LSN_REVOKED = 12307; // The license file has expired.
-        public static final int PU_RESULT_LIC_ESNANY_AND_SIX_MON_VLDITY_NOT_ALLOWED = 12308; // You are not allowed to
+        int PU_RESULT_LIC_LSN_REVOKED = 12307; // The license file has expired.
+        int PU_RESULT_LIC_ESNANY_AND_SIX_MON_VLDITY_NOT_ALLOWED = 12308; // You are not allowed to
         // repeatedly load a
         // commissioning license
         // file whose ESN is ANY
         // and validity period
         // is six months.
-        public static final int PU_RESULT_LIC_MAX_FEATURES_REACHED = 12309; // The number of features in the license
+        int PU_RESULT_LIC_MAX_FEATURES_REACHED = 12309; // The number of features in the license
         // file exceeds the maximum.
-        public static final int PU_RESULT_LIC_INVALID_FEATURE_TYPE = 12310; // The feature type in the license file is
+        int PU_RESULT_LIC_INVALID_FEATURE_TYPE = 12310; // The feature type in the license file is
         // incorrect.
-        public static final int PU_RESULT_LIC_LM_NOT_ENABLED = 12311; // The license component is not started.
-        public static final int PU_RESULT_LIC_NO_FEATURES_IN_NORMAL_STATE = 12312; // All features in the license file
+        int PU_RESULT_LIC_LM_NOT_ENABLED = 12311; // The license component is not started.
+        int PU_RESULT_LIC_NO_FEATURES_IN_NORMAL_STATE = 12312; // All features in the license file
         // expired or are in the trial
         // period.
-        public static final int PU_RESULT_LIC_ESN_MISMATCH = 12313; // The ESN in the license file is different from the
+        int PU_RESULT_LIC_ESN_MISMATCH = 12313; // The ESN in the license file is different from the
         // actual ESN.
-        public static final int PU_RESULT_LIC_VERSION_MISMATCH = 12314; // The device version in the license file is
+        int PU_RESULT_LIC_VERSION_MISMATCH = 12314; // The device version in the license file is
         // different from the actual version.
-        public static final int PU_RESULT_LIC_NO_LICENSE_ACTIVITED = 12315; // No activated license.
+        int PU_RESULT_LIC_NO_LICENSE_ACTIVITED = 12315; // No activated license.
 
-        public static final int PU_RESULT_MTU_ERR_WITH_IPV6_OPEN = 12520; // The MTU is incorrect in the IPv6 scenario.
-        public static final int PU_RESULT_ITGT_ERR_INVALID = 12600; // Invalid intelligent analysis license.
-        public static final int PU_RESULT_MEDIA_UTGT_NOT_ENABLED = 12780; /*
+        int PU_RESULT_MTU_ERR_WITH_IPV6_OPEN = 12520; // The MTU is incorrect in the IPv6 scenario.
+        int PU_RESULT_ITGT_ERR_INVALID = 12600; // Invalid intelligent analysis license.
+        int PU_RESULT_MEDIA_UTGT_NOT_ENABLED = 12780; /*
          * An intelligent analysis channel needs to
          * be created for media streams, but the
          * intelligent analysis module is not
          * enabled.
          */
         // Algorithm switchover
-        public static final int PU_RESULT_TGT_SWITCH_MODE_ERR_WRONG_VIDEO_MODE = 12800; // The switched mode does not
+        int PU_RESULT_TGT_SWITCH_MODE_ERR_WRONG_VIDEO_MODE = 12800; // The switched mode does not
         // support the corridor mode.
-        public static final int PU_RESULT_TGT_SWITCH_MODE_ERR_ENABLE_ALG = 12801; // Failed to enable the algorithm for
+        int PU_RESULT_TGT_SWITCH_MODE_ERR_ENABLE_ALG = 12801; // Failed to enable the algorithm for
         // the switched mode. Check the
         // model.
-        public static final int PU_RESULT_TGT_SWITCH_MODE_FTP_NEED_RECONFIG = 12802; // The mode is switched
+        int PU_RESULT_TGT_SWITCH_MODE_FTP_NEED_RECONFIG = 12802; // The mode is switched
         // successfully. The FTP needs
         // to be reconfigured.
-        public static final int PU_ERROR_MAX = 20000;
+        int PU_ERROR_MAX = 20000;
     }
 
     public interface FACE_DT_CAP_MODE_E {
@@ -894,7 +894,7 @@ public interface HWPuSDK extends Library {
     }
 
     // Park action parameters setting
-    public class GUARD_PARA extends Structure {
+    class GUARD_PARA extends Structure {
         public ULONG ulPtzId;
 
         public BOOL bEnable;
@@ -956,7 +956,7 @@ public interface HWPuSDK extends Library {
     }
 
     // Home position parameters (only for preset positions).
-    public class GUARD_POSITION_PARA extends Structure {
+    class GUARD_POSITION_PARA extends Structure {
         public ULONG ulPtzId;
 
         public BOOL bEnable;
@@ -975,7 +975,7 @@ public interface HWPuSDK extends Library {
     }
 
     // Park action parameters setting
-    public class GUARD_POSITION_PARA_EX extends Structure {
+    class GUARD_POSITION_PARA_EX extends Structure {
         public ULONG ulPtzId;
 
         public BOOL bEnable;
@@ -1037,9 +1037,9 @@ public interface HWPuSDK extends Library {
     }
 
     // IPC module.
-    public interface IPC_MODULE {
-        public static final int IPC_WEB_MODULE = 0; // Web module.
-        public static final int IPC_SDK_MODULE = 1; // SDK module.
+    interface IPC_MODULE {
+        int IPC_WEB_MODULE = 0; // Web module.
+        int IPC_SDK_MODULE = 1; // SDK module.
     }
 
     public interface ITS_ROAD_LINE_TYPE_E {
@@ -1080,222 +1080,222 @@ public interface HWPuSDK extends Library {
     /// Layer-1 metadata type.
     /// </summary>
     public interface LAYER_ONE_TYPE {
-        public static final int METADATA_TYPE = 0x4154454D; // M'' E' 'T'' A' little endian.
+        int METADATA_TYPE = 0x4154454D; // M'' E' 'T'' A' little endian.
     }
 
     public interface LAYER_THREE_TYPE_E {
-        public static final int PTS = 0x09000001; // Timestamp.
-        public static final int ITGT_TYPE = 0x07000011; // Intelligent type.
-        public static final int IMG_WIDTH = 0x07000100; // Image width.
-        public static final int IMG_HEIGHT = 0x07000101; // Image height.
-        public static final int FACE_SCORE = 0x04000013; // Face confidence.
-        public static final int FACE_ANGLE = 0x04000014; // Face angle.
-        public static final int FACE_ID = 0x07000016; // Face ID.
-        public static final int FACE_PANOPIC_SIZE = 0x07000018; // Full face image size.
-        public static final int FACE_FACEPIC_SIZE = 0x07000019; // Face cutout image size.
-        public static final int FACE_PIC_TIME = 0x08000015; // Time when a face cutout is generated.
-        public static final int FACE_PIC_TZONE = 0x08000020; // Time zone of the face cutout device, in milliseconds. +
+        int PTS = 0x09000001; // Timestamp.
+        int ITGT_TYPE = 0x07000011; // Intelligent type.
+        int IMG_WIDTH = 0x07000100; // Image width.
+        int IMG_HEIGHT = 0x07000101; // Image height.
+        int FACE_SCORE = 0x04000013; // Face confidence.
+        int FACE_ANGLE = 0x04000014; // Face angle.
+        int FACE_ID = 0x07000016; // Face ID.
+        int FACE_PANOPIC_SIZE = 0x07000018; // Full face image size.
+        int FACE_FACEPIC_SIZE = 0x07000019; // Face cutout image size.
+        int FACE_PIC_TIME = 0x08000015; // Time when a face cutout is generated.
+        int FACE_PIC_TZONE = 0x08000020; // Time zone of the face cutout device, in milliseconds. +
         // indicates an eastern time zone, and - indicates a
         // western time zone.
-        public static final int HUMAN_FEATURE = 0x10000002; // Personal attribute recognition.
-        public static final int FACE_FEATURE = 0x11000003; // Facial attribute recognition.
-        public static final int PANORAMA_PIC = 0x0A00000A; // Full image.
-        public static final int FACE_PIC = 0x0A000012; // Face cutout.
-        public static final int FACE_PIC_KPS = 0x07000012; // Quality filtering flag of the face cutout KPS.
-        public static final int HUMAN_PIC = 0x0A000013; // Person cutout.
-        public static final int HUMAN_PIC_KPS = 0x07000013; // Quality filtering flag of the person cutout KPS.
-        public static final int HUMAN_PIC_ROI = 0x0B000017; // Frame for person cutout.
-        public static final int FACE_PANORAMA = 0x0A000017; // Full face image.
-        public static final int FACE_PIC_POSITION = 0x0B000011; // Position of the frame for face cutout.
-        public static final int FACE_POS = 0x0B000012; // Face position (real-time frame position).
-        public static final int HUMAN_RECT = 0x0B000013; // Person position (real-time frame position).
-        public static final int HUMAN_RECT_POSITION = 0x0B000014; // Position of the frame for person cutout.
-        public static final int FACE_MATCH = 0x0A000014; // Matching image in the face library.
-        public static final int FACELIB_RECORDID = 0x07000017; // Face ID in the face library, which is used to maintain
+        int HUMAN_FEATURE = 0x10000002; // Personal attribute recognition.
+        int FACE_FEATURE = 0x11000003; // Facial attribute recognition.
+        int PANORAMA_PIC = 0x0A00000A; // Full image.
+        int FACE_PIC = 0x0A000012; // Face cutout.
+        int FACE_PIC_KPS = 0x07000012; // Quality filtering flag of the face cutout KPS.
+        int HUMAN_PIC = 0x0A000013; // Person cutout.
+        int HUMAN_PIC_KPS = 0x07000013; // Quality filtering flag of the person cutout KPS.
+        int HUMAN_PIC_ROI = 0x0B000017; // Frame for person cutout.
+        int FACE_PANORAMA = 0x0A000017; // Full face image.
+        int FACE_PIC_POSITION = 0x0B000011; // Position of the frame for face cutout.
+        int FACE_POS = 0x0B000012; // Face position (real-time frame position).
+        int HUMAN_RECT = 0x0B000013; // Person position (real-time frame position).
+        int HUMAN_RECT_POSITION = 0x0B000014; // Position of the frame for person cutout.
+        int FACE_MATCH = 0x0A000014; // Matching image in the face library.
+        int FACELIB_RECORDID = 0x07000017; // Face ID in the face library, which is used to maintain
         // the consistency of feature records.
-        public static final int FACE_MATCHRATE = 0x07000020; // Face match rate.
-        public static final int FACE_INFO = 0x12000001; // Face information, corresponding to the information in the
+        int FACE_MATCHRATE = 0x07000020; // Face match rate.
+        int FACE_INFO = 0x12000001; // Face information, corresponding to the information in the
         // database.
-        public static final int FACE_LIB_TYPE = 0x07000022; // Face library type.
-        public static final int FACE_LIB_NAME = 0x0A000015; // Face library name.
-        public static final int TARGET_TYPE = 0x07000023; // Object type, which is used to differentiate face cutout,
+        int FACE_LIB_TYPE = 0x07000022; // Face library type.
+        int FACE_LIB_NAME = 0x0A000015; // Face library name.
+        int TARGET_TYPE = 0x07000023; // Object type, which is used to differentiate face cutout,
         // facial recognition, and facial recognition in
         // multi-camera collaboration mode.
-        public static final int FACE_LIB_ID = 0x07000024; // Face library ID.
-        public static final int MMC_FACE_COMPARE_NUM_MAX = 0x07000025; // Multi-camera collaboration algorithm parameter
+        int FACE_LIB_ID = 0x07000024; // Face library ID.
+        int MMC_FACE_COMPARE_NUM_MAX = 0x07000025; // Multi-camera collaboration algorithm parameter
         // (face match data).
-        public static final int MMC_FACE_WARNING_RECALL_RATE_MAX = 0x07000026; // Multi-camera collaboration algorithm
+        int MMC_FACE_WARNING_RECALL_RATE_MAX = 0x07000026; // Multi-camera collaboration algorithm
         // parameter (maximum face alarm recall
         // rate).
-        public static final int MMC_FACE_WARNING_RECALL_RATE_MIN = 0x07000027; // Multi-camera collaboration algorithm
+        int MMC_FACE_WARNING_RECALL_RATE_MIN = 0x07000027; // Multi-camera collaboration algorithm
         // parameter (minimum face alarm recall
         // rate).
-        public static final int OBJ_ID = 0x07000021; // Object ID.
-        public static final int OBJ_STATUS = 0x06000022; // Object status.
-        public static final int OBJ_POS = 0x0B000023; // Object position.
-        public static final int OBJ_TYPE = 0x06000024; // Object type.
-        public static final int OBJ_SPEED = 0x0C000025; // Object speed.
-        public static final int OBJ_UPHALF_COLOR = 0x0F000026; // Object tops color.
-        public static final int OBJ_DOWNHALF_COLOR = 0x0F000027; // Object bottoms color.
-        public static final int RULE_TYPE = 0x07000031; // Rule type.
-        public static final int RULE_LINE_POS = 0x0D000032; // Rule line position.
-        public static final int RULE_LINE_DIR = 0x07000033; // Rule line direction.
-        public static final int RULE_AREA_POS = 0x0E000034; // Rule frame position.
-        public static final int OBJ_POS_R = 0x0B000035; // Object position (relative position).
-        public static final int OBJ_SPEED_R = 0x0C000036; // Object speed (relative position).
-        public static final int RULE_LINE_POS_R = 0x0D000037; // Rule line position (relative position).
-        public static final int RULE_AREA_POS_R = 0x0E000038; // Rule frame position (relative position).
-        public static final int LANE_ID = 0x07000002; // Lane ID.
-        public static final int VEHICLE_TYPE = 0x07000003; // Vehicle type.
-        public static final int VEHICLE_TYPE_EXT = 0x07000406; // C50 vehicle type.
-        public static final int VEHICLE_COLOR = 0x07000004; // Vehicle color.
-        public static final int VEHICLE_DIRECTION = 0x07000005; // Vehicle driving direction.
-        public static final int VEHICLE_POS = 0x0B000005; // Vehicle position.
-        public static final int PLATE_TYPE = 0x07000006; // License plate type.
-        public static final int PLATE_POS = 0x0B000007; // License plate position.
-        public static final int PLATE_CHAR = 0x0A000008; // License plate characters.
-        public static final int PLATE_PIC = 0x0A000009; // License plate cutout.
-        public static final int PLATE_CONFIDENCE = 0x07000061; // License plate confidence.
-        public static final int PLATE_COLOR = 0x07000062; // License plate color.
-        public static final int PLATE_CHAR_POS = 0x0B000063; // License plate character position.
-        public static final int PLATE_FACE_POS = 0x0B000064; // Vehicle front position.
-        public static final int PLATE_MOVE_DIR = 0x07000065; // License plate movement direction.
-        public static final int PLATE_SNAPSHOT_TYPE = 0x07000066; // License plate snapshot type.
-        public static final int VEHICLE_PIC = 0x0A000067; // Close-up vehicle image.
-        public static final int PIC_SNAPSHOT_TIMEMS = 0x09000003; // Snapshot time (unit: ms).
-        public static final int PIC_SNAPSHOT_TIME = 0x07000068; // Snapshot time.
-        public static final int PIC_SNAPSHOT_TZONE = 0x08000069; // Time zone of the device, in milliseconds. +
+        int OBJ_ID = 0x07000021; // Object ID.
+        int OBJ_STATUS = 0x06000022; // Object status.
+        int OBJ_POS = 0x0B000023; // Object position.
+        int OBJ_TYPE = 0x06000024; // Object type.
+        int OBJ_SPEED = 0x0C000025; // Object speed.
+        int OBJ_UPHALF_COLOR = 0x0F000026; // Object tops color.
+        int OBJ_DOWNHALF_COLOR = 0x0F000027; // Object bottoms color.
+        int RULE_TYPE = 0x07000031; // Rule type.
+        int RULE_LINE_POS = 0x0D000032; // Rule line position.
+        int RULE_LINE_DIR = 0x07000033; // Rule line direction.
+        int RULE_AREA_POS = 0x0E000034; // Rule frame position.
+        int OBJ_POS_R = 0x0B000035; // Object position (relative position).
+        int OBJ_SPEED_R = 0x0C000036; // Object speed (relative position).
+        int RULE_LINE_POS_R = 0x0D000037; // Rule line position (relative position).
+        int RULE_AREA_POS_R = 0x0E000038; // Rule frame position (relative position).
+        int LANE_ID = 0x07000002; // Lane ID.
+        int VEHICLE_TYPE = 0x07000003; // Vehicle type.
+        int VEHICLE_TYPE_EXT = 0x07000406; // C50 vehicle type.
+        int VEHICLE_COLOR = 0x07000004; // Vehicle color.
+        int VEHICLE_DIRECTION = 0x07000005; // Vehicle driving direction.
+        int VEHICLE_POS = 0x0B000005; // Vehicle position.
+        int PLATE_TYPE = 0x07000006; // License plate type.
+        int PLATE_POS = 0x0B000007; // License plate position.
+        int PLATE_CHAR = 0x0A000008; // License plate characters.
+        int PLATE_PIC = 0x0A000009; // License plate cutout.
+        int PLATE_CONFIDENCE = 0x07000061; // License plate confidence.
+        int PLATE_COLOR = 0x07000062; // License plate color.
+        int PLATE_CHAR_POS = 0x0B000063; // License plate character position.
+        int PLATE_FACE_POS = 0x0B000064; // Vehicle front position.
+        int PLATE_MOVE_DIR = 0x07000065; // License plate movement direction.
+        int PLATE_SNAPSHOT_TYPE = 0x07000066; // License plate snapshot type.
+        int VEHICLE_PIC = 0x0A000067; // Close-up vehicle image.
+        int PIC_SNAPSHOT_TIMEMS = 0x09000003; // Snapshot time (unit: ms).
+        int PIC_SNAPSHOT_TIME = 0x07000068; // Snapshot time.
+        int PIC_SNAPSHOT_TZONE = 0x08000069; // Time zone of the device, in milliseconds. +
         // indicates an eastern time zone, and - indicates a
         // western time zone.
-        public static final int DEVICE_ID = 0x0A000025; // Device ID.
-        public static final int ROID_ID = 0x0A000026; // Road ID.
-        public static final int DIR_ID = 0x0A000027; // Direction ID.
-        public static final int DIR_INFO = 0x0A000028; // Direction information.
-        public static final int PANORAMA_PIC_SIZE = 0x07000073; // Full image size.
-        public static final int PLATE_PIC_SIZE = 0x07000074; // License plate image size.
-        public static final int VLPR_ALG_TYPE = 0x07000079; // License plate algorithm type.
-        public static final int REGULATION_CODE = 0x0A000029;// Violation code character string.
-        public static final int ITS_TYPE = 0x04000032; // ITS application mode.
-        public static final int VEHICLE_TL_X = 0x0400002A; // X coordinate of the upper left corner of the vehicle
+        int DEVICE_ID = 0x0A000025; // Device ID.
+        int ROID_ID = 0x0A000026; // Road ID.
+        int DIR_ID = 0x0A000027; // Direction ID.
+        int DIR_INFO = 0x0A000028; // Direction information.
+        int PANORAMA_PIC_SIZE = 0x07000073; // Full image size.
+        int PLATE_PIC_SIZE = 0x07000074; // License plate image size.
+        int VLPR_ALG_TYPE = 0x07000079; // License plate algorithm type.
+        int REGULATION_CODE = 0x0A000029;// Violation code character string.
+        int ITS_TYPE = 0x04000032; // ITS application mode.
+        int VEHICLE_TL_X = 0x0400002A; // X coordinate of the upper left corner of the vehicle
         // position.
-        public static final int VEHICLE_TL_Y = 0x0400002B; // Y coordinate of the upper left corner of the vehicle
+        int VEHICLE_TL_Y = 0x0400002B; // Y coordinate of the upper left corner of the vehicle
         // position.
-        public static final int VEHICLE_BR_X = 0x0400002C; // X coordinate of the lower right corner of the vehicle
+        int VEHICLE_BR_X = 0x0400002C; // X coordinate of the lower right corner of the vehicle
         // position.
-        public static final int VEHICLE_BR_Y = 0x0400002D; // Y coordinate of the lower right corner of the vehicle
+        int VEHICLE_BR_Y = 0x0400002D; // Y coordinate of the lower right corner of the vehicle
         // position.
-        public static final int PLATE_TL_X = 0x0400002E; // X coordinate of the upper left corner of the license plate
+        int PLATE_TL_X = 0x0400002E; // X coordinate of the upper left corner of the license plate
         // position.
-        public static final int PLATE_TL_Y = 0x0400002F; // Y coordinate of the upper left corner of the license plate
+        int PLATE_TL_Y = 0x0400002F; // Y coordinate of the upper left corner of the license plate
         // position.
-        public static final int PLATE_BR_X = 0x04000030; // X coordinate of the lower right corner of the license plate
+        int PLATE_BR_X = 0x04000030; // X coordinate of the lower right corner of the license plate
         // position.
-        public static final int PLATE_BR_Y = 0x04000031; // Y coordinate of the lower right corner of the license plate
+        int PLATE_BR_Y = 0x04000031; // Y coordinate of the lower right corner of the license plate
         // position.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS = 0x070000A0;// Traffic flow statistics parameter.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_LANE_COUNT = 0x070000A1;// Number of lanes for vehicle
+        int MICRO_PORT_TRAFFIC_STATISTICS = 0x070000A0;// Traffic flow statistics parameter.
+        int MICRO_PORT_TRAFFIC_STATISTICS_LANE_COUNT = 0x070000A1;// Number of lanes for vehicle
         // traffic statistics of the
         // micro checkpoint camera.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_LANE_INDEX = 0x070000A2;// Current lane for vehicle
+        int MICRO_PORT_TRAFFIC_STATISTICS_LANE_INDEX = 0x070000A2;// Current lane for vehicle
         // traffic statistics of the
         // micro checkpoint camera.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_COUNT = 0x070000A3;// Vehicle quantity
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_AVG_SPEED = 0x070000A4;// Average vehicle speed.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_LANE_TIME_USED_RATIO = 0x070000A5;// Time occupancy.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_DENSITY = 0x070000A6;// Vehicle density.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_HEAD_INTERVAL = 0x070000A7;// Time headway.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_HEAD_SPACE_INTERVAL = 0x070000A8;// Space headway.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_CONGESTION_DEGREE = 0x070000A9;// Traffic status.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_TYPE1_COUNT = 0x070000AA;// Number of large
+        int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_COUNT = 0x070000A3;// Vehicle quantity
+        int MICRO_PORT_TRAFFIC_STATISTICS_AVG_SPEED = 0x070000A4;// Average vehicle speed.
+        int MICRO_PORT_TRAFFIC_STATISTICS_LANE_TIME_USED_RATIO = 0x070000A5;// Time occupancy.
+        int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_DENSITY = 0x070000A6;// Vehicle density.
+        int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_HEAD_INTERVAL = 0x070000A7;// Time headway.
+        int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_HEAD_SPACE_INTERVAL = 0x070000A8;// Space headway.
+        int MICRO_PORT_TRAFFIC_STATISTICS_CONGESTION_DEGREE = 0x070000A9;// Traffic status.
+        int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_TYPE1_COUNT = 0x070000AA;// Number of large
         // vehicles.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_TYPE2_COUNT = 0x070000AB;// Number of medium
+        int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_TYPE2_COUNT = 0x070000AB;// Number of medium
         // vehicles.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_TYPE3_COUNT = 0x070000AC;// Number of small
+        int MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_TYPE3_COUNT = 0x070000AC;// Number of small
         // vehicles.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_QUEUE_LENGTH = 0x070000AD;// Queue length detection.
-        public static final int MICRO_PORT_TRAFFIC_STATISTICS_LANE_SPACE_USED_RATIO = 0x070000AE;// Space occupancy.
-        public static final int ITS_TRAFFIC_LEFT_VEHICLE_COUNT = 0x070000AF; // Number of left-turn vehicles (ITS).
-        public static final int ITS_TRAFFIC_STRAIGHT_VHEICLE_COUNT = 0x070000B0; // Number of straight-through vehicles
+        int MICRO_PORT_TRAFFIC_STATISTICS_QUEUE_LENGTH = 0x070000AD;// Queue length detection.
+        int MICRO_PORT_TRAFFIC_STATISTICS_LANE_SPACE_USED_RATIO = 0x070000AE;// Space occupancy.
+        int ITS_TRAFFIC_LEFT_VEHICLE_COUNT = 0x070000AF; // Number of left-turn vehicles (ITS).
+        int ITS_TRAFFIC_STRAIGHT_VHEICLE_COUNT = 0x070000B0; // Number of straight-through vehicles
         // (ITS).
-        public static final int ITS_TRAFFIC_RIGHT_VHEICLE_COUNT = 0x070000B1; // Number of right-turn vehicles (ITS).
-        public static final int ITS_TRAFFIC_TIME_ZONE = 0x070000B2; // Vehicle traffic statistics time zone (ITS).
-        public static final int ITS_TRAFFIC_SNAP_TIME = 0x070000B3; // Vehicle traffic statistics snapshot time (ITS).
-        public static final int VEHICLE_SPEED = 0x07000075; // Vehicle speed.
-        public static final int REGULATION_TYPE = 0x07000076; // Violation type.
-        public static final int ITS_FLOWRATE_FEATURE = 0x07000077; // ITS traffic statistics attribute.
-        public static final int VEHICLE_MFR_TYPE = 0x07000078; // Secondary motor vehicle feature.
-        public static final int ITS_VEHICLE_FLOWRATE_FEATURE = 0x0700009A; // Vehicle traffic statistics attribute
+        int ITS_TRAFFIC_RIGHT_VHEICLE_COUNT = 0x070000B1; // Number of right-turn vehicles (ITS).
+        int ITS_TRAFFIC_TIME_ZONE = 0x070000B2; // Vehicle traffic statistics time zone (ITS).
+        int ITS_TRAFFIC_SNAP_TIME = 0x070000B3; // Vehicle traffic statistics snapshot time (ITS).
+        int VEHICLE_SPEED = 0x07000075; // Vehicle speed.
+        int REGULATION_TYPE = 0x07000076; // Violation type.
+        int ITS_FLOWRATE_FEATURE = 0x07000077; // ITS traffic statistics attribute.
+        int VEHICLE_MFR_TYPE = 0x07000078; // Secondary motor vehicle feature.
+        int ITS_VEHICLE_FLOWRATE_FEATURE = 0x0700009A; // Vehicle traffic statistics attribute
         // (ITS).
-        public static final int MFR_MAIN_CALL = 0x06000025; // Hands-free device infraction (driver).
-        public static final int MFR_MAIN_BELT = 0x06000026; // Seat belt infraction (driver).
-        public static final int MFR_VICE_EXIST = 0x06000027; // Front passenger existence.
-        public static final int MFR_VICE_BELT = 0x06000035; // Seat belt infraction (front passenger).
-        public static final int MFR_YEAR_LOG = 0x06000036; // Annual inspection sticker.
-        public static final int MFR_MAIN_SUN_VISOR = 0x06000030; // Sun visor (driver).
-        public static final int MFR_VICE_SUN_VISOR = 0x06000031; // Sun visor (front passenger).
-        public static final int MFR_NAP_KIN_BOX = 0x06000032; // Tissue box.
-        public static final int MFR_CAR_PENDANT = 0x06000034; // Hanging accessory.
-        public static final int ITS_TRAFFIC_STATE = 0x07000079; // Lane traffic status.
-        public static final int CARDETECTION_POS = 0x0B000015; // Parking location.
-        public static final int HUMANCOUNT_NUM = 0x0B000016; // Head count.
-        public static final int VEHICLE_BODY_RECT = 0x0B000008; // Vehicle position.
-        public static final int NOMOTOR_BODY_RECT = 0x0B000009; // Non-motor vehicle position.
-        public static final int CAR_PRE_BRAND = 0x0A000007; // Vehicle brand, for example, Volkswagen.
-        public static final int CAR_SUB_BRAND = 0x0A000022; // Vehicle model, for example, Santana.
-        public static final int CAR_TYPE_BRAND = 0x0A000023; // Vehicle type, for example, car.
-        public static final int CAR_YEAR_BRAND = 0x0A000024; // Model year, for example, 2011.
-        public static final int VHD_OBJ_ID = 0x09000006; // Object (motor vehicle, non-motor vehicle, and pedestrian)
+        int MFR_MAIN_CALL = 0x06000025; // Hands-free device infraction (driver).
+        int MFR_MAIN_BELT = 0x06000026; // Seat belt infraction (driver).
+        int MFR_VICE_EXIST = 0x06000027; // Front passenger existence.
+        int MFR_VICE_BELT = 0x06000035; // Seat belt infraction (front passenger).
+        int MFR_YEAR_LOG = 0x06000036; // Annual inspection sticker.
+        int MFR_MAIN_SUN_VISOR = 0x06000030; // Sun visor (driver).
+        int MFR_VICE_SUN_VISOR = 0x06000031; // Sun visor (front passenger).
+        int MFR_NAP_KIN_BOX = 0x06000032; // Tissue box.
+        int MFR_CAR_PENDANT = 0x06000034; // Hanging accessory.
+        int ITS_TRAFFIC_STATE = 0x07000079; // Lane traffic status.
+        int CARDETECTION_POS = 0x0B000015; // Parking location.
+        int HUMANCOUNT_NUM = 0x0B000016; // Head count.
+        int VEHICLE_BODY_RECT = 0x0B000008; // Vehicle position.
+        int NOMOTOR_BODY_RECT = 0x0B000009; // Non-motor vehicle position.
+        int CAR_PRE_BRAND = 0x0A000007; // Vehicle brand, for example, Volkswagen.
+        int CAR_SUB_BRAND = 0x0A000022; // Vehicle model, for example, Santana.
+        int CAR_TYPE_BRAND = 0x0A000023; // Vehicle type, for example, car.
+        int CAR_YEAR_BRAND = 0x0A000024; // Model year, for example, 2011.
+        int VHD_OBJ_ID = 0x09000006; // Object (motor vehicle, non-motor vehicle, and pedestrian)
         // ID.
-        public static final int CAR_PRE_BRAND_INDEX = 0x06000028; // Vehicle brand index, for example, Volkswagen.
-        public static final int CAR_SUB_BRAND_INDEX = 0x06000029; // Vehicle model index, for example, Santana.
-        public static final int DEV_CNT = 0x03000070; // Number of devices.
-        public static final int CHAN_ID = 0x03000071; // Channel ID.
-        public static final int SHOULDER_RECT = 0x0B000018; // Head and shoulder position (queue length).
-        public static final int SHOULDER_NUM = 0x06000001; // Head count (queue length).
-        public static final int QUEUE_TIME = 0x06000002; // Queuing duration.
-        public static final int PEOPLE_NUM = 0X07000087; // Number of persons returned by the crowd density detection
+        int CAR_PRE_BRAND_INDEX = 0x06000028; // Vehicle brand index, for example, Volkswagen.
+        int CAR_SUB_BRAND_INDEX = 0x06000029; // Vehicle model index, for example, Santana.
+        int DEV_CNT = 0x03000070; // Number of devices.
+        int CHAN_ID = 0x03000071; // Channel ID.
+        int SHOULDER_RECT = 0x0B000018; // Head and shoulder position (queue length).
+        int SHOULDER_NUM = 0x06000001; // Head count (queue length).
+        int QUEUE_TIME = 0x06000002; // Queuing duration.
+        int PEOPLE_NUM = 0X07000087; // Number of persons returned by the crowd density detection
         // algorithm.
-        public static final int HEADSHOULDER_POS = 0X0B000088; // Frame position returned by the crowd density detection
+        int HEADSHOULDER_POS = 0X0B000088; // Frame position returned by the crowd density detection
         // algorithm.
-        public static final int AREARATIO = 0X07000089; // Crowd density returned by the crowd density detection
+        int AREARATIO = 0X07000089; // Crowd density returned by the crowd density detection
         // algorithm.
-        public static final int TRACK_OBJECT = 0x07000028; // Tracking object ID.
-        public static final int SEX = 0X0700008A; // Sex.
-        public static final int AGE = 0X0700008B; // Age.
-        public static final int META_GLASSES = 0X0700008C; // Glasses.
-        public static final int MOUTHMASK = 0X0700008D; // Mouth mask.
-        public static final int UMBRELLA = 0X0700008E; // Umbrella.
-        public static final int BACKPACK = 0X0700008F; // Backpack.
-        public static final int SHAPE = 0X07000090; // Figure.
-        public static final int HAIR = 0X07000091; // Hairstyle.
-        public static final int SATCHEL = 0X07000092; // Satchel.
-        public static final int LUGGAGE = 0X07000093; // Luggage.
-        public static final int CARRY = 0X07000094; // Carrying object.
-        public static final int MOVEDIRECT = 0X07000095; // Movement direction.
-        public static final int UPPERSTYLE = 0X07000096; // Tops style.
-        public static final int UPPERCOLOR = 0X07000097; // Tops color.
-        public static final int LOWERSTYLE = 0X07000098; // Bottoms style.
-        public static final int LOWERCOLOR = 0X07000099; // Bottoms color.
-        public static final int RIDERMAN_FEATURE = 0x13000001;// 骑行人属性
-        public static final int RIDERMAN_AGE = 0X07000400; // Age (juvenile, youth, elderly).
-        public static final int RIDERMAN_GENDER = 0X07000401; // Sex (male, female).
-        public static final int RIDERMAN_UPPERSTYLE = 0X07000402; // Tops style (long sleeves, short sleeves).
-        public static final int RIDERMAN_UPPERCOLOR = 0X07000403; // Tops color (black, blue, green, white/gray,
+        int TRACK_OBJECT = 0x07000028; // Tracking object ID.
+        int SEX = 0X0700008A; // Sex.
+        int AGE = 0X0700008B; // Age.
+        int META_GLASSES = 0X0700008C; // Glasses.
+        int MOUTHMASK = 0X0700008D; // Mouth mask.
+        int UMBRELLA = 0X0700008E; // Umbrella.
+        int BACKPACK = 0X0700008F; // Backpack.
+        int SHAPE = 0X07000090; // Figure.
+        int HAIR = 0X07000091; // Hairstyle.
+        int SATCHEL = 0X07000092; // Satchel.
+        int LUGGAGE = 0X07000093; // Luggage.
+        int CARRY = 0X07000094; // Carrying object.
+        int MOVEDIRECT = 0X07000095; // Movement direction.
+        int UPPERSTYLE = 0X07000096; // Tops style.
+        int UPPERCOLOR = 0X07000097; // Tops color.
+        int LOWERSTYLE = 0X07000098; // Bottoms style.
+        int LOWERCOLOR = 0X07000099; // Bottoms color.
+        int RIDERMAN_FEATURE = 0x13000001;// 骑行人属性
+        int RIDERMAN_AGE = 0X07000400; // Age (juvenile, youth, elderly).
+        int RIDERMAN_GENDER = 0X07000401; // Sex (male, female).
+        int RIDERMAN_UPPERSTYLE = 0X07000402; // Tops style (long sleeves, short sleeves).
+        int RIDERMAN_UPPERCOLOR = 0X07000403; // Tops color (black, blue, green, white/gray,
         // yellow/orange/brown, red/pink/purple).
-        public static final int RIDERMAN_HELMET = 0X07000404; // Helmet.
-        public static final int RIDERMAN_HELMETCOLOR = 0X07000405; // Helmet color.
-        public static final int CHANNEL_ID = 0x09000078; // Camera channel ID.
+        int RIDERMAN_HELMET = 0X07000404; // Helmet.
+        int RIDERMAN_HELMETCOLOR = 0X07000405; // Helmet color.
+        int CHANNEL_ID = 0x09000078; // Camera channel ID.
     }
 
     /// <summary>
     /// Layer 2 metadata type.
     /// </summary>
     public interface LAYER_TWO_TYPE {
-        public static final int COMMON = 0x00000001; // Universal.
-        public static final int TARGET = 0x00000002; // Object (such as vehicles, persons, and faces).
-        public static final int RULE = 0x00000003; // Rule (rule frame).
-        public static final int TALARM = 0x00000004; // Intelligent alarm.
-        public static final int TRECORD = 0x00000005; // Intelligent analysis–triggered recording.
+        int COMMON = 0x00000001; // Universal.
+        int TARGET = 0x00000002; // Object (such as vehicles, persons, and faces).
+        int RULE = 0x00000003; // Rule (rule frame).
+        int TALARM = 0x00000004; // Intelligent alarm.
+        int TRECORD = 0x00000005; // Intelligent analysis–triggered recording.
     }
 
     public static class LLong extends IntegerType {
@@ -1405,20 +1405,35 @@ public interface HWPuSDK extends Library {
         }
     }
 
-    // Device information structure.
-    public static class LPPU_DEVICEINFO_S extends Structure {
+    /**
+     * 设备信息结构体
+     */
+    class LPPU_DEVICEINFO_S extends Structure {
+        /**
+         * 设备名称 最长32位
+         */
         public byte[] szDeviceName = new byte[PU_DEVICE_NAME_LEN]; // Device name. The device name can contain a maximum
         // of 32 characters.
 
+        /**
+         * 设备厂商名
+         */
         public byte[] szDeviceFac = new byte[PU_FAC_NAME_LEN]; // Device vendor.
-
+        /**
+         * 设备型号 只可读
+         */
         public byte[] szDeviceType = new byte[PU_DEVICE_TYPE_LEN]; // Device model, which can be queried but cannot be
-        // set.
-
+        /**
+         * 设备硬件序列号
+         */
         public byte[] szSerialNumber = new byte[PU_SERIAL_LEN]; // Hardware SN.
-
+        /**
+         * 设备版本
+         */
         public PU_DEVICE_VERSION stDeviceVersion; // Device version.
-
+        /**
+         * Bom编码
+         */
         public byte[] szReserved = new byte[PU_RESERVE_LEN]; // BOM code.
 
         public LPPU_DEVICEINFO_S() {
@@ -1747,16 +1762,16 @@ public interface HWPuSDK extends Library {
 
     // Movement direction.
     public interface META_MOVE_DIRECT {
-        public static final int DIRECT_UNKNOWN = 0; // Unknown.
-        public static final int DIRECT_FORWARD = 1; // Front.
-        public static final int DIRECT_BACKWARD = 2; // Back.
+        int DIRECT_UNKNOWN = 0; // Unknown.
+        int DIRECT_FORWARD = 1; // Front.
+        int DIRECT_BACKWARD = 2; // Back.
     }
 
     // Movement speed.
     public interface META_MOVE_SPEED {
-        public static final int SPEED_UNKNOWN = 0; // Unknown.
-        public static final int SPEED_SLOW = 1; // Slow.
-        public static final int SPEED_FAST = 2; // Fast.
+        int SPEED_UNKNOWN = 0; // Unknown.
+        int SPEED_SLOW = 1; // Slow.
+        int SPEED_FAST = 2; // Fast.
     }
 
     // Point.
@@ -1849,7 +1864,8 @@ public interface HWPuSDK extends Library {
     }
 
     // real play callback function type
-    public interface pfRealDataCallBack extends StdCallCallback {
+    @FunctionalInterface
+    interface pfRealDataCallBack extends StdCallCallback {
         Pointer invoke(Pointer szBuffer, NativeLong lSize, String pUsrData);
     }
 
@@ -1867,11 +1883,11 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PTZ_OSD_MODE {
-        public static final int PTZ_OSD_NONE = 0; // None.
-        public static final int PTZ_OSD_PTZ_INFO = 1; // PTZ information mode.
-        public static final int PTZ_OSD_ORIENTATION = 2; // Azimuth mode.
-        public static final int PTZ_OSD_POSITION = 3; // Latitude and longitude mode.
-        public static final int PTZ_OSD_ZOOM = 4; // Zoom information mode.
+        int PTZ_OSD_NONE = 0; // None.
+        int PTZ_OSD_PTZ_INFO = 1; // PTZ information mode.
+        int PTZ_OSD_ORIENTATION = 2; // Azimuth mode.
+        int PTZ_OSD_POSITION = 3; // Latitude and longitude mode.
+        int PTZ_OSD_ZOOM = 4; // Zoom information mode.
     }
 
     public static class PU_1TN_ENABLE_S extends Structure {
@@ -1978,14 +1994,14 @@ public interface HWPuSDK extends Library {
 
     /* AE exposure mode. */
     public interface PU_AE_MODE {
-        public static final int PU_AE_MODE_AUTO = 0; // Auto exposure, auto aperture gain, and fixed shutter speed.
-        public static final int PU_AE_MODE_MANUAL = 1; // Manual exposure.
-        public static final int PU_AE_MODE_SHUTTER_PRI = 2; // Shutter priority.
-        public static final int PU_AE_MODE_IRIS_PRI = 3; // Aperture priority.
-        public static final int PU_AE_MODE_LOW_NOISE = 4; // Noise priority.
-        public static final int PU_AE_MODE_FRAME_RATE = 5; // Frame rate priority.
-        public static final int PU_AE_MODE_BRIGHT = 6; // Brightness priority.
-        public static final int PU_AE_MODE_MAX = 7;
+        int PU_AE_MODE_AUTO = 0; // Auto exposure, auto aperture gain, and fixed shutter speed.
+        int PU_AE_MODE_MANUAL = 1; // Manual exposure.
+        int PU_AE_MODE_SHUTTER_PRI = 2; // Shutter priority.
+        int PU_AE_MODE_IRIS_PRI = 3; // Aperture priority.
+        int PU_AE_MODE_LOW_NOISE = 4; // Noise priority.
+        int PU_AE_MODE_FRAME_RATE = 5; // Frame rate priority.
+        int PU_AE_MODE_BRIGHT = 6; // Brightness priority.
+        int PU_AE_MODE_MAX = 7;
     }
 
     // Echo cancellation.
@@ -2043,31 +2059,31 @@ public interface HWPuSDK extends Library {
 
     /* AES key type. */
     public interface PU_AES_KEY_MODULE {
-        public static final int PU_AES_KEY_MODULE_WEB = 0; // WEB
-        public static final int PU_AES_KEY_MODULE_ONVIF = 1; // ONVIF
-        public static final int PU_AES_KEY_MODULE_T28181 = 2; // T28181
-        public static final int PU_AES_KEY_MODULE_CA_PWD = 3; // CA certificate.
-        public static final int PU_AES_KEY_MODULE_8021X = 4; // 8021X
-        public static final int PU_AES_KEY_MODULE_SNMP = 5; // SNMP
-        public static final int PU_AES_KEY_MODULE_DDNS = 6; // DDNS
-        public static final int PU_AES_KEY_MODULE_SDK = 7; // SDK
-        public static final int PU_AES_KEY_MODULE_FACE_REC_DATABASE = 15; // Facial recognition database.
-        public static final int PU_AES_KEY_MODULE_MAX = 16;
+        int PU_AES_KEY_MODULE_WEB = 0; // WEB
+        int PU_AES_KEY_MODULE_ONVIF = 1; // ONVIF
+        int PU_AES_KEY_MODULE_T28181 = 2; // T28181
+        int PU_AES_KEY_MODULE_CA_PWD = 3; // CA certificate.
+        int PU_AES_KEY_MODULE_8021X = 4; // 8021X
+        int PU_AES_KEY_MODULE_SNMP = 5; // SNMP
+        int PU_AES_KEY_MODULE_DDNS = 6; // DDNS
+        int PU_AES_KEY_MODULE_SDK = 7; // SDK
+        int PU_AES_KEY_MODULE_FACE_REC_DATABASE = 15; // Facial recognition database.
+        int PU_AES_KEY_MODULE_MAX = 16;
     }
 
     // Alert deployment.
     public interface PU_ALARM_ACTION {
-        public static final int PU_ALARM_ACTION_MOVE = 1; // Alarm cleared.
-        public static final int PU_ALARM_ACTION_HAPPEN = 2; // Alarm occurred.
-        public static final int PU_ALARM_ACTION_MAX = 3;
+        int PU_ALARM_ACTION_MOVE = 1; // Alarm cleared.
+        int PU_ALARM_ACTION_HAPPEN = 2; // Alarm occurred.
+        int PU_ALARM_ACTION_MAX = 3;
     }
 
     // Alarm type.
     public interface PU_ALARM_CATEGORY_TYPE {
-        public static final int PU_ALARM_CATEGORY_TYPE_ALL = 0; // Service and device alarms.
-        public static final int PU_ALARM_CATEGORY_TYPE_DEVICE = 1; // Device alarms.
-        public static final int PU_ALARM_CATEGORY_TYPE_SERVICE = 2; // Service alarms.
-        public static final int PU_ALARM_CATEGORY_TYPE_MAX = 3;
+        int PU_ALARM_CATEGORY_TYPE_ALL = 0; // Service and device alarms.
+        int PU_ALARM_CATEGORY_TYPE_DEVICE = 1; // Device alarms.
+        int PU_ALARM_CATEGORY_TYPE_SERVICE = 2; // Service alarms.
+        int PU_ALARM_CATEGORY_TYPE_MAX = 3;
     }
 
     public interface PU_ALARM_LEVEL_E {
@@ -2097,11 +2113,11 @@ public interface HWPuSDK extends Library {
 
     // Alarm linkage PTZ priority.
     public interface PU_ALARM_LINK_PTZ_PRIORITY {
-        public static final int PU_GUARD_FIRST = 0; // Park action first. (When the park waiting time elapses, the park
+        int PU_GUARD_FIRST = 0; // Park action first. (When the park waiting time elapses, the park
         // action is triggered no matter whether any alarm is generated.)
-        public static final int PU_ALARM_FIRST = 1; // Alarm linkage first. (During the alarming period, the park action
+        int PU_ALARM_FIRST = 1; // Alarm linkage first. (During the alarming period, the park action
         // does not take effect.)
-        public static final int PU_LINK_MAX = 2;
+        int PU_LINK_MAX = 2;
     }
 
     // Alarm linkage PTZ priority.
@@ -2350,138 +2366,138 @@ public interface HWPuSDK extends Library {
 
     // Alarm type. Note: The enumerated type is the same as the ALARM_TYPE_E.
     public interface PU_ALARM_TYPE {
-        public static final int PU_ALARM_TYPE_DI = 1; // Boolean value input.
-        public static final int PU_ALARM_TYPE_DISK_FULL = 2; // Full disk.
-        public static final int PU_ALARM_TYPE_NO_SIGNAL = 3; // Video signal loss.
-        public static final int PU_ALARM_TYPE_MOVE_DECTION = 4; // Motion detection alarm.
-        public static final int PU_ALARM_TYPE_DISK_FAULT = 5; // Disk fault.
-        public static final int PU_ALARM_TYPE_SHIELD = 6; // Lens blocking alarm, including the intelligent lens
+        int PU_ALARM_TYPE_DI = 1; // Boolean value input.
+        int PU_ALARM_TYPE_DISK_FULL = 2; // Full disk.
+        int PU_ALARM_TYPE_NO_SIGNAL = 3; // Video signal loss.
+        int PU_ALARM_TYPE_MOVE_DECTION = 4; // Motion detection alarm.
+        int PU_ALARM_TYPE_DISK_FAULT = 5; // Disk fault.
+        int PU_ALARM_TYPE_SHIELD = 6; // Lens blocking alarm, including the intelligent lens
         // blocking detection alarm.
-        public static final int PU_ALARM_TYPE_NETWORK_INTERRUPT = 7; // Network disconnection.
-        public static final int PU_ALARM_TYPE_IP_ADDRESS_CONFLICT = 8; // IP address conflict.
-        public static final int PU_ALARM_TYPE_TEMPERATURE = 9; // Temperature alarm.
-        public static final int PU_ALARM_TYPE_FACE_DETECTION = 10; // Face detection.
-        public static final int PU_ALARM_TYPE_INVADE = 11; // Tripwire crossing detection.
-        public static final int PU_ALARM_TYPE_COUNT = 12; // Object counting.
-        public static final int PU_ALARM_TYPE_DISTURB = 13; // Interference detection.
+        int PU_ALARM_TYPE_NETWORK_INTERRUPT = 7; // Network disconnection.
+        int PU_ALARM_TYPE_IP_ADDRESS_CONFLICT = 8; // IP address conflict.
+        int PU_ALARM_TYPE_TEMPERATURE = 9; // Temperature alarm.
+        int PU_ALARM_TYPE_FACE_DETECTION = 10; // Face detection.
+        int PU_ALARM_TYPE_INVADE = 11; // Tripwire crossing detection.
+        int PU_ALARM_TYPE_COUNT = 12; // Object counting.
+        int PU_ALARM_TYPE_DISTURB = 13; // Interference detection.
         /* Intelligent alarming. */
-        public static final int PU_ALARM_TYPE_TRIPWIRE = 14; // Tripwire crossing detection.
-        public static final int PU_ALARM_TYPE_INTRUSION = 15; // Intrusion detection.
-        public static final int PU_ALARM_TYPE_HOVER = 16; // Loitering detection.
-        public static final int PU_ALARM_TYPE_LEGACY = 17; // Abandoned object detection.
-        public static final int PU_ALARM_TYPE_REMOVE = 18; // Removed object detection.
-        public static final int PU_ALARM_TYPE_MEDIA_INTERRUPT = 30; // Media stream interrupted.
-        public static final int PU_ALARM_TYPE_DISK_EXCEPTION = 31; // SD card exception.
-        public static final int PU_ALARM_TYPE_AUDIO_EXCEPTION = 32; // Audio exception detection.
-        public static final int PU_ALARM_TYPE_STORAGE_FAIL = 33; // Drive memory alarm.
-        public static final int PU_ALARM_TYPE_RECORDING_JOBSTATE = 34; // Recording task status change.
-        public static final int PU_ALARM_TYPE_DEV_TEMPE = 35; // Temperature chip error alarm.
-        public static final int PU_ALARM_TYPE_LOG_WR = 36; // Log read and write alarm.
-        public static final int PU_ALARM_TYPE_PTZ_CONFIG_WR = 37; // PTZ protocol configuration alarm.
-        public static final int PU_ALARM_TYPE_FAN_PWR_BLOCKED = 38; // The fan for the power module of a fixed dome
+        int PU_ALARM_TYPE_TRIPWIRE = 14; // Tripwire crossing detection.
+        int PU_ALARM_TYPE_INTRUSION = 15; // Intrusion detection.
+        int PU_ALARM_TYPE_HOVER = 16; // Loitering detection.
+        int PU_ALARM_TYPE_LEGACY = 17; // Abandoned object detection.
+        int PU_ALARM_TYPE_REMOVE = 18; // Removed object detection.
+        int PU_ALARM_TYPE_MEDIA_INTERRUPT = 30; // Media stream interrupted.
+        int PU_ALARM_TYPE_DISK_EXCEPTION = 31; // SD card exception.
+        int PU_ALARM_TYPE_AUDIO_EXCEPTION = 32; // Audio exception detection.
+        int PU_ALARM_TYPE_STORAGE_FAIL = 33; // Drive memory alarm.
+        int PU_ALARM_TYPE_RECORDING_JOBSTATE = 34; // Recording task status change.
+        int PU_ALARM_TYPE_DEV_TEMPE = 35; // Temperature chip error alarm.
+        int PU_ALARM_TYPE_LOG_WR = 36; // Log read and write alarm.
+        int PU_ALARM_TYPE_PTZ_CONFIG_WR = 37; // PTZ protocol configuration alarm.
+        int PU_ALARM_TYPE_FAN_PWR_BLOCKED = 38; // The fan for the power module of a fixed dome
         // camera is faulty.
-        public static final int PU_ALARM_TYPE_FAN_HEC_BLOCKED = 39; // The fan for the coding module of a fixed dome
+        int PU_ALARM_TYPE_FAN_HEC_BLOCKED = 39; // The fan for the coding module of a fixed dome
         // camera is faulty.
-        public static final int PU_ALARM_TYPE_SFP_TEMP_HIGH = 40; // Overheat alarm of the optical module.
-        public static final int PU_ALARM_TYPE_SFP_TEMP_LOW = 41; // Low heat alarm of the optical module.
-        public static final int PU_ALARM_TYPE_SFP_VOL_HIGH = 42; // Overvoltage alarm of the optical module.
-        public static final int PU_ALARM_TYPE_SFP_VOL_LOW = 43; // Low voltage alarm of the optical module.
-        public static final int PU_ALARM_TYPE_SFP_BIAS_HIGH = 44; // Over-high bias current alarm of the optical module.
-        public static final int PU_ALARM_TYPE_SFP_BIAS_LOW = 45; // Over-low bias current alarm of the optical module.
-        public static final int PU_ALARM_TYPE_SFP_TX_PWR_HIGH = 46; // Over-high transmission power alarm of the optical
+        int PU_ALARM_TYPE_SFP_TEMP_HIGH = 40; // Overheat alarm of the optical module.
+        int PU_ALARM_TYPE_SFP_TEMP_LOW = 41; // Low heat alarm of the optical module.
+        int PU_ALARM_TYPE_SFP_VOL_HIGH = 42; // Overvoltage alarm of the optical module.
+        int PU_ALARM_TYPE_SFP_VOL_LOW = 43; // Low voltage alarm of the optical module.
+        int PU_ALARM_TYPE_SFP_BIAS_HIGH = 44; // Over-high bias current alarm of the optical module.
+        int PU_ALARM_TYPE_SFP_BIAS_LOW = 45; // Over-low bias current alarm of the optical module.
+        int PU_ALARM_TYPE_SFP_TX_PWR_HIGH = 46; // Over-high transmission power alarm of the optical
         // module.
-        public static final int PU_ALARM_TYPE_SFP_TX_PWR_LOW = 47; // Over-low transmission power alarm of the optical
+        int PU_ALARM_TYPE_SFP_TX_PWR_LOW = 47; // Over-low transmission power alarm of the optical
         // module.
-        public static final int PU_ALARM_TYPE_SFP_RX_PWR_HIGH = 48; // Over-high received power alarm of the optical
+        int PU_ALARM_TYPE_SFP_RX_PWR_HIGH = 48; // Over-high received power alarm of the optical
         // module.
-        public static final int PU_ALARM_TYPE_SFP_RX_PWR_LOW = 49; // Over-low received power alarm of the optical
+        int PU_ALARM_TYPE_SFP_RX_PWR_LOW = 49; // Over-low received power alarm of the optical
         // module.
-        public static final int PU_ALARM_TYPE_SFP_LASER_TEMP_HIGH = 50; // Over-heat laser alarm of the optical module.
-        public static final int PU_ALARM_TYPE_SFP_LASER_TEMP_LOW = 51; // Low heat laser alarm of the optical module.
-        public static final int PU_ALARM_TYPE_SFP_TEC_CURRENT_HIGH = 52; // Over-high TEC current alarm of the optical
+        int PU_ALARM_TYPE_SFP_LASER_TEMP_HIGH = 50; // Over-heat laser alarm of the optical module.
+        int PU_ALARM_TYPE_SFP_LASER_TEMP_LOW = 51; // Low heat laser alarm of the optical module.
+        int PU_ALARM_TYPE_SFP_TEC_CURRENT_HIGH = 52; // Over-high TEC current alarm of the optical
         // module.
-        public static final int PU_ALARM_TYPE_SFP_TEC_CURRENT_LOW = 53; // Over-low TEC current alarm of the optical
+        int PU_ALARM_TYPE_SFP_TEC_CURRENT_LOW = 53; // Over-low TEC current alarm of the optical
         // module.
-        public static final int PU_ALARM_TYPE_DISC_PULLOUT = 54; // Hard disk removal.
-        public static final int PU_ALARM_TYPE_LIGHT_SENSOR_INCVALID = 55; // Ambient light sensor failure alarm.
-        public static final int PU_ALARM_TYPE_EXTERNAL_POWER_DOWN = 56; // Power-off of the external power supply.
-        public static final int PU_ALARM_TYPE_WIPER_FAILURE_ALARM = 57; // Wiper failure alarm.
-        public static final int PU_ALARM_TYPE_SFP_NOT_EXIST = 58; // Optical module not in position.
-        public static final int PU_ALARM_TYPE_TYPE_PTOPT_HOR_FAIL = 59; // Horizontal optocoupler failure.
-        public static final int PU_ALARM_TYPE_TYPE_PTOPT_VER_FAIL = 60; // Vertical optocoupler failure.
+        int PU_ALARM_TYPE_DISC_PULLOUT = 54; // Hard disk removal.
+        int PU_ALARM_TYPE_LIGHT_SENSOR_INCVALID = 55; // Ambient light sensor failure alarm.
+        int PU_ALARM_TYPE_EXTERNAL_POWER_DOWN = 56; // Power-off of the external power supply.
+        int PU_ALARM_TYPE_WIPER_FAILURE_ALARM = 57; // Wiper failure alarm.
+        int PU_ALARM_TYPE_SFP_NOT_EXIST = 58; // Optical module not in position.
+        int PU_ALARM_TYPE_TYPE_PTOPT_HOR_FAIL = 59; // Horizontal optocoupler failure.
+        int PU_ALARM_TYPE_TYPE_PTOPT_VER_FAIL = 60; // Vertical optocoupler failure.
 
-        public static final int PU_ALARM_TYPE_ITS_RADAR_EXCEPTION_ALARM = 62; // ITS radar exception.
-        public static final int PU_ALARM_TYPE_ITS_IOCOIL_EXCEPTION_ALARM = 63; // ITS I/O loop exception.
-        public static final int PU_ALARM_TYPE_ITS_485COIL_EXCEPTION_ALARM = 64; // ITS RS-485 loop exception.
-        public static final int PU_ALARM_TYPE_ITS_REDTOR_EXCEPTION_ALARM = 65; // ITS traffic light detector exception.
-        public static final int PU_ALARM_TYPE_LENS_FAILURE_ALARM = 66; // Lens PT optocoupler failure.
+        int PU_ALARM_TYPE_ITS_RADAR_EXCEPTION_ALARM = 62; // ITS radar exception.
+        int PU_ALARM_TYPE_ITS_IOCOIL_EXCEPTION_ALARM = 63; // ITS I/O loop exception.
+        int PU_ALARM_TYPE_ITS_485COIL_EXCEPTION_ALARM = 64; // ITS RS-485 loop exception.
+        int PU_ALARM_TYPE_ITS_REDTOR_EXCEPTION_ALARM = 65; // ITS traffic light detector exception.
+        int PU_ALARM_TYPE_LENS_FAILURE_ALARM = 66; // Lens PT optocoupler failure.
         /* Hardware module alarms. The value cannot exceed 200. */
-        public static final int PU_ALARM_TYPE_AUDIO_UP = 100; // Sudden volume increase detection.
-        public static final int PU_ALARM_TYPE_AUDIO_DOWN = 101; // Sudden volume decrease detection.
-        public static final int PU_ALARM_TYPE_ENTER = 102; // Area entry detection.
-        public static final int PU_ALARM_TYPE_EXIT = 103; // Area exit detection.
-        public static final int PU_ALARM_TYPE_FASTMOVE = 104; // Fast movement detection.
-        public static final int PU_ALARM_TYPE_CPU_HIGHT = 105; // Over-high CPU usage alarm.
-        public static final int PU_ALARM_TYPE_MEM_HIGHT = 106; // Over-high memory usage alarm.
-        public static final int PU_ALARM_TYPE_SCENECHANGE = 107; // Scene change detection.
-        public static final int PU_ALARM_TYPE_AUTOTRACKING = 108; // Auto tracking.
-        public static final int PU_ALARM_TYPE_OUTOFFOCUS_DETECT = 109; // Defocus detection.
-        public static final int PU_ALARM_TYPE_CROWD_ANALYSIS = 110; // Crowd gathering detection.
-        public static final int PU_ALARM_TYPE_SHAKE_DIAGNOSIS = 111; // Image shaking detection.
-        public static final int PU_ALARM_TYPE_FROZEN_DIAGNOSIS = 112; // Image freezing.
-        public static final int PU_ALARM_TYPE_SNOW_NOISE_DIAGNOSIS = 113; // Static noise detection.
-        public static final int PU_ALARM_TYPE_STRIPENOISE_DIAGNOSIS = 114; // Stripe noise detection.
-        public static final int PU_ALARM_TYPE_BRIGHT_DIAGNOSIS = 115; // Gain imbalance.
-        public static final int PU_ALARM_TYPE_COLORCAST_DIAGNOSIS = 116; // Color cast.
-        public static final int PU_ALARM_TYPE_CAR_DETECTION = 117; // Parking detection.
-        public static final int PU_ALARM_TYPE_HUMAN_COUNT = 118; // Head counting.
-        public static final int PU_ALARM_TYPE_FD_DL = 119; // 3559 face detection.
-        public static final int PU_ALARM_TYPE_QUEUE_DETECT = 121; // Queue length detection.
-        public static final int PU_ALARM_TYPE_CROWD_DENSITY_DETECT = 122; // Crowd density detection.
-        public static final int PU_ALARM_TYPE_ILLEGAL_PARKING = 123; // PTZ dome camera that supports parking violation
+        int PU_ALARM_TYPE_AUDIO_UP = 100; // Sudden volume increase detection.
+        int PU_ALARM_TYPE_AUDIO_DOWN = 101; // Sudden volume decrease detection.
+        int PU_ALARM_TYPE_ENTER = 102; // Area entry detection.
+        int PU_ALARM_TYPE_EXIT = 103; // Area exit detection.
+        int PU_ALARM_TYPE_FASTMOVE = 104; // Fast movement detection.
+        int PU_ALARM_TYPE_CPU_HIGHT = 105; // Over-high CPU usage alarm.
+        int PU_ALARM_TYPE_MEM_HIGHT = 106; // Over-high memory usage alarm.
+        int PU_ALARM_TYPE_SCENECHANGE = 107; // Scene change detection.
+        int PU_ALARM_TYPE_AUTOTRACKING = 108; // Auto tracking.
+        int PU_ALARM_TYPE_OUTOFFOCUS_DETECT = 109; // Defocus detection.
+        int PU_ALARM_TYPE_CROWD_ANALYSIS = 110; // Crowd gathering detection.
+        int PU_ALARM_TYPE_SHAKE_DIAGNOSIS = 111; // Image shaking detection.
+        int PU_ALARM_TYPE_FROZEN_DIAGNOSIS = 112; // Image freezing.
+        int PU_ALARM_TYPE_SNOW_NOISE_DIAGNOSIS = 113; // Static noise detection.
+        int PU_ALARM_TYPE_STRIPENOISE_DIAGNOSIS = 114; // Stripe noise detection.
+        int PU_ALARM_TYPE_BRIGHT_DIAGNOSIS = 115; // Gain imbalance.
+        int PU_ALARM_TYPE_COLORCAST_DIAGNOSIS = 116; // Color cast.
+        int PU_ALARM_TYPE_CAR_DETECTION = 117; // Parking detection.
+        int PU_ALARM_TYPE_HUMAN_COUNT = 118; // Head counting.
+        int PU_ALARM_TYPE_FD_DL = 119; // 3559 face detection.
+        int PU_ALARM_TYPE_QUEUE_DETECT = 121; // Queue length detection.
+        int PU_ALARM_TYPE_CROWD_DENSITY_DETECT = 122; // Crowd density detection.
+        int PU_ALARM_TYPE_ILLEGAL_PARKING = 123; // PTZ dome camera that supports parking violation
         // detection.
-        public static final int PU_ALARM_TYPE_VLPR_TRAFFIC_CONGESTION = 124; // Traffic congestion alarm.
-        public static final int PU_ALARM_TYPE_TRAFFIC_CONGESTION = 125; // ITS traffic congestion alarm.
-        public static final int PU_ALARM_TYPE_FACE_RECOGNITION = 130; // 3559 facial recognition.
-        public static final int PU_LPR_CAPTURE_RES = 200; // License plate snapshot result.
-        public static final int PU_MANUAL_LPR_CAPTURE_RES = 201; // Manual license plate snapshot result.
-        public static final int PU_ALARM_TYPE_HTTPS_CERT_EXPIRE = 300; // HTTPS certificate expiration alarm.
-        public static final int PU_ALARM_TYPE_HTTPS_CERT_WILL_EXPIRE = 301; // Alarm of the HTTPS certificate about to
+        int PU_ALARM_TYPE_VLPR_TRAFFIC_CONGESTION = 124; // Traffic congestion alarm.
+        int PU_ALARM_TYPE_TRAFFIC_CONGESTION = 125; // ITS traffic congestion alarm.
+        int PU_ALARM_TYPE_FACE_RECOGNITION = 130; // 3559 facial recognition.
+        int PU_LPR_CAPTURE_RES = 200; // License plate snapshot result.
+        int PU_MANUAL_LPR_CAPTURE_RES = 201; // Manual license plate snapshot result.
+        int PU_ALARM_TYPE_HTTPS_CERT_EXPIRE = 300; // HTTPS certificate expiration alarm.
+        int PU_ALARM_TYPE_HTTPS_CERT_WILL_EXPIRE = 301; // Alarm of the HTTPS certificate about to
         // expire.
-        public static final int PU_ALARM_TYPE_DOT1X_CERT_EXPIRE = 302; // 802.1X certificate expiration alarm.
-        public static final int PU_ALARM_TYPE_DOT1X_CERT_WILL_EXPIRE = 303; // Alarm of the 802.1X certificate about to
+        int PU_ALARM_TYPE_DOT1X_CERT_EXPIRE = 302; // 802.1X certificate expiration alarm.
+        int PU_ALARM_TYPE_DOT1X_CERT_WILL_EXPIRE = 303; // Alarm of the 802.1X certificate about to
         // expire.
-        public static final int PU_ALARM_TYPE_SDK_PWD_STILL_INITIAL_PWD = 304; // SDK password not changed
-        public static final int PU_AlARM_TYPE_PTZ_MOVE = 305; // PTZ rotation (GENETEC).
-        public static final int PU_ALARM_TYPE_SSH_OPEN = 306; // SSH enabled.
-        public static final int PU_ALARM_TYPE_SDK_USR_LOCK = 307; // SDK user locked.
-        public static final int PU_ALARM_TYPE_WEB_USR_LOCK = 308; // Web user locked.
-        public static final int PU_ALARM_TYPE_ONVIF_USR_LOCK = 309; // ONVIF user locked.
-        public static final int PU_ALARM_TYPE_GENETEC_USR_LOCK = 310; // GENETEC user locked.
-        public static final int PU_ALARM_TYPE_DOT1X_CA_CERT_EXPIRE = 311; // 802.1X CA certificate expiration alarm.
-        public static final int PU_ALARM_TYPE_DOT1X_CA_CERT_WILL_EXPIRE = 312; // Alarm of the 802.1X CA certificate
+        int PU_ALARM_TYPE_SDK_PWD_STILL_INITIAL_PWD = 304; // SDK password not changed
+        int PU_AlARM_TYPE_PTZ_MOVE = 305; // PTZ rotation (GENETEC).
+        int PU_ALARM_TYPE_SSH_OPEN = 306; // SSH enabled.
+        int PU_ALARM_TYPE_SDK_USR_LOCK = 307; // SDK user locked.
+        int PU_ALARM_TYPE_WEB_USR_LOCK = 308; // Web user locked.
+        int PU_ALARM_TYPE_ONVIF_USR_LOCK = 309; // ONVIF user locked.
+        int PU_ALARM_TYPE_GENETEC_USR_LOCK = 310; // GENETEC user locked.
+        int PU_ALARM_TYPE_DOT1X_CA_CERT_EXPIRE = 311; // 802.1X CA certificate expiration alarm.
+        int PU_ALARM_TYPE_DOT1X_CA_CERT_WILL_EXPIRE = 312; // Alarm of the 802.1X CA certificate
         // about to expire.
-        public static final int PU_ALARM_TYPE_WEB_PWD_EXPIRE = 313; // Web password expiration alarm.
-        public static final int PU_ALARM_TYPE_ATTITUDE_ABNORMAL = 314; // Abnormal posture.
-        public static final int PU_ALARM_TYPE_VE_ILLEGAL_PARKING = 400; // Parking violation.
-        public static final int PU_ALARM_TYPE_VE_ON_VEHICLE_LANE = 401; // Non-motor vehicles driving on motor vehicle
+        int PU_ALARM_TYPE_WEB_PWD_EXPIRE = 313; // Web password expiration alarm.
+        int PU_ALARM_TYPE_ATTITUDE_ABNORMAL = 314; // Abnormal posture.
+        int PU_ALARM_TYPE_VE_ILLEGAL_PARKING = 400; // Parking violation.
+        int PU_ALARM_TYPE_VE_ON_VEHICLE_LANE = 401; // Non-motor vehicles driving on motor vehicle
         // lanes.
-        public static final int PU_ALARM_TYPE_VE_ON_NONEVEHICLE_LANE = 402; // Motor vehicles driving on non-motor
+        int PU_ALARM_TYPE_VE_ON_NONEVEHICLE_LANE = 402; // Motor vehicles driving on non-motor
         // vehicle lanes.
-        public static final int PU_ALARM_TYPE_VE_PRESSING_LINE = 403; // Marked lanes violation.
-        public static final int PU_ALARM_TYPE_VE_WRONG_DIRECTION = 404; // Illegal backing/Wrong-way driving.
+        int PU_ALARM_TYPE_VE_PRESSING_LINE = 403; // Marked lanes violation.
+        int PU_ALARM_TYPE_VE_WRONG_DIRECTION = 404; // Illegal backing/Wrong-way driving.
         // Abnormal license plate alarm (reserved).c
         // type：PU_ALARM_TYPE_VE_ABNORMAL_PLATE
-        public static final int PU_ALARM_TYPE_VE_REVERSE = 406; // Illegal backing. Since the abnormal license plate is
+        int PU_ALARM_TYPE_VE_REVERSE = 406; // Illegal backing. Since the abnormal license plate is
         // not deleted, the value is fixed at 406.
         // Master-slave camera surveillance (1+N).
-        public static final int PU_ALARM_TYPE_SLAVE_RTSP_KEEP_ALIVE_FAIL = 500; // Alarm of the RTSP keepalive operation
+        int PU_ALARM_TYPE_SLAVE_RTSP_KEEP_ALIVE_FAIL = 500; // Alarm of the RTSP keepalive operation
         // failure of the slave device.
-        public static final int PU_ALARM_TYPE_SLAVE_STREAM_NORMAL = 506; // Normal RTSP stream of the slave device.
-        public static final int PU_ALARM_TYPE_WIFI_ALARM = 550; // Wi-Fi exception.
-        public static final int PU_ALARM_TYPE_UPDATE_ROLLBACK_ALARM = 560; // Version rollback upon upgrade failure.
-        public static final int PU_ALARM_TYPE_ALL = 561; // All alarms.
-        public static final int PU_ALARM_TYPE_MAX = 562; // Reserved.
+        int PU_ALARM_TYPE_SLAVE_STREAM_NORMAL = 506; // Normal RTSP stream of the slave device.
+        int PU_ALARM_TYPE_WIFI_ALARM = 550; // Wi-Fi exception.
+        int PU_ALARM_TYPE_UPDATE_ROLLBACK_ALARM = 560; // Version rollback upon upgrade failure.
+        int PU_ALARM_TYPE_ALL = 561; // All alarms.
+        int PU_ALARM_TYPE_MAX = 562; // Reserved.
     }
 
     /* Algorithm version information. */
@@ -2500,10 +2516,10 @@ public interface HWPuSDK extends Library {
 
     // Transparency.
     public interface PU_ALPHA_TYPE {
-        public static final int PU_ALPHA_NONE = 0;
-        public static final int PU_ALPHA_HALF = 1;
-        public static final int PU_ALPHA_ALL = 2;
-        public static final int PU_ALPHA_MAX = 3;
+        int PU_ALPHA_NONE = 0;
+        int PU_ALPHA_HALF = 1;
+        int PU_ALPHA_ALL = 2;
+        int PU_ALPHA_MAX = 3;
     }
 
     // Area-based detection.
@@ -2638,28 +2654,28 @@ public interface HWPuSDK extends Library {
 
     // Bit rate of streams in G.726 encoding format.
     public interface PU_AUDIO_G726_BPS {
-        public static final int PU_AUDIO_G726_16K = 0; /* G726 16kbps */
-        public static final int PU_AUDIO_G726_24K = 1; /* G726 24kbps */
-        public static final int PU_AUDIO_G726_32K = 2; /* G726 32kbps */
-        public static final int PU_AUDIO_G726_40K = 3; /* G726 40kbps */
-        public static final int PU_AUDIO_G726_64K = 4; /* G726 64kbps */
-        public static final int PU_AUDIO_G726_96K = 5; /* G726 96kbps */
-        public static final int PU_AUDIO_G726_128K = 6; /* G726 128kbps */
-        public static final int PU_AUDIO_G726_160K = 7; /* G726 160kbps */
-        public static final int PU_AUDIO_G726_192K = 8; /* G726 192kbps */
-        public static final int PU_AUDIO_G726_224K = 9; /* G726 224kbps */
-        public static final int PU_AUDIO_G726_256K = 10; /* G726 256kbps */
-        public static final int PU_AUDIO_G726_288K = 11; /* G726 288kbps */
-        public static final int PU_AUDIO_G726_320K = 12; /* G726 320kbps */
-        public static final int PU_AUDIO_G726_352K = 13; /* G726 352kbps */
-        public static final int PU_AUDIO_G726_384K = 14; /* G726 384kbps */
-        public static final int PU_AUDIO_G726_416K = 15; /* G726 416kbps */
-        public static final int PU_AUDIO_G726_448K = 16; /* G726 448kbps */
-        public static final int PU_AUDIO_G726_480K = 17; /* G726 480kbps */
-        public static final int PU_AUDIO_G726_512K = 18; /* G726 512kbps */
-        public static final int PU_AUDIO_G726_48K = 19; /* G726 48kbps */
-        public static final int PU_AUDIO_G726_22K = 20; /* G726 22kbps */
-        public static final int PU_AUDIO_G726_MAX = 21;
+        int PU_AUDIO_G726_16K = 0; /* G726 16kbps */
+        int PU_AUDIO_G726_24K = 1; /* G726 24kbps */
+        int PU_AUDIO_G726_32K = 2; /* G726 32kbps */
+        int PU_AUDIO_G726_40K = 3; /* G726 40kbps */
+        int PU_AUDIO_G726_64K = 4; /* G726 64kbps */
+        int PU_AUDIO_G726_96K = 5; /* G726 96kbps */
+        int PU_AUDIO_G726_128K = 6; /* G726 128kbps */
+        int PU_AUDIO_G726_160K = 7; /* G726 160kbps */
+        int PU_AUDIO_G726_192K = 8; /* G726 192kbps */
+        int PU_AUDIO_G726_224K = 9; /* G726 224kbps */
+        int PU_AUDIO_G726_256K = 10; /* G726 256kbps */
+        int PU_AUDIO_G726_288K = 11; /* G726 288kbps */
+        int PU_AUDIO_G726_320K = 12; /* G726 320kbps */
+        int PU_AUDIO_G726_352K = 13; /* G726 352kbps */
+        int PU_AUDIO_G726_384K = 14; /* G726 384kbps */
+        int PU_AUDIO_G726_416K = 15; /* G726 416kbps */
+        int PU_AUDIO_G726_448K = 16; /* G726 448kbps */
+        int PU_AUDIO_G726_480K = 17; /* G726 480kbps */
+        int PU_AUDIO_G726_512K = 18; /* G726 512kbps */
+        int PU_AUDIO_G726_48K = 19; /* G726 48kbps */
+        int PU_AUDIO_G726_22K = 20; /* G726 22kbps */
+        int PU_AUDIO_G726_MAX = 21;
     }
 
     // Audio stream information.
@@ -2692,23 +2708,23 @@ public interface HWPuSDK extends Library {
 
     // Audio port type.
     public interface PU_AUDIO_PORT_TYPE {
-        public static final int PU_AUDIO_PORT_TYPE_BNC_PLAY = 0; // BNC port.
-        public static final int PU_AUDIO_PORT_TYPE_HDMI_PLAY = 1; // HDMI port.
-        public static final int PU_AUDIO_PORT_TYPE_MAX = 2;
+        int PU_AUDIO_PORT_TYPE_BNC_PLAY = 0; // BNC port.
+        int PU_AUDIO_PORT_TYPE_HDMI_PLAY = 1; // HDMI port.
+        int PU_AUDIO_PORT_TYPE_MAX = 2;
     }
 
     // Audio sampling rate.
     public interface PU_AUDIO_SAMPLERATE {
-        public static final int PU_AUDIO_SAMPLERATE_8000 = 8000;
-        public static final int PU_AUDIO_SAMPLERATE_12000 = 12000;
-        public static final int PU_AUDIO_SAMPLERATE_11025 = 11025;
-        public static final int PU_AUDIO_SAMPLERATE_16000 = 16000;
-        public static final int PU_AUDIO_SAMPLERATE_22050 = 22050;
-        public static final int PU_AUDIO_SAMPLERATE_24000 = 24000;
-        public static final int PU_AUDIO_SAMPLERATE_32000 = 32000;
-        public static final int PU_AUDIO_SAMPLERATE_44100 = 44100;
-        public static final int PU_AUDIO_SAMPLERATE_48000 = 48000;
-        public static final int PU_AUDIO_SAMPLERATE_MAX = 48001;
+        int PU_AUDIO_SAMPLERATE_8000 = 8000;
+        int PU_AUDIO_SAMPLERATE_12000 = 12000;
+        int PU_AUDIO_SAMPLERATE_11025 = 11025;
+        int PU_AUDIO_SAMPLERATE_16000 = 16000;
+        int PU_AUDIO_SAMPLERATE_22050 = 22050;
+        int PU_AUDIO_SAMPLERATE_24000 = 24000;
+        int PU_AUDIO_SAMPLERATE_32000 = 32000;
+        int PU_AUDIO_SAMPLERATE_44100 = 44100;
+        int PU_AUDIO_SAMPLERATE_48000 = 48000;
+        int PU_AUDIO_SAMPLERATE_MAX = 48001;
     }
 
     /* Auto iris parameter. */
@@ -2827,25 +2843,25 @@ public interface HWPuSDK extends Library {
 
     // Baud rate.
     public interface PU_BAUD_RATE {
-        public static final int PU_BAUD_R2400 = 0;
-        public static final int PU_BAUD_R4800 = 2;
-        public static final int PU_BAUD_R9600 = 3;
-        public static final int PU_BAUD_R19200 = 4;
-        public static final int PU_BAUD_R38400 = 5;
-        public static final int PU_BAUD_R57600 = 6;
-        public static final int PU_BAUD_R115200 = 7;
-        public static final int PU_BAUD_R230400 = 8;
-        public static final int PU_BAUD_R460800 = 9;
-        public static final int PU_BAUD_R921600 = 10;
-        public static final int PU_BAUD_MAX = 11;
+        int PU_BAUD_R2400 = 0;
+        int PU_BAUD_R4800 = 2;
+        int PU_BAUD_R9600 = 3;
+        int PU_BAUD_R19200 = 4;
+        int PU_BAUD_R38400 = 5;
+        int PU_BAUD_R57600 = 6;
+        int PU_BAUD_R115200 = 7;
+        int PU_BAUD_R230400 = 8;
+        int PU_BAUD_R460800 = 9;
+        int PU_BAUD_R921600 = 10;
+        int PU_BAUD_MAX = 11;
     }
 
     // Bit rate type.
     public interface PU_BIT_RATE_TYPE {
-        public static final int PU_BIT_RATE_TYPE_FIXED = 0; // Constant bit rate (CBR).
-        public static final int PU_BIT_RATE_TYPE_VARIABLE = 1; // Variable bit rate (VBR).
-        public static final int PU_BIT_RATE_TYPE_QP = 2; // MJPEG stream.
-        public static final int PU_BIT_RATE_TYPE_MAX = 3;
+        int PU_BIT_RATE_TYPE_FIXED = 0; // Constant bit rate (CBR).
+        int PU_BIT_RATE_TYPE_VARIABLE = 1; // Variable bit rate (VBR).
+        int PU_BIT_RATE_TYPE_QP = 2; // MJPEG stream.
+        int PU_BIT_RATE_TYPE_MAX = 3;
     }
 
     /* Day/Night mode. */
@@ -2861,19 +2877,19 @@ public interface HWPuSDK extends Library {
 
     // Service type.
     public interface PU_BUSINESS_TYPE {
-        public static final int PU_BUSINESS_REAL_VIDEO = 0; // Live video viewing.
-        public static final int PU_BUSINESS_AUDIO_TALK = 1; // Voice intercom.
-        public static final int PU_BUSINESS_AUDIO_BROADCAST = 2; // Voice broadcast.
-        public static final int PU_BUSINESS_RECORD_DOWNLOAD = 3; // Recording download.
-        public static final int PU_BUSINESS_RECORD_PLAY_BACK = 4; // Recording playback.
-        public static final int PU_BUSINESS_SNAPSHOT_DOWNLOAD = 5; // Image download.
-        public static final int PU_BUSINESS_TYPE_MAX = 6;
+        int PU_BUSINESS_REAL_VIDEO = 0; // Live video viewing.
+        int PU_BUSINESS_AUDIO_TALK = 1; // Voice intercom.
+        int PU_BUSINESS_AUDIO_BROADCAST = 2; // Voice broadcast.
+        int PU_BUSINESS_RECORD_DOWNLOAD = 3; // Recording download.
+        int PU_BUSINESS_RECORD_PLAY_BACK = 4; // Recording playback.
+        int PU_BUSINESS_SNAPSHOT_DOWNLOAD = 5; // Image download.
+        int PU_BUSINESS_TYPE_MAX = 6;
     }
 
     public interface PU_CACHERECORD {
-        public static final int PU_RECORD_CLOSE = 0;
-        public static final int PU_RECORD_OFFLINE = 1;
-        public static final int PU_RECORD_MAX = 2;
+        int PU_RECORD_CLOSE = 0;
+        int PU_RECORD_OFFLINE = 1;
+        int PU_RECORD_MAX = 2;
     }
 
     // AE exposure mode.
@@ -2994,36 +3010,36 @@ public interface HWPuSDK extends Library {
 
     // Shutter settings.
     public interface PU_CAM_SHUTTER_MODE {
-        public static final int PU_SHUTTER_MODE_1 = 0; // Shutter speed: 1s.
-        public static final int PU_SHUTTER_MODE_2 = 1; // Shutter speed: 1/2s.
-        public static final int PU_SHUTTER_MODE_4 = 2; // Shutter speed: 1/4s.
-        public static final int PU_SHUTTER_MODE_8 = 3;
-        public static final int PU_SHUTTER_MODE_12 = 4;
-        public static final int PU_SHUTTER_MODE_15 = 5;
-        public static final int PU_SHUTTER_MODE_25 = 6;
-        public static final int PU_SHUTTER_MODE_30 = 7;
-        public static final int PU_SHUTTER_MODE_50 = 8;
-        public static final int PU_SHUTTER_MODE_60 = 9;
-        public static final int PU_SHUTTER_MODE_90 = 10;
-        public static final int PU_SHUTTER_MODE_100 = 11;
-        public static final int PU_SHUTTER_MODE_120 = 12;
-        public static final int PU_SHUTTER_MODE_125 = 13;
-        public static final int PU_SHUTTER_MODE_180 = 14;
-        public static final int PU_SHUTTER_MODE_250 = 15;
-        public static final int PU_SHUTTER_MODE_350 = 16;
-        public static final int PU_SHUTTER_MODE_500 = 17;
-        public static final int PU_SHUTTER_MODE_725 = 18;
-        public static final int PU_SHUTTER_MODE_1000 = 19;
-        public static final int PU_SHUTTER_MODE_1500 = 20;
-        public static final int PU_SHUTTER_MODE_2000 = 21;
-        public static final int PU_SHUTTER_MODE_3000 = 22;
-        public static final int PU_SHUTTER_MODE_4000 = 23;
-        public static final int PU_SHUTTER_MODE_6000 = 24;
-        public static final int PU_SHUTTER_MODE_10000 = 25;
-        public static final int PU_SHUTTER_MODE_30000 = 26;
-        public static final int PU_SHUTTER_MODE_100000 = 27;
-        public static final int PU_SHUTTER_MODE_3 = 28; // Shutter speed: 1/3s.
-        public static final int PU_SHUTTER_MODE_MAX = 29;
+        int PU_SHUTTER_MODE_1 = 0; // Shutter speed: 1s.
+        int PU_SHUTTER_MODE_2 = 1; // Shutter speed: 1/2s.
+        int PU_SHUTTER_MODE_4 = 2; // Shutter speed: 1/4s.
+        int PU_SHUTTER_MODE_8 = 3;
+        int PU_SHUTTER_MODE_12 = 4;
+        int PU_SHUTTER_MODE_15 = 5;
+        int PU_SHUTTER_MODE_25 = 6;
+        int PU_SHUTTER_MODE_30 = 7;
+        int PU_SHUTTER_MODE_50 = 8;
+        int PU_SHUTTER_MODE_60 = 9;
+        int PU_SHUTTER_MODE_90 = 10;
+        int PU_SHUTTER_MODE_100 = 11;
+        int PU_SHUTTER_MODE_120 = 12;
+        int PU_SHUTTER_MODE_125 = 13;
+        int PU_SHUTTER_MODE_180 = 14;
+        int PU_SHUTTER_MODE_250 = 15;
+        int PU_SHUTTER_MODE_350 = 16;
+        int PU_SHUTTER_MODE_500 = 17;
+        int PU_SHUTTER_MODE_725 = 18;
+        int PU_SHUTTER_MODE_1000 = 19;
+        int PU_SHUTTER_MODE_1500 = 20;
+        int PU_SHUTTER_MODE_2000 = 21;
+        int PU_SHUTTER_MODE_3000 = 22;
+        int PU_SHUTTER_MODE_4000 = 23;
+        int PU_SHUTTER_MODE_6000 = 24;
+        int PU_SHUTTER_MODE_10000 = 25;
+        int PU_SHUTTER_MODE_30000 = 26;
+        int PU_SHUTTER_MODE_100000 = 27;
+        int PU_SHUTTER_MODE_3 = 28; // Shutter speed: 1/3s.
+        int PU_SHUTTER_MODE_MAX = 29;
     }
 
     /* Slow shutter mode settings. */
@@ -3069,23 +3085,23 @@ public interface HWPuSDK extends Library {
 
     /* White balance mode. */
     public interface PU_CAM_WB_MODE {
-        public static final int PU_WB_MODE_AUTO = 0; // Automatic (stable environment and sharp colors).
-        public static final int PU_WB_MODE_ATW = 1; // Automatic tracking (area where the white balance difference is
+        int PU_WB_MODE_AUTO = 0; // Automatic (stable environment and sharp colors).
+        int PU_WB_MODE_ATW = 1; // Automatic tracking (area where the white balance difference is
         // large).
-        public static final int PU_WB_MODE_INDOOR = 2; // Indoor.
-        public static final int PU_WB_MODE_OUTDOOR = 3; // Outdoor.
-        public static final int PU_WB_MODE_ONEPUSH_TRIGGER = 4; // OnePush.
-        public static final int PU_WB_MODE_MANUAL = 5; // Manual.
-        public static final int PU_WB_MODE_OUTDOOR_AUTO = 6; // Outdoor automatic.
-        public static final int PU_WB_MODE_SODIUM_VAPOR_LAMP_AUTO = 7; // Automatic sodium lamp.
-        public static final int PU_WB_MODE_SODIUM_VAPOR_LAMP = 8; // Fixed sodium lamp.
-        public static final int PU_WB_MODE_MERCURE_VAPOR_LAMP = 9; // Mercury lamp.
-        public static final int PU_WB_MODE_FLUO_4200k = 10; // 4200k
-        public static final int PU_WB_MODE_FLUORESCENTLAMP1 = 11; // Fluorescent lamp 1 (2500-3500 K).
-        public static final int PU_WB_MODE_FLUORESCENTLAMP2 = 12; // Fluorescent lamp 2 (3500-4500 K).
-        public static final int PU_WB_MODE_INCANDESCENTLAMP = 13; // Incandescent lamp (2700-2900 K).
-        public static final int PU_WB_MODE_SUNLIGHT = 14; // Sunlight.
-        public static final int PU_WB_MODE_MAX = 15;
+        int PU_WB_MODE_INDOOR = 2; // Indoor.
+        int PU_WB_MODE_OUTDOOR = 3; // Outdoor.
+        int PU_WB_MODE_ONEPUSH_TRIGGER = 4; // OnePush.
+        int PU_WB_MODE_MANUAL = 5; // Manual.
+        int PU_WB_MODE_OUTDOOR_AUTO = 6; // Outdoor automatic.
+        int PU_WB_MODE_SODIUM_VAPOR_LAMP_AUTO = 7; // Automatic sodium lamp.
+        int PU_WB_MODE_SODIUM_VAPOR_LAMP = 8; // Fixed sodium lamp.
+        int PU_WB_MODE_MERCURE_VAPOR_LAMP = 9; // Mercury lamp.
+        int PU_WB_MODE_FLUO_4200k = 10; // 4200k
+        int PU_WB_MODE_FLUORESCENTLAMP1 = 11; // Fluorescent lamp 1 (2500-3500 K).
+        int PU_WB_MODE_FLUORESCENTLAMP2 = 12; // Fluorescent lamp 2 (3500-4500 K).
+        int PU_WB_MODE_INCANDESCENTLAMP = 13; // Incandescent lamp (2700-2900 K).
+        int PU_WB_MODE_SUNLIGHT = 14; // Sunlight.
+        int PU_WB_MODE_MAX = 15;
     }
 
     /* WDR parameters. */
@@ -3111,9 +3127,9 @@ public interface HWPuSDK extends Library {
 
     // Zoom and focus control.
     public interface PU_CamControl {
-        public static final int PU_CAM_CONTROL_UP = 0;
-        public static final int PU_CAM_CONTROL_DOWN = 1;
-        public static final int PU_CAM_CONTROL_STOP = 2;
+        int PU_CAM_CONTROL_UP = 0;
+        int PU_CAM_CONTROL_DOWN = 1;
+        int PU_CAM_CONTROL_STOP = 2;
     }
 
     // Campus entrance and exit parameter settings.
@@ -3170,19 +3186,32 @@ public interface HWPuSDK extends Library {
         }
     }
 
-    // Certificate path parameters.
-    public static class PU_CERT_FILE_PATH_PARA_S extends Structure {
+    /**
+     * CA证书信息
+     */
+    class PU_CERT_FILE_PATH_PARA_S extends Structure {
         public static class ByReference extends PU_CERT_FILE_PATH_PARA_S implements Structure.ByReference {
         }
 
+        /**
+         * CA证书路径
+         */
         public byte[] szCACertFilePath = new byte[PU_CERT_FILE_PATH_MAX];
-
+        /**
+         * 客户端私钥路径
+         */
         public byte[] szKeyFilePath = new byte[PU_CERT_FILE_PATH_MAX];
-
+        /**
+         * 客户端证书路径
+         */
         public byte[] szCertFilePath = new byte[PU_CERT_FILE_PATH_MAX];
-
+        /**
+         * 私钥密码
+         */
         public byte[] szKeyPasswd = new byte[PU_PASSWORD_LEN + 4];
-
+        /**
+         * 保留
+         */
         public byte[] szReserve = new byte[PU_RESERVE_LEN];
 
         public PU_CERT_FILE_PATH_PARA_S() {
@@ -3242,9 +3271,9 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_CHAR_ENCODE_TYPE {
-        public static final int PU_CHAR_ENCODE_ANSI = 0; // ANSI code.
-        public static final int PU_CHAR_ENCODE_UTF_8 = 1; // UTF-8 code.
-        public static final int PU_CHAR_ENCODE_MAX = 2;
+        int PU_CHAR_ENCODE_ANSI = 0; // ANSI code.
+        int PU_CHAR_ENCODE_UTF_8 = 1; // UTF-8 code.
+        int PU_CHAR_ENCODE_MAX = 2;
     }
 
     // CMOS sensor size.
@@ -3269,9 +3298,9 @@ public interface HWPuSDK extends Library {
 
     // Color.
     public interface PU_COLOR_TYPE {
-        public static final int PU_COLOR_BLACK = 0;
-        public static final int PU_COLOR_WHITE = 1;
-        public static final int PU_COLOR_MAX = 2;
+        int PU_COLOR_BLACK = 0;
+        int PU_COLOR_WHITE = 1;
+        int PU_COLOR_MAX = 2;
     }
 
     public interface PU_COMBINE_IMG_ROI_E {
@@ -3371,17 +3400,17 @@ public interface HWPuSDK extends Library {
 
     /* Indicates whether to enable ISP. */
     public interface PU_COMMONMODE_SWITCH {
-        public static final int MODE_OPEN = 0; // Enable.
-        public static final int MODE_CLOSE = 1; // Disable.
-        public static final int MODE_AUTO = 2; // Auto mode.
-        public static final int MODE_MANUAL = 3; // Manual mode.
-        public static final int MODE_MAX = 4;
+        int MODE_OPEN = 0; // Enable.
+        int MODE_CLOSE = 1; // Disable.
+        int MODE_AUTO = 2; // Auto mode.
+        int MODE_MANUAL = 3; // Manual mode.
+        int MODE_MAX = 4;
     }
 
     public interface PU_CONNECT_TYPE {
-        public static final int PU_CONNECT_TYPE_PWD = 0;
-        public static final int PU_CONNECT_TYPE_SSL_PWD = 1;
-        public static final int PU_CONNECT_TYPE_MAX = 2;
+        int PU_CONNECT_TYPE_PWD = 0;
+        int PU_CONNECT_TYPE_SSL_PWD = 1;
+        int PU_CONNECT_TYPE_MAX = 2;
     }
 
     /* HTTPS certificate creation. */
@@ -3515,11 +3544,11 @@ public interface HWPuSDK extends Library {
 
     // Data bit.
     public interface PU_DATA_BIT {
-        public static final int PU_DATA_BIT_CS5 = 0;
-        public static final int PU_DATA_BIT_CS6 = 1;
-        public static final int PU_DATA_BIT_CS7 = 2;
-        public static final int PU_DATA_BIT_CS8 = 3;
-        public static final int PU_DATA_BIT_MAX = 4;
+        int PU_DATA_BIT_CS5 = 0;
+        int PU_DATA_BIT_CS6 = 1;
+        int PU_DATA_BIT_CS7 = 2;
+        int PU_DATA_BIT_CS8 = 3;
+        int PU_DATA_BIT_MAX = 4;
     }
 
     // DST parameters.
@@ -3665,12 +3694,12 @@ public interface HWPuSDK extends Library {
 
     /* Defogging level. */
     public interface PU_DEFOG_TYPR {
-        public static final int PU_DEFOG_TYPE_CLOSE = 0; // Disabled.
-        public static final int PU_DEFOG_TYPE_LOW = 1; // Low-level defogging.
-        public static final int PU_DEFOG_TYPE_MIDDLING = 2; // Medium-level defogging.
-        public static final int PU_DEFOG_TYPE_HIGH = 3; // High-level defogging.
-        public static final int PU_DEFOG_TYPE_AUTO = 4; // Automatic defogging.
-        public static final int PU_DEFOG_TYPE_MAX = 5;
+        int PU_DEFOG_TYPE_CLOSE = 0; // Disabled.
+        int PU_DEFOG_TYPE_LOW = 1; // Low-level defogging.
+        int PU_DEFOG_TYPE_MIDDLING = 2; // Medium-level defogging.
+        int PU_DEFOG_TYPE_HIGH = 3; // High-level defogging.
+        int PU_DEFOG_TYPE_AUTO = 4; // Automatic defogging.
+        int PU_DEFOG_TYPE_MAX = 5;
     }
 
     public static class PU_DEL_MASK_PARA extends Structure {
@@ -3690,10 +3719,10 @@ public interface HWPuSDK extends Library {
 
     /* Noise reduction mode */
     public interface PU_DENOISE_MODE {
-        public static final int DENOISE_NORMOL = 0; // Common mode.
-        public static final int DENOISE_CLOSE = 1; // Disabled.
-        public static final int DENOISE_EXPERT = 2; // Expert mode.
-        public static final int DENOISE_MAX = 3;
+        int DENOISE_NORMOL = 0; // Common mode.
+        int DENOISE_CLOSE = 1; // Disabled.
+        int DENOISE_EXPERT = 2; // Expert mode.
+        int DENOISE_MAX = 3;
     }
 
     // Noise reduction parameters.
@@ -3993,9 +4022,9 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_DEV_OPT_TYPE {
-        public static final int PU_DEV_OPT_TYPE_REBOOT = 0; // Restart.
-        public static final int PU_DEV_OPT_TYPE_FORMAT = 1; // Format a disk.
-        public static final int PU_DEV_OPT_TYPE_MAX = 2;
+        int PU_DEV_OPT_TYPE_REBOOT = 0; // Restart.
+        int PU_DEV_OPT_TYPE_FORMAT = 1; // Format a disk.
+        int PU_DEV_OPT_TYPE_MAX = 2;
     }
 
     public static class PU_DEV_REALSTATUS_INFO extends Structure {
@@ -4215,16 +4244,29 @@ public interface HWPuSDK extends Library {
         }
     }
 
-    // Device version.
-    public static class PU_DEVICE_VERSION extends Structure {
+    /**
+     * 设备版本信息
+     */
+    class PU_DEVICE_VERSION extends Structure {
+        /**
+         * 软件版本号
+         */
         public byte[] szVerSoftware = new byte[PU_VERSION_LEN]; // Software version.
-
+        /**
+         * UBOOT版本号
+         */
         public byte[] szVerUboot = new byte[PU_VERSION_LEN]; // UBoot version.
-
+        /**
+         * 内核版本号
+         */
         public byte[] szVerKernel = new byte[PU_VERSION_LEN]; // Kernel version.
-
+        /**
+         * 设别硬件版本号
+         */
         public byte[] szVerHardware = new byte[PU_VERSION_LEN]; // Hardware version.
-
+        /**
+         * 前24字节表示设备MAC地址
+         */
         public byte[] szReserved = new byte[PU_RESERVE_LEN]; // The first 24 bytes indicate the MAC address.
         // szReserved[24]: input parameter, indicating the network port index. The value
         // 0 indicates network adapter 1. The value 1 indicates network adapter 2.
@@ -4381,54 +4423,54 @@ public interface HWPuSDK extends Library {
 
     /* Disk type. */
     public interface PU_DISK_TYPE {
-        public static final int PU_DISK_TYPE_IDE = 1; // IDE hard disk.
-        public static final int PU_DISK_TYPE_SATA = 2; // Hard disk with serial interfaces.
-        public static final int PU_DISK_TYPE_FLASH = 3; // Flash memory, such as SD and CF.
-        public static final int PU_DISK_TYPE_UNKNOWN = 4;
+        int PU_DISK_TYPE_IDE = 1; // IDE hard disk.
+        int PU_DISK_TYPE_SATA = 2; // Hard disk with serial interfaces.
+        int PU_DISK_TYPE_FLASH = 3; // Flash memory, such as SD and CF.
+        int PU_DISK_TYPE_UNKNOWN = 4;
     }
 
     // Decoder type.
     // Resolution mode.
     public interface PU_DISRESOLUTION_MODE {
-        public static final int PU_VGA_NOT_AVALIABLE = 0;
-        public static final int PU_VGA_MODE_SVGA_60HZ = 1;
-        public static final int PU_VGA_MODE_SVGA_75HZ = 2;
-        public static final int PU_VGA_MODE_XGA_60HZ = 3;
-        public static final int PU_VGA_MODE_XGA_70HZ = 4;
-        public static final int PU_VGA_MODE_SXGA_60HZ = 5;
-        public static final int PU_VGA_MODE_720P_60HZ = 6;
-        public static final int PU_VGA_MODE_1080I_60HZ = 7;
-        public static final int PU_VGA_MODE_1080P_30HZ = 8;
-        public static final int PU_VGA_MODE_UXGA_30HZ = 9;
-        public static final int PU_HDMI_MODE_XGA_60HZ = 21;
-        public static final int PU_HDMI_MODE_SXGA_60HZ = 22;
-        public static final int PU_HDMI_MODE_SXGA2_60HZ = 23;
-        public static final int PU_HDMI_MODE_720P_60HZ = 24;
-        public static final int PU_HDMI_MODE_720P_50HZ = 25;
-        public static final int PU_HDMI_MODE_1080I_60HZ = 26;
-        public static final int PU_HDMI_MODE_1080I_50HZ = 27;
-        public static final int PU_HDMI_MODE_1080P_25HZ = 28;
-        public static final int PU_HDMI_MODE_1080P_30HZ = 29;
-        public static final int PU_HDMI_MODE_1080P_50HZ = 30;
-        public static final int PU_HDMI_MODE_1080P_60HZ = 31;
-        public static final int PU_HDMI_MODE_UXGA_60HZ = 32;
-        public static final int PU_DVI_MODE_XGA_60HZ = 41;
-        public static final int PU_DVI_MODE_SXGA_60HZ = 42;
-        public static final int PU_DVI_MODE_SXGA2_60HZ = 43;
-        public static final int PU_DVI_MODE_720P_60HZ = 44;
-        public static final int PU_DVI_MODE_720P_50HZ = 45;
-        public static final int PU_DVI_MODE_1080I_60HZ = 46;
-        public static final int PU_DVI_MODE_1080I_50HZ = 47;
-        public static final int PU_DVI_MODE_1080P_25HZ = 48;
-        public static final int PU_DVI_MODE_1080P_30HZ = 49;
-        public static final int PU_DVI_MODE_1080P_50HZ = 50;
-        public static final int PU_DVI_MODE_1080P_60HZ = 51;
-        public static final int PU_DVI_MODE_UXGA_60HZ = 52;
-        public static final int PU_BNC_MODE_D1PAL_60HZ = 61;
-        public static final int PU_BNC_MODE_D1PAL_50HZ = 62;
-        public static final int PU_BNC_MODE_D1NTSC_60HZ = 63;
-        public static final int PU_BNC_MODE_D1NTSC_50HZ = 64;
-        public static final int PU_DISRESOLUTION_MODE_MAX = 65;
+        int PU_VGA_NOT_AVALIABLE = 0;
+        int PU_VGA_MODE_SVGA_60HZ = 1;
+        int PU_VGA_MODE_SVGA_75HZ = 2;
+        int PU_VGA_MODE_XGA_60HZ = 3;
+        int PU_VGA_MODE_XGA_70HZ = 4;
+        int PU_VGA_MODE_SXGA_60HZ = 5;
+        int PU_VGA_MODE_720P_60HZ = 6;
+        int PU_VGA_MODE_1080I_60HZ = 7;
+        int PU_VGA_MODE_1080P_30HZ = 8;
+        int PU_VGA_MODE_UXGA_30HZ = 9;
+        int PU_HDMI_MODE_XGA_60HZ = 21;
+        int PU_HDMI_MODE_SXGA_60HZ = 22;
+        int PU_HDMI_MODE_SXGA2_60HZ = 23;
+        int PU_HDMI_MODE_720P_60HZ = 24;
+        int PU_HDMI_MODE_720P_50HZ = 25;
+        int PU_HDMI_MODE_1080I_60HZ = 26;
+        int PU_HDMI_MODE_1080I_50HZ = 27;
+        int PU_HDMI_MODE_1080P_25HZ = 28;
+        int PU_HDMI_MODE_1080P_30HZ = 29;
+        int PU_HDMI_MODE_1080P_50HZ = 30;
+        int PU_HDMI_MODE_1080P_60HZ = 31;
+        int PU_HDMI_MODE_UXGA_60HZ = 32;
+        int PU_DVI_MODE_XGA_60HZ = 41;
+        int PU_DVI_MODE_SXGA_60HZ = 42;
+        int PU_DVI_MODE_SXGA2_60HZ = 43;
+        int PU_DVI_MODE_720P_60HZ = 44;
+        int PU_DVI_MODE_720P_50HZ = 45;
+        int PU_DVI_MODE_1080I_60HZ = 46;
+        int PU_DVI_MODE_1080I_50HZ = 47;
+        int PU_DVI_MODE_1080P_25HZ = 48;
+        int PU_DVI_MODE_1080P_30HZ = 49;
+        int PU_DVI_MODE_1080P_50HZ = 50;
+        int PU_DVI_MODE_1080P_60HZ = 51;
+        int PU_DVI_MODE_UXGA_60HZ = 52;
+        int PU_BNC_MODE_D1PAL_60HZ = 61;
+        int PU_BNC_MODE_D1PAL_50HZ = 62;
+        int PU_BNC_MODE_D1NTSC_60HZ = 63;
+        int PU_BNC_MODE_D1NTSC_50HZ = 64;
+        int PU_DISRESOLUTION_MODE_MAX = 65;
     }
 
     /* 802.1X EAP TLS certificate upload type. */
@@ -4454,9 +4496,9 @@ public interface HWPuSDK extends Library {
     /* 802.1X EAP TLS certificate upload type. */
     /* EAPOL version number. */
     public interface PU_DOT1X_EAPOL_VERSION {
-        public static final int PU_DOT1X_EAPOL_VERSION_1 = 1;
-        public static final int PU_DOT1X_EAPOL_VERSION_2 = 2;
-        public static final int PU_DOT1X_EAPOL_VERSION_MAX = 3;
+        int PU_DOT1X_EAPOL_VERSION_1 = 1;
+        int PU_DOT1X_EAPOL_VERSION_2 = 2;
+        int PU_DOT1X_EAPOL_VERSION_MAX = 3;
     }
 
     /* 802.1X EAP TLS certificate upload. */
@@ -4477,23 +4519,23 @@ public interface HWPuSDK extends Library {
 
     /* 802.1X EAP TLS certificate upload type. */
     public interface PU_DOT1X_TLS_CERT_UPLOAD_TYPE {
-        public static final int PU_DOT1X_TLS_CA_CERT_UPLOAD_TYPE = 0;
-        public static final int PU_DOT1X_TLS_CLIENT_CERT_UPLOAD_TYPE = 1;
-        public static final int PU_DOT1X_TLS_CERT_UPLOAD_TYPE_MAX = 2;
+        int PU_DOT1X_TLS_CA_CERT_UPLOAD_TYPE = 0;
+        int PU_DOT1X_TLS_CLIENT_CERT_UPLOAD_TYPE = 1;
+        int PU_DOT1X_TLS_CERT_UPLOAD_TYPE_MAX = 2;
     }
 
     /* 802.1X EAP TLS certificate upload type. */
     public interface PU_DOT1X_TLS_CERT_UPLOAD_TYPE_E {
-        public static final int PU_DOT1X_TLS_CA_CERT_UPLOAD_TYPE = 0;
-        public static final int PU_DOT1X_TLS_CLIENT_CERT_UPLOAD_TYPE = 1;
-        public static final int PU_DOT1X_TLS_CERT_UPLOAD_TYPE_MAX = 2;
+        int PU_DOT1X_TLS_CA_CERT_UPLOAD_TYPE = 0;
+        int PU_DOT1X_TLS_CLIENT_CERT_UPLOAD_TYPE = 1;
+        int PU_DOT1X_TLS_CERT_UPLOAD_TYPE_MAX = 2;
     }
 
     public interface PU_DSCP_TYPE {
-        public static final int PU_DSCP_TYPE_MEDIA = 0; // Media differentiated services code point (DSCP) value (the
+        int PU_DSCP_TYPE_MEDIA = 0; // Media differentiated services code point (DSCP) value (the
         // media include audio and video).
-        public static final int PU_DSCP_TYPE_CMD = 1; // Signaling DSCP value (the signaling includes alarms).
-        public static final int PU_DSCP_TYPE_MAX = 2;
+        int PU_DSCP_TYPE_CMD = 1; // Signaling DSCP value (the signaling includes alarms).
+        int PU_DSCP_TYPE_MAX = 2;
     }
 
     // DST start and end time.
@@ -4543,11 +4585,11 @@ public interface HWPuSDK extends Library {
 
     // DST offset.
     public interface PU_DST_OFFSET {
-        public static final int OFFSET_NONE = 0;
-        public static final int OFFSET_30_MIN = 30;
-        public static final int OFFSET_60_MIN = 60;
-        public static final int OFFSET_90_MIN = 90;
-        public static final int OFFSET_120_MIN = 120;
+        int OFFSET_NONE = 0;
+        int OFFSET_30_MIN = 30;
+        int OFFSET_60_MIN = 60;
+        int OFFSET_90_MIN = 90;
+        int OFFSET_120_MIN = 120;
     }
 
     // DST offset.
@@ -4561,9 +4603,9 @@ public interface HWPuSDK extends Library {
 
     // DST implementation mode.
     public interface PU_DST_TYPE {
-        public static final int DST_WEEK_WAY = 0;
-        public static final int DST_DATE_WAY = 1;
-        public static final int DST_TYPE_MAX = 2;
+        int DST_WEEK_WAY = 0;
+        int DST_DATE_WAY = 1;
+        int DST_TYPE_MAX = 2;
     }
 
     // DST implementation mode.
@@ -4631,85 +4673,85 @@ public interface HWPuSDK extends Library {
 
     // Audio and video encoding standards.
     public interface PU_ENCODE_TYPE {
-        public static final int PU_ENC_PCMU = 0;
-        public static final int PU_ENC_1016 = 1;
-        public static final int PU_ENC_G721 = 2;
-        public static final int PU_ENC_GSM = 3;
-        public static final int PU_ENC_G723 = 4;
-        public static final int PU_ENC_DVI4_8K = 5;
-        public static final int PU_ENC_DVI4_16K = 6;
-        public static final int PU_ENC_LPC = 7;
-        public static final int PU_ENC_PCMA = 8;
-        public static final int PU_ENC_G722 = 9;
-        public static final int PU_ENC_S16BE_STEREO = 10;
-        public static final int PU_ENC_S16BE_MONO = 11;
-        public static final int PU_ENC_QCELP = 12;
-        public static final int PU_ENC_CN = 13;
-        public static final int PU_ENC_MPEGAUDIO = 14;
-        public static final int PU_ENC_G728 = 15;
-        public static final int PU_ENC_DVI4_3 = 16;
-        public static final int PU_ENC_DVI4_4 = 17;
-        public static final int PU_ENC_G729 = 18;
-        public static final int PU_ENC_G711A = 19; // g711a
-        public static final int PU_ENC_G711U = 20; // g711u
-        public static final int PU_ENC_G726 = 21; // g726
-        public static final int PU_ENC_G729A = 22;
-        public static final int PU_ENC_LPCM = 23;
-        public static final int PU_ENC_CelB = 25;
-        public static final int PU_ENC_JPEG = 26;
-        public static final int PU_ENC_CUSM = 27;
-        public static final int PU_ENC_NV = 28;
-        public static final int PU_ENC_PICW = 29;
-        public static final int PU_ENC_CPV = 30;
-        public static final int PU_ENC_H261 = 31;
-        public static final int PU_ENC_MPEGVIDEO = 32;
-        public static final int PU_ENC_MPEG2TS = 33;
-        public static final int PU_ENC_H263 = 34;
-        public static final int PU_ENC_SPEG = 35;
-        public static final int PU_ENC_MPEG2VIDEO = 36;
-        public static final int PU_ENC_AAC = 37;
-        public static final int PU_ENC_WMA9STD = 38;
-        public static final int PU_ENC_HEAAC = 39;
-        public static final int PU_ENC_PCM_VOICE = 40;
-        public static final int PU_ENC_PCM_AUDIO = 41;
-        public static final int PU_ENC_AACLC = 42;
-        public static final int PU_ENC_MP3 = 43;
-        public static final int PU_ENC_ADPCMA = 49;
-        public static final int PU_ENC_AEC = 50;
-        public static final int PU_ENC_X_LD = 95;
-        public static final int PU_ENC_H264 = 96;
-        public static final int PU_ENC_D_GSM_HR = 200;
-        public static final int PU_ENC_D_GSM_EFR = 201;
-        public static final int PU_ENC_D_L8 = 202;
-        public static final int PU_ENC_D_RED = 203;
-        public static final int PU_ENC_D_VDVI = 204;
-        public static final int PU_ENC_D_BT656 = 220;
-        public static final int PU_ENC_D_H263_1998 = 221;
-        public static final int PU_ENC_D_MP1S = 222;
-        public static final int PU_ENC_D_MP2P = 223;
-        public static final int PU_ENC_D_BMPEG = 224;
-        public static final int PU_ENC_MP4VIDEO = 230; // mepg-4
-        public static final int PU_ENC_MP4AUDIO = 237;
-        public static final int PU_ENC_VC1 = 238;
-        public static final int PU_ENC_JVC_ASF = 255;
-        public static final int PU_ENC_D_AVI = 256;
-        public static final int PU_ENC_OPUS = 258; // opus
-        public static final int PU_ENC_H265 = 265;
-        public static final int PU_ENC_AMR = 1001;
-        public static final int PU_ENC_MJPEG = 1002; // motion jpeg
-        public static final int PU_ENC_MAX = 1003;
+        int PU_ENC_PCMU = 0;
+        int PU_ENC_1016 = 1;
+        int PU_ENC_G721 = 2;
+        int PU_ENC_GSM = 3;
+        int PU_ENC_G723 = 4;
+        int PU_ENC_DVI4_8K = 5;
+        int PU_ENC_DVI4_16K = 6;
+        int PU_ENC_LPC = 7;
+        int PU_ENC_PCMA = 8;
+        int PU_ENC_G722 = 9;
+        int PU_ENC_S16BE_STEREO = 10;
+        int PU_ENC_S16BE_MONO = 11;
+        int PU_ENC_QCELP = 12;
+        int PU_ENC_CN = 13;
+        int PU_ENC_MPEGAUDIO = 14;
+        int PU_ENC_G728 = 15;
+        int PU_ENC_DVI4_3 = 16;
+        int PU_ENC_DVI4_4 = 17;
+        int PU_ENC_G729 = 18;
+        int PU_ENC_G711A = 19; // g711a
+        int PU_ENC_G711U = 20; // g711u
+        int PU_ENC_G726 = 21; // g726
+        int PU_ENC_G729A = 22;
+        int PU_ENC_LPCM = 23;
+        int PU_ENC_CelB = 25;
+        int PU_ENC_JPEG = 26;
+        int PU_ENC_CUSM = 27;
+        int PU_ENC_NV = 28;
+        int PU_ENC_PICW = 29;
+        int PU_ENC_CPV = 30;
+        int PU_ENC_H261 = 31;
+        int PU_ENC_MPEGVIDEO = 32;
+        int PU_ENC_MPEG2TS = 33;
+        int PU_ENC_H263 = 34;
+        int PU_ENC_SPEG = 35;
+        int PU_ENC_MPEG2VIDEO = 36;
+        int PU_ENC_AAC = 37;
+        int PU_ENC_WMA9STD = 38;
+        int PU_ENC_HEAAC = 39;
+        int PU_ENC_PCM_VOICE = 40;
+        int PU_ENC_PCM_AUDIO = 41;
+        int PU_ENC_AACLC = 42;
+        int PU_ENC_MP3 = 43;
+        int PU_ENC_ADPCMA = 49;
+        int PU_ENC_AEC = 50;
+        int PU_ENC_X_LD = 95;
+        int PU_ENC_H264 = 96;
+        int PU_ENC_D_GSM_HR = 200;
+        int PU_ENC_D_GSM_EFR = 201;
+        int PU_ENC_D_L8 = 202;
+        int PU_ENC_D_RED = 203;
+        int PU_ENC_D_VDVI = 204;
+        int PU_ENC_D_BT656 = 220;
+        int PU_ENC_D_H263_1998 = 221;
+        int PU_ENC_D_MP1S = 222;
+        int PU_ENC_D_MP2P = 223;
+        int PU_ENC_D_BMPEG = 224;
+        int PU_ENC_MP4VIDEO = 230; // mepg-4
+        int PU_ENC_MP4AUDIO = 237;
+        int PU_ENC_VC1 = 238;
+        int PU_ENC_JVC_ASF = 255;
+        int PU_ENC_D_AVI = 256;
+        int PU_ENC_OPUS = 258; // opus
+        int PU_ENC_H265 = 265;
+        int PU_ENC_AMR = 1001;
+        int PU_ENC_MJPEG = 1002; // motion jpeg
+        int PU_ENC_MAX = 1003;
     }
 
     // Stream encryption mode.
     public interface PU_ENCRYPT_TYPE {
-        public static final int PU_ENCRYPT_TYPE_HUAWEI_VIDEO = 0; // Uses Huawei stream encryption algorithm to encrypt
+        int PU_ENCRYPT_TYPE_HUAWEI_VIDEO = 0; // Uses Huawei stream encryption algorithm to encrypt
         // video.
-        public static final int PU_ENCRYPT_TYPE_HUAWEI_AUDIO = 1; // Uses Huawei stream encryption algorithm to encrypt
+        int PU_ENCRYPT_TYPE_HUAWEI_AUDIO = 1; // Uses Huawei stream encryption algorithm to encrypt
         // audio.
-        public static final int PU_ENCRYPT_TYPE_HUAWEI_MUX = 2; // Uses Huawei stream encryption algorithm to encrypt
+        int PU_ENCRYPT_TYPE_HUAWEI_MUX = 2; // Uses Huawei stream encryption algorithm to encrypt
         // hybrid streams.
-        public static final int PU_ENCRYPT_TYPE_NONE = 3; // Does not encrypt streams.
-        public static final int PU_ENCRYPT_TYPE_MAX = 4;
+        int PU_ENCRYPT_TYPE_NONE = 3; // Does not encrypt streams.
+        int PU_ENCRYPT_TYPE_MAX = 4;
     }
 
     // ePTZ control.
@@ -4775,39 +4817,39 @@ public interface HWPuSDK extends Library {
     // device event callback type
     public interface PU_EVENT_TYPE {
         /* Connection status callback. */
-        public static final int PU_EVENT_TYPE_CONNCET = 1; // The PU proactively connects to the network.
-        public static final int PU_EVENT_TYPE_REGISTER = 2; // Proactive PU registration.
-        public static final int PU_EVENT_TYPE_NOT_REGISTER = 3; // The PU is not registered with the platform after
+        int PU_EVENT_TYPE_CONNCET = 1; // The PU proactively connects to the network.
+        int PU_EVENT_TYPE_REGISTER = 2; // Proactive PU registration.
+        int PU_EVENT_TYPE_NOT_REGISTER = 3; // The PU is not registered with the platform after
         // proactively connecting to the network.
-        public static final int PU_EVENT_TYPE_UNREGISTER = 4; // Proactive PU deregistration.
-        public static final int PU_EVENT_TYPE_DISCONNECT = 5; // The PU is disconnected from the network.
-        public static final int PU_EVENT_TYPE_SEND_RECV_ERROR = 6; // Sending or receiving failed.
-        public static final int PU_EVENT_TYPE_KEEPLIVE_FAIL = 7; // PU keepalive failure.
+        int PU_EVENT_TYPE_UNREGISTER = 4; // Proactive PU deregistration.
+        int PU_EVENT_TYPE_DISCONNECT = 5; // The PU is disconnected from the network.
+        int PU_EVENT_TYPE_SEND_RECV_ERROR = 6; // Sending or receiving failed.
+        int PU_EVENT_TYPE_KEEPLIVE_FAIL = 7; // PU keepalive failure.
         /* Event notification callback. */
-        public static final int PU_EVENT_TYPE_STREAM_PACKAGE_CHANGE = 8; // Stream profile change.
-        public static final int PU_EVENT_TYPE_WATERMARK_ERR = 9; // Digital watermark verification error.
-        public static final int PU_EVENT_TYPE_UPLOAD_IMAGE_URL = 10; // The PU proactively obtains the URL for uploading
+        int PU_EVENT_TYPE_STREAM_PACKAGE_CHANGE = 8; // Stream profile change.
+        int PU_EVENT_TYPE_WATERMARK_ERR = 9; // Digital watermark verification error.
+        int PU_EVENT_TYPE_UPLOAD_IMAGE_URL = 10; // The PU proactively obtains the URL for uploading
         // snapshots.
-        public static final int PU_EVENT_TYPE_UPLOAD_IMAGE_COMP_NOTIFY = 11; // Send a PU-triggered snapshot upload
+        int PU_EVENT_TYPE_UPLOAD_IMAGE_COMP_NOTIFY = 11; // Send a PU-triggered snapshot upload
         // completion notification.
-        public static final int PU_EVENT_TYPE_TRANSPARENT_CHANNEL_NOTIFY = 12; // Report transparent channel data.
-        public static final int PU_EVENT_TYPE_REALPALY_ERROR = 13; // The live video is abnormal.
-        public static final int PU_EVENT_TYPE_REPORT_VISUAL_INFO = 14; // Report visualized information.
-        public static final int PU_EVENT_TYPE_PUPU_INFO = 15; // Report multi-camera collaboration data.
-        public static final int PU_EVENT_TYPE_RECORD_COMP_NOTIFY = 16; // Send a recording download completion
+        int PU_EVENT_TYPE_TRANSPARENT_CHANNEL_NOTIFY = 12; // Report transparent channel data.
+        int PU_EVENT_TYPE_REALPALY_ERROR = 13; // The live video is abnormal.
+        int PU_EVENT_TYPE_REPORT_VISUAL_INFO = 14; // Report visualized information.
+        int PU_EVENT_TYPE_PUPU_INFO = 15; // Report multi-camera collaboration data.
+        int PU_EVENT_TYPE_RECORD_COMP_NOTIFY = 16; // Send a recording download completion
         // notification.
-        public static final int PU_EVENT_TYPE_SLAVE_DEVICE_ADD = 17; // Event for adding a slave device.
-        public static final int PU_EVENT_TYPE_SLAVE_DEVICE_MODIFY = 18; // Event for modifying a slave device.
-        public static final int PU_EVENT_TYPE_SLAVE_DEVICE_DELETE = 19; // Event for deleting a slave device.
-        public static final int PU_EVENT_TYPE_SLAVE_DEVICE_ONLINE = 20; // Slave device going online event.
-        public static final int PU_EVENT_TYPE_SLAVE_DEVICE_OFFLINE = 21; // Slave device going offline event.
-        public static final int PU_EVENT_TYPE_MAX = 22;
+        int PU_EVENT_TYPE_SLAVE_DEVICE_ADD = 17; // Event for adding a slave device.
+        int PU_EVENT_TYPE_SLAVE_DEVICE_MODIFY = 18; // Event for modifying a slave device.
+        int PU_EVENT_TYPE_SLAVE_DEVICE_DELETE = 19; // Event for deleting a slave device.
+        int PU_EVENT_TYPE_SLAVE_DEVICE_ONLINE = 20; // Slave device going online event.
+        int PU_EVENT_TYPE_SLAVE_DEVICE_OFFLINE = 21; // Slave device going offline event.
+        int PU_EVENT_TYPE_MAX = 22;
     }
 
     // Flash light triggering level.
     public interface PU_EXP_LAMP_TRIG_LEVEL {
-        public static final int PU_TRIG_HIGH_LEVEL = 0; // Triggered by high electrical level.
-        public static final int PU_TRIG_LOW_LEVEL = 1; // Triggered by low electric level.
+        int PU_TRIG_HIGH_LEVEL = 0; // Triggered by high electrical level.
+        int PU_TRIG_LOW_LEVEL = 1; // Triggered by low electric level.
     }
 
     /* Exposure compensation. */
@@ -4865,22 +4907,22 @@ public interface HWPuSDK extends Library {
 
     /* Strobe light frequency. */
     public interface PU_EXT_LAMP_FREQ {
-        public static final int PU_FREQ_50 = 0; /* 50hz */
-        public static final int PU_FREQ_60 = 1; /* 60hz */
-        public static final int PU_FREQ_100 = 2; /* 100hz */
-        public static final int PU_FREQ_120 = 3; /* 120hz */
+        int PU_FREQ_50 = 0; /* 50hz */
+        int PU_FREQ_60 = 1; /* 60hz */
+        int PU_FREQ_100 = 2; /* 100hz */
+        int PU_FREQ_120 = 3; /* 120hz */
     }
 
     // External illuminator type.
     public interface PU_EXT_LAMP_TYPE {
-        public static final int PU_EXPOSURE_LAMP = 0; // Flash light.
-        public static final int PU_STROBE_LAMP = 1; // Strobe light.
+        int PU_EXPOSURE_LAMP = 0; // Flash light.
+        int PU_STROBE_LAMP = 1; // Strobe light.
     }
 
     // External illuminator work mode.
     public interface PU_EXT_LAMP_WORK_MODE {
-        public static final int PU_WORK_MODE_OFF = 0; // Always off.
-        public static final int PU_WORK_MODE_ON = 1; // Always on.
+        int PU_WORK_MODE_OFF = 0; // Always off.
+        int PU_WORK_MODE_ON = 1; // Always on.
     }
 
     // External detector type.
@@ -5008,9 +5050,9 @@ public interface HWPuSDK extends Library {
 
     // Face/Person detection mode.
     public interface PU_FACE_DETECTION_DL_MODE {
-        public static final int FACE_MODE = 0; // Face detection.
-        public static final int BODY_MODE = 1; // Person detection.
-        public static final int FACE_BODY_MODE = 2; // Face/Person detection.
+        int FACE_MODE = 0; // Face detection.
+        int BODY_MODE = 1; // Person detection.
+        int FACE_BODY_MODE = 2; // Face/Person detection.
     }
 
     // Facial feature extraction.
@@ -5402,12 +5444,12 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_FACE_PACKET_TYPE {
-        public static final int FACE_PACKET_TYPE_PICMODE = 0; // Image + personnel information.
-        public static final int FACE_PACKET_TYPE_FEATUREMODE = 1; // Facial features only; SDK mode only; must be used
+        int FACE_PACKET_TYPE_PICMODE = 0; // Image + personnel information.
+        int FACE_PACKET_TYPE_FEATUREMODE = 1; // Facial features only; SDK mode only; must be used
         // with the platform.
-        public static final int FACE_PACKET_TYPE_ALLPACKET = 2; // Entire package (image + personnel information +
+        int FACE_PACKET_TYPE_ALLPACKET = 2; // Entire package (image + personnel information +
         // facial features).
-        public static final int FACE_PACKET_TYPE_MAX = 3;
+        int FACE_PACKET_TYPE_MAX = 3;
     }
 
     // Obtaining face images.
@@ -5620,27 +5662,27 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_FEC_PACKET_LOSS_RATIO {
-        public static final int PU_FEC_PACKET_LOSS_RATIO_1 = 0;
+        int PU_FEC_PACKET_LOSS_RATIO_1 = 0;
         /**
          * < 0: 1% packet loss
          */
-        public static final int PU_FEC_PACKET_LOSS_RATIO_2 = 1;
+        int PU_FEC_PACKET_LOSS_RATIO_2 = 1;
         /**
          * < 1: 2% packet loss
          */
-        public static final int PU_FEC_PACKET_LOSS_RATIO_3 = 2;
+        int PU_FEC_PACKET_LOSS_RATIO_3 = 2;
         /**
          * < 2: 3% packet loss
          */
-        public static final int PU_FEC_PACKET_LOSS_RATIO_4 = 3;
+        int PU_FEC_PACKET_LOSS_RATIO_4 = 3;
         /**
          * < 3: 4% packet loss
          */
-        public static final int PU_FEC_PACKET_LOSS_RATIO_5 = 4;
+        int PU_FEC_PACKET_LOSS_RATIO_5 = 4;
         /**
          * < 4: 5% packet loss
          */
-        public static final int PU_FEC_PACKET_LOSS_RATIO_MAX = 5;
+        int PU_FEC_PACKET_LOSS_RATIO_MAX = 5;
     }
 
     /* Background frequency. */
@@ -5656,10 +5698,10 @@ public interface HWPuSDK extends Library {
 
     // Serial port flow control type.
     public interface PU_FLOW_CONTROL {
-        public static final int PU_FLOW_CONTROL_NONE = 0;
-        public static final int PU_FLOW_CONTROL_SOFT = 1;
-        public static final int PU_FLOW_CONTROL_HARD = 2;
-        public static final int PU_FLOW_CONTROL_MAX = 3;
+        int PU_FLOW_CONTROL_NONE = 0;
+        int PU_FLOW_CONTROL_SOFT = 1;
+        int PU_FLOW_CONTROL_HARD = 2;
+        int PU_FLOW_CONTROL_MAX = 3;
     }
 
     // Infrared focus compensation information.
@@ -5679,10 +5721,10 @@ public interface HWPuSDK extends Library {
 
     // Focus mode.
     public interface PU_FOCUS_MODE {
-        public static final int PU_FOCUS_MODE_AUTO = 0; // Auto focus.
-        public static final int PU_FOCUS_MODE_MANUAL = 1; // Manual focus.
-        public static final int PU_FOCUS_MODE_TRIGGER = 2; // Semi-auto focus.
-        public static final int PU_FOCUS_MODE_MAX = 3;
+        int PU_FOCUS_MODE_AUTO = 0; // Auto focus.
+        int PU_FOCUS_MODE_MANUAL = 1; // Manual focus.
+        int PU_FOCUS_MODE_TRIGGER = 2; // Semi-auto focus.
+        int PU_FOCUS_MODE_MAX = 3;
     }
 
     public interface PU_FONT_SIZE_E {
@@ -5705,9 +5747,9 @@ public interface HWPuSDK extends Library {
 
     // Frame rate.
     public interface PU_FRAME_RATE {
-        public static final int PU_FRAME_RATE_30 = 0;
-        public static final int PU_FRAME_RATE_50 = 1;
-        public static final int PU_FRAME_RATE_60 = 2;
+        int PU_FRAME_RATE_30 = 0;
+        int PU_FRAME_RATE_50 = 1;
+        int PU_FRAME_RATE_60 = 2;
     }
 
     // Frame scan.
@@ -5722,11 +5764,11 @@ public interface HWPuSDK extends Library {
 
     /* Video collection frame format. */
     public interface PU_FRAMERATE_FORMAT {
-        public static final int PU_FRAME_RATE_25F = 1; // 25 fps.
-        public static final int PU_FRAME_RATE_30F = 2; // 30 fps.
-        public static final int PU_FRAME_RATE_50F = 3; // 50 fps.
-        public static final int PU_FRAME_RATE_60F = 4; // 60 fps.
-        public static final int PU_FRAME_RATE_MAX = 5;
+        int PU_FRAME_RATE_25F = 1; // 25 fps.
+        int PU_FRAME_RATE_30F = 2; // 30 fps.
+        int PU_FRAME_RATE_50F = 3; // 50 fps.
+        int PU_FRAME_RATE_60F = 4; // 60 fps.
+        int PU_FRAME_RATE_MAX = 5;
     }
 
     /* FTP upload parameters. */
@@ -5772,41 +5814,41 @@ public interface HWPuSDK extends Library {
 
     /* Directory structure. */
     public interface PU_FTP_UPLOAD_DIR_TYPE {
-        public static final int PU_FTP_UPLOAD_DIR_TYPE_ROOT_DIR = 0; // Upload to the root directory.
-        public static final int PU_FTP_UPLOAD_DIR_TYPE_FIRST_DIR = 1; // Upload to the level-1 directory.
-        public static final int PU_FTP_UPLOAD_DIR_TYPE_SECOND_DIR = 2; // Upload to the level-2 directory.
-        public static final int PU_FTP_UPLOAD_DIR_TYPE_THIRD_DIR = 3; // Upload to the level-3 directory.
-        public static final int PU_FTP_UPLOAD_DIR_TYPE_FOURTH_DIR = 4; // Upload to the level-4 directory.
-        public static final int FTP_UPLOAD_DIR_TYPE_MAX = 5;
+        int PU_FTP_UPLOAD_DIR_TYPE_ROOT_DIR = 0; // Upload to the root directory.
+        int PU_FTP_UPLOAD_DIR_TYPE_FIRST_DIR = 1; // Upload to the level-1 directory.
+        int PU_FTP_UPLOAD_DIR_TYPE_SECOND_DIR = 2; // Upload to the level-2 directory.
+        int PU_FTP_UPLOAD_DIR_TYPE_THIRD_DIR = 3; // Upload to the level-3 directory.
+        int PU_FTP_UPLOAD_DIR_TYPE_FOURTH_DIR = 4; // Upload to the level-4 directory.
+        int FTP_UPLOAD_DIR_TYPE_MAX = 5;
     }
 
     /* Image naming rule. */
     public interface PU_FTP_UPLOAD_FILE_NAMING_RULE {
-        public static final int PU_FTP_UPLOAD_FILE_NAMING_RULE_DATE = 0; // Named by time.
-        public static final int PU_FTP_UPLOAD_FILE_NAMING_RULE_MAX = 1;
+        int PU_FTP_UPLOAD_FILE_NAMING_RULE_DATE = 0; // Named by time.
+        int PU_FTP_UPLOAD_FILE_NAMING_RULE_MAX = 1;
     }
 
     /* Level-1 directory type. */
     public interface PU_FTP_UPLOAD_FIRST_DIR_TYPE {
-        public static final int PU_FTP_UPLOAD_FIRST_DIR_TYPE_IP = 0; // The level-1 directory is named by device IP
+        int PU_FTP_UPLOAD_FIRST_DIR_TYPE_IP = 0; // The level-1 directory is named by device IP
         // address.
-        public static final int PU_FTP_UPLOAD_FIRST_DIR_TYPE_SELF = 1; // The level-1 directory name is customized.
-        public static final int FTP_UPLOAD_FIRST_DIR_TYPE_MAX = 2;
+        int PU_FTP_UPLOAD_FIRST_DIR_TYPE_SELF = 1; // The level-1 directory name is customized.
+        int FTP_UPLOAD_FIRST_DIR_TYPE_MAX = 2;
     }
 
     /* Upload type. */
     public interface PU_FTP_UPLOAD_PROTOCOL_TYPE {
-        public static final int PU_FTP_UPLOAD_PROTOCOL_TYPE_FTP = 0;
-        public static final int PU_FTP_UPLOAD_PROTOCOL_TYPE_SFTP = 1;
-        public static final int FTP_UPLOAD_PROTOCOL_TYPE_MAX = 2;
+        int PU_FTP_UPLOAD_PROTOCOL_TYPE_FTP = 0;
+        int PU_FTP_UPLOAD_PROTOCOL_TYPE_SFTP = 1;
+        int FTP_UPLOAD_PROTOCOL_TYPE_MAX = 2;
     }
 
     /* Level-2 directory type. */
     public interface PU_FTP_UPLOAD_SECOND_DIR_TYPE {
-        public static final int PU_FTP_UPLOAD_SECOND_DIR_TYPE_CHANNEL = 0; // The level-2 directory is named by channel
+        int PU_FTP_UPLOAD_SECOND_DIR_TYPE_CHANNEL = 0; // The level-2 directory is named by channel
         // ID.
-        public static final int PU_FTP_UPLOAD_SECOND_DIR_TYPE_SELF = 1; // The level-2 directory name is customized.
-        public static final int PU_FTP_UPLOAD_SECOND_DIR_TYPE_MAX = 2;
+        int PU_FTP_UPLOAD_SECOND_DIR_TYPE_SELF = 1; // The level-2 directory name is customized.
+        int PU_FTP_UPLOAD_SECOND_DIR_TYPE_MAX = 2;
     }
 
     /* Gain control. */
@@ -5849,10 +5891,10 @@ public interface HWPuSDK extends Library {
 
     /* Gain type. */
     public interface PU_GAIN_TYPE {
-        public static final int PU_GAIN_TYPE_AUTO = 0; // Automatic gain.
-        public static final int PU_GAIN_TYPE_DIGITAL = 1; // Digital gain.
-        public static final int PU_GAIN_TYPE_ANALOG = 2; // Analog signal.
-        public static final int PU_GAIN_TYPE_MAX = 3;
+        int PU_GAIN_TYPE_AUTO = 0; // Automatic gain.
+        int PU_GAIN_TYPE_DIGITAL = 1; // Digital gain.
+        int PU_GAIN_TYPE_ANALOG = 2; // Analog signal.
+        int PU_GAIN_TYPE_MAX = 3;
     }
 
     /* Gamma parameters. */
@@ -5931,15 +5973,15 @@ public interface HWPuSDK extends Library {
 
     /********* Home Position (All) *********/
     public interface PU_GUARD_POINT_TYPE {
-        public static final int PU_GUARD_POINT_PRESET = 0; // Preset position.
-        public static final int PU_GUARD_POINT_CRUISE = 1; // Tour track.
-        public static final int PU_GUARD_POINT_USER_DEFINED = 2; // Pattern scan.
-        public static final int PU_GUARD_POINT_HORIZONTAL = 3; // Horizontal scan.
-        public static final int PU_GUARD_POINT_FRAME = 4; // Frame scan.
-        public static final int PU_GUARD_POINT_RANDOM = 5; // Random scan.
-        public static final int PU_GUARD_POINT_PANORAMA = 6; // Panorama scan.
-        public static final int PU_GUARD_POINT_VERTICAL = 7; // Vertical scan.
-        public static final int PU_GUARD_POINT_MAX = 8;
+        int PU_GUARD_POINT_PRESET = 0; // Preset position.
+        int PU_GUARD_POINT_CRUISE = 1; // Tour track.
+        int PU_GUARD_POINT_USER_DEFINED = 2; // Pattern scan.
+        int PU_GUARD_POINT_HORIZONTAL = 3; // Horizontal scan.
+        int PU_GUARD_POINT_FRAME = 4; // Frame scan.
+        int PU_GUARD_POINT_RANDOM = 5; // Random scan.
+        int PU_GUARD_POINT_PANORAMA = 6; // Panorama scan.
+        int PU_GUARD_POINT_VERTICAL = 7; // Vertical scan.
+        int PU_GUARD_POINT_MAX = 8;
     }
 
     // alert deployment
@@ -6055,9 +6097,9 @@ public interface HWPuSDK extends Library {
 
     /* Frame rate or bit rate priority. */
     public interface PU_H264_RC_PRI {
-        public static final int PU_H264_RC_FRAMERATE_PRI = 1; // Frame rate priority.
-        public static final int PU_H264_RC_BITRATE_PRI = 2; // Stream first.
-        public static final int PU_H264_RC_PRI_MAX = 3;
+        int PU_H264_RC_FRAMERATE_PRI = 1; // Frame rate priority.
+        int PU_H264_RC_BITRATE_PRI = 2; // Stream first.
+        int PU_H264_RC_PRI_MAX = 3;
     }
 
     // User data of H.264 decoding initialization parameters.
@@ -6079,27 +6121,27 @@ public interface HWPuSDK extends Library {
 
     // H.265 decoding mode.
     public interface PU_H265D_DECODEMODE {
-        public static final int PU_H265D_DECODE = 0; // Normal decoding.
-        public static final int PU_H265D_DECODE_END = 1; // Decoding is complete, and the decoder is required to output
+        int PU_H265D_DECODE = 0; // Normal decoding.
+        int PU_H265D_DECODE_END = 1; // Decoding is complete, and the decoder is required to output
         // the remaining images.
     }
 
     // H.265 decoding type.
     public interface PU_H265D_DECODESTATUS {
-        public static final int PU_H265_DEC_GETDISPLAY = 0; // One frame has been decoded and output, and can be used
+        int PU_H265_DEC_GETDISPLAY = 0; // One frame has been decoded and output, and can be used
         // for display.
-        public static final int PU_H265_DEC_NEED_MORE_BITS = 1; // The decoder has no image output and requires more
+        int PU_H265_DEC_NEED_MORE_BITS = 1; // The decoder has no image output and requires more
         // streams.
-        public static final int PU_H265_DEC_NO_PICTURE = 2; // Decoding is complete. All images have been output.
-        public static final int PU_H265_DEC_ERR_HANDLE = 3; // Handle error.
+        int PU_H265_DEC_NO_PICTURE = 2; // Decoding is complete. All images have been output.
+        int PU_H265_DEC_ERR_HANDLE = 3; // Handle error.
     }
 
     // H.265 frame type.
     public interface PU_H265D_FRAMETYPE {
-        public static final int PU_H265D_FRAME_I = 0; // I-frame.
-        public static final int PU_H265D_FRAME_P = 1; // P-frame.
-        public static final int PU_H265D_FRAME_B = 2; // B-frame.
-        public static final int PU_H265D_FRAME_UNKNOWN = 3;
+        int PU_H265D_FRAME_I = 0; // I-frame.
+        int PU_H265D_FRAME_P = 1; // P-frame.
+        int PU_H265D_FRAME_B = 2; // B-frame.
+        int PU_H265D_FRAME_UNKNOWN = 3;
     }
 
     // H.265 decoder initialization parameters.
@@ -6132,14 +6174,14 @@ public interface HWPuSDK extends Library {
 
     // Output sequence.
     public interface PU_H265D_OUTPUTORDER {
-        public static final int PU_H265D_DECODE_ORDER = 0; // Output in the decoding sequence.
-        public static final int PU_H265D_DISPLAY_ORDER = 1; // Output in the display sequence.
+        int PU_H265D_DECODE_ORDER = 0; // Output in the decoding sequence.
+        int PU_H265D_DISPLAY_ORDER = 1; // Output in the display sequence.
     }
 
     // Thread type.
     public interface PU_H265D_THREADTYPE {
-        public static final int PU_H265D_SINGLE_THREAD = 0; // Single-thread.
-        public static final int PU_H265D_MULTI_THREAD = 1; // Multi-thread.
+        int PU_H265D_SINGLE_THREAD = 0; // Single-thread.
+        int PU_H265D_MULTI_THREAD = 1; // Multi-thread.
     }
 
     // User data.
@@ -6806,14 +6848,14 @@ public interface HWPuSDK extends Library {
 
     /* Intelligent area-based detection type. */
     public interface PU_IGT_AREA_ALARM_TYPE {
-        public static final int PU_IGT_TYPE_INTRUSION = 0; // Intrusion detection.
-        public static final int PU_IGT_TYPE_HOVER = 1; // Loitering detection.
-        public static final int PU_IGT_TYPE_LEGACY = 2; // Abandoned object detection.
-        public static final int PU_IGT_TYPE_REMOVE = 3; // Removed object detection.
-        public static final int PU_IGT_TYPE_ENTER = 4; // Area entry detection.
-        public static final int PU_IGT_TYPE_EXIT = 5; // Area exit detection.
-        public static final int PU_IGT_TYPE_FASTMOVE = 6; // Fast movement detection.
-        public static final int PU_IGT_TYPE_MAX = 7;
+        int PU_IGT_TYPE_INTRUSION = 0; // Intrusion detection.
+        int PU_IGT_TYPE_HOVER = 1; // Loitering detection.
+        int PU_IGT_TYPE_LEGACY = 2; // Abandoned object detection.
+        int PU_IGT_TYPE_REMOVE = 3; // Removed object detection.
+        int PU_IGT_TYPE_ENTER = 4; // Area entry detection.
+        int PU_IGT_TYPE_EXIT = 5; // Area exit detection.
+        int PU_IGT_TYPE_FASTMOVE = 6; // Fast movement detection.
+        int PU_IGT_TYPE_MAX = 7;
     }
 
     public static class PU_IGT_AREA_ITEM extends Structure {
@@ -6837,58 +6879,58 @@ public interface HWPuSDK extends Library {
 
     /* Background update rate. */
     public interface PU_IGT_BG_UPDATE {
-        public static final int PU_BGUPDATE_LOW = 0;
-        public static final int PU_BGUPDATE_MID = 1;
-        public static final int PU_BGUPDATE_HIGH = 2;
-        public static final int PU_BGUPDATE_MAX = 3;
+        int PU_BGUPDATE_LOW = 0;
+        int PU_BGUPDATE_MID = 1;
+        int PU_BGUPDATE_HIGH = 2;
+        int PU_BGUPDATE_MAX = 3;
     }
 
     // Intelligent data packaging format.
     public interface PU_IGT_DATA_TYPE {
-        public static final int XML_TYPE = 0;
-        public static final int META_TYPE = 1;
+        int XML_TYPE = 0;
+        int META_TYPE = 1;
     }
 
     /* Sensitivity. */
     public interface PU_IGT_DETECT_SENS {
-        public static final int PU_IGT_SENS_LOW = 0; // Low sensitivity.
-        public static final int PU_IGT_SENS_MIDDLE = 1; // Medium sensitivity.
-        public static final int PU_IGT_SENS_HIGH = 2; // High sensitivity.
-        public static final int PU_IGT_SENS_LOWER = 3; // Lower sensitivity.
-        public static final int PU_IGT_SENS_LOWEST = 4; // Lowest sensitivity.
-        public static final int PU_IGT_SENS_MAX = 5;
+        int PU_IGT_SENS_LOW = 0; // Low sensitivity.
+        int PU_IGT_SENS_MIDDLE = 1; // Medium sensitivity.
+        int PU_IGT_SENS_HIGH = 2; // High sensitivity.
+        int PU_IGT_SENS_LOWER = 3; // Lower sensitivity.
+        int PU_IGT_SENS_LOWEST = 4; // Lowest sensitivity.
+        int PU_IGT_SENS_MAX = 5;
     }
 
     /* Intelligent detection scene. */
     public interface PU_IGT_FIELD_TYPE {
-        public static final int PU_IGT_FIELD_LONGSHOT = 0; // Distant object.
-        public static final int PU_IGT_FIELD_CLOSESHOT = 1; // Close-up object.
-        public static final int PU_IGT_FIELD_MAX = 2;
+        int PU_IGT_FIELD_LONGSHOT = 0; // Distant object.
+        int PU_IGT_FIELD_CLOSESHOT = 1; // Close-up object.
+        int PU_IGT_FIELD_MAX = 2;
     }
 
     /* Foreground object size. */
     public interface PU_IGT_MINTARGET_SIZE {
-        public static final int PU_IGT_TARGETSIZE_SMALL = 0; // Small object.
-        public static final int PU_IGT_TARGETSIZE_MIDDLE = 1; // Medium object.
-        public static final int PU_IGT_TARGETSIZE_BIG = 2; // Large object.
-        public static final int PU_IGT_TARGETSIZE_MAX = 3;
+        int PU_IGT_TARGETSIZE_SMALL = 0; // Small object.
+        int PU_IGT_TARGETSIZE_MIDDLE = 1; // Medium object.
+        int PU_IGT_TARGETSIZE_BIG = 2; // Large object.
+        int PU_IGT_TARGETSIZE_MAX = 3;
     }
 
     public interface PU_IGT_OBJ_TRACK {
-        public static final int PU_OBJTRACK_LOW = 0;
-        public static final int PU_OBJTRACK_MID = 1;
-        public static final int PU_OBJTRACK_HIGH = 2;
-        public static final int PU_OBJTRACK_MAX = 3;
+        int PU_OBJTRACK_LOW = 0;
+        int PU_OBJTRACK_MID = 1;
+        int PU_OBJTRACK_HIGH = 2;
+        int PU_OBJTRACK_MAX = 3;
     }
 
     public interface PU_IGT_OPT_TYPE {
-        public static final int PU_IGT_OPT_TYPE_ADD = 0; // New: All information containing LPPU_IGT_TW_LINE_S or
+        int PU_IGT_OPT_TYPE_ADD = 0; // New: All information containing LPPU_IGT_TW_LINE_S or
         // LPPU_IGT_AREA_S
-        public static final int PU_IGT_OPT_TYPE_MOD = 1; // Modified: All information containing LPPU_IGT_TW_LINE_S or
+        int PU_IGT_OPT_TYPE_MOD = 1; // Modified: All information containing LPPU_IGT_TW_LINE_S or
         // LPPU_IGT_AREA_S
-        public static final int PU_IGT_OPT_TYPE_DEL = 2; // Deleted: Only the channelid and index with
+        int PU_IGT_OPT_TYPE_DEL = 2; // Deleted: Only the channelid and index with
         // LPPU_IGT_TW_LINE_S or LPPU_IGT_AREA_S
-        public static final int PU_IGT_OPT_TYPE_MOV = 3; /*
+        int PU_IGT_OPT_TYPE_MOV = 3; /*
          * Move to the view when you want to add a tripwire or area.
          * Only the channelid and index with LPPU_IGT_TW_LINE_S or
          * LPPU_IGT_AREA_S
@@ -6897,7 +6939,7 @@ public interface HWPuSDK extends Library {
          * The tripwire or coordinate information will be returned as an output
          * parameter.
          */
-        public static final int PU_IGT_OPT_TYPE_MAX = 4;
+        int PU_IGT_OPT_TYPE_MAX = 4;
     }
 
     public static class PU_IGT_POINT_S extends Structure {
@@ -6917,18 +6959,18 @@ public interface HWPuSDK extends Library {
 
     /* Shadow removal mode. */
     public interface PU_IGT_SHADOW_MODE {
-        public static final int PU_IGT_SHADOW_WEAK = 0; // Weak shadow.
-        public static final int PU_IGT_SHADOW_COMMON = 1; // Common shadow.
-        public static final int PU_IGT_SHADOW_STRONG = 2; // Strong shadow.
-        public static final int PU_IGT_SHADOW_MAX = 3;
+        int PU_IGT_SHADOW_WEAK = 0; // Weak shadow.
+        int PU_IGT_SHADOW_COMMON = 1; // Common shadow.
+        int PU_IGT_SHADOW_STRONG = 2; // Strong shadow.
+        int PU_IGT_SHADOW_MAX = 3;
     }
 
     /* Intelligent object recognition mode. */
     public interface PU_IGT_TARGET_MODE_E {
-        public static final int PU_IGT_TARGETMODE_CENTRE = 0; // Center.
-        public static final int PU_IGT_TARGETMODE_BOTTOM = 1; // Bottom.
-        public static final int PU_IGT_TARGETMODE_TOP = 2; // Top.
-        public static final int PU_IGT_TARGETMODE_MAX = 3;
+        int PU_IGT_TARGETMODE_CENTRE = 0; // Center.
+        int PU_IGT_TARGETMODE_BOTTOM = 1; // Bottom.
+        int PU_IGT_TARGETMODE_TOP = 2; // Top.
+        int PU_IGT_TARGETMODE_MAX = 3;
     }
 
     public static class PU_IGT_TW_LINE extends Structure {
@@ -7112,8 +7154,8 @@ public interface HWPuSDK extends Library {
 
     // New interface type used by public interface functions.
     public interface PU_INTERFACE_TYPE {
-        public static final int PU_ITF_TYPE_SIM_PHONE_NUM = 1; // SIM mobile number.
-        public static final int PU_ITF_TYPE_MAX = 2; // Reserved.
+        int PU_ITF_TYPE_SIM_PHONE_NUM = 1; // SIM mobile number.
+        int PU_ITF_TYPE_MAX = 2; // Reserved.
     }
 
     // Vehicle detector information.
@@ -7136,18 +7178,18 @@ public interface HWPuSDK extends Library {
 
     // IP address filtering policy.
     public interface PU_IP_FILTER_STRATEGY {
-        public static final int PU_IP_FILTER_STRATEGY_ALLOW = 0; // Whitelist mode.
-        public static final int PU_IP_FILTER_STRATEGY_DENY = 1; // Whitelist mode.
-        public static final int PU_IP_FILTER_STRATEGY_MAX = 2;
+        int PU_IP_FILTER_STRATEGY_ALLOW = 0; // Whitelist mode.
+        int PU_IP_FILTER_STRATEGY_DENY = 1; // Whitelist mode.
+        int PU_IP_FILTER_STRATEGY_MAX = 2;
     }
 
     // IP address filtering protocol.
     public interface PU_IP_PROTOCOL_TYPE {
-        public static final int PU_IP_PROTOCOL_TYPE_UDP = 0; // UDP.
-        public static final int PU_IP_PROTOCOL_TYPE_TCP = 1; // TCP.
-        public static final int PU_IP_PROTOCOL_TYPE_ICMP = 2; // ICMP.
-        public static final int PU_IP_PROTOCOL_TYPE_ALL = 3; // All protocols.
-        public static final int PU_IP_PROTOCOL_TYPE_MAX = 4;
+        int PU_IP_PROTOCOL_TYPE_UDP = 0; // UDP.
+        int PU_IP_PROTOCOL_TYPE_TCP = 1; // TCP.
+        int PU_IP_PROTOCOL_TYPE_ICMP = 2; // ICMP.
+        int PU_IP_PROTOCOL_TYPE_ALL = 3; // All protocols.
+        int PU_IP_PROTOCOL_TYPE_MAX = 4;
     }
 
     public static class PU_IPCA_RULES extends Structure {
@@ -7179,9 +7221,9 @@ public interface HWPuSDK extends Library {
 
     // IP filtering mode.
     public interface PU_IPFILTER_MATCH_TYPE {
-        public static final int MATCH_IP = 0; // Filters packets based on IP addresses.
-        public static final int MATCH_MAC = 1; // Filters packets based on MAC addresses.
-        public static final int MATCH_IP_AND_MAC = 2; // Filters packets based on IP and MAC addresses.
+        int MATCH_IP = 0; // Filters packets based on IP addresses.
+        int MATCH_MAC = 1; // Filters packets based on MAC addresses.
+        int MATCH_IP_AND_MAC = 2; // Filters packets based on IP and MAC addresses.
     }
 
     // Data packet filtering rules.
@@ -7380,10 +7422,10 @@ public interface HWPuSDK extends Library {
 
     /* Day/Night mode. */
     public interface PU_IRC_MODE {
-        public static final int PU_IRC_MODE_COLOR = 0; // Color mode.
-        public static final int PU_IRC_MODE_GRAY = 1; // B/W mode.
-        public static final int PU_IRC_MODE_AUTO = 2; // Auto mode.
-        public static final int PU_IRC_MODE_MAX = 3;
+        int PU_IRC_MODE_COLOR = 0; // Color mode.
+        int PU_IRC_MODE_GRAY = 1; // B/W mode.
+        int PU_IRC_MODE_AUTO = 2; // Auto mode.
+        int PU_IRC_MODE_MAX = 3;
     }
 
     /* IRC parameters. */
@@ -7434,11 +7476,11 @@ public interface HWPuSDK extends Library {
 
     /* Day/Night mode triggers. */
     public interface PU_IRC_TRIGGER_MODE {
-        public static final int PU_IRC_CAM_TRIGGER = 0; // Triggered by chip.
-        public static final int PU_IRC_LUM_TRIGGER = 1; // Triggered by photosensitive sensor, which is the default
+        int PU_IRC_CAM_TRIGGER = 0; // Triggered by chip.
+        int PU_IRC_LUM_TRIGGER = 1; // Triggered by photosensitive sensor, which is the default
         // trigger mode.
-        public static final int PU_IRC_SWITCH_TRIGGER = 2; // Triggered by external alarms.
-        public static final int PU_IRC_TRIGGER_MAX = 3;
+        int PU_IRC_SWITCH_TRIGGER = 2; // Triggered by external alarms.
+        int PU_IRC_TRIGGER_MAX = 3;
     }
 
     /* Iris control. */
@@ -7488,39 +7530,39 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_IRIS_TYPE {
-        public static final int PU_IRIS_TYPE_DC = 0; // DC iris.
-        public static final int PU_IRIS_TYPE_P_IRIS = 1; // P-iris.
-        public static final int PU_IRIS_TYPE_MANUAL = 2; // Manual.
-        public static final int PU_IRIS_TYPE_BUTT = 3;
+        int PU_IRIS_TYPE_DC = 0; // DC iris.
+        int PU_IRIS_TYPE_P_IRIS = 1; // P-iris.
+        int PU_IRIS_TYPE_MANUAL = 2; // Manual.
+        int PU_IRIS_TYPE_BUTT = 3;
     }
 
     // Aperture parameter.
     public interface PU_IRIS_VALUE {
-        public static final int IRIS_VALUE_1_2 = 0;
-        public static final int IRIS_VALUE_1_4 = 1;
-        public static final int IRIS_VALUE_1_6 = 2; // The f-number is F1.6.
-        public static final int IRIS_VALUE_2_0 = 3; // The f-number is F2.0. The rest can be deduced by analogy.
-        public static final int IRIS_VALUE_2_3 = 4;
-        public static final int IRIS_VALUE_2_4 = 5;
-        public static final int IRIS_VALUE_2_8 = 6;
-        public static final int IRIS_VALUE_3_2 = 7;
-        public static final int IRIS_VALUE_3_4 = 8;
-        public static final int IRIS_VALUE_4_0 = 9;
-        public static final int IRIS_VALUE_4_5 = 10;
-        public static final int IRIS_VALUE_4_8 = 11;
-        public static final int IRIS_VALUE_5_6 = 12;
-        public static final int IRIS_VALUE_6_4 = 13;
-        public static final int IRIS_VALUE_6_8 = 14;
-        public static final int IRIS_VALUE_8_0 = 15;
-        public static final int IRIS_VALUE_9_1 = 16;
-        public static final int IRIS_VALUE_9_6 = 17;
-        public static final int IRIS_VALUE_11_0 = 18;
-        public static final int IRIS_VALUE_14_0 = 19;
-        public static final int IRIS_VALUE_16_0 = 20;
-        public static final int IRIS_VALUE_22_0 = 21;
-        public static final int IRIS_VALUE_32_0 = 22;
-        public static final int IRIS_VALUE_CLOSE = 23; // Close the iris.
-        public static final int IRIS_VALUE_MAX = 24;
+        int IRIS_VALUE_1_2 = 0;
+        int IRIS_VALUE_1_4 = 1;
+        int IRIS_VALUE_1_6 = 2; // The f-number is F1.6.
+        int IRIS_VALUE_2_0 = 3; // The f-number is F2.0. The rest can be deduced by analogy.
+        int IRIS_VALUE_2_3 = 4;
+        int IRIS_VALUE_2_4 = 5;
+        int IRIS_VALUE_2_8 = 6;
+        int IRIS_VALUE_3_2 = 7;
+        int IRIS_VALUE_3_4 = 8;
+        int IRIS_VALUE_4_0 = 9;
+        int IRIS_VALUE_4_5 = 10;
+        int IRIS_VALUE_4_8 = 11;
+        int IRIS_VALUE_5_6 = 12;
+        int IRIS_VALUE_6_4 = 13;
+        int IRIS_VALUE_6_8 = 14;
+        int IRIS_VALUE_8_0 = 15;
+        int IRIS_VALUE_9_1 = 16;
+        int IRIS_VALUE_9_6 = 17;
+        int IRIS_VALUE_11_0 = 18;
+        int IRIS_VALUE_14_0 = 19;
+        int IRIS_VALUE_16_0 = 20;
+        int IRIS_VALUE_22_0 = 21;
+        int IRIS_VALUE_32_0 = 22;
+        int IRIS_VALUE_CLOSE = 23; // Close the iris.
+        int IRIS_VALUE_MAX = 24;
     }
 
     public static class PU_IRLIGHT_LIST extends Structure {
@@ -7554,9 +7596,9 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_IRLIGHT_MODE {
-        public static final int PU_IRLIGHT_MODE_ATUO = 0; // Automatic.
-        public static final int PU_IRLIGHT_MODE_MANUAL = 1; // Manual.
-        public static final int PU_IRLIGHT_MODE_MAX = 2;
+        int PU_IRLIGHT_MODE_ATUO = 0; // Automatic.
+        int PU_IRLIGHT_MODE_MANUAL = 1; // Manual.
+        int PU_IRLIGHT_MODE_MAX = 2;
     }
 
     // Infrared illuminator parameters.
@@ -7648,10 +7690,10 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_ISP_IRCUT_MODULE {
-        public static final int PU_IRCUT_MODE_DUMMY = 0; // Color mode.
-        public static final int PU_IRCUT_MODE_NIGHT = 1; // B/W mode.
-        public static final int PU_IRCUT_MODE_DEFOG = 2; // Optical defogging (supported only by some devices).
-        public static final int PU_IRCUT_MODE_MAX = 3;
+        int PU_IRCUT_MODE_DUMMY = 0; // Color mode.
+        int PU_IRCUT_MODE_NIGHT = 1; // B/W mode.
+        int PU_IRCUT_MODE_DEFOG = 2; // Optical defogging (supported only by some devices).
+        int PU_IRCUT_MODE_MAX = 3;
     }
 
     /* Detailed ISP parameters. */
@@ -7810,16 +7852,16 @@ public interface HWPuSDK extends Library {
 
     /* ISP scene. */
     public interface PU_ISP_SCENE_TYPE {
-        public static final int ISP_SCNEN_NORMAL = 0; // Common scene.
-        public static final int ISP_SCENE_OBJECT = 1; // Objective scene, used for type inspection.
-        public static final int ISP_SCENE_INDOOR = 2; // Indoor.
-        public static final int ISP_SCENE_OUTDOOR = 3; // Outdoor.
-        public static final int ISP_SCENE_LOW_BRIGHT = 4; // Dimly lit.
-        public static final int ISP_SCENE_BACK_LIGHT = 5; // Backlit scene.
-        public static final int ISP_SCENE_VIRTUAL_BAYONET = 6; // Virtual checkpoint scene.
-        public static final int ISP_SCENE_FOG = 7; // Overcast scene.
-        public static final int ISP_SCENE_FACE = 8; // Facial application scene (for face checkpoint cameras only).
-        public static final int ISP_SCENE_MAX = 9;
+        int ISP_SCNEN_NORMAL = 0; // Common scene.
+        int ISP_SCENE_OBJECT = 1; // Objective scene, used for type inspection.
+        int ISP_SCENE_INDOOR = 2; // Indoor.
+        int ISP_SCENE_OUTDOOR = 3; // Outdoor.
+        int ISP_SCENE_LOW_BRIGHT = 4; // Dimly lit.
+        int ISP_SCENE_BACK_LIGHT = 5; // Backlit scene.
+        int ISP_SCENE_VIRTUAL_BAYONET = 6; // Virtual checkpoint scene.
+        int ISP_SCENE_FOG = 7; // Overcast scene.
+        int ISP_SCENE_FACE = 8; // Facial application scene (for face checkpoint cameras only).
+        int ISP_SCENE_MAX = 9;
     }
 
     /* Typical ISP scenes. */
@@ -7857,14 +7899,33 @@ public interface HWPuSDK extends Library {
         int ITS_TGATEWAY_DOUBLE_PIPE = 12; // Checkpoint dual-channel stream mode.
     }
 
+    /**
+     * 智能算法基本信息接口
+     */
     public static class PU_ITGT_ALTHM_BASIC_INFO extends Structure {
-        // C type : PU_ITGT_TYPE_E
+        /**
+         * C type : PU_ITGT_TYPE_E  算法类型
+         */
         public int enAlthmType; // Algorithm type.
+        /**
+         * 算法类型
+         */
         public PU_ITGT_LIC_STATUS_E enAlthmStatus; // Algorithm control status.
+        /**
+         * 算法是否启用  0：未启用  1：已启用
+         */
         public BOOL bEnableAlthm; // Indicates whether to enable the algorithm. The options are as follows: 0: no;
-        // 1: yes.
+        /**
+         * 算法版本
+         */
         public byte[] szAlthmVer = new byte[PU_ITGT_ALTHM_VERSION_LEN]; // Algorithm version.
+        /**
+         * 算法厂家
+         */
         public byte[] szAlthmOwner = new byte[PU_ITGT_ALTHM_VENDOR_LEN]; // Algorithm vendor.
+        /**
+         * 预留
+         */
         public byte[] szReserved = new byte[PU_RESERVE_LEN];
 
         @Override
@@ -7989,36 +8050,36 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_ITGT_TYPE {
-        public static final int PU_ITGT_TYPE_FACE_BODY_DETECT = 1; // Face and body detection
-        public static final int PU_ITGT_TYPE_FACE_RECOGTION = 2; // Facial recognition
-        public static final int PU_ITGT_TYPE_OBJ_CLASSIFICATION = 3; // Object classification
-        public static final int PU_ITGT_TYPE_ILLEG_PARK_DETECT = 4; // Parking violation detection.
+        int PU_ITGT_TYPE_FACE_BODY_DETECT = 1; // Face and body detection
+        int PU_ITGT_TYPE_FACE_RECOGTION = 2; // Facial recognition
+        int PU_ITGT_TYPE_OBJ_CLASSIFICATION = 3; // Object classification
+        int PU_ITGT_TYPE_ILLEG_PARK_DETECT = 4; // Parking violation detection.
         // PU_ITGT_TYPE_NON_CHINA_VEH_RECOGTION, // Non-Chinese license plate
         // recognition (incorporated).
-        public static final int PU_ITGT_TYPE_VLPR_VEH_RECOGTION = 6; // License plate recognition, incorporating
+        int PU_ITGT_TYPE_VLPR_VEH_RECOGTION = 6; // License plate recognition, incorporating
         // non-Chinese license plate recognition and
         // Chinese and Indonesian license plate
         // recognition.
-        public static final int PU_ITGT_TYPE_SCENE_ADAPT_FOG = 7; // Overcast adaptation.
-        public static final int PU_ITGT_TYPE_SCENE_ADAPT_SPEED = 8; // Trailing adaptation.
-        public static final int PU_ITGT_TYPE_SCENE_ADAPT_BACK_LIGHT = 9; // Backlight adaptation.
-        public static final int PU_ITGT_TYPE_FACE_ATTRIBUTE = 10; // Facial attribute recognition.
-        public static final int PU_ITGT_TYPE_BODY_ATTRIBUTE = 11; // Personal attribute recognition.
-        public static final int PU_ITGT_TYPE_QUEUE_DETECT = 12; // Queue length detection.
-        public static final int PU_ITGT_TYPE_CROWD_DENSITY_DETECITON = 13; // Crowd density detection.
-        public static final int PU_ITGT_TYPE_CHINA_INDO_VEH_RECOGTION = 14; // Chinese and Indonesian license plate
+        int PU_ITGT_TYPE_SCENE_ADAPT_FOG = 7; // Overcast adaptation.
+        int PU_ITGT_TYPE_SCENE_ADAPT_SPEED = 8; // Trailing adaptation.
+        int PU_ITGT_TYPE_SCENE_ADAPT_BACK_LIGHT = 9; // Backlight adaptation.
+        int PU_ITGT_TYPE_FACE_ATTRIBUTE = 10; // Facial attribute recognition.
+        int PU_ITGT_TYPE_BODY_ATTRIBUTE = 11; // Personal attribute recognition.
+        int PU_ITGT_TYPE_QUEUE_DETECT = 12; // Queue length detection.
+        int PU_ITGT_TYPE_CROWD_DENSITY_DETECITON = 13; // Crowd density detection.
+        int PU_ITGT_TYPE_CHINA_INDO_VEH_RECOGTION = 14; // Chinese and Indonesian license plate
         // recognition (incorporated).
-        public static final int PU_ITGT_TYPE_STRATEGY_MMC = 15; // Multi-camera collaboration.
-        public static final int PU_ITGT_TYPE_STRATEGY_YTN = 16; // 1 + N network.
-        public static final int PU_ITGT_TYPE_STRATEGY_ONLINELEARNING = 17; // Online learning.
-        public static final int PU_ITGT_TYPE_STRATEGY_PORTTRAIT_VALUE_BASIC = 18; // Face image base.
-        public static final int PU_ITGT_TYPE_STRATEGY_PORTTRAIT_VALUE_ENHANCED = 19;// Face image enhancement.
-        public static final int PU_ITGT_TYPE_STRATEGY_VEHICLE_VALUE_BASE = 20; // Vehicle image base.
-        public static final int PU_ITGT_TYPE_STRATEGY_VEHICLE_VALUE_enhanced = 21; // Vehicle image enhancement.
-        public static final int PU_ITGT_TYPE_STRATEGY_BEHAVIOR_ANALYSIS = 22; // Behavior analysis.
-        public static final int PU_GB35114SW = 23; // GB 35114 software SDK license.
-        public static final int PU_ITGT_TYPE_EBI_TYPE = 24; // BEI perimeter intrusion detection camera.
-        public static final int PU_ITGT_TYPE_MAX = 25;
+        int PU_ITGT_TYPE_STRATEGY_MMC = 15; // Multi-camera collaboration.
+        int PU_ITGT_TYPE_STRATEGY_YTN = 16; // 1 + N network.
+        int PU_ITGT_TYPE_STRATEGY_ONLINELEARNING = 17; // Online learning.
+        int PU_ITGT_TYPE_STRATEGY_PORTTRAIT_VALUE_BASIC = 18; // Face image base.
+        int PU_ITGT_TYPE_STRATEGY_PORTTRAIT_VALUE_ENHANCED = 19;// Face image enhancement.
+        int PU_ITGT_TYPE_STRATEGY_VEHICLE_VALUE_BASE = 20; // Vehicle image base.
+        int PU_ITGT_TYPE_STRATEGY_VEHICLE_VALUE_enhanced = 21; // Vehicle image enhancement.
+        int PU_ITGT_TYPE_STRATEGY_BEHAVIOR_ANALYSIS = 22; // Behavior analysis.
+        int PU_GB35114SW = 23; // GB 35114 software SDK license.
+        int PU_ITGT_TYPE_EBI_TYPE = 24; // BEI perimeter intrusion detection camera.
+        int PU_ITGT_TYPE_MAX = 25;
 
     }
 
@@ -9098,8 +9159,8 @@ public interface HWPuSDK extends Library {
 
     // Illuminator control mode.
     public interface PU_LAMP_CTRL_MODE {
-        public static final int LAMP_CTRL_MODE_AUTO = 0; // Automatic.
-        public static final int LAMP_CTRL_MODE_MANUAL = 1; // Manual.
+        int LAMP_CTRL_MODE_AUTO = 0; // Automatic.
+        int LAMP_CTRL_MODE_MANUAL = 1; // Manual.
     }
 
     // Lane attribute parameters.
@@ -9115,9 +9176,9 @@ public interface HWPuSDK extends Library {
 
     // Language type. c type:PU_LANGUAGE_TYPE
     public interface PU_LANGUAGE_TYPE {
-        public static final int PU_LANGUAGE_TYPE_CHINESE = 0; // Chinese
-        public static final int PU_LANGUAGE_TYPE_ENGLISH = 1; // English
-        public static final int PU_LANGUAGE_TYPE_MAX = 2;
+        int PU_LANGUAGE_TYPE_CHINESE = 0; // Chinese
+        int PU_LANGUAGE_TYPE_ENGLISH = 1; // English
+        int PU_LANGUAGE_TYPE_MAX = 2;
     }
 
     // Lens information.
@@ -9143,8 +9204,8 @@ public interface HWPuSDK extends Library {
 
     /* Lens type. */
     public interface PU_LENS_TYPE {
-        public static final int PU_LENS_TYPE_SA = 0; // Fuji lens(DV3.4x3.8SA-SA1L)
-        public static final int PU_LENS_TYPE_SE = 1; // Fuji lens(D8x7.8A-SE2N)
+        int PU_LENS_TYPE_SA = 0; // Fuji lens(DV3.4x3.8SA-SA1L)
+        int PU_LENS_TYPE_SE = 1; // Fuji lens(D8x7.8A-SE2N)
     }
 
     /* Licence file upload. */
@@ -9210,13 +9271,13 @@ public interface HWPuSDK extends Library {
 
     // PU registration mode.
     public interface PU_LINK_MODE {
-        public static final int PU_AUTOLOGIN_MODE = 0; // Proactive login mode. After the initialization, the PU
+        int PU_AUTOLOGIN_MODE = 0; // Proactive login mode. After the initialization, the PU
         // proactively logs in to the SDK. Only the decoder supports
         // this mode.
-        public static final int PU_MANUALLOGIN_MODE = 1; // In manual login mode, you need to manually invoke the
+        int PU_MANUALLOGIN_MODE = 1; // In manual login mode, you need to manually invoke the
         // IVS_PU_Login to log in to the PU.
-        public static final int PU_BOTHLOGIN_MODE = 3; // The preceding two login modes are supported only by SDCs.
-        public static final int PU_LINK_MODE_MAX = 4;
+        int PU_BOTHLOGIN_MODE = 3; // The preceding two login modes are supported only by SDCs.
+        int PU_LINK_MODE_MAX = 4;
     }
 
     public static class PU_LOCAL_RECORD extends Structure {
@@ -9262,49 +9323,49 @@ public interface HWPuSDK extends Library {
 
     // log type.
     public interface PU_LOG_TYPE {
-        public static final int PU_LOG_TYPE_OPERATION = 1; // Operation log.
-        public static final int PU_LOG_TYPE_EXCEPT = 2; // Error log.
-        public static final int PU_LOG_TYPE_ALARM = 3; // Alarm log.
-        public static final int PU_LOG_TYPE_MAX = 4;
+        int PU_LOG_TYPE_OPERATION = 1; // Operation log.
+        int PU_LOG_TYPE_EXCEPT = 2; // Error log.
+        int PU_LOG_TYPE_ALARM = 3; // Alarm log.
+        int PU_LOG_TYPE_MAX = 4;
     }
 
     // License plate color.
     public interface PU_LPR_PLATE_COLOR {
-        public static final int PU_LPR_LC_UNKNOWN = 0; // Unknown.
-        public static final int PU_LPR_LC_BLUE = 1; // Blue.
-        public static final int PU_LPR_LC_YELLOW = 2; // Yellow.
-        public static final int PU_LPR_LC_WHITE = 3; // White.
-        public static final int PU_LPR_LC_BLACK = 4; // Black.
-        public static final int PU_LPR_LC_GREEN = 5; // Green.
-        public static final int PU_LPR_LC_GRADIENT_GREEN = 6;// Black text on gradient green background.
-        public static final int PU_LPR_LC_YELLOW_GREEN = 7;// Black text on yellow and green background.
+        int PU_LPR_LC_UNKNOWN = 0; // Unknown.
+        int PU_LPR_LC_BLUE = 1; // Blue.
+        int PU_LPR_LC_YELLOW = 2; // Yellow.
+        int PU_LPR_LC_WHITE = 3; // White.
+        int PU_LPR_LC_BLACK = 4; // Black.
+        int PU_LPR_LC_GREEN = 5; // Green.
+        int PU_LPR_LC_GRADIENT_GREEN = 6;// Black text on gradient green background.
+        int PU_LPR_LC_YELLOW_GREEN = 7;// Black text on yellow and green background.
     }
 
     // License plate type.
     public interface PU_LPR_PLATE_TYPE {
-        public static final int PU_LPR_PLT_UNKNOWN = 0; // Unknown.
-        public static final int PU_LPR_PLT_NORMBLUE = 1; // Single-layer blue plate.
-        public static final int PU_LPR_PLT_NORMBLACK = 2; // Single-layer black plate.
-        public static final int PU_LPR_PLT_NORMYELLOW = 3; // Single-layer yellow plate.
-        public static final int PU_LPR_PLT_DBLYELLOW = 4; // Double-layer yellow plate.
-        public static final int PU_LPR_PLT_POLICE = 5; // White plate for police.
-        public static final int PU_LPR_PLT_WJ = 6; // White plate for armed police.
-        public static final int PU_LPR_PLT_DBLWJ = 7; // Double-layer white plate for armed police.
-        public static final int PU_LPR_PLT_ARMY = 8; // Single-layer plate for military.
-        public static final int PU_LPR_PLT_DBLARMY = 9; // Double-layer plate for military.
-        public static final int PU_LPR_PLT_EMBASSY = 10; // Plate for embassy vehicles.
-        public static final int PU_LPR_PLT_HK = 11; // Hong Kong plate.
-        public static final int PU_LPR_PLT_MACAU = 13; // Macau plate.
-        public static final int PU_LPR_PLT_AGRICULTURE = 14; // Agricultural conveyance plate (tractor).
-        public static final int PU_LPR_PLT_CHANGNEI = 15; // Factory plate.
-        public static final int PU_LPR_PLT_INDIVI = 16; // Personalized plate.
-        public static final int PU_LPR_PLT_NEWNENRGY = 17; // Plate for new-energy vehicles.
-        public static final int PU_LPR_PLT_OTHER = 18; // Others.
-        public static final int PU_VLPR_LPT_INA_PRIVATE = 100; // Plate for Indonesian private vehicles.
-        public static final int PU_VLPR_LPT_INA_PUBLIC = 101; // Plate for Indonesian public transportation vehicles.
-        public static final int PU_VLPR_LPT_INA_EMBASSY = 102; // Plate for Indonesian embassy vehicles.
-        public static final int PU_VLPR_LPT_KSA_PRIVATE = 110; // Saudi Arabia plate.
-        public static final int PU_VLPR_LPT_HK_PRIVATE = 120; // Hong Kong plate.
+        int PU_LPR_PLT_UNKNOWN = 0; // Unknown.
+        int PU_LPR_PLT_NORMBLUE = 1; // Single-layer blue plate.
+        int PU_LPR_PLT_NORMBLACK = 2; // Single-layer black plate.
+        int PU_LPR_PLT_NORMYELLOW = 3; // Single-layer yellow plate.
+        int PU_LPR_PLT_DBLYELLOW = 4; // Double-layer yellow plate.
+        int PU_LPR_PLT_POLICE = 5; // White plate for police.
+        int PU_LPR_PLT_WJ = 6; // White plate for armed police.
+        int PU_LPR_PLT_DBLWJ = 7; // Double-layer white plate for armed police.
+        int PU_LPR_PLT_ARMY = 8; // Single-layer plate for military.
+        int PU_LPR_PLT_DBLARMY = 9; // Double-layer plate for military.
+        int PU_LPR_PLT_EMBASSY = 10; // Plate for embassy vehicles.
+        int PU_LPR_PLT_HK = 11; // Hong Kong plate.
+        int PU_LPR_PLT_MACAU = 13; // Macau plate.
+        int PU_LPR_PLT_AGRICULTURE = 14; // Agricultural conveyance plate (tractor).
+        int PU_LPR_PLT_CHANGNEI = 15; // Factory plate.
+        int PU_LPR_PLT_INDIVI = 16; // Personalized plate.
+        int PU_LPR_PLT_NEWNENRGY = 17; // Plate for new-energy vehicles.
+        int PU_LPR_PLT_OTHER = 18; // Others.
+        int PU_VLPR_LPT_INA_PRIVATE = 100; // Plate for Indonesian private vehicles.
+        int PU_VLPR_LPT_INA_PUBLIC = 101; // Plate for Indonesian public transportation vehicles.
+        int PU_VLPR_LPT_INA_EMBASSY = 102; // Plate for Indonesian embassy vehicles.
+        int PU_VLPR_LPT_KSA_PRIVATE = 110; // Saudi Arabia plate.
+        int PU_VLPR_LPT_HK_PRIVATE = 120; // Hong Kong plate.
     }
 
     public static class PU_MANAGE_3RD_APP_INFO extends Structure {
@@ -9741,24 +9802,24 @@ public interface HWPuSDK extends Library {
 
     // Media callback type.
     public interface PU_MEDIA_CALLBACK_TYPE_E {
-        public static final int PU_MEDIA_CALLBACK_TYPE_RTP = 0; // Real-Time Transport Protocol (RTP) packet.
-        public static final int PU_MEDIA_CALLBACK_TYPE_RTP_CRYPTO = 1; // RTP packet without decryption.
-        public static final int PU_MEDIA_CALLBACK_TYPE_FRAME = 2; // Frame callback mode.
-        public static final int PU_MEDIA_CALLBACK_TYPE_YUV = 3; // YUV (not supported by Linux).
-        public static final int PU_MEDIA_CALLBACK_TYPE_FOR_STORAGE = 4;
-        public static final int PU_MEDIA_CALLBACK_TYPE_META_FRAME = 5;
-        public static final int PU_MEDIA_CALLBACK_TYPE_MAX = 6;
+        int PU_MEDIA_CALLBACK_TYPE_RTP = 0; // Real-Time Transport Protocol (RTP) packet.
+        int PU_MEDIA_CALLBACK_TYPE_RTP_CRYPTO = 1; // RTP packet without decryption.
+        int PU_MEDIA_CALLBACK_TYPE_FRAME = 2; // Frame callback mode.
+        int PU_MEDIA_CALLBACK_TYPE_YUV = 3; // YUV (not supported by Linux).
+        int PU_MEDIA_CALLBACK_TYPE_FOR_STORAGE = 4;
+        int PU_MEDIA_CALLBACK_TYPE_META_FRAME = 5;
+        int PU_MEDIA_CALLBACK_TYPE_MAX = 6;
     }
 
     // Media stream encryption type.
     public interface PU_MEDIA_CRYPTO_TYPE {
-        public static final int PU_MEDIA_CRYPTO_NONE = 0; // No encryption.
-        public static final int PU_MEDIA_CRYPTO_HW_SIMPLE = 1; // Huawei encryption.
-        public static final int PU_MEDIA_CRYPTO_AES_128BIT = 2; // 128-bit AES encryption.
-        public static final int PU_MEDIA_CRYPTO_AES_192BIT = 3; // 192-bit AES encryption.
-        public static final int PU_MEDIA_CRYPTO_AES_256BIT = 4; // 256-bit AES encryption.
-        public static final int PU_MEDIA_CRYPTO_AES256_CBC = 5; // 256-bit AES CBC encryption.
-        public static final int PU_MEDIA_CRYPTO_MAX = 6;
+        int PU_MEDIA_CRYPTO_NONE = 0; // No encryption.
+        int PU_MEDIA_CRYPTO_HW_SIMPLE = 1; // Huawei encryption.
+        int PU_MEDIA_CRYPTO_AES_128BIT = 2; // 128-bit AES encryption.
+        int PU_MEDIA_CRYPTO_AES_192BIT = 3; // 192-bit AES encryption.
+        int PU_MEDIA_CRYPTO_AES_256BIT = 4; // 256-bit AES encryption.
+        int PU_MEDIA_CRYPTO_AES256_CBC = 5; // 256-bit AES CBC encryption.
+        int PU_MEDIA_CRYPTO_MAX = 6;
     }
 
     // Media encryption parameter
@@ -9899,21 +9960,21 @@ public interface HWPuSDK extends Library {
 
     // Minimum focus distance (unit: mm).
     public interface PU_MIN_FOCUS {
-        public static final int PU_MIN_FOCUS_10 = 10; // 1cm
-        public static final int PU_MIN_FOCUS_100 = 100;
-        public static final int PU_MIN_FOCUS_300 = 300;
-        public static final int PU_MIN_FOCUS_500 = 500;
-        public static final int PU_MIN_FOCUS_1000 = 1000; // 1m
-        public static final int PU_MIN_FOCUS_1500 = 1500;
-        public static final int PU_MIN_FOCUS_2000 = 2000;
-        public static final int PU_MIN_FOCUS_3000 = 3000;
-        public static final int PU_MIN_FOCUS_5000 = 5000;
-        public static final int PU_MIN_FOCUS_6000 = 6000;
-        public static final int PU_MIN_FOCUS_10000 = 10000; // 10m
-        public static final int PU_MIN_FOCUS_20000 = 20000;
-        public static final int PU_MIN_FOCUS_50000 = 50000;
-        public static final int PU_MIN_FOCUS_100000 = 100000; // 100m
-        public static final int PU_MIN_FOCUS_MAX = 100001;
+        int PU_MIN_FOCUS_10 = 10; // 1cm
+        int PU_MIN_FOCUS_100 = 100;
+        int PU_MIN_FOCUS_300 = 300;
+        int PU_MIN_FOCUS_500 = 500;
+        int PU_MIN_FOCUS_1000 = 1000; // 1m
+        int PU_MIN_FOCUS_1500 = 1500;
+        int PU_MIN_FOCUS_2000 = 2000;
+        int PU_MIN_FOCUS_3000 = 3000;
+        int PU_MIN_FOCUS_5000 = 5000;
+        int PU_MIN_FOCUS_6000 = 6000;
+        int PU_MIN_FOCUS_10000 = 10000; // 10m
+        int PU_MIN_FOCUS_20000 = 20000;
+        int PU_MIN_FOCUS_50000 = 50000;
+        int PU_MIN_FOCUS_100000 = 100000; // 100m
+        int PU_MIN_FOCUS_MAX = 100001;
     }
 
     // Minimum focus distance parameters.
@@ -10010,10 +10071,10 @@ public interface HWPuSDK extends Library {
 
     /* Noise reduction mode */
     public interface PU_NOISE_REDUCTION_MODE {
-        public static final int PU_NOISE_REDUCTION_CLOSE = 0; // Disabled.
-        public static final int PU_NOISE_REDUCTION_NORMAL = 1; // Common mode.
-        public static final int PU_NOISE_REDUCTION_EXPERT = 2; // Expert mode.
-        public static final int PU_NOISE_REDUCTION_MAX = 3;
+        int PU_NOISE_REDUCTION_CLOSE = 0; // Disabled.
+        int PU_NOISE_REDUCTION_NORMAL = 1; // Common mode.
+        int PU_NOISE_REDUCTION_EXPERT = 2; // Expert mode.
+        int PU_NOISE_REDUCTION_MAX = 3;
     }
 
     /* NTP parameters. */
@@ -10045,13 +10106,13 @@ public interface HWPuSDK extends Library {
 
     // ONVIF authentication type.
     public interface PU_ONVIF_AUTH_TYPE {
-        public static final int AUTH_TYPE_DIGGEST = 0; // Only Digest authentication is supported.
-        public static final int AUTH_TYPE_DIGGEST_AND_WSSE = 1; // Digest authentication and WSSE authentication are
+        int AUTH_TYPE_DIGGEST = 0; // Only Digest authentication is supported.
+        int AUTH_TYPE_DIGGEST_AND_WSSE = 1; // Digest authentication and WSSE authentication are
         // supported. Digest authentication takes precedence
         // over WSSE authentication.
-        public static final int AUTH_TYPE_NONE = 2; // No authentication.
-        public static final int AUTH_TYPE_WSSE = 3; // Only WSSE authentication is supported.
-        public static final int AUTH_TYPE_MAX = 4;
+        int AUTH_TYPE_NONE = 2; // No authentication.
+        int AUTH_TYPE_WSSE = 3; // Only WSSE authentication is supported.
+        int AUTH_TYPE_MAX = 4;
     }
 
     // ONVIF password.
@@ -10087,9 +10148,9 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_ONVIF_VERSION_ENUM {
-        public static final int ONVIF_VERSION_2_6 = 0;
-        public static final int ONVIF_VERSION_2_6_1 = 1;
-        public static final int ONVIF_VERSION_MAX = 2;
+        int ONVIF_VERSION_2_6 = 0;
+        int ONVIF_VERSION_2_6_1 = 1;
+        int ONVIF_VERSION_MAX = 2;
     }
 
     /*** ONVIF version ***/
@@ -10109,20 +10170,20 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_OPT_TYPE {
-        public static final int PU_OPT_TYPE_ADD = 0; // Add.
-        public static final int PU_OPT_TYPE_DEL = 1; // Delete.
-        public static final int PU_OPT_TYPE_MOD = 2; // Modify.
-        public static final int PU_OPT_TYPE_MAX = 3;
+        int PU_OPT_TYPE_ADD = 0; // Add.
+        int PU_OPT_TYPE_DEL = 1; // Delete.
+        int PU_OPT_TYPE_MOD = 2; // Modify.
+        int PU_OPT_TYPE_MAX = 3;
     }
 
     public interface PU_OSD_DATE_TYPE {
-        public static final int PU_YYYY_MM_DD = 0; // YYYY-MM-DD
-        public static final int PU_MM_DD_YYYY = 1; // MM-DD-YYYY
-        public static final int PU_YYYY_MM_DD_CH = 2; // YYYY-MM-DD
-        public static final int PU_MM_DD_YYYY_CH = 3; // MM-DD-YYYY
-        public static final int PU_DD_MM_YYYY = 4; // DD-MM-YYYY
-        public static final int PU_DD_MM_YYY_CH = 5; // dd-mm-yyyy (Chinese)
-        public static final int PU_OSD_DATA_TYPE_MAX = 6;
+        int PU_YYYY_MM_DD = 0; // YYYY-MM-DD
+        int PU_MM_DD_YYYY = 1; // MM-DD-YYYY
+        int PU_YYYY_MM_DD_CH = 2; // YYYY-MM-DD
+        int PU_MM_DD_YYYY_CH = 3; // MM-DD-YYYY
+        int PU_DD_MM_YYYY = 4; // DD-MM-YYYY
+        int PU_DD_MM_YYY_CH = 5; // dd-mm-yyyy (Chinese)
+        int PU_OSD_DATA_TYPE_MAX = 6;
     }
 
     /* OSD time parameter. */
@@ -10415,13 +10476,13 @@ public interface HWPuSDK extends Library {
 
     // OSDI operation type.
     public interface PU_OSDI_OPTYPE {
-        public static final int PU_OSDI_AREA_ADD = 0; // Add an OSDI area.
-        public static final int PU_OSDI_AREA_DEL = 1; // Delete an OSDI area.
-        public static final int PU_OSDI_AREA_MOD = 2; // Modify an OSDI area.
-        public static final int PU_OSDI_AREA_ENABLE = 3; // Enable an OSDI area.
-        public static final int PU_OSDI_MOVE_TO_AREA = 4; // Move to an OSDI area.
-        public static final int PU_OSDI_BUSINESS_ENABLE = 5; // Indicates whether to enable OSDI.
-        public static final int PU_OSDI_GET_CUR_CONFIG = 6; // Obtain the current OSDI configuration.
+        int PU_OSDI_AREA_ADD = 0; // Add an OSDI area.
+        int PU_OSDI_AREA_DEL = 1; // Delete an OSDI area.
+        int PU_OSDI_AREA_MOD = 2; // Modify an OSDI area.
+        int PU_OSDI_AREA_ENABLE = 3; // Enable an OSDI area.
+        int PU_OSDI_MOVE_TO_AREA = 4; // Move to an OSDI area.
+        int PU_OSDI_BUSINESS_ENABLE = 5; // Indicates whether to enable OSDI.
+        int PU_OSDI_GET_CUR_CONFIG = 6; // Obtain the current OSDI configuration.
     }
 
     public static class PU_OSDI_POINT_INFO extends Structure {
@@ -10498,12 +10559,12 @@ public interface HWPuSDK extends Library {
 
     // Parity bit.
     public interface PU_PARITY_BIT {
-        public static final int PU_PARITY_BIT_NONE = 0;
-        public static final int PU_PARITY_BIT_ODD = 1;
-        public static final int PU_PARITY_BIT_EVEN = 2;
-        public static final int PU_PARITY_BIT_MARK = 3;
-        public static final int PU_PARITY_BIT_SPACE = 4;
-        public static final int PU_PARITY_BIT_MAX = 5;
+        int PU_PARITY_BIT_NONE = 0;
+        int PU_PARITY_BIT_ODD = 1;
+        int PU_PARITY_BIT_EVEN = 2;
+        int PU_PARITY_BIT_MARK = 3;
+        int PU_PARITY_BIT_SPACE = 4;
+        int PU_PARITY_BIT_MAX = 5;
     }
 
     // Image parameters.
@@ -10806,13 +10867,13 @@ public interface HWPuSDK extends Library {
 
     // Image quality.
     public interface PU_PIC_QUALITY {
-        public static final int PU_PIC_QUALITY_BEST = 0; // Supreme
-        public static final int PU_PIC_QUALITY_MORE_BETTER = 1; // Excellent
-        public static final int PU_PIC_QUALITY_BETTER = 2; // Great
-        public static final int PU_PIC_QUALITY_ORDINARY = 3; // Good
-        public static final int PU_PIC_QUALITY_BAD = 4; // Average
-        public static final int PU_PIC_QUALITY_BADEST = 5; // Poor
-        public static final int PU_PIC_QUALITY_MAX = 6;
+        int PU_PIC_QUALITY_BEST = 0; // Supreme
+        int PU_PIC_QUALITY_MORE_BETTER = 1; // Excellent
+        int PU_PIC_QUALITY_BETTER = 2; // Great
+        int PU_PIC_QUALITY_ORDINARY = 3; // Good
+        int PU_PIC_QUALITY_BAD = 4; // Average
+        int PU_PIC_QUALITY_BADEST = 5; // Poor
+        int PU_PIC_QUALITY_MAX = 6;
     }
 
     // Image synthesis data structure in the earlier versions.
@@ -10930,11 +10991,11 @@ public interface HWPuSDK extends Library {
 
     // License plate movement direction.
     public interface PU_PLATE_DIR {
-        public static final int PU_LPR_UNKNOWN = 0; // Unknown.
-        public static final int PU_LPR_LEFT = 1; // Left.
-        public static final int PU_LPR_RIGHT = 2; // Right.
-        public static final int PU_LPR_UP = 3; // Up.
-        public static final int PU_LPR_DOWN = 4; // Down.
+        int PU_LPR_UNKNOWN = 0; // Unknown.
+        int PU_LPR_LEFT = 1; // Left.
+        int PU_LPR_RIGHT = 2; // Right.
+        int PU_LPR_UP = 3; // Up.
+        int PU_LPR_DOWN = 4; // Down.
     }
 
     public static class PU_PLATE_INFO_S extends Structure {
@@ -11010,14 +11071,14 @@ public interface HWPuSDK extends Library {
 
     // Platform type (platform configuration).
     public interface PU_PLATFORM_TYPE {
-        public static final int PU_PLATFORM_TYPE_NVS = 1; // NVS platform.
-        public static final int PU_PLATFORM_TYPE_IVS = 2; // IVS platform.
-        public static final int PU_PLATFORM_TYPE_GBT = 3; // GB/T 28281 platform.
-        public static final int PU_PLATFORM_TYPE_IVS_ENABLE = 4; // IVS platform (can be enabled or disabled).
-        public static final int PU_PLATFORM_TYPE_GBT_ENABLE = 5; // GB/T 28281 (can be enabled or disabled).
-        public static final int PU_PLATFORM_TYPE_SDK_ENABLE = 6; // SDK platform (can be enabled or disabled).
-        public static final int PU_PLATFORM_TYPE_OTHERS = 7;
-        public static final int PU_PLATFORM_TYPE_MAX = 8;
+        int PU_PLATFORM_TYPE_NVS = 1; // NVS platform.
+        int PU_PLATFORM_TYPE_IVS = 2; // IVS platform.
+        int PU_PLATFORM_TYPE_GBT = 3; // GB/T 28281 platform.
+        int PU_PLATFORM_TYPE_IVS_ENABLE = 4; // IVS platform (can be enabled or disabled).
+        int PU_PLATFORM_TYPE_GBT_ENABLE = 5; // GB/T 28281 (can be enabled or disabled).
+        int PU_PLATFORM_TYPE_SDK_ENABLE = 6; // SDK platform (can be enabled or disabled).
+        int PU_PLATFORM_TYPE_OTHERS = 7;
+        int PU_PLATFORM_TYPE_MAX = 8;
     }
 
     public static class PU_POINT extends Structure {
@@ -11058,21 +11119,21 @@ public interface HWPuSDK extends Library {
 
     // Port mode.
     public interface PU_PORT_MODE {
-        public static final int PU_PORT_MODE_1 = 1; // 1-pane.
-        public static final int PU_PORT_MODE_2 = 2; // 2-pane.
-        public static final int PU_PORT_MODE_4 = 4; // 4-pane.
-        public static final int PU_PORT_MODE_9 = 9; // 9-pane.
-        public static final int PU_PORT_MODE_16 = 16; // 16-pane.
-        public static final int PU_PORT_MODE_MAX = 17;
+        int PU_PORT_MODE_1 = 1; // 1-pane.
+        int PU_PORT_MODE_2 = 2; // 2-pane.
+        int PU_PORT_MODE_4 = 4; // 4-pane.
+        int PU_PORT_MODE_9 = 9; // 9-pane.
+        int PU_PORT_MODE_16 = 16; // 16-pane.
+        int PU_PORT_MODE_MAX = 17;
     }
 
     // Port type.
     public interface PU_PORT_TYPE {
-        public static final int PU_PORT_TYPE_HDMI = 0;
-        public static final int PU_PORT_TYPE_VGA = 1;
-        public static final int PU_PORT_TYPE_BNC = 2;
-        public static final int PU_PORT_TYPE_DVI = 3;
-        public static final int PU_PORT_TYPE_MAX = 4;
+        int PU_PORT_TYPE_HDMI = 0;
+        int PU_PORT_TYPE_VGA = 1;
+        int PU_PORT_TYPE_BNC = 2;
+        int PU_PORT_TYPE_DVI = 3;
+        int PU_PORT_TYPE_MAX = 4;
     }
 
     // Single-channel information.
@@ -11197,19 +11258,19 @@ public interface HWPuSDK extends Library {
 
     // Transmission type.
     public interface PU_PROTOCOL_TYPE_E {
-        public static final int PU_PROTOCOL_TYPE_UDP = 0; // UDP mode.
-        public static final int PU_PROTOCOL_TYPE_TCP = 1; // TCP mode.
-        public static final int PU_PROTOCOL_TYPE_MULTICAST = 2; // Multicast mode.
-        public static final int PU_PROTOCOL_TYPE_MAX = 3;
+        int PU_PROTOCOL_TYPE_UDP = 0; // UDP mode.
+        int PU_PROTOCOL_TYPE_TCP = 1; // TCP mode.
+        int PU_PROTOCOL_TYPE_MULTICAST = 2; // Multicast mode.
+        int PU_PROTOCOL_TYPE_MAX = 3;
     }
 
     public interface PU_PTZ_AUX_MODE {
-        public static final int PU_AUX_MODE_PROTOCOL = 0; // Wiper protocol mode.
-        public static final int PU_AUX_MODE_ALARMOUT = 1; // Boolean value output mode.
-        public static final int PU_AUX_MODE_TORRENTIAL_RAIN = 2; // Wiper torrential rain mode.
-        public static final int PU_AUX_MODE_MODERATE_RAIN = 3; // Wiper moderate rain mode.
-        public static final int PU_AUX_MODE_BRUSH_FIVE_TIMES = 4; // Swipe for five times consecutively.
-        public static final int PU_AUX_MODE_MAX = 5;
+        int PU_AUX_MODE_PROTOCOL = 0; // Wiper protocol mode.
+        int PU_AUX_MODE_ALARMOUT = 1; // Boolean value output mode.
+        int PU_AUX_MODE_TORRENTIAL_RAIN = 2; // Wiper torrential rain mode.
+        int PU_AUX_MODE_MODERATE_RAIN = 3; // Wiper moderate rain mode.
+        int PU_AUX_MODE_BRUSH_FIVE_TIMES = 4; // Swipe for five times consecutively.
+        int PU_AUX_MODE_MAX = 5;
     }
 
     /************* PTZ dome camera self-check *************/
@@ -11230,19 +11291,19 @@ public interface HWPuSDK extends Library {
 
     // Direction control.
     public interface PU_PTZ_CONTROL_MODE {
-        public static final int PU_PTZ_CONTROL_MODE_FORWARD = 1;
-        public static final int PU_PTZ_CONTROL_MODE_BACK = 2;
-        public static final int PU_PTZ_CONTROL_MODE_MAX = 3;
+        int PU_PTZ_CONTROL_MODE_FORWARD = 1;
+        int PU_PTZ_CONTROL_MODE_BACK = 2;
+        int PU_PTZ_CONTROL_MODE_MAX = 3;
     }
 
     // Tour track operation command word.
     public interface PU_PTZ_CRUISE_TRACK {
-        public static final int PU_PTZ_CRUISE_TRACK_SET = 1; // Setting the tour track.
-        public static final int PU_PTZ_CRUISE_TRACK_GET = 2; // Obtain tour tacks.
-        public static final int PU_PTZ_CRUISE_TRACK_CLR = 3; // Clear a tour track.
-        public static final int PU_PTZ_CRUISE_TRACK_GOTO = 4; // Invoke a tour track.
-        public static final int PU_PTZ_CRUISE_TRACK_STOP = 5; // Stop tour.
-        public static final int PU_PTZ_CRUISE_TRACK_MAX = 6;
+        int PU_PTZ_CRUISE_TRACK_SET = 1; // Setting the tour track.
+        int PU_PTZ_CRUISE_TRACK_GET = 2; // Obtain tour tacks.
+        int PU_PTZ_CRUISE_TRACK_CLR = 3; // Clear a tour track.
+        int PU_PTZ_CRUISE_TRACK_GOTO = 4; // Invoke a tour track.
+        int PU_PTZ_CRUISE_TRACK_STOP = 5; // Stop tour.
+        int PU_PTZ_CRUISE_TRACK_MAX = 6;
     }
 
     // Tour information.
@@ -11337,23 +11398,23 @@ public interface HWPuSDK extends Library {
 
     // PTZ decoder type.
     public interface PU_PTZ_DECODER_TYPE {
-        public static final int PU_PTZ_DECODER_PELCO_P = 1;
-        public static final int PU_PTZ_DECODER_PELCO_D = 2;
-        public static final int PU_PTZ_DECODER_YAAN = 3;
-        public static final int PU_PTZ_DECODER_SAMSUNG = 4;
-        public static final int PU_PTZ_DECODER_REDAPPLE_5052 = 5;
-        public static final int PU_PTZ_DECODER_TAISHUO = 6;
-        public static final int PU_PTZ_DECODER_REDAPPLE_5051 = 7;
-        public static final int PU_PTZ_DECODER_USER_DEF = 8;
-        public static final int PU_PTZ_DECODER_MAX = 9;
+        int PU_PTZ_DECODER_PELCO_P = 1;
+        int PU_PTZ_DECODER_PELCO_D = 2;
+        int PU_PTZ_DECODER_YAAN = 3;
+        int PU_PTZ_DECODER_SAMSUNG = 4;
+        int PU_PTZ_DECODER_REDAPPLE_5052 = 5;
+        int PU_PTZ_DECODER_TAISHUO = 6;
+        int PU_PTZ_DECODER_REDAPPLE_5051 = 7;
+        int PU_PTZ_DECODER_USER_DEF = 8;
+        int PU_PTZ_DECODER_MAX = 9;
     }
 
     public interface PU_PTZ_DIRECTION {
-        public static final int PU_PTZ_DIRECTION_UP = 0; // Up.
-        public static final int PU_PTZ_DIRECTION_DOWN = 1; // Down.
-        public static final int PU_PTZ_DIRECTION_LEFT = 2; // Left.
-        public static final int PU_PTZ_DIRECTION_RIGHT = 3; // Right.
-        public static final int PU_PTZ_DIRECTION_MAX = 4;
+        int PU_PTZ_DIRECTION_UP = 0; // Up.
+        int PU_PTZ_DIRECTION_DOWN = 1; // Down.
+        int PU_PTZ_DIRECTION_LEFT = 2; // Left.
+        int PU_PTZ_DIRECTION_RIGHT = 3; // Right.
+        int PU_PTZ_DIRECTION_MAX = 4;
     }
 
     /********* Focus mode *********/
@@ -11404,124 +11465,124 @@ public interface HWPuSDK extends Library {
 
     // PTZ rotation mode.
     public interface PU_PTZ_MOTION_MODE {
-        public static final int PU_PTZ_MOTION_MODE_BURST = 1; // Step mode.
-        public static final int PU_PTZ_MOTION_MODE_CONTINUOUS = 2; // Continuous mode.
-        public static final int PU_PTZ_MOTION_MODE_MAX = 3;
+        int PU_PTZ_MOTION_MODE_BURST = 1; // Step mode.
+        int PU_PTZ_MOTION_MODE_CONTINUOUS = 2; // Continuous mode.
+        int PU_PTZ_MOTION_MODE_MAX = 3;
     }
 
     // PTZ control.
     public interface PU_PTZ_OPCODE {
-        public static final int PU_PTZ_STOP = 1; // The PTZ stops. Ignore para1 and para2.
-        public static final int PU_PTZ_UP = 2; // Rotate the PTZ upward. The param1 parameter indicates the rotation
+        int PU_PTZ_STOP = 1; // The PTZ stops. Ignore para1 and para2.
+        int PU_PTZ_UP = 2; // Rotate the PTZ upward. The param1 parameter indicates the rotation
         // mode. The value 1 indicates the step mode. The value 2 indicates the
         // continuous mode. The param2 parameter specifies the PTZ rotation
         // speed. The value ranges from 1 to 10.
-        public static final int PU_PTZ_DOWN = 3; // Rotate the PTZ downward. The param1 parameter indicates the rotation
+        int PU_PTZ_DOWN = 3; // Rotate the PTZ downward. The param1 parameter indicates the rotation
         // mode. The value 1 indicates the step mode. The value 2 indicates
         // the continuous mode. The param2 parameter specifies the PTZ
         // rotation speed. The value ranges from 1 to 10.
-        public static final int PU_PTZ_LEFT = 4; // Rotate the PTZ leftward. The param1 parameter indicates the rotation
+        int PU_PTZ_LEFT = 4; // Rotate the PTZ leftward. The param1 parameter indicates the rotation
         // mode. The value 1 indicates the step mode. The value 2 indicates
         // the continuous mode. The param2 parameter specifies the PTZ
         // rotation speed. The value ranges from 1 to 10.
-        public static final int PU_PTZ_UP_LEFT = 5; // Rotate the PTZ upper leftward. The param1 parameter indicates the
+        int PU_PTZ_UP_LEFT = 5; // Rotate the PTZ upper leftward. The param1 parameter indicates the
         // rotation mode. The value 1 indicates the step mode. The value 2
         // indicates the continuous mode. The param2 parameter specifies the
         // PTZ rotation speed. The value ranges from 1 to 10.
-        public static final int PU_PTZ_DOWN_LEFT = 6; // Rotate the PTZ lower leftward. The param1 parameter indicates
+        int PU_PTZ_DOWN_LEFT = 6; // Rotate the PTZ lower leftward. The param1 parameter indicates
         // the rotation mode. The value 1 indicates the step mode. The
         // value 2 indicates the continuous mode. The param2 parameter
         // specifies the PTZ rotation speed. The value ranges from 1 to
         // 10.
-        public static final int PU_PTZ_RIGHT = 7; // Rotate the PTZ rightward. The param1 parameter indicates the
+        int PU_PTZ_RIGHT = 7; // Rotate the PTZ rightward. The param1 parameter indicates the
         // rotation mode. The value 1 indicates the step mode. The value 2
         // indicates the continuous mode. The param2 parameter specifies the
         // PTZ rotation speed. The value ranges from 1 to 10.
-        public static final int PU_PTZ_UP_RIGHT = 8; // Rotate the PTZ upper rightward. The param1 parameter indicates
+        int PU_PTZ_UP_RIGHT = 8; // Rotate the PTZ upper rightward. The param1 parameter indicates
         // the rotation mode. The value 1 indicates the step mode. The
         // value 2 indicates the continuous mode. The param2 parameter
         // specifies the PTZ rotation speed. The value ranges from 1 to
         // 10.
-        public static final int PU_PTZ_DOWN_RIGHT = 9; // Rotate the PTZ lower rightward. The param1 parameter indicates
+        int PU_PTZ_DOWN_RIGHT = 9; // Rotate the PTZ lower rightward. The param1 parameter indicates
         // the rotation mode. The value 1 indicates the step mode. The
         // value 2 indicates the continuous mode. The param2 parameter
         // specifies the PTZ rotation speed. The value ranges from 1 to
         // 10.
-        public static final int PU_PTZ_AUTO = 10; // The PTZ control is automatic. Ignore para1 and para2.
-        public static final int PU_PTZ_PRESET_RUN = 11; // Rotate to a preset position. The para1 parameter indicates
+        int PU_PTZ_AUTO = 10; // The PTZ control is automatic. Ignore para1 and para2.
+        int PU_PTZ_PRESET_RUN = 11; // Rotate to a preset position. The para1 parameter indicates
         // the preset position ID. Ignore para2.
-        public static final int PU_PTZ_CRUISE_RUN = 12; // Rotate along the tour track. The para1 parameter indicates
+        int PU_PTZ_CRUISE_RUN = 12; // Rotate along the tour track. The para1 parameter indicates
         // the tour track ID. Ignore para2.
-        public static final int PU_PTZ_CRUISE_STOP = 13; // Moving along the tour track stops. Ignore para1 and para2.
-        public static final int PU_PTZ_FLIP = 17; // The PTZ rotates 180 degrees. Ignore para1 and para2.
-        public static final int PU_PTZ_HOMING = 18; // The camera returns to the home position. Ignore para1 and para2.
+        int PU_PTZ_CRUISE_STOP = 13; // Moving along the tour track stops. Ignore para1 and para2.
+        int PU_PTZ_FLIP = 17; // The PTZ rotates 180 degrees. Ignore para1 and para2.
+        int PU_PTZ_HOMING = 18; // The camera returns to the home position. Ignore para1 and para2.
         // Lens control.
-        public static final int PU_PTZ_LENS_APERTURE_OPEN = 19; // Opens up the aperture. Ignore para1 and para2.
-        public static final int PU_PTZ_LENS_APERTURE_CLOSE = 20; // Close down the aperture. Ignore para1 and para2.
-        public static final int PU_PTZ_LENS_ZOOM_WIDE = 21; // Enlarge the field of view, that is, ZOOM OUT. The param1
+        int PU_PTZ_LENS_APERTURE_OPEN = 19; // Opens up the aperture. Ignore para1 and para2.
+        int PU_PTZ_LENS_APERTURE_CLOSE = 20; // Close down the aperture. Ignore para1 and para2.
+        int PU_PTZ_LENS_ZOOM_WIDE = 21; // Enlarge the field of view, that is, ZOOM OUT. The param1
         // parameter indicates the rotation mode. The value is fixed
         // at 2, indicating the continuous mode. The param2
         // parameter indicates the speed.
-        public static final int PU_PTZ_LENS_ZOOM_TELESCOPE = 22; // Narrow the field of view, that is, ZOOM IN. The
+        int PU_PTZ_LENS_ZOOM_TELESCOPE = 22; // Narrow the field of view, that is, ZOOM IN. The
         // param1 parameter indicates the rotation mode. The
         // value is fixed at 2, indicating the continuous
         // mode. The param2 parameter indicates the speed.
 
         /* This parameter is not recommended in the new version. */
-        public static final int PU_PTZ_LENS_ZOOM_IN = 21; // (You are advised to use PU_PTZ_LENS_ZOOM_WIDE instead of
+        int PU_PTZ_LENS_ZOOM_IN = 21; // (You are advised to use PU_PTZ_LENS_ZOOM_WIDE instead of
         // this parameter in the new version.)
-        public static final int PU_PTZ_LENS_ZOOM_OUT = 22; // (You are advised to use PU_PTZ_LENS_ZOOM_TELESCOPE instead
+        int PU_PTZ_LENS_ZOOM_OUT = 22; // (You are advised to use PU_PTZ_LENS_ZOOM_TELESCOPE instead
         // of this parameter in the new version.)
 
-        public static final int PU_PTZ_LENS_ZOOM_STOP = 23; // Stop zooming.
-        public static final int PU_PTZ_LENS_FOCAL_NEAR = 24; // Focus near. The param1 parameter indicates the rotation
+        int PU_PTZ_LENS_ZOOM_STOP = 23; // Stop zooming.
+        int PU_PTZ_LENS_FOCAL_NEAR = 24; // Focus near. The param1 parameter indicates the rotation
         // mode. The value is fixed at 2, indicating the
         // continuous mode. The param2 parameter indicates the
         // speed. The value ranges from 1 to 10.
-        public static final int PU_PTZ_LENS_FOCAL_FAR = 25; // Focus far. The param1 parameter indicates the rotation
+        int PU_PTZ_LENS_FOCAL_FAR = 25; // Focus far. The param1 parameter indicates the rotation
         // mode. The value is fixed at 2, indicating the continuous
         // mode. The param2 parameter indicates the speed. The value
         // ranges from 1 to 10.
-        public static final int PU_PTZ_LENS_FOCAL_STOP = 26; // Stop adjusting the focus.
-        public static final int PU_PTZ_AUX_OPEN = 27; // The auxiliary device is enabled. para1 indicates the device
+        int PU_PTZ_LENS_FOCAL_STOP = 26; // Stop adjusting the focus.
+        int PU_PTZ_AUX_OPEN = 27; // The auxiliary device is enabled. para1 indicates the device
         // name. Ignore para2.
-        public static final int PU_PTZ_AUX_STOP = 28; // The auxiliary device is disabled. para1 indicates the device
+        int PU_PTZ_AUX_STOP = 28; // The auxiliary device is disabled. para1 indicates the device
         // name. Ignore para2.
-        public static final int PU_PTZ_HORIZONTAL_SCAN = 29; // Horizontal scan. The para1 parameter indicates the
+        int PU_PTZ_HORIZONTAL_SCAN = 29; // Horizontal scan. The para1 parameter indicates the
         // direction, and para2 indicates the speed (range:
         // 1-10).
-        public static final int PU_PTZ_VERTICAL_SCAN = 30; // Vertical scan. Ignore para1. The para2 parameter indicates
+        int PU_PTZ_VERTICAL_SCAN = 30; // Vertical scan. Ignore para1. The para2 parameter indicates
         // the speed (range: 1-10).
-        public static final int PU_PTZ_MODE_SET_START = 31; // Start recording the pattern scan path.
-        public static final int PU_PTZ_MODE_SET_STOP = 32; // Stop recording the pattern scan path.
-        public static final int PU_PTZ_FAST_LOCATE = 33; // 3D positioning.
-        public static final int PU_PTZ_FAST_RETURN = 34; // 3D return.
-        public static final int PU_PTZ_REBOOT = 35; // Restart the electromechanics board.
-        public static final int PU_PTZ_RESTORE = 36; // Restore the electromechanics board to default settings.
-        public static final int PU_PTZ_SET_LEFT_LIMIT = 37; // Set the left limit.
-        public static final int PU_PTZ_SET_RIGHT_LIMIT = 38; // Set the right limit.
-        public static final int PU_PTZ_MODE_CRUISE_START = 39; // Pattern scan starts.The para1 parameter indicates the
+        int PU_PTZ_MODE_SET_START = 31; // Start recording the pattern scan path.
+        int PU_PTZ_MODE_SET_STOP = 32; // Stop recording the pattern scan path.
+        int PU_PTZ_FAST_LOCATE = 33; // 3D positioning.
+        int PU_PTZ_FAST_RETURN = 34; // 3D return.
+        int PU_PTZ_REBOOT = 35; // Restart the electromechanics board.
+        int PU_PTZ_RESTORE = 36; // Restore the electromechanics board to default settings.
+        int PU_PTZ_SET_LEFT_LIMIT = 37; // Set the left limit.
+        int PU_PTZ_SET_RIGHT_LIMIT = 38; // Set the right limit.
+        int PU_PTZ_MODE_CRUISE_START = 39; // Pattern scan starts.The para1 parameter indicates the
         // tour track ID. Ignore para2.
-        public static final int PU_PTZ_MODE_CRUISE_STOP = 40; // Pattern scan stops. The para1 parameter indicates the
+        int PU_PTZ_MODE_CRUISE_STOP = 40; // Pattern scan stops. The para1 parameter indicates the
         // tour track ID. Ignore para2.
-        public static final int PU_PTZ_FAST_MOVE = 41; // Select a point for quick positioning. The para1 parameter
+        int PU_PTZ_FAST_MOVE = 41; // Select a point for quick positioning. The para1 parameter
         // indicates the x coordinate, and the para2 parameter indicates
         // the y coordinate.
-        public static final int PU_PTZ_HORIZONTAL_LIMIT_SCAN = 51; // Horizontal limit scan. The param1 parameter
+        int PU_PTZ_HORIZONTAL_LIMIT_SCAN = 51; // Horizontal limit scan. The param1 parameter
         // indicates the rotation mode. The value is fixed
         // at 2, indicating the continuous mode. The param2
         // parameter indicates the speed. The value ranges
         // from 1 to 10.
-        public static final int PU_PTZ_LENS_AUTO_FOCAL = 52; // Auto focus.
-        public static final int PU_PTZ_GOTO_HOME = 53; // Rotate to the home position.
-        public static final int PU_PTZ_ONE_PUSH = 54; // OnePush focus of the bullet camera.
-        public static final int PTZ_VERTICAL_LIMIT_SCAN = 55; // Vertical limit scan. The param1 parameter indicates the
+        int PU_PTZ_LENS_AUTO_FOCAL = 52; // Auto focus.
+        int PU_PTZ_GOTO_HOME = 53; // Rotate to the home position.
+        int PU_PTZ_ONE_PUSH = 54; // OnePush focus of the bullet camera.
+        int PTZ_VERTICAL_LIMIT_SCAN = 55; // Vertical limit scan. The param1 parameter indicates the
         // rotation mode. The value is fixed at 2, indicating
         // the continuous mode. The param2 parameter indicates
         // the speed. The value ranges from 1 to 10.
-        public static final int PTZ_SET_UP_LIMIT = 56; // Set the upper limit.
-        public static final int PTZ_SET_DOWN_LIMIT = 57; // Set the lower limit.
-        public static final int PU_PTZ_CMD_MAX = 58;
+        int PTZ_SET_UP_LIMIT = 56; // Set the upper limit.
+        int PTZ_SET_DOWN_LIMIT = 57; // Set the lower limit.
+        int PU_PTZ_CMD_MAX = 58;
     }
 
     // PTZ parameters.
@@ -11548,11 +11609,11 @@ public interface HWPuSDK extends Library {
 
     // Preset position operation command word.
     public interface PU_PTZ_PRESET_CMD {
-        public static final int PU_PTZ_PRESET_SET = 1; // Set preset positions.
-        public static final int PU_PTZ_PRESET_GET = 2; // Obtain the preset position.
-        public static final int PU_PTZ_PRESET_CLR = 3; // Delete a preset position.
-        public static final int PU_PTZ_PRESET_GOTO = 4; // Rotate to a preset position.
-        public static final int PU_PTZ_PRESET_MAX = 5;
+        int PU_PTZ_PRESET_SET = 1; // Set preset positions.
+        int PU_PTZ_PRESET_GET = 2; // Obtain the preset position.
+        int PU_PTZ_PRESET_CLR = 3; // Delete a preset position.
+        int PU_PTZ_PRESET_GOTO = 4; // Rotate to a preset position.
+        int PU_PTZ_PRESET_MAX = 5;
     }
 
     // Preset position information.
@@ -11774,15 +11835,18 @@ public interface HWPuSDK extends Library {
         }
     }
 
-    // Live video viewing structure.
+    /**
+     * 实时浏览参数
+     */
     public static class PU_REAL_PLAY_INFO_S extends Structure {
         public static class ByReference extends PU_REAL_PLAY_INFO_S implements Structure.ByReference {
         }
 
         public static class ByValue extends PU_REAL_PLAY_INFO_S implements Structure.ByValue {
         }
-
+        //通道ID
         public ULONG ulChannelId; // Channel ID.
+        //播放窗口
         public WinDef.HWND hPlayWnd; // Windows window handle.
         public int enStreamType; // Code stream type (primary stream or secondary stream).PU_STREAM_TYPE_E
         public int enVideoType; // Stream type (video, audio, hybrid, or recording).PU_VIDEO_TYPE_E
@@ -11790,8 +11854,11 @@ public interface HWPuSDK extends Library {
         public int enMediaCallbackType; // Callback type. 0: RTP decryption; 1: no RTP decryption; 2: frame; 3:
         // YUV.PU_MEDIA_CALLBACK_TYPE_E
         public byte[] szLocalIp = new byte[PU_IP4_ADDR_LEN]; // IP address of the request end.
+        //是否保活
         public boolean bKeepLive; // Indicates whether to enable the keep-alive function.
+        //请求录像的开始时间
         public PU_TIME_S.ByValue stStartTime; // Start time of requested pre-recording or video recording.
+        //请求录像的结束时间
         public PU_TIME_S.ByValue stEndTime; // End time of requested pre-recording or video recording.
         public int enMediaCryptoType; // Encryption type. Only AES encryption is supported.
         public byte[] szMediaCrypto = new byte[PU_CRYPTION_PASSWD_LEN]; // Encryption key.
@@ -11977,12 +12044,12 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_RECORD_TYPE {
-        public static final int PU_RECORD_TYPE_ALARM = 0; // Alarm-triggered recording.
-        public static final int PU_RECORD_TYPE_MANUAL = 1; // Manual recording.
-        public static final int PU_RECORD_TYPE_TIMING = 2; // Scheduled recording.
-        public static final int PU_RECORD_METHOD_ADD = 3; // Video buffering.
-        public static final int PU_RECORD_METHOD_ALL = 4; // All recording types.
-        public static final int PU_RECORD_TYPE_MAX = 5;
+        int PU_RECORD_TYPE_ALARM = 0; // Alarm-triggered recording.
+        int PU_RECORD_TYPE_MANUAL = 1; // Manual recording.
+        int PU_RECORD_TYPE_TIMING = 2; // Scheduled recording.
+        int PU_RECORD_METHOD_ADD = 3; // Video buffering.
+        int PU_RECORD_METHOD_ALL = 4; // All recording types.
+        int PU_RECORD_TYPE_MAX = 5;
     }
 
     public static class PU_RECT_LOCATE_PARA extends Structure {
@@ -12026,9 +12093,9 @@ public interface HWPuSDK extends Library {
     // The request type REQ_NULL indicates the situation that no value is assigned
     // after initialization.
     public interface PU_REQ_TYPE {
-        public static final int REQ_NULL = 0;
-        public static final int REQ_GET = 1;
-        public static final int REQ_SET = 2;
+        int REQ_NULL = 0;
+        int REQ_GET = 1;
+        int REQ_SET = 2;
     }
 
     // Video resolution.
@@ -12068,45 +12135,45 @@ public interface HWPuSDK extends Library {
 
     // Video resolution type.
     public interface PU_RESOLUTION_TYPE {
-        public static final int PU_RESOLUTION_480I = 0;
-        public static final int PU_RESOLUTION_576I = 1;
-        public static final int PU_RESOLUTION_QCIF_PAL = 2;
-        public static final int PU_RESOLUTION_QCIF_NTSC = 3;
-        public static final int PU_RESOLUTION_CIF_PAL = 4;
-        public static final int PU_RESOLUTION_CIF_NTSC = 5;
-        public static final int PU_RESOLUTION_2CIF = 6;
-        public static final int PU_RESOLUTION_HD1 = 7;
-        public static final int PU_RESOLUTION_D1_PAL = 8; // 720 * 576
-        public static final int PU_RESOLUTION_D1_NTSC = 9;
-        public static final int PU_RESOLUTION_QVGA = 10; // 320 * 240
-        public static final int PU_RESOLUTION_VGA = 11; // 640 * 480
-        public static final int PU_RESOLUTION_XGA = 12; // 1024 * 768
-        public static final int PU_RESOLUTION_SXGA = 13; // 1400 * 1050
-        public static final int PU_RESOLUTION_UXGA = 14; // 1600 * 1200
-        public static final int PU_RESOLUTION_QXGA = 15; // 2048 * 1536
-        public static final int PU_RESOLUTION_WVGA = 16; // 854 * 480
-        public static final int PU_RESOLUTION_WSXGA = 17; // 1680 * 1050
-        public static final int PU_RESOLUTION_WUXGA = 18; // 1920 * 1200
-        public static final int PU_RESOLUTION_WQXGA = 19; // 2560 * 1600
-        public static final int PU_RESOLUTION_HD720 = 20; // 1280 * 720
-        public static final int PU_RESOLUTION_HD1080 = 21; // 1920 * 1080
-        public static final int PU_RESOLUTION_HD1080I = 22;
-        public static final int PU_RESOLUTION_HD960 = 23; // 1280 * 960
-        public static final int PU_RESOLUTION_HD1024 = 24; // 1280 * 1024
-        public static final int PU_RESOLUTION_HD1296P = 25; // 2304 * 1296
-        public static final int PU_RESOLUTION_HD1440P = 26; // 2560 * 1440
-        public static final int PU_RESOLUTION_HD1728P = 27; // 3072 * 1728
-        public static final int PU_RESOLUTION_HD4K = 28; // 3840 * 2160
-        public static final int PU_RESOLUTION_HD1536P = 29; // 2048 * 1536
-        public static final int PU_RESOLUTION_HD1920P = 30; // 2560 * 1920
-        public static final int PU_RESOLUTION_HD1944P = 31; // 2592 * 1944
-        public static final int PU_RESOLUTION_HD2448P = 32; // 3264 * 2448
-        public static final int PU_RESOLUTION_HD2160P = 33; // 4096 * 2160
-        public static final int PU_RESOLUTION_HD2736P = 34; // 3648 * 2736
-        public static final int PU_RESOLUTION_2592_1520P = 35; /* 2592*1520 400W */
-        public static final int PU_RESOLUTION_2560_2048 = 36; /* 2560*2048 5:4 500W */
-        public static final int PU_RESOLUTION_3072_2048 = 37; /* 3072*2048 3:2 600W */
-        public static final int PU_RESOLUTION_MAX = 38;
+        int PU_RESOLUTION_480I = 0;
+        int PU_RESOLUTION_576I = 1;
+        int PU_RESOLUTION_QCIF_PAL = 2;
+        int PU_RESOLUTION_QCIF_NTSC = 3;
+        int PU_RESOLUTION_CIF_PAL = 4;
+        int PU_RESOLUTION_CIF_NTSC = 5;
+        int PU_RESOLUTION_2CIF = 6;
+        int PU_RESOLUTION_HD1 = 7;
+        int PU_RESOLUTION_D1_PAL = 8; // 720 * 576
+        int PU_RESOLUTION_D1_NTSC = 9;
+        int PU_RESOLUTION_QVGA = 10; // 320 * 240
+        int PU_RESOLUTION_VGA = 11; // 640 * 480
+        int PU_RESOLUTION_XGA = 12; // 1024 * 768
+        int PU_RESOLUTION_SXGA = 13; // 1400 * 1050
+        int PU_RESOLUTION_UXGA = 14; // 1600 * 1200
+        int PU_RESOLUTION_QXGA = 15; // 2048 * 1536
+        int PU_RESOLUTION_WVGA = 16; // 854 * 480
+        int PU_RESOLUTION_WSXGA = 17; // 1680 * 1050
+        int PU_RESOLUTION_WUXGA = 18; // 1920 * 1200
+        int PU_RESOLUTION_WQXGA = 19; // 2560 * 1600
+        int PU_RESOLUTION_HD720 = 20; // 1280 * 720
+        int PU_RESOLUTION_HD1080 = 21; // 1920 * 1080
+        int PU_RESOLUTION_HD1080I = 22;
+        int PU_RESOLUTION_HD960 = 23; // 1280 * 960
+        int PU_RESOLUTION_HD1024 = 24; // 1280 * 1024
+        int PU_RESOLUTION_HD1296P = 25; // 2304 * 1296
+        int PU_RESOLUTION_HD1440P = 26; // 2560 * 1440
+        int PU_RESOLUTION_HD1728P = 27; // 3072 * 1728
+        int PU_RESOLUTION_HD4K = 28; // 3840 * 2160
+        int PU_RESOLUTION_HD1536P = 29; // 2048 * 1536
+        int PU_RESOLUTION_HD1920P = 30; // 2560 * 1920
+        int PU_RESOLUTION_HD1944P = 31; // 2592 * 1944
+        int PU_RESOLUTION_HD2448P = 32; // 3264 * 2448
+        int PU_RESOLUTION_HD2160P = 33; // 4096 * 2160
+        int PU_RESOLUTION_HD2736P = 34; // 3648 * 2736
+        int PU_RESOLUTION_2592_1520P = 35; /* 2592*1520 400W */
+        int PU_RESOLUTION_2560_2048 = 36; /* 2560*2048 5:4 500W */
+        int PU_RESOLUTION_3072_2048 = 37; /* 3072*2048 3:2 600W */
+        int PU_RESOLUTION_MAX = 38;
     }
 
     /* Red light enhancement parameters. */
@@ -12145,16 +12212,16 @@ public interface HWPuSDK extends Library {
 
     /* Traffic light status. */
     public interface PU_RL_LIGHT_STATUS {
-        public static final int RL_STATUS_GREEN = 0; // Green light.
-        public static final int RL_STATUS_RED = 1; // Red light.
-        public static final int RL_STATUS_MAX = 2;
+        int RL_STATUS_GREEN = 0; // Green light.
+        int RL_STATUS_RED = 1; // Red light.
+        int RL_STATUS_MAX = 2;
     }
 
     public interface PU_RL_LIGHT_TYPE {
-        public static final int RL_TYPE_DISC = 1; // Ball traffic light.
-        public static final int RL_TYPE_ARROW = 2; // Arrow traffic light.
-        public static final int RL_TYPE_NUMBER = 3; // Countdown traffic light.
-        public static final int RL_TYPE_MAX = 4;
+        int RL_TYPE_DISC = 1; // Ball traffic light.
+        int RL_TYPE_ARROW = 2; // Arrow traffic light.
+        int RL_TYPE_NUMBER = 3; // Countdown traffic light.
+        int RL_TYPE_MAX = 4;
     }
 
     /* Traffic light group information. */
@@ -12271,12 +12338,14 @@ public interface HWPuSDK extends Library {
 
     // Local image storage mode.
     public interface PU_SAVE_PICTURE_TYPE {
-        public static final int PU_SAVE_PICTURE_TYPE_BMP = 0; // BMP file.
-        public static final int PU_SAVE_PICTURE_TYPE_JEPG = 1; // JPEG file.
-        public static final int PU_SAVE_PICTURE_TYPE_MAX = 2;
+        int PU_SAVE_PICTURE_TYPE_BMP = 0; // BMP file.
+        int PU_SAVE_PICTURE_TYPE_JEPG = 1; // JPEG file.
+        int PU_SAVE_PICTURE_TYPE_MAX = 2;
     }
 
-    // Live video data storage structure.
+    /**
+     * 实况保存接口
+     */
     public static class PU_SAVE_REALDATA_INFO extends Structure {
         public byte[] szFilePath = new byte[PU_SAVE_FILE_PATH_MAX]; // File save path.
         public int enSaveType; // Save mode. c type:PU_SAVE_REALDATA_TYPE
@@ -12294,28 +12363,28 @@ public interface HWPuSDK extends Library {
 
     // Local recording storage mode.
     public interface PU_SAVE_REALDATA_TYPE {
-        public static final int PU_SAVE_REALDATA_TYPE_TIME = 0; // Storage by time (unit: minute).
-        public static final int PU_SAVE_REALDATA_TYPE_SIZE = 1; // Storage by size (unit: MB).
-        public static final int PU_SAVE_REALDATA_TYPE_MAX = 2;
+        int PU_SAVE_REALDATA_TYPE_TIME = 0; // Storage by time (unit: minute).
+        int PU_SAVE_REALDATA_TYPE_SIZE = 1; // Storage by size (unit: MB).
+        int PU_SAVE_REALDATA_TYPE_MAX = 2;
     }
 
     /* ISP scene parameter type. */
     public interface PU_SCENE_PARAM_TYPE {
-        public static final int PU_SCENE_PARAM_COMM = 0; // Common scene parameter.
-        public static final int PU_SCENE_PARAM_SNAPSHOT = 1; // Scene parameter of the ITS camera or multi-algorithm
+        int PU_SCENE_PARAM_COMM = 0; // Common scene parameter.
+        int PU_SCENE_PARAM_SNAPSHOT = 1; // Scene parameter of the ITS camera or multi-algorithm
         // concurrency camera in full intelligence or micro
         // checkpoint mode.
-        public static final int PU_SCENE_PARAM_HUMAN = 2; // Scene parameter of the multi-algorithm concurrency camera
+        int PU_SCENE_PARAM_HUMAN = 2; // Scene parameter of the multi-algorithm concurrency camera
         // in face capture or behavior analysis mode.
-        public static final int PU_SCENE_PARAM_VEHICLE = 3; // Scene parameter of the multi-algorithm concurrency camera
+        int PU_SCENE_PARAM_VEHICLE = 3; // Scene parameter of the multi-algorithm concurrency camera
         // in micro checkpoint mode.
-        public static final int PU_SCENE_PARAM_MAX = 4;
+        int PU_SCENE_PARAM_MAX = 4;
     }
 
     public interface PU_SDK_PLATFORM_MODE_E {
-        public static final int PU_SDK_PALTFORM_MODE_SINGEL = 1; // Single-server mode.
-        public static final int PU_SDK_PLATFORM_MODE_DUAL = 2; // Dual-server mode.
-        public static final int PU_SDK_PLATFORM_MODE_MAX = 3;
+        int PU_SDK_PALTFORM_MODE_SINGEL = 1; // Single-server mode.
+        int PU_SDK_PLATFORM_MODE_DUAL = 2; // Dual-server mode.
+        int PU_SDK_PLATFORM_MODE_MAX = 3;
     }
 
     /* SDK TLS certificate upload. */
@@ -12333,19 +12402,19 @@ public interface HWPuSDK extends Library {
 
     /* SDK-TLS certificate upload type. */
     public interface PU_SDK_TLS_CERT_UPLOAD_TYPE {
-        public static final int PU_SDK_TLS_CA_CERT_UPLOAD_TYPE = 0;
-        public static final int PU_SDK_TLS_CLIENT_CERT_UPLOAD_TYPE = 1;
-        public static final int PU_SDK_TLS_CERT_UPLOAD_TYPE_MAX = 2;
+        int PU_SDK_TLS_CA_CERT_UPLOAD_TYPE = 0;
+        int PU_SDK_TLS_CLIENT_CERT_UPLOAD_TYPE = 1;
+        int PU_SDK_TLS_CERT_UPLOAD_TYPE_MAX = 2;
     }
 
     // SEC packet loss rate.
     public interface PU_SEC_PACKET_LOSS_RATIO {
-        public static final int PU_SEC_PACKET_LOSS_RATIO_1 = 0; /* 0: 4% packet loss */
-        public static final int PU_SEC_PACKET_LOSS_RATIO_2 = 1; /* 1: 8% packet loss */
-        public static final int PU_SEC_PACKET_LOSS_RATIO_3 = 2; /* 2: 12% packet loss */
-        public static final int PU_SEC_PACKET_LOSS_RATIO_4 = 3; /* 3: 16% packet loss */
-        public static final int PU_SEC_PACKET_LOSS_RATIO_5 = 4; /* 4: 20% packet loss */
-        public static final int PU_SEC_PACKET_LOSS_RATIO_MAX = 5;
+        int PU_SEC_PACKET_LOSS_RATIO_1 = 0; /* 0: 4% packet loss */
+        int PU_SEC_PACKET_LOSS_RATIO_2 = 1; /* 1: 8% packet loss */
+        int PU_SEC_PACKET_LOSS_RATIO_3 = 2; /* 2: 12% packet loss */
+        int PU_SEC_PACKET_LOSS_RATIO_4 = 3; /* 3: 16% packet loss */
+        int PU_SEC_PACKET_LOSS_RATIO_5 = 4; /* 4: 20% packet loss */
+        int PU_SEC_PACKET_LOSS_RATIO_MAX = 5;
     }
 
     /* Super Error Concealment (SEC) parameters. */
@@ -12381,10 +12450,10 @@ public interface HWPuSDK extends Library {
 
     // Serial port type.
     public interface PU_SERIAL_PORT_MODE {
-        public static final int PU_SERIAL_PORT_RS232 = 0; // RS-232 serial port.
-        public static final int PU_SERIAL_PORT_RS422 = 1; // RS-422 serial port.
-        public static final int PU_SERIAL_PORT_RS485 = 2; // RS-485 serial port.
-        public static final int PU_SERIAL_PORT_MAX = 3;
+        int PU_SERIAL_PORT_RS232 = 0; // RS-232 serial port.
+        int PU_SERIAL_PORT_RS422 = 1; // RS-422 serial port.
+        int PU_SERIAL_PORT_RS485 = 2; // RS-485 serial port.
+        int PU_SERIAL_PORT_MAX = 3;
     }
 
     // Serial port parameters.
@@ -12733,8 +12802,8 @@ public interface HWPuSDK extends Library {
     ;
 
     public interface PU_SMTP_MAIL_TYPE {
-        public static final int FOR_TEST = 0;
-        public static final int FOR_EVENT = 1;
+        int FOR_TEST = 0;
+        int FOR_EVENT = 1;
     }
 
     ;
@@ -12757,18 +12826,18 @@ public interface HWPuSDK extends Library {
     ;
 
     public interface PU_SMTP_SECURITY_TYPE {
-        public static final int PU_NO_SECURITY = 0;
-        public static final int PU_USE_TLS = 1;
-        public static final int PU_USE_SSL = 2;
-        public static final int PU_DO_NOT_SET = 3;
+        int PU_NO_SECURITY = 0;
+        int PU_USE_TLS = 1;
+        int PU_USE_SSL = 2;
+        int PU_DO_NOT_SET = 3;
     }
 
     ;
 
     /* Snapshot format. */
     public interface PU_SNAPSHOT_FORMAT {
-        public static final int PU_SNAPSHOT_FORMAT_BMP = 0;
-        public static final int PU_SNAPSHOT_FORMAT_JPEG = 1;
+        int PU_SNAPSHOT_FORMAT_BMP = 0;
+        int PU_SNAPSHOT_FORMAT_JPEG = 1;
     }
 
     ;
@@ -12908,13 +12977,13 @@ public interface HWPuSDK extends Library {
 
     // Snapshot quality.
     public interface PU_SNAPSHOT_QUALITY {
-        public static final int PU_QUAILTY_BEST = 0;
-        public static final int PU_QUAILTY_MORE_BETTER = 1;
-        public static final int PU_QUAILTY_BETTER = 2;
-        public static final int PU_QUAILTY_ORDINARY = 3;
-        public static final int PU_QUAILTY_LOW = 4;
-        public static final int PU_QUAILTY_WORST = 5;
-        public static final int PU_QUAILTY_MAX = 6;
+        int PU_QUAILTY_BEST = 0;
+        int PU_QUAILTY_MORE_BETTER = 1;
+        int PU_QUAILTY_BETTER = 2;
+        int PU_QUAILTY_ORDINARY = 3;
+        int PU_QUAILTY_LOW = 4;
+        int PU_QUAILTY_WORST = 5;
+        int PU_QUAILTY_MAX = 6;
     }
 
     ;
@@ -12999,15 +13068,15 @@ public interface HWPuSDK extends Library {
 
     /* Snapshot type. */
     public interface PU_SNAPSHOT_TYPE {
-        public static final int PU_SNAPSHOT_TYPE_MANUAL = 0; // Manual snapshot.
-        public static final int PU_SNAPSHOT_TYPE_ALARM = 1; // Alarm-triggered snapshot.
-        public static final int PU_SNAPSHOT_TYPE_TIMER = 2; // Scheduled snapshot.
-        public static final int PU_SNAPSHOT_TYPE_MANUAL_EX = 3; //
-        public static final int PU_SNAPSHOT_TYPE_FACEDT = 4; // Face snapshot.
-        public static final int PU_SNAPSHOT_TYPE_ITGT = 5; // Intelligent analysis–triggered snapshot.
-        public static final int PU_SNAPSHOT_TYPE_ITS = 6; // ITS snapshot.
-        public static final int PU_SNAPSHOT_TYPE_VEHICLE = 7; // Vehicle event–triggered snapshot.
-        public static final int PU_SNAPSHOT_TYPE_MAX = 8;
+        int PU_SNAPSHOT_TYPE_MANUAL = 0; // Manual snapshot.
+        int PU_SNAPSHOT_TYPE_ALARM = 1; // Alarm-triggered snapshot.
+        int PU_SNAPSHOT_TYPE_TIMER = 2; // Scheduled snapshot.
+        int PU_SNAPSHOT_TYPE_MANUAL_EX = 3; //
+        int PU_SNAPSHOT_TYPE_FACEDT = 4; // Face snapshot.
+        int PU_SNAPSHOT_TYPE_ITGT = 5; // Intelligent analysis–triggered snapshot.
+        int PU_SNAPSHOT_TYPE_ITS = 6; // ITS snapshot.
+        int PU_SNAPSHOT_TYPE_VEHICLE = 7; // Vehicle event–triggered snapshot.
+        int PU_SNAPSHOT_TYPE_MAX = 8;
     }
 
     ;
@@ -13031,9 +13100,9 @@ public interface HWPuSDK extends Library {
 
     /* SNMP v1/v2c community property. */
     public interface PU_SNMP_COMMUNITY_ATTR {
-        public static final int PU_SNMP_COMMUNITY_READONLY = 0;
-        public static final int PU_SNMP_COMMUNITY_READWRITE = 1;
-        public static final int PU_SNMP_COMMUNITY_MAX = 2;
+        int PU_SNMP_COMMUNITY_READONLY = 0;
+        int PU_SNMP_COMMUNITY_READWRITE = 1;
+        int PU_SNMP_COMMUNITY_MAX = 2;
     }
 
     ;
@@ -13158,38 +13227,38 @@ public interface HWPuSDK extends Library {
 
     /* SNMP version. */
     public interface PU_SNMP_VERSION_TYPE {
-        public static final int PU_SNMP_VERSION_V1 = 0;
-        public static final int PU_SNMP_VERSION_V2C = 1;
-        public static final int PU_SNMP_VERSION_V3 = 2;
-        public static final int PU_SNMP_VERSION_MAX = 3;
+        int PU_SNMP_VERSION_V1 = 0;
+        int PU_SNMP_VERSION_V2C = 1;
+        int PU_SNMP_VERSION_V3 = 2;
+        int PU_SNMP_VERSION_MAX = 3;
     }
 
     ;
 
     /* SNMP v3 password authentication protocol. */
     public interface PU_SNMPV3_AUTH_PROTOCOL {
-        public static final int PU_SNMPV3_AUTH_MD5 = 0;
-        public static final int PU_SNMPV3_AUTH_SHA = 1;
-        public static final int PU_SNMPV3_AUTH_NONE = 2;
-        public static final int PU_SNMPV3_AUTH_MAX = 3;
+        int PU_SNMPV3_AUTH_MD5 = 0;
+        int PU_SNMPV3_AUTH_SHA = 1;
+        int PU_SNMPV3_AUTH_NONE = 2;
+        int PU_SNMPV3_AUTH_MAX = 3;
     }
 
     ;
 
     /* SNMP v3 private key protocol. */
     public interface PU_SNMPV3_PRIV_PROTOCOL {
-        public static final int PU_SNMPV3_PRIV_DES = 0;
-        public static final int PU_SNMPV3_PRIV_AES = 1;
-        public static final int PU_SNMPV3_PRIV_NONE = 2;
-        public static final int PU_SNMPV3_PRIV_MAX = 3;
+        int PU_SNMPV3_PRIV_DES = 0;
+        int PU_SNMPV3_PRIV_AES = 1;
+        int PU_SNMPV3_PRIV_NONE = 2;
+        int PU_SNMPV3_PRIV_MAX = 3;
     }
 
     /* SNMPv3 user security level. */
     public interface PU_SNMPV3_SECURITY_LEVEL {
-        public static final int PU_SNMPV3_SECURITY_NOAUTH = 0; // Unauthorized.
-        public static final int PU_SNMPV3_SECURITY_AUTH = 1; // Authorized.
-        public static final int PU_SNMPV3_SECURITY_PRIV = 2; // Private key encryption and authorization.
-        public static final int PU_SNMPV3_SECURITY_MAX = 3;
+        int PU_SNMPV3_SECURITY_NOAUTH = 0; // Unauthorized.
+        int PU_SNMPV3_SECURITY_AUTH = 1; // Authorized.
+        int PU_SNMPV3_SECURITY_PRIV = 2; // Private key encryption and authorization.
+        int PU_SNMPV3_SECURITY_MAX = 3;
     }
 
     ;
@@ -13355,9 +13424,9 @@ public interface HWPuSDK extends Library {
 
     // Stop bit.
     public interface PU_STOP_BIT {
-        public static final int PU_STOP_BIT_OFF = 0;
-        public static final int PU_STOP_BIT_ON = 1;
-        public static final int PU_STOP_BIT_MAX = 2;
+        int PU_STOP_BIT_OFF = 0;
+        int PU_STOP_BIT_ON = 1;
+        int PU_STOP_BIT_MAX = 2;
     }
 
     ;
@@ -13459,37 +13528,37 @@ public interface HWPuSDK extends Library {
 
     /* Stream profile operations. */
     public interface PU_STREAM_MANIPULATE_TYPE {
-        public static final int PU_STREAM_MANIPULATE_ADD = 0; // Add.
-        public static final int PU_STREAM_MANIPULATE_DELETE = 1; // Delete.
-        public static final int PU_STREAM_MANIPULATE_MODIFY = 2; // Modify.
-        public static final int PU_STREAM_MANIPULATE_MAX = 3;
+        int PU_STREAM_MANIPULATE_ADD = 0; // Add.
+        int PU_STREAM_MANIPULATE_DELETE = 1; // Delete.
+        int PU_STREAM_MANIPULATE_MODIFY = 2; // Modify.
+        int PU_STREAM_MANIPULATE_MAX = 3;
     }
 
     // Video stream mode.
     public interface PU_STREAM_MODE_E {
-        public static final int PU_VIEDO_STREAM_NONE = 0; // No stream profile is configured.
-        public static final int PU_VIEDO_STREAM_SINGLE = 1; // Single video stream.
-        public static final int PU_VIEDO_STREAM_DOUBLE = 2; // Dual video streams.
-        public static final int PU_VIEDO_STREAM_TRIPLE = 3; // Triple video streams.
-        public static final int PU_VIEDO_STREAM_FOUR = 4; // Four video streams.
-        public static final int PU_VIEDO_STREAM_FIVE = 5; // Five video streams.
-        public static final int PU_VIEDO_STREAM_MAX = 6;
+        int PU_VIEDO_STREAM_NONE = 0; // No stream profile is configured.
+        int PU_VIEDO_STREAM_SINGLE = 1; // Single video stream.
+        int PU_VIEDO_STREAM_DOUBLE = 2; // Dual video streams.
+        int PU_VIEDO_STREAM_TRIPLE = 3; // Triple video streams.
+        int PU_VIEDO_STREAM_FOUR = 4; // Four video streams.
+        int PU_VIEDO_STREAM_FIVE = 5; // Five video streams.
+        int PU_VIEDO_STREAM_MAX = 6;
     }
 
     ;
 
     /* Stream profile. */
     public interface PU_STREAM_PROFILE_MODE {
-        public static final int PU_STREAM_PROFILE_DEFAULT = 0; /* Default. */
-        public static final int PU_STREAM_PROFILE_HIGH_QUALITY = 1; /* HD. */
-        public static final int PU_STREAM_PROFILE_BALANCED = 2; /* Smooth bandwidth. */
-        public static final int PU_STREAM_PROFILE_LOW_BANDWIDTH = 3; /* Low bandwidth. */
-        public static final int PU_STREAM_PROFILE_MOBILE_DEVICE = 4; /* Mobile device. */
-        public static final int PU_STREAM_PROFILE_USER_1 = 5; /* User-defined scene 1. */
-        public static final int PU_STREAM_PROFILE_USER_2 = 6; /* User-defined scene 2. */
-        public static final int PU_STREAM_PROFILE_USER_3 = 7; /* User-defined scene 3. */
-        public static final int PU_STREAM_PROFILE_USER_4 = 8; /* User-defined scene 4. */
-        public static final int PU_STREAM_PROFILE_MAX = 9;
+        int PU_STREAM_PROFILE_DEFAULT = 0; /* Default. */
+        int PU_STREAM_PROFILE_HIGH_QUALITY = 1; /* HD. */
+        int PU_STREAM_PROFILE_BALANCED = 2; /* Smooth bandwidth. */
+        int PU_STREAM_PROFILE_LOW_BANDWIDTH = 3; /* Low bandwidth. */
+        int PU_STREAM_PROFILE_MOBILE_DEVICE = 4; /* Mobile device. */
+        int PU_STREAM_PROFILE_USER_1 = 5; /* User-defined scene 1. */
+        int PU_STREAM_PROFILE_USER_2 = 6; /* User-defined scene 2. */
+        int PU_STREAM_PROFILE_USER_3 = 7; /* User-defined scene 3. */
+        int PU_STREAM_PROFILE_USER_4 = 8; /* User-defined scene 4. */
+        int PU_STREAM_PROFILE_MAX = 9;
     }
 
     /* Stream profile parameters. */
@@ -13545,13 +13614,13 @@ public interface HWPuSDK extends Library {
 
     // Video stream type. PU_VIDEO_TYPE
     public interface PU_STREAM_TYPE_E {
-        public static final int PU_VIDEO_MAIN_STREAM = 0; // Primary stream.
-        public static final int PU_VIDEO_SUB_STREAM1 = 1; // Secondary stream 1.
-        public static final int PU_VIDEO_SUB_STREAM2 = 2; // Secondary stream 2.
-        public static final int PU_VIDEO_SUB_STREAM3 = 3; // Secondary stream 3.
-        public static final int PU_VIDEO_SUB_STREAM4 = 4; // Secondary stream 4.
-        public static final int PU_VIDEO_SUB_STREAM5 = 5; //
-        public static final int PU_VIDEO_STREAM_MAX = 6;
+        int PU_VIDEO_MAIN_STREAM = 0; // Primary stream.
+        int PU_VIDEO_SUB_STREAM1 = 1; // Secondary stream 1.
+        int PU_VIDEO_SUB_STREAM2 = 2; // Secondary stream 2.
+        int PU_VIDEO_SUB_STREAM3 = 3; // Secondary stream 3.
+        int PU_VIDEO_SUB_STREAM4 = 4; // Secondary stream 4.
+        int PU_VIDEO_SUB_STREAM5 = 5; //
+        int PU_VIDEO_STREAM_MAX = 6;
     }
 
     // Stream profile information.
@@ -13660,10 +13729,10 @@ public interface HWPuSDK extends Library {
 
     // Illuminator control mode.
     public interface PU_SUPPLEMENT_LIGHT_LAMP_CTRL_MODE {
-        public static final int PU_CONTROL_DISABLE_MODE = 0;
-        public static final int PU_CONTROL_AUTO_MODE = 1;
-        public static final int PU_CONTROL_TIME_MODE = 2;
-        public static final int PU_CONTROL_MODE_MAX = 3;
+        int PU_CONTROL_DISABLE_MODE = 0;
+        int PU_CONTROL_AUTO_MODE = 1;
+        int PU_CONTROL_TIME_MODE = 2;
+        int PU_CONTROL_MODE_MAX = 3;
     }
 
     // Illuminators for license plates (alert deployment time structure).
@@ -13708,14 +13777,14 @@ public interface HWPuSDK extends Library {
 
     // Illuminator I/O mode.
     public interface PU_SUPPLEMENT_LIGHT_LAMP_IO_MODE {
-        public static final int PU_IO_CONTINUE_MODE = 0;
-        public static final int PU_IO_MODE_MAX = 1;
+        int PU_IO_CONTINUE_MODE = 0;
+        int PU_IO_MODE_MAX = 1;
     }
 
     public interface PU_SUPPLEMENTLAMP_TYPE {
-        public static final int PU_TYPE_LAMP_WHITE = 0; // White-light illuminator.
-        public static final int PU_TYPE_LAMP_RED = 1; // Infrared illuminator.
-        public static final int PU_TYPE_LAMP_MAX = 2;
+        int PU_TYPE_LAMP_WHITE = 0; // White-light illuminator.
+        int PU_TYPE_LAMP_RED = 1; // Infrared illuminator.
+        int PU_TYPE_LAMP_MAX = 2;
     }
 
     /************************
@@ -13801,10 +13870,10 @@ public interface HWPuSDK extends Library {
     }
 
     public interface PU_TABLE_TYPE {
-        public static final int PU_TABLE_DAY = 0; // Daily report.
-        public static final int PU_TABLE_WEEK = 1; // Weekly report.
-        public static final int PU_TABLE_MONTH = 2; // Monthly report.
-        public static final int PU_TABLE_YEAR = 3; // Annual report.
+        int PU_TABLE_DAY = 0; // Daily report.
+        int PU_TABLE_WEEK = 1; // Weekly report.
+        int PU_TABLE_MONTH = 2; // Monthly report.
+        int PU_TABLE_YEAR = 3; // Annual report.
     }
 
     // TCP acceleration parameters.
@@ -14789,43 +14858,43 @@ public interface HWPuSDK extends Library {
 
     // Tripwire crossing direction.
     public interface PU_TRIPWIRE_DIR {
-        public static final int PU_TRIPWIRE_CLOCKWISE = 0; // Clockwise tripwire crossing.
-        public static final int PU_TRIPWIRE_ANTICLOCKWISE = 1; // Counterclockwise tripwire crossing.
-        public static final int PU_TRIPWIRE_MAX = 2;
+        int PU_TRIPWIRE_CLOCKWISE = 0; // Clockwise tripwire crossing.
+        int PU_TRIPWIRE_ANTICLOCKWISE = 1; // Counterclockwise tripwire crossing.
+        int PU_TRIPWIRE_MAX = 2;
     }
 
     // Traffic shaping coefficient. c type:PU_TS_COEFFICIENT
     public interface PU_TS_COEFFICIENT {
-        public static final int PU_TS_COEFFICIENT_11 = 11;
-        public static final int PU_TS_COEFFICIENT_12 = 12;
-        public static final int PU_TS_COEFFICIENT_13 = 13;
-        public static final int PU_TS_COEFFICIENT_14 = 14;
-        public static final int PU_TS_COEFFICIENT_15 = 15;
-        public static final int PU_TS_COEFFICIENT_16 = 16;
-        public static final int PU_TS_COEFFICIENT_17 = 17;
-        public static final int PU_TS_COEFFICIENT_18 = 18;
-        public static final int PU_TS_COEFFICIENT_19 = 19;
-        public static final int PU_TS_COEFFICIENT_20 = 20;
-        public static final int PU_TS_COEFFICIENT_21 = 21;
-        public static final int PU_TS_COEFFICIENT_22 = 22;
-        public static final int PU_TS_COEFFICIENT_23 = 23;
-        public static final int PU_TS_COEFFICIENT_24 = 24;
-        public static final int PU_TS_COEFFICIENT_25 = 25;
-        public static final int PU_TS_COEFFICIENT_26 = 26;
-        public static final int PU_TS_COEFFICIENT_27 = 27;
-        public static final int PU_TS_COEFFICIENT_28 = 28;
-        public static final int PU_TS_COEFFICIENT_29 = 29;
-        public static final int PU_TS_COEFFICIENT_30 = 30;
-        public static final int PU_TS_COEFFICIENT_31 = 31;
-        public static final int PU_TS_COEFFICIENT_32 = 32;
-        public static final int PU_TS_COEFFICIENT_33 = 33;
-        public static final int PU_TS_COEFFICIENT_34 = 34;
-        public static final int PU_TS_COEFFICIENT_35 = 35;
-        public static final int PU_TS_COEFFICIENT_36 = 36;
-        public static final int PU_TS_COEFFICIENT_37 = 37;
-        public static final int PU_TS_COEFFICIENT_38 = 38;
-        public static final int PU_TS_COEFFICIENT_39 = 39;
-        public static final int PU_TS_COEFFICIENT_40 = 40;
+        int PU_TS_COEFFICIENT_11 = 11;
+        int PU_TS_COEFFICIENT_12 = 12;
+        int PU_TS_COEFFICIENT_13 = 13;
+        int PU_TS_COEFFICIENT_14 = 14;
+        int PU_TS_COEFFICIENT_15 = 15;
+        int PU_TS_COEFFICIENT_16 = 16;
+        int PU_TS_COEFFICIENT_17 = 17;
+        int PU_TS_COEFFICIENT_18 = 18;
+        int PU_TS_COEFFICIENT_19 = 19;
+        int PU_TS_COEFFICIENT_20 = 20;
+        int PU_TS_COEFFICIENT_21 = 21;
+        int PU_TS_COEFFICIENT_22 = 22;
+        int PU_TS_COEFFICIENT_23 = 23;
+        int PU_TS_COEFFICIENT_24 = 24;
+        int PU_TS_COEFFICIENT_25 = 25;
+        int PU_TS_COEFFICIENT_26 = 26;
+        int PU_TS_COEFFICIENT_27 = 27;
+        int PU_TS_COEFFICIENT_28 = 28;
+        int PU_TS_COEFFICIENT_29 = 29;
+        int PU_TS_COEFFICIENT_30 = 30;
+        int PU_TS_COEFFICIENT_31 = 31;
+        int PU_TS_COEFFICIENT_32 = 32;
+        int PU_TS_COEFFICIENT_33 = 33;
+        int PU_TS_COEFFICIENT_34 = 34;
+        int PU_TS_COEFFICIENT_35 = 35;
+        int PU_TS_COEFFICIENT_36 = 36;
+        int PU_TS_COEFFICIENT_37 = 37;
+        int PU_TS_COEFFICIENT_38 = 38;
+        int PU_TS_COEFFICIENT_39 = 39;
+        int PU_TS_COEFFICIENT_40 = 40;
     }
 
     /*------------ Tripwire crossing detection parameter structure ------------*/
@@ -14943,24 +15012,24 @@ public interface HWPuSDK extends Library {
 
     /* Typical scene. */
     public interface PU_TYPICAL_SCENE_MODE {
-        public static final int PU_TYPICAL_SCENE_DEFAULT = 0;/* Default scene. */
-        public static final int PU_TYPICAL_SCENE_OUT_DOOR = 1; /* Outdoor. */
-        public static final int PU_TYPICAL_SCENE_IN_DOOR = 2; /* Indoor. */
-        public static final int PU_TYPICAL_SCENE_LOW_LIGHT = 3; /* Dimly lit. */
-        public static final int PU_TYPICAL_SCENE_MOVE = 4; /* Motion scene. */
-        public static final int PU_TYPICAL_SCENE_BACKLIGHT = 5; /* Backlit scene. */
-        public static final int PU_TYPICAL_SCENE_USER_1 = 6; /* User-defined scene 1. */
-        public static final int PU_TYPICAL_SCENE_USER_2 = 7; /* User-defined scene 2. */
-        public static final int PU_TYPICAL_SCENE_USER_3 = 8; /* User-defined scene 3. */
-        public static final int PU_TYPICAL_SCENE_USER_4 = 9; /* User-defined scene 4. */
-        public static final int PU_TYPICAL_SCENE_USER_5 = 10; /* User-defined scene 5. */
-        public static final int PU_TYPICAL_SCENE_USER_6 = 11; /* User-defined scene 6. */
-        public static final int PU_TYPICAL_SCENE_USER_7 = 12; /* User-defined scene 7. */
-        public static final int PU_TYPICAL_SCENE_USER_8 = 13; /* User-defined scene 8. */
-        public static final int PU_TYPICAL_SCENE_FOGGY = 14; /* Overcast scene. */
-        public static final int PU_TYPICAL_SCENE_FACE = 15; /* Face scene. */
-        public static final int PU_TYPICAL_SCENE_NONE = 128; /* No scene is specified. */
-        public static final int PU_TYPICAL_SCENE_MAX = 129;
+        int PU_TYPICAL_SCENE_DEFAULT = 0;/* Default scene. */
+        int PU_TYPICAL_SCENE_OUT_DOOR = 1; /* Outdoor. */
+        int PU_TYPICAL_SCENE_IN_DOOR = 2; /* Indoor. */
+        int PU_TYPICAL_SCENE_LOW_LIGHT = 3; /* Dimly lit. */
+        int PU_TYPICAL_SCENE_MOVE = 4; /* Motion scene. */
+        int PU_TYPICAL_SCENE_BACKLIGHT = 5; /* Backlit scene. */
+        int PU_TYPICAL_SCENE_USER_1 = 6; /* User-defined scene 1. */
+        int PU_TYPICAL_SCENE_USER_2 = 7; /* User-defined scene 2. */
+        int PU_TYPICAL_SCENE_USER_3 = 8; /* User-defined scene 3. */
+        int PU_TYPICAL_SCENE_USER_4 = 9; /* User-defined scene 4. */
+        int PU_TYPICAL_SCENE_USER_5 = 10; /* User-defined scene 5. */
+        int PU_TYPICAL_SCENE_USER_6 = 11; /* User-defined scene 6. */
+        int PU_TYPICAL_SCENE_USER_7 = 12; /* User-defined scene 7. */
+        int PU_TYPICAL_SCENE_USER_8 = 13; /* User-defined scene 8. */
+        int PU_TYPICAL_SCENE_FOGGY = 14; /* Overcast scene. */
+        int PU_TYPICAL_SCENE_FACE = 15; /* Face scene. */
+        int PU_TYPICAL_SCENE_NONE = 128; /* No scene is specified. */
+        int PU_TYPICAL_SCENE_MAX = 129;
     }
 
     public static class PU_UPGRADE_ITGT_FILE_INFO extends Structure {
@@ -15073,10 +15142,10 @@ public interface HWPuSDK extends Library {
 
     // User type.
     public interface PU_USER_TYPE {
-        public static final int PU_USER_TYPE_SYSTEM_ADMIN = 0; // Administrator.
-        public static final int PU_USER_TYPE_ADVANCED_OPERATOR = 1; // Advanced operator.
-        public static final int PU_USER_TYPE_COMMON_OPERATOR = 2; // Common operator.
-        public static final int PU_USER_TYPE_MAX = 3;
+        int PU_USER_TYPE_SYSTEM_ADMIN = 0; // Administrator.
+        int PU_USER_TYPE_ADVANCED_OPERATOR = 1; // Advanced operator.
+        int PU_USER_TYPE_COMMON_OPERATOR = 2; // Common operator.
+        int PU_USER_TYPE_MAX = 3;
     }
 
     public static class PU_UserData extends Structure {
@@ -15280,21 +15349,21 @@ public interface HWPuSDK extends Library {
 
     // Vehicle color.
     public interface PU_VEHICLE_COLOR {
-        public static final int PU_LPR_VC_NOT = 0; // Unknown.
-        public static final int PU_LPR_VC_WHITE = 1; // White.
-        public static final int PU_LPR_VC_GRAY = 2; // Gray (silver).
-        public static final int PU_LPR_VC_YELLOW = 3; // Yellow.
-        public static final int PU_LPR_VC_PINK = 4; // Pink.
-        public static final int PU_LPR_VC_RED = 5; // Red.
-        public static final int PU_LPR_VC_GREEN = 6; // Green.
-        public static final int PU_LPR_VC_BLUE = 7; // Blue.
-        public static final int PU_LPR_VC_BROWN = 8; // Brown.
-        public static final int PU_LPR_VC_BLACK = 9; // Black.
-        public static final int PU_LPR_VC_PURPLE = 10; // Purple.
-        public static final int PU_LPR_VC_ORANGE = 11; // Orange.
-        public static final int PU_LPR_VC_CYAN = 12; // Cyan.
-        public static final int PU_LPR_VC_GOLDEN = 13; // Golden.
-        public static final int PU_LPR_VC_SILVER = 14; // Silver.
+        int PU_LPR_VC_NOT = 0; // Unknown.
+        int PU_LPR_VC_WHITE = 1; // White.
+        int PU_LPR_VC_GRAY = 2; // Gray (silver).
+        int PU_LPR_VC_YELLOW = 3; // Yellow.
+        int PU_LPR_VC_PINK = 4; // Pink.
+        int PU_LPR_VC_RED = 5; // Red.
+        int PU_LPR_VC_GREEN = 6; // Green.
+        int PU_LPR_VC_BLUE = 7; // Blue.
+        int PU_LPR_VC_BROWN = 8; // Brown.
+        int PU_LPR_VC_BLACK = 9; // Black.
+        int PU_LPR_VC_PURPLE = 10; // Purple.
+        int PU_LPR_VC_ORANGE = 11; // Orange.
+        int PU_LPR_VC_CYAN = 12; // Cyan.
+        int PU_LPR_VC_GOLDEN = 13; // Golden.
+        int PU_LPR_VC_SILVER = 14; // Silver.
     }
 
     // Vehicle detector information.
@@ -15321,9 +15390,9 @@ public interface HWPuSDK extends Library {
 
     // Vehicle direction.
     public interface PU_VEHICLE_DIR {
-        public static final int PU_VLPR_VD_HEAD = 0; // Vehicle front.
-        public static final int PU_VLPR_VD_TAIL = 1; // Vehicle rear.
-        public static final int PU_VLPR_VD_HEAD_AND_TAIL = 2; // Bidirectional.
+        int PU_VLPR_VD_HEAD = 0; // Vehicle front.
+        int PU_VLPR_VD_TAIL = 1; // Vehicle rear.
+        int PU_VLPR_VD_HEAD_AND_TAIL = 2; // Bidirectional.
     }
 
     public static class PU_VEHICLE_INFO_S extends Structure {
@@ -15341,35 +15410,35 @@ public interface HWPuSDK extends Library {
 
     // Vehicle type.
     public interface PU_VEHICLE_TYPE {
-        public static final int PU_LPR_VT_PEDESTRAIN = 9; // Pedestrian.
-        public static final int PU_LPR_VT_SCHOOL_BUS = 10; // School bus.
-        public static final int PU_LPR_VT_HEAVY_TRUCK = 11; // Dump truck.
-        public static final int PU_LPR_VT_TANKER = 12; // High-risk vehicle.
-        public static final int PU_LPR_VT_RIDEMAN = 13; // Rider.
+        int PU_LPR_VT_PEDESTRAIN = 9; // Pedestrian.
+        int PU_LPR_VT_SCHOOL_BUS = 10; // School bus.
+        int PU_LPR_VT_HEAVY_TRUCK = 11; // Dump truck.
+        int PU_LPR_VT_TANKER = 12; // High-risk vehicle.
+        int PU_LPR_VT_RIDEMAN = 13; // Rider.
         // =================The preceding types are supported by old versions.
-        public static final int PU_VLPR_VT_CAR_M = 14; // Mini car.
-        public static final int PU_VLPR_VT_CAR_L = 15; // Small car.
-        public static final int PU_VLPR_VT_CAR_S = 16; // Compact car.
-        public static final int PU_VLPR_VT_CAR_TWO = 17; // Two-box car.
-        public static final int PU_VLPR_VT_CAR_THR = 18; // Three-box car.
-        public static final int PU_VLPR_VT_SUV_QINGKE = 19; // Light bus.
-        public static final int PU_VLPR_VT_SUV_L = 20; // Small SUV.
-        public static final int PU_VLPR_VT_SUV_S = 21; // Compact SUV.
-        public static final int PU_VLPR_VT_SUV_Z = 22; // Medium SUV.
-        public static final int PU_VLPR_VT_SUV_M = 23; // Medium and large SUV.
-        public static final int PU_VLPR_VT_SUV_B = 24; // Large SUV.
-        public static final int PU_VLPR_VT_WEIMIAN = 25; // Mini van.
-        public static final int PU_VLPR_VT_MPV = 26; // MPV
-        public static final int PU_VLPR_VT_JP = 27; // Coupe.
-        public static final int PU_VLPR_VT_WEIKA = 28; // Mini truck.
-        public static final int PU_VLPR_VT_SUV_PIKA = 29; // Pickup truck.
-        public static final int PU_VLPR_VT_TRUCK_Z = 30; // Medium truck.
-        public static final int PU_VLPR_VT_TRUCK_KEI = 31; // Light truck.
-        public static final int PU_VLPR_VT_ZHONGKA = 32; // Heavy truck.
-        public static final int PU_VLPR_VT_TAXI = 33; // Taxi.
-        public static final int PU_VLPR_VT_TANK = 34; // Tank truck.
-        public static final int PU_VLPR_VT_CRANE = 35; // Mobile crane.
-        public static final int PU_LPR_VT_ALL = 512; // All.
+        int PU_VLPR_VT_CAR_M = 14; // Mini car.
+        int PU_VLPR_VT_CAR_L = 15; // Small car.
+        int PU_VLPR_VT_CAR_S = 16; // Compact car.
+        int PU_VLPR_VT_CAR_TWO = 17; // Two-box car.
+        int PU_VLPR_VT_CAR_THR = 18; // Three-box car.
+        int PU_VLPR_VT_SUV_QINGKE = 19; // Light bus.
+        int PU_VLPR_VT_SUV_L = 20; // Small SUV.
+        int PU_VLPR_VT_SUV_S = 21; // Compact SUV.
+        int PU_VLPR_VT_SUV_Z = 22; // Medium SUV.
+        int PU_VLPR_VT_SUV_M = 23; // Medium and large SUV.
+        int PU_VLPR_VT_SUV_B = 24; // Large SUV.
+        int PU_VLPR_VT_WEIMIAN = 25; // Mini van.
+        int PU_VLPR_VT_MPV = 26; // MPV
+        int PU_VLPR_VT_JP = 27; // Coupe.
+        int PU_VLPR_VT_WEIKA = 28; // Mini truck.
+        int PU_VLPR_VT_SUV_PIKA = 29; // Pickup truck.
+        int PU_VLPR_VT_TRUCK_Z = 30; // Medium truck.
+        int PU_VLPR_VT_TRUCK_KEI = 31; // Light truck.
+        int PU_VLPR_VT_ZHONGKA = 32; // Heavy truck.
+        int PU_VLPR_VT_TAXI = 33; // Taxi.
+        int PU_VLPR_VT_TANK = 34; // Tank truck.
+        int PU_VLPR_VT_CRANE = 35; // Mobile crane.
+        int PU_LPR_VT_ALL = 512; // All.
     }
 
     // Vertical limit.
@@ -15470,13 +15539,13 @@ public interface HWPuSDK extends Library {
 
     /* Metering mode. */
     public interface PU_VIDEO_AEMETERING_MODE {
-        public static final int PU_VIDEO_AEMETERING_CENTER = 0; // Center-weighted average metering (not supported).
-        public static final int PU_VIDEO_AEMETERING_SPOT = 1; // Spot metering (not supported).
-        public static final int PU_VIDEO_AEMETERING_AVERAGE = 2; // Average metering.
-        public static final int PU_VIDEO_AEMETERING_BACKLIGHT = 3; // Backlight metering (not supported).
-        public static final int PU_VIDEO_AEMETERING_CLOSE = 4; // Disabled (not supported).
-        public static final int PU_VIDEO_AEMETERING_USER = 5; // User-defined.
-        public static final int PU_VIDEO_AEMETERING_MAX = 6;
+        int PU_VIDEO_AEMETERING_CENTER = 0; // Center-weighted average metering (not supported).
+        int PU_VIDEO_AEMETERING_SPOT = 1; // Spot metering (not supported).
+        int PU_VIDEO_AEMETERING_AVERAGE = 2; // Average metering.
+        int PU_VIDEO_AEMETERING_BACKLIGHT = 3; // Backlight metering (not supported).
+        int PU_VIDEO_AEMETERING_CLOSE = 4; // Disabled (not supported).
+        int PU_VIDEO_AEMETERING_USER = 5; // User-defined.
+        int PU_VIDEO_AEMETERING_MAX = 6;
     }
 
     /******************************************************************************
@@ -15498,10 +15567,10 @@ public interface HWPuSDK extends Library {
 
     // Log level.
     public interface PU_VIDEO_ALG_LOG_LEVEL {
-        public static final int PU_VIDEO_ALG_LOG_ERROR = 0; // Log generated when an error occurs.
-        public static final int PU_VIDEO_ALG_LOG_WARNING = 1; // Log generated when an alarm occurs.
-        public static final int PU_VIDEO_ALG_LOG_INFO = 2; // Auxiliary information.
-        public static final int PU_VIDEO_ALG_LOG_DEBUG = 3; // Debug information, which provides reference for R&D
+        int PU_VIDEO_ALG_LOG_ERROR = 0; // Log generated when an error occurs.
+        int PU_VIDEO_ALG_LOG_WARNING = 1; // Log generated when an alarm occurs.
+        int PU_VIDEO_ALG_LOG_INFO = 2; // Auxiliary information.
+        int PU_VIDEO_ALG_LOG_DEBUG = 3; // Debug information, which provides reference for R&D
         // personnel to perform debugging.
     }
 
@@ -15553,28 +15622,28 @@ public interface HWPuSDK extends Library {
 
     /* Day/Night mode. */
     public interface PU_VIDEO_BLACKWHITE_MODE {
-        public static final int PU_VIDEO_MODE_AUTO = 0; // Auto mode.
-        public static final int PU_VIDEO_MODE_COLOR = 1; // Color mode.
-        public static final int PU_VIDEO_MODE_GRAY = 2; // B/W mode.
-        public static final int PU_VIDEO_MODE_NEGART = 3;
+        int PU_VIDEO_MODE_AUTO = 0; // Auto mode.
+        int PU_VIDEO_MODE_COLOR = 1; // Color mode.
+        int PU_VIDEO_MODE_GRAY = 2; // B/W mode.
+        int PU_VIDEO_MODE_NEGART = 3;
     }
 
     // Video stream transmission type.
     public interface PU_VIDEO_CODE_TYPE {
-        public static final int PU_VIDEO_CODE_TYPE_ES = 0; // Elementary stream (ES).
-        public static final int PU_VIDEO_CODE_TYPE_PS = 1; // Program stream (PS).
-        public static final int PU_VIDEO_CODE_TYPE_TS = 2; // Transport stream (TS).
-        public static final int PU_VIDEO_CODE_TYPE_MAX = 3;
+        int PU_VIDEO_CODE_TYPE_ES = 0; // Elementary stream (ES).
+        int PU_VIDEO_CODE_TYPE_PS = 1; // Program stream (PS).
+        int PU_VIDEO_CODE_TYPE_TS = 2; // Transport stream (TS).
+        int PU_VIDEO_CODE_TYPE_MAX = 3;
     }
 
     ;
 
     /* Video day/night mode. */
     public interface PU_VIDEO_DAYNIGHT_MODE {
-        public static final int PU_VIDEO_DAYNIGHT_MODE_AUTO = 0; // Auto mode.
-        public static final int PU_VIDEO_DAYNIGHT_MODE_COLOR = 1; // Color mode.
-        public static final int PU_VIDEO_DAYNIGHT_MODE_GRAY = 2; // B/W mode.
-        public static final int PU_VIDEO_DAYNIGHT_MODE_MAX = 3;
+        int PU_VIDEO_DAYNIGHT_MODE_AUTO = 0; // Auto mode.
+        int PU_VIDEO_DAYNIGHT_MODE_COLOR = 1; // Color mode.
+        int PU_VIDEO_DAYNIGHT_MODE_GRAY = 2; // B/W mode.
+        int PU_VIDEO_DAYNIGHT_MODE_MAX = 3;
     }
 
     // Video display effect structure.
@@ -15659,26 +15728,26 @@ public interface HWPuSDK extends Library {
 
     /* Background frequency. */
     public interface PU_VIDEO_FLICKER_MODE {
-        public static final int PU_VIDEO_FLICKER_NONE = 0; // Disabled.
-        public static final int PU_VIDEO_FLICKER_50HZ = 1; // 50HZ
-        public static final int PU_IDEO_FLICKER_60HZ = 2; // 60HZ
-        public static final int PU_VIDEO_FLICKER_MAX = 3;
+        int PU_VIDEO_FLICKER_NONE = 0; // Disabled.
+        int PU_VIDEO_FLICKER_50HZ = 1; // 50HZ
+        int PU_IDEO_FLICKER_60HZ = 2; // 60HZ
+        int PU_VIDEO_FLICKER_MAX = 3;
     }
 
     // Video standard.
     public interface PU_VIDEO_FORMAT {
-        public static final int PU_VIDEO_FORMAT_PAL = 0; // PAL standard.
-        public static final int PU_VIDEO_FORMAT_NTSC = 1; // NTSC standard.
-        public static final int PU_VIDEO_FORMAT_MAX = 2;
+        int PU_VIDEO_FORMAT_PAL = 0; // PAL standard.
+        int PU_VIDEO_FORMAT_NTSC = 1; // NTSC standard.
+        int PU_VIDEO_FORMAT_MAX = 2;
     }
 
     /* Image mirroring and flip mode. */
     public interface PU_VIDEO_MIRROR_MODE {
-        public static final int PU_VIDEO_MIRROR_MODE_NORMAL = 0; // Normal.
-        public static final int PU_VIDEO_MIRROR_MODE_MIRROR = 1; // Left and right mirroring.
-        public static final int PU_VIDEO_MIRROR_MODE_FLIP = 2; // Up and down mirroring.
-        public static final int PU_VIDEO_MIRROR_MODE_BOTH = 3; // Up/down and left/right mirroring.
-        public static final int PU_VIDEO_MIRROR_MODE_MAX = 4;
+        int PU_VIDEO_MIRROR_MODE_NORMAL = 0; // Normal.
+        int PU_VIDEO_MIRROR_MODE_MIRROR = 1; // Left and right mirroring.
+        int PU_VIDEO_MIRROR_MODE_FLIP = 2; // Up and down mirroring.
+        int PU_VIDEO_MIRROR_MODE_BOTH = 3; // Up/down and left/right mirroring.
+        int PU_VIDEO_MIRROR_MODE_MAX = 4;
     }
 
     // Video stream information.
@@ -15723,31 +15792,31 @@ public interface HWPuSDK extends Library {
 
     // Stream type. PU_STREAM_TYPE
     public interface PU_VIDEO_TYPE_E {
-        public static final int PU_VIDEO_TYPE_VIDEO = 0; // Video stream.
-        public static final int PU_VIDEO_TYPE_AUDIO = 1; // Audio stream.
-        public static final int PU_VIDEO_TYPE_MUX = 2; // Hybrid stream.
-        public static final int PU_VIDEO_TYPE_RECORD = 3; // Recording.
-        public static final int PU_VIDEO_TYPE_META = 4; // Metadata.
-        public static final int PU_VIDEO_TYPE_VIDEO_META = 5; // Video+metadata stream.
-        public static final int PU_VIDEO_TYPE_MAX = 6;
+        int PU_VIDEO_TYPE_VIDEO = 0; // Video stream.
+        int PU_VIDEO_TYPE_AUDIO = 1; // Audio stream.
+        int PU_VIDEO_TYPE_MUX = 2; // Hybrid stream.
+        int PU_VIDEO_TYPE_RECORD = 3; // Recording.
+        int PU_VIDEO_TYPE_META = 4; // Metadata.
+        int PU_VIDEO_TYPE_VIDEO_META = 5; // Video+metadata stream.
+        int PU_VIDEO_TYPE_MAX = 6;
     }
 
     /* WDR mode. */
     public interface PU_VIDEO_WD_MODE {
-        public static final int PU_WD_MODE_AUTO_WDR = 0; // Normal WDR.
-        public static final int PU_WD_MODE_AUTO_ADWDR = 1; // Brighten the dark area; increase the WDR by 10 dB.
-        public static final int PU_WD_MODE_AUTO_CNT = 2; // Used in image processing.
-        public static final int PU_WD_MODE_AUTO_WDR_CNT = 3; // Increase the WDR level through offset comparison.
-        public static final int PU_WD_MODE_AUTO_ADWDR_CNT = 4; // Increase 10 dB based on the offset comparison.
-        public static final int PU_WD_MODE_RATIOFIX = 5; // The short exposure shutter speed is fixed. Set the ratio to
+        int PU_WD_MODE_AUTO_WDR = 0; // Normal WDR.
+        int PU_WD_MODE_AUTO_ADWDR = 1; // Brighten the dark area; increase the WDR by 10 dB.
+        int PU_WD_MODE_AUTO_CNT = 2; // Used in image processing.
+        int PU_WD_MODE_AUTO_WDR_CNT = 3; // Increase the WDR level through offset comparison.
+        int PU_WD_MODE_AUTO_ADWDR_CNT = 4; // Increase 10 dB based on the offset comparison.
+        int PU_WD_MODE_RATIOFIX = 5; // The short exposure shutter speed is fixed. Set the ratio to
         // determine the long exposure.
-        public static final int PU_WD_MODE_HISTOGRAM = 6; // Use the histogram to correct the over-bright and over-dark
+        int PU_WD_MODE_HISTOGRAM = 6; // Use the histogram to correct the over-bright and over-dark
         // areas.
-        public static final int PU_WD_MODE_OFF_MODE = 7; // Dedicated to the TI chip; disabled.
-        public static final int PU_WD_MODE_FRAMESWITCH = 8; // Dedicated to the TI chip; frame switching.
-        public static final int PU_WD_MODE_STATIC_CHECK = 9; // Dedicated to the TI chip; static mode.
-        public static final int PU_WD_MODE_DYNAMIC_CHECK = 10; // Dedicated to the TI chip; dynamic mode.
-        public static final int PU_WD_MODE_MAX = 11; // Fluorescent lamp 1 (2500-3500 K).
+        int PU_WD_MODE_OFF_MODE = 7; // Dedicated to the TI chip; disabled.
+        int PU_WD_MODE_FRAMESWITCH = 8; // Dedicated to the TI chip; frame switching.
+        int PU_WD_MODE_STATIC_CHECK = 9; // Dedicated to the TI chip; static mode.
+        int PU_WD_MODE_DYNAMIC_CHECK = 10; // Dedicated to the TI chip; dynamic mode.
+        int PU_WD_MODE_MAX = 11; // Fluorescent lamp 1 (2500-3500 K).
     }
 
     public static class PU_VIDEODIAGNOSIS_ENABLE_PARAM extends Structure {
@@ -15793,15 +15862,15 @@ public interface HWPuSDK extends Library {
 
     // License plate snapshot algorithm type.
     public interface PU_VLPR_ALG_MODE {
-        public static final int PU_VLPR_ALG_CHINESE = 0; // Chinese license plate.
-        public static final int PU_VLPR_ALG_EURO = 1; // European license plate.
-        public static final int PU_VLPR_ALG_INA = 2; // Indonesian license plate.
-        public static final int PU_VLPR_ALG_MAX = 3;
+        int PU_VLPR_ALG_CHINESE = 0; // Chinese license plate.
+        int PU_VLPR_ALG_EURO = 1; // European license plate.
+        int PU_VLPR_ALG_INA = 2; // Indonesian license plate.
+        int PU_VLPR_ALG_MAX = 3;
     }
 
     public interface PU_VLPR_CATCH_MODE {
-        public static final int PU_VLPR_MODE_MOTORWAY = 0; // Motor vehicle detection mode.
-        public static final int PU_VLPR_MODE_COEXISTED = 1; // Motor vehicle, non-motor vehicle, and pedestrian
+        int PU_VLPR_MODE_MOTORWAY = 0; // Motor vehicle detection mode.
+        int PU_VLPR_MODE_COEXISTED = 1; // Motor vehicle, non-motor vehicle, and pedestrian
         // detection mode.
     }
 
@@ -16213,16 +16282,16 @@ public interface HWPuSDK extends Library {
 
     // WDR mode.
     public interface PU_WDR_SWITCH_MODE {
-        public static final int PU_WDR_SWITCH_AUTO = 0; // Auto mode.
-        public static final int PU_WDR_SWITCH_CLOSE = 1; // Disabled.
-        public static final int PU_WDR_SWITCH_MANUAL = 2; // Manual mode.
-        public static final int PU_WDR_SWITCH_MAX = 3;
+        int PU_WDR_SWITCH_AUTO = 0; // Auto mode.
+        int PU_WDR_SWITCH_CLOSE = 1; // Disabled.
+        int PU_WDR_SWITCH_MANUAL = 2; // Manual mode.
+        int PU_WDR_SWITCH_MAX = 3;
     }
 
     public interface PU_WEB_HTTP_MODE {
-        public static final int PU_WEB_HTTPS_HTTP = 0; // Support for HTTPS and HTTP.
-        public static final int PU_WEB_HTTPS_ONLY = 1; // Support for only HTTPS.
-        public static final int PU_WEB_HTTP_MAX = 2;
+        int PU_WEB_HTTPS_HTTP = 0; // Support for HTTPS and HTTP.
+        int PU_WEB_HTTPS_ONLY = 1; // Support for only HTTPS.
+        int PU_WEB_HTTP_MAX = 2;
     }
 
     // Storage policy upon full disk.
@@ -16885,491 +16954,491 @@ public interface HWPuSDK extends Library {
         int WL_NET_TYPE_MAX = 3;
     }
 
-    public static final int CHANNEL_ID = 101;
+    int CHANNEL_ID = 101;
 
     /********************************
      * Macro Definition
      **********************************************/
-    public static final int PU_RESERVE_LEN = 32;
+    int PU_RESERVE_LEN = 32;
 
-    public static final int PU_RESERVE_EX_LEN = 256;
+    int PU_RESERVE_EX_LEN = 256;
 
-    public static final int PU_VERSION_LEN = 32;
+    int PU_VERSION_LEN = 32;
 
-    public static final int PU_DEVICE_NAME_LEN = 32;
+    int PU_DEVICE_NAME_LEN = 32;
 
-    public static final int PU_FAC_NAME_LEN = 12;
+    int PU_FAC_NAME_LEN = 12;
 
-    public static final int PU_DEVICE_TYPE_LEN = 32;
+    int PU_DEVICE_TYPE_LEN = 32;
 
-    public static final int PU_SERIAL_LEN = 32;
+    int PU_SERIAL_LEN = 32;
 
-    public static final int PU_ESN_INFO_LEN = 32;
+    int PU_ESN_INFO_LEN = 32;
 
-    public static final int PU_IP4_ADDR_LEN = 16;
+    int PU_IP4_ADDR_LEN = 16;
 
-    public static final int PU_MULTICAST_ADDR_LEN = 32;
+    int PU_MULTICAST_ADDR_LEN = 32;
 
-    public static final int PU_IP6_ADDR_LEN = 40;
+    int PU_IP6_ADDR_LEN = 40;
 
-    public static final int PU_HEX_MAC_ADDR_LEN = 18;
+    int PU_HEX_MAC_ADDR_LEN = 18;
 
-    public static final int PU_PLATFORM_INFO_LEN = 32;
+    int PU_PLATFORM_INFO_LEN = 32;
 
-    public static final int PU_PTZ_NAME_LEN = 32;
+    int PU_PTZ_NAME_LEN = 32;
 
-    public static final int PU_PTZ_CRUISE_LEN = 32;
+    int PU_PTZ_CRUISE_LEN = 32;
 
-    public static final int PU_PTZ_CRUISE_POINT_MAX = 32;
+    int PU_PTZ_CRUISE_POINT_MAX = 32;
 
-    public static final int PU_PTZ_PRESET_NUM = 10;
+    int PU_PTZ_PRESET_NUM = 10;
 
-    public static final int PU_PTZ_GEAR_NUM_MAX = 10;
+    int PU_PTZ_GEAR_NUM_MAX = 10;
 
-    public static final int PU_PRIVACY_MASK_MAX = 10;
+    int PU_PRIVACY_MASK_MAX = 10;
 
-    public static final int PU_ALARM_TIME_MAX = 8;
+    int PU_ALARM_TIME_MAX = 8;
 
-    public static final int PU_ALARM_AREA_MAX = 16;
+    int PU_ALARM_AREA_MAX = 16;
 
-    public static final int PU_CRUISE_DWELL_MIN = 3;
+    int PU_CRUISE_DWELL_MIN = 3;
 
-    public static final int PU_CRUISE_DWELL_MAX = 3600;
+    int PU_CRUISE_DWELL_MAX = 3600;
 
-    public static final int PU_CRUISE_SPEED_MIN = 1;
+    int PU_CRUISE_SPEED_MIN = 1;
 
-    public static final int PU_CRUISE_SPEED_MAX = 10;
+    int PU_CRUISE_SPEED_MAX = 10;
 
-    public static final int PU_TIME_YEAR_LEN = 5;
+    int PU_TIME_YEAR_LEN = 5;
 
-    public static final int PU_TIME_OTHERS_LEN = 3;
+    int PU_TIME_OTHERS_LEN = 3;
 
-    public static final int PU_TIME_TOTAL_LEN = 32;
+    int PU_TIME_TOTAL_LEN = 32;
 
-    public static final int PU_UPGRADE_FILE_NUM_MAX = 16;
+    int PU_UPGRADE_FILE_NUM_MAX = 16;
 
-    public static final int PU_UPGRADE_FILE_LEN_MAX = 300;
+    int PU_UPGRADE_FILE_LEN_MAX = 300;
 
-    public static final int PU_INVADE_LINE_NUM_MAX = 5;
+    int PU_INVADE_LINE_NUM_MAX = 5;
 
-    public static final int PU_SAVE_FILE_PATH_MAX = 128;
+    int PU_SAVE_FILE_PATH_MAX = 128;
 
-    public static final int PU_ALARM_CAMERA_MAX = 4;
+    int PU_ALARM_CAMERA_MAX = 4;
 
-    public static final int PU_ALARM_DO_MAX = 4;
+    int PU_ALARM_DO_MAX = 4;
 
-    public static final int PU_USER_NAME_LEN = 32;
+    int PU_USER_NAME_LEN = 32;
 
-    public static final int PU_PASSWORD_LEN = (64 + 4);
+    int PU_PASSWORD_LEN = (64 + 4);
 
-    public static final int PU_CLIENT_USERNAME_LEN = (32 + 4);
+    int PU_CLIENT_USERNAME_LEN = (32 + 4);
 
-    public static final int PU_FTP_UPLOAD_PATH_LEN = (128 + 4);
+    int PU_FTP_UPLOAD_PATH_LEN = (128 + 4);
 
-    public static final int PU_CAMERA_NUM_MAX = 4;
+    int PU_CAMERA_NUM_MAX = 4;
 
-    public static final int PU_TRIPWIRE_LEN_NUM_MAX = 5;
+    int PU_TRIPWIRE_LEN_NUM_MAX = 5;
 
-    public static final int PU_IGT_AREA_POINTS_NUM = 10;
+    int PU_IGT_AREA_POINTS_NUM = 10;
 
-    public static final int PU_IGT_AREA_NUM = 4;
+    int PU_IGT_AREA_NUM = 4;
 
-    public static final int PU_IGT_LINE_NAME_LEN = (32 + 4);
+    int PU_IGT_LINE_NAME_LEN = (32 + 4);
 
-    public static final int PU_IGT_AREA_NAME_LEN = (32 + 4);
+    int PU_IGT_AREA_NAME_LEN = (32 + 4);
 
-    public static final int PU_DEVICE_NUM_MAX = 1000;
+    int PU_DEVICE_NUM_MAX = 1000;
 
-    public static final int PU_DEVICE_LOGIN_NUM_MAX = 20000;
+    int PU_DEVICE_LOGIN_NUM_MAX = 20000;
 
-    public static final int PU_TRANSPARENT_CMD_MAX = 256;
+    int PU_TRANSPARENT_CMD_MAX = 256;
 
-    public static final int PU_DOMAIN_LEN = 256;
+    int PU_DOMAIN_LEN = 256;
 
-    public static final int PU_IRLIGHT_NUM_MAX = 4;
+    int PU_IRLIGHT_NUM_MAX = 4;
 
-    public static final int PU_DIO_NAME_LEN = (32 + 4);
+    int PU_DIO_NAME_LEN = (32 + 4);
 
-    public static final int PU_DIO_NUM_MAX = 8;
+    int PU_DIO_NUM_MAX = 8;
 
-    public static final int PU_RECORD_PLAN_NUM = 28;
+    int PU_RECORD_PLAN_NUM = 28;
 
-    public static final int PU_RECORD_PLAN_NUM_SD = 24;
+    int PU_RECORD_PLAN_NUM_SD = 24;
 
-    public static final int MAX_RECORD_CONTENTID_LEN = 64;
+    int MAX_RECORD_CONTENTID_LEN = 64;
 
-    public static final int PU_LOG_INFO_LEN = 256;
+    int PU_LOG_INFO_LEN = 256;
 
-    public static final int PU_LOG_INFO_NUM = 100;
+    int PU_LOG_INFO_NUM = 100;
 
-    public static final int PU_NAT_SESSIONID_LEN = 32;
+    int PU_NAT_SESSIONID_LEN = 32;
 
-    public static final int PU_NAT_URL_LEN = 256;
+    int PU_NAT_URL_LEN = 256;
 
-    public static final int PU_RECORD_TYPE_NUM = 4;
+    int PU_RECORD_TYPE_NUM = 4;
 
-    public static final int PU_RECORD_INFO_NUM_MAX = 5;
+    int PU_RECORD_INFO_NUM_MAX = 5;
 
-    public static final int PU_RECORD_CONTENTID_LEN = 40;
+    int PU_RECORD_CONTENTID_LEN = 40;
 
-    public static final int PU_VIDEO_FORMAT_NUM = 4;
+    int PU_VIDEO_FORMAT_NUM = 4;
 
-    public static final int PU_STREAM_NUM = 4;
+    int PU_STREAM_NUM = 4;
 
-    public static final int PU_STREAM_NUM_V2 = 5;
+    int PU_STREAM_NUM_V2 = 5;
 
-    public static final int PU_OSD_STRING_LEN = (96 + 4);
+    int PU_OSD_STRING_LEN = (96 + 4);
 
-    public static final int PU_OSD_STRING_NUM = 7;
+    int PU_OSD_STRING_NUM = 7;
 
-    public static final int PU_OSD_STRING_EX_NUM = 10;
+    int PU_OSD_STRING_EX_NUM = 10;
 
-    public static final int PU_MAC_ADDR_LEN = 30;
+    int PU_MAC_ADDR_LEN = 30;
 
-    public static final int PU_SNAP_IMAGE_NAME_LEN = 24;
+    int PU_SNAP_IMAGE_NAME_LEN = 24;
 
-    public static final int PU_MAX_URL_LEN = 512;
+    int PU_MAX_URL_LEN = 512;
 
-    public static final int PU_CONFIG_FILE_PATH_MAX = 512;
+    int PU_CONFIG_FILE_PATH_MAX = 512;
 
-    public static final int PU_CONFIG_LOAD_UP_KEY_LEN = (32 + 1);
+    int PU_CONFIG_LOAD_UP_KEY_LEN = (32 + 1);
 
-    public static final int PU_SNAPSHOT_PIC_PATH_LEN = 512;
+    int PU_SNAPSHOT_PIC_PATH_LEN = 512;
 
-    public static final int PU_DEVICE_USER_NUM_MAX = 10;
+    int PU_DEVICE_USER_NUM_MAX = 10;
 
-    public static final int PU_CERT_FILE_PATH_MAX = 512;
+    int PU_CERT_FILE_PATH_MAX = 512;
 
-    public static final int PU_TYPICAL_SCENE_NUM_MAX = 12;
+    int PU_TYPICAL_SCENE_NUM_MAX = 12;
 
-    public static final int PU_TYPICAL_SCENE_NUM_MAX_EX = 15;
+    int PU_TYPICAL_SCENE_NUM_MAX_EX = 15;
 
-    public static final int PU_TYPICAL_SCENE_NAME_LEN = (64 + 4);
+    int PU_TYPICAL_SCENE_NAME_LEN = (64 + 4);
 
-    public static final int PU_TYPICAL_SCENE_DESCRIBE_LEN = 128;
+    int PU_TYPICAL_SCENE_DESCRIBE_LEN = 128;
 
-    public static final int PU_PLAN_NUM_MAX = 8;
+    int PU_PLAN_NUM_MAX = 8;
 
-    public static final int PU_MONTH_NUM = 12;
+    int PU_MONTH_NUM = 12;
 
-    public static final int FAC_NAME_LEN_MAX = 12;
+    int FAC_NAME_LEN_MAX = 12;
 
 //===Begin: Scene application parameters of traffic PTZ dome cameras ===
 //Application parameters of traffic PTZ dome cameras (parking violation detection).
 // TRAFFIC_DOME_ILLEGAL_PARKINK_PARAMS_S
 
-    public static final int STREAM_PROFILES_MAX = 8;
+    int STREAM_PROFILES_MAX = 8;
 
-    public static final int STREAMPROFILES_NAME_LEN = (64 + 4);
+    int STREAMPROFILES_NAME_LEN = (64 + 4);
 
-    public static final int PRIVACY_AREA_POINTS_NUM = 4;
+    int PRIVACY_AREA_POINTS_NUM = 4;
 
-    public static final int VW_ZONE_ROW = 15;
+    int VW_ZONE_ROW = 15;
 
-    public static final int VW_ZONE_COLUMN = 17;
+    int VW_ZONE_COLUMN = 17;
 
-    public static final int ISP_PARA_NUM = 22;
+    int ISP_PARA_NUM = 22;
 
-    public static final int ETH_RECV_RATE_MAX = 16000;
+    int ETH_RECV_RATE_MAX = 16000;
 
-    public static final int ETH_RECV_RATE_MIN = 2000;
+    int ETH_RECV_RATE_MIN = 2000;
 
-    public static final int PU_ENC_STREAM_MAX_NUM = 3;
+    int PU_ENC_STREAM_MAX_NUM = 3;
 
-    public static final int PU_ENC_STREAM_MAX_NUM_V2 = 5;
+    int PU_ENC_STREAM_MAX_NUM_V2 = 5;
 
-    public static final int PU_FOCUSREGION_NUM_MAX = 256;
+    int PU_FOCUSREGION_NUM_MAX = 256;
 
-    public static final int PU_FOCUSAREA_ROW = 15;
+    int PU_FOCUSAREA_ROW = 15;
 
-    public static final int PU_FOCUSAREA_COL = 17;
+    int PU_FOCUSAREA_COL = 17;
 
-    public static final int VW_VIM_MAX_AREA_POINTS_NUM = 10;
+    int VW_VIM_MAX_AREA_POINTS_NUM = 10;
 
-    public static final int GATHER_AREA_NAME_LEN = 32;
+    int GATHER_AREA_NAME_LEN = 32;
 
-    public static final int MAX_AREA_NUM = 4;
+    int MAX_AREA_NUM = 4;
 
-    public static final int MAX_BURST_SHOOTING_NUM = 5;
+    int MAX_BURST_SHOOTING_NUM = 5;
 
-    public static final int MAX_LANE_NUM = 4;
+    int MAX_LANE_NUM = 4;
 
-    public static final int TDOME_MAX_LANE_NUM = 6;
+    int TDOME_MAX_LANE_NUM = 6;
 
-    public static final int MAX_AREA_VERTEX = (MAX_LANE_NUM + 1);
+    int MAX_AREA_VERTEX = (MAX_LANE_NUM + 1);
 
-    public static final int MAX_PLATE_LOCAL_ZH_LEN = 24;
+    int MAX_PLATE_LOCAL_ZH_LEN = 24;
 
-    public static final int CAM_POSITION_STR_LEN = 15;
+    int CAM_POSITION_STR_LEN = 15;
 
-    public static final int MAX_SUPPLEMENT_LIGHT_LAMP_NUM = 8;
+    int MAX_SUPPLEMENT_LIGHT_LAMP_NUM = 8;
 
-    public static final int FD_AREA_NUM = 16;
+    int FD_AREA_NUM = 16;
 
-    public static final int FD_AREA_POINT_NUM = 12;
+    int FD_AREA_POINT_NUM = 12;
 
-    public static final int FD_AREA_NAME_LEN = 36;
+    int FD_AREA_NAME_LEN = 36;
 
-    public static final int PU_SNAPSHOT_INQUIRE_NUM = 10;
+    int PU_SNAPSHOT_INQUIRE_NUM = 10;
 
-    public static final int PU_SNAPSHOT_PICTURE_NAME_LEN = 64;
+    int PU_SNAPSHOT_PICTURE_NAME_LEN = 64;
 
-    public static final int PU_VLPR_PIC_OSD_TYPE_MAX = 15;
+    int PU_VLPR_PIC_OSD_TYPE_MAX = 15;
 
-    public static final int PU_VLPR_PIC_OSD_TYPE_MAX_EX = 50;
+    int PU_VLPR_PIC_OSD_TYPE_MAX_EX = 50;
 
-    public static final int PU_MEDIA_ENC_AES_KEY_STR_LEN = 65;
+    int PU_MEDIA_ENC_AES_KEY_STR_LEN = 65;
 
-    public static final int PU_MEDIA_ENC_AES_CBC_IV_LEN = 17;
+    int PU_MEDIA_ENC_AES_CBC_IV_LEN = 17;
 
-    public static final int MAX_ITS_SNAPSHOT_INTERVAL = 60000;
+    int MAX_ITS_SNAPSHOT_INTERVAL = 60000;
 
-    public static final int MIN_ITS_SNAPSHOT_INTERVAL = 67;
+    int MIN_ITS_SNAPSHOT_INTERVAL = 67;
 
     /********* SNMP *********/
-    public static final int PU_SNMPV3_USER_NUM = 3;
+    int PU_SNMPV3_USER_NUM = 3;
 
-    public static final int PU_SNMP_COMMUNITY_NUM = 3;
+    int PU_SNMP_COMMUNITY_NUM = 3;
 
-    public static final int PU_SNMP_COMMUNITY_NAME_LEN = (16 + 1);
+    int PU_SNMP_COMMUNITY_NAME_LEN = (16 + 1);
 
-    public static final int PU_SNMP_COMMUNITY_NAME_LEN_EX = (32 + 1);
+    int PU_SNMP_COMMUNITY_NAME_LEN_EX = (32 + 1);
 
-    public static final int PU_SNMP_TRAP_NUM = 3;
+    int PU_SNMP_TRAP_NUM = 3;
 
-    public static final int PU_SNMP_ENGINEID_LEN = (32 + 1);
+    int PU_SNMP_ENGINEID_LEN = (32 + 1);
 
-    public static final int PU_SNMP_CONTEXT_NAME_LEN = (16 + 1);
+    int PU_SNMP_CONTEXT_NAME_LEN = (16 + 1);
 
-    public static final int PU_ROI_AREA_NUM_MAX = 8;
+    int PU_ROI_AREA_NUM_MAX = 8;
 
-    public static final int PU_PORT_MODE_NUM_MAX = 16;
+    int PU_PORT_MODE_NUM_MAX = 16;
 
-    public static final int PU_BNC_PORT_MAX = 32;
+    int PU_BNC_PORT_MAX = 32;
 
-    public static final int PU_VGA_PORT_MAX = 8;
+    int PU_VGA_PORT_MAX = 8;
 
-    public static final int PU_DVI_PORT_MAX = 8;
+    int PU_DVI_PORT_MAX = 8;
 
-    public static final int PU_HDMI_PORT_MAX = 8;
+    int PU_HDMI_PORT_MAX = 8;
 
-    public static final int PU_DECODE_TYPE_MAX = 4;
+    int PU_DECODE_TYPE_MAX = 4;
 
-    public static final int PU_PORT_NUM_MAX = 32;
+    int PU_PORT_NUM_MAX = 32;
 
-    public static final int PU_CHANNEL_NUM_MAX = 32;
+    int PU_CHANNEL_NUM_MAX = 32;
 
-    public static final int PU_OSD_MAX_LENGTH = (96 + 1);
+    int PU_OSD_MAX_LENGTH = (96 + 1);
 
-    public static final int PU_OSD_MAX_LENGTH_EX = (176 + 1);
+    int PU_OSD_MAX_LENGTH_EX = (176 + 1);
 
-    public static final int PU_CRYPTION_PASSWD_LEN = 44;
+    int PU_CRYPTION_PASSWD_LEN = 44;
 
-    public static final int PU_DEC_CHANNEL_NAME_LEN = 32;
+    int PU_DEC_CHANNEL_NAME_LEN = 32;
 
-    public static final int PU_DECODER_ID_LEN = 20;
+    int PU_DECODER_ID_LEN = 20;
 
-    public static final int PU_DECODER_NAME_LEN = 32;
+    int PU_DECODER_NAME_LEN = 32;
 
-    public static final int PU_DEC_PAY_LOAD_TYPE_NUM = 16;
+    int PU_DEC_PAY_LOAD_TYPE_NUM = 16;
 
-    public static final int PU_DECODER_ENCODING_LEN = 16;
+    int PU_DECODER_ENCODING_LEN = 16;
 
-    public static final int PU_CERT_FIELD_NAME_LEN_MAX = (128 + 4);
+    int PU_CERT_FIELD_NAME_LEN_MAX = (128 + 4);
 
-    public static final int PU_IP_FILTER_NUM_MAX = 3;
+    int PU_IP_FILTER_NUM_MAX = 3;
 
-    public static final int PU_IP_FILTER_NUM_MAXV2 = 48;
+    int PU_IP_FILTER_NUM_MAXV2 = 48;
 
-    public static final int PU_IP_FILTER_NUM_MAXV3 = 100;
+    int PU_IP_FILTER_NUM_MAXV3 = 100;
 
-    public static final int PU_DDNS_MAX_LEN = 256;
+    int PU_DDNS_MAX_LEN = 256;
 
-    public static final int OSDI_AREA_NUM_MAX = 8;
+    int OSDI_AREA_NUM_MAX = 8;
 
-    public static final int PU_H264DEC_OK = 0;
+    int PU_H264DEC_OK = 0;
 
-    public static final int PU_H264DEC_NEED_MORE_BITS = -1;
+    int PU_H264DEC_NEED_MORE_BITS = -1;
 
-    public static final int PU_H264DEC_NO_PICTURE = -2;
+    int PU_H264DEC_NO_PICTURE = -2;
 
-    public static final int PU_H264DEC_ERR_HANDLE = -3;
+    int PU_H264DEC_ERR_HANDLE = -3;
 
     ;
 
     /******* SMTP ********/
-    public static final int PU_SMTP_NAME_LEN_MAX = (32 + 4);
+    int PU_SMTP_NAME_LEN_MAX = (32 + 4);
 
-    public static final int PU_SMTP_MAIL_LEN = 128;
+    int PU_SMTP_MAIL_LEN = 128;
 
-    public static final int PU_SMTP_RECV_MAX_NUM = 3;
+    int PU_SMTP_RECV_MAX_NUM = 3;
 
-    public static final int PU_IRCUT_MODE_MAX_NUM = 3;
+    int PU_IRCUT_MODE_MAX_NUM = 3;
 
-    public static final int PU_HUMANCOUNT_TABLE_LEN_MAX = 32;
+    int PU_HUMANCOUNT_TABLE_LEN_MAX = 32;
 
-    public static final int PU_MAX_CUSTOM_CONTENT_LEN = 24;
+    int PU_MAX_CUSTOM_CONTENT_LEN = 24;
 
-    public static final int PU_MAX_DIR_NAMING_ELEM = 4;
+    int PU_MAX_DIR_NAMING_ELEM = 4;
 
     ;
 
-    public static final int PU_MAX_PIC_NAMING_ELEM = 20;
+    int PU_MAX_PIC_NAMING_ELEM = 20;
 
-    public static final int PU_MAX_PIC_NAMING_ELEM_EX = 90;
+    int PU_MAX_PIC_NAMING_ELEM_EX = 90;
 
-    public static final int PU_ITS_MAX_ROAD_NUM = 5;
+    int PU_ITS_MAX_ROAD_NUM = 5;
 
-    public static final int PU_MAX_EXT_LAMP_NUM = 8;
+    int PU_MAX_EXT_LAMP_NUM = 8;
 
-    public static final int PU_MAX_INNER_LAMP_NUM = 3;
+    int PU_MAX_INNER_LAMP_NUM = 3;
 
-    public static final int PU_LIC_SERVICE_AGE_MAX_LEN = 256;
+    int PU_LIC_SERVICE_AGE_MAX_LEN = 256;
 
-    public static final int PU_LIC_REVOKE_KEY_LEN = 136;
+    int PU_LIC_REVOKE_KEY_LEN = 136;
 
-    public static final int PU_LIC_DATE_MAX_LEN = 72;
+    int PU_LIC_DATE_MAX_LEN = 72;
 
-    public static final int PU_3RD_APP_MAX_NUM = 16;
+    int PU_3RD_APP_MAX_NUM = 16;
 
-    public static final int PU_ITGT_TYPE_MAX_NUM = 16;
+    int PU_ITGT_TYPE_MAX_NUM = 16;
 
-    public static final int PU_ITGT_TYPE_MAX_EX_NUM = 64;
+    int PU_ITGT_TYPE_MAX_EX_NUM = 64;
 
-    public static final int PU_ITGT_ALTHM_VERSION_LEN = 48;
+    int PU_ITGT_ALTHM_VERSION_LEN = 48;
 
-    public static final int PU_ITGT_ALTHM_VENDOR_LEN = 48;
+    int PU_ITGT_ALTHM_VENDOR_LEN = 48;
 
-    public static final int PU_ISP_TYPE_MAX_NUM = 64;
+    int PU_ISP_TYPE_MAX_NUM = 64;
 
-    public static final int PU_IMPORT_FILE_LEN_MAX = 256;
+    int PU_IMPORT_FILE_LEN_MAX = 256;
 
-    public static final int PU_IMPORT_FILENAME_LEN_MAX = 128;
+    int PU_IMPORT_FILENAME_LEN_MAX = 128;
 
-    public static final int PU_SNAP_NUM_MAX = 3;
+    int PU_SNAP_NUM_MAX = 3;
 
-    public static final int PU_SNAP_NUM_MAX2 = 4;
+    int PU_SNAP_NUM_MAX2 = 4;
 
-    public static final int PU_RL_NUM_MAX = 4;
+    int PU_RL_NUM_MAX = 4;
 
-    public static final int PU_ITS_MAX_LIGHTAREA_NUM = 4;
+    int PU_ITS_MAX_LIGHTAREA_NUM = 4;
 
-    public static final int PU_ITS_ILLEGAL_TYPE_NUM_MAX = 96;
+    int PU_ITS_ILLEGAL_TYPE_NUM_MAX = 96;
 
-    public static final int PU_ITS_ILLEGAL_TYPE_LEN_MAX = (64 + 4);
+    int PU_ITS_ILLEGAL_TYPE_LEN_MAX = (64 + 4);
 
-    public static final int PU_ITS_ILLEGAL_NUM_LEN_MAX = (8 + 1);
+    int PU_ITS_ILLEGAL_NUM_LEN_MAX = (8 + 1);
 
-    public static final int PU_ITS_ILLEGAL_NAME_LEN_MAX = (64 + 4);
+    int PU_ITS_ILLEGAL_NAME_LEN_MAX = (64 + 4);
 
-    public static final int PU_MIN_GPS_SYNC_INTERVAL = 5 * 60;
+    int PU_MIN_GPS_SYNC_INTERVAL = 5 * 60;
 
-    public static final int PU_MAX_GPS_SYNC_INTERVAL = (1000 * 60);
+    int PU_MAX_GPS_SYNC_INTERVAL = (1000 * 60);
 
-    public static final int TD_MAX_SNAP_FRAME_NUM = 4;
+    int TD_MAX_SNAP_FRAME_NUM = 4;
 
-    public static final int TD_MAX_SCENE_NUM = 16;
+    int TD_MAX_SCENE_NUM = 16;
 
-    public static final int TD_MAX_DAY_ONE_WEEK = 7;
+    int TD_MAX_DAY_ONE_WEEK = 7;
 
-    public static final int TD_MAX_STRING_LENGTH = (64 + 1);
+    int TD_MAX_STRING_LENGTH = (64 + 1);
 
-    public static final int PU_CALIBRATION_POINT_MAX_NUM = 14;
+    int PU_CALIBRATION_POINT_MAX_NUM = 14;
 
-    public static final int PU_MASTER_SLAVE_GROUP_MAX_NUM = 4;
+    int PU_MASTER_SLAVE_GROUP_MAX_NUM = 4;
 
-    public static final int PU_MASTER_NUM_MAX = 8;
+    int PU_MASTER_NUM_MAX = 8;
 
-    public static final int PU_SLAVE_NUM_MAX = 8;
+    int PU_SLAVE_NUM_MAX = 8;
 
-    public static final int PU_1TN_SLAVE_NUM_MAX = 8;
+    int PU_1TN_SLAVE_NUM_MAX = 8;
 
     /******* hot map ********/
-    public static final int PU_MONTH_NUM_PER_YEAR = 12;
+    int PU_MONTH_NUM_PER_YEAR = 12;
 
-    public static final int PU_DAY_NUM_PER_MONTH = 31;
+    int PU_DAY_NUM_PER_MONTH = 31;
 
-    public static final int PU_DAY_NUM_PER_WEEK = 7;
+    int PU_DAY_NUM_PER_WEEK = 7;
 
-    public static final int PU_HOUR_NUM_PER_DAY = 24;
+    int PU_HOUR_NUM_PER_DAY = 24;
 
-    public static final int PU_GUARD_PLAN_NUM_PER_DAY = 8;
+    int PU_GUARD_PLAN_NUM_PER_DAY = 8;
 
-    public static final int PU_HOTMAP_AREA_NUM = 8;
+    int PU_HOTMAP_AREA_NUM = 8;
 
-    public static final int PU_ITGT_AUTOTRACKING_PRIORITY_ITEM_NUM = 3;
+    int PU_ITGT_AUTOTRACKING_PRIORITY_ITEM_NUM = 3;
 
-    public static final int PU_MAX_RECORD_LEN_16 = 16;
+    int PU_MAX_RECORD_LEN_16 = 16;
 
-    public static final int PU_MAX_RECORD_LEN_32 = 32;
+    int PU_MAX_RECORD_LEN_32 = 32;
 
-    public static final int PU_MAX_RECORD_LEN_48 = 48;
+    int PU_MAX_RECORD_LEN_48 = 48;
 
     ;
 
-    public static final int PU_MAX_RECORD_LEN_64 = 64;
+    int PU_MAX_RECORD_LEN_64 = 64;
 
-    public static final int PU_MAX_EX_FIELD_LEN = 512;
+    int PU_MAX_EX_FIELD_LEN = 512;
 
-    public static final int PU_MAX_DELETE_NUM = 100;
+    int PU_MAX_DELETE_NUM = 100;
 
     /********* begin:End-Number Policy *********/
-    public static final int MAX_RESTRICTED_NUM = 10;
+    int MAX_RESTRICTED_NUM = 10;
 
-    public static final int MAX_RESTRICTED_EVENT_NUM = 30;
+    int MAX_RESTRICTED_EVENT_NUM = 30;
 
-    public static final int MAX_RESTRICTED_DATE_NUM = 10;
+    int MAX_RESTRICTED_DATE_NUM = 10;
 
-    public static final int MAX_RESTRICTED_LOCALPLATE_LEN = 5;
+    int MAX_RESTRICTED_LOCALPLATE_LEN = 5;
 
-    public static final int MAX_RESTRICTED_LOCALPLATE_NUM = 32;
+    int MAX_RESTRICTED_LOCALPLATE_NUM = 32;
 
-    public static final int MAX_RESTRICTED_LOCALPLATE_ALL_NUM = 26;
+    int MAX_RESTRICTED_LOCALPLATE_ALL_NUM = 26;
 
     /************************** Macro Definition Ends ***************************/
-    public static final int MAX_POINT_NUM = 10;
+    int MAX_POINT_NUM = 10;
 
-    public static final int PU_OPERATE_3RD_APP_NAME_LEN = 32;
+    int PU_OPERATE_3RD_APP_NAME_LEN = 32;
 
-    public static final int PU_OPERATE_3RD_APP_PATH_LEN = 64;
+    int PU_OPERATE_3RD_APP_PATH_LEN = 64;
 
-    public static final int PU_OPERATE_3RD_APP_CMD_LEN = 128;
+    int PU_OPERATE_3RD_APP_CMD_LEN = 128;
 
-    public static final int PU_MANAGE_3RD_APP_NUM_MAX = 1;
+    int PU_MANAGE_3RD_APP_NUM_MAX = 1;
 
     ;
 
-    public static final int PU_MANAGE_3RD_APP_URL_MAX = 64;
+    int PU_MANAGE_3RD_APP_URL_MAX = 64;
 
-    public static final int DIAL_APP_LEN_MAX = (32 + 1);
+    int DIAL_APP_LEN_MAX = (32 + 1);
 
-    public static final int DIAL_USR_NAME_LEN_MAX = (32 + 1);
+    int DIAL_USR_NAME_LEN_MAX = (32 + 1);
 
-    public static final int DIAL_PASSWD_LEN_MAX = (32 + 1);
+    int DIAL_PASSWD_LEN_MAX = (32 + 1);
 
-    public static final int DIAL_PLAN_AREA_MAX = 8;
+    int DIAL_PLAN_AREA_MAX = 8;
 
-    public static final int DIAL_SMS_WHITE_LIST_MAX = 8;
+    int DIAL_SMS_WHITE_LIST_MAX = 8;
 
-    public static final int DIAL_RC_NUM_LEN_MAX = (4 + 1);
+    int DIAL_RC_NUM_LEN_MAX = (4 + 1);
 
-    public static final int DIAL_PHONE_NUM_LEN = 16;
+    int DIAL_PHONE_NUM_LEN = 16;
 
-    public static final int IPV4_ADDR_LEN = 16;
+    int IPV4_ADDR_LEN = 16;
 
-    public static final int DAYS_PER_WEEK = 7;
+    int DAYS_PER_WEEK = 7;
 
-    public static final int DIAL_PLMN_NAME_MAX = 40;
+    int DIAL_PLMN_NAME_MAX = 40;
 
-    public static final int ITS_REGULATION_TYPE_NUM_MAX = 32;
+    int ITS_REGULATION_TYPE_NUM_MAX = 32;
 
-    public static final int ITS_SNAP_NUM_MAX = 4;
+    int ITS_SNAP_NUM_MAX = 4;
 
-    public static final int ITS_ADAPT_SNAP_INTERVAL_NUM_MAX = 2;
+    int ITS_ADAPT_SNAP_INTERVAL_NUM_MAX = 2;
 
-    public static final int MAX_AREA_POINTS_NUM = 10;
+    int MAX_AREA_POINTS_NUM = 10;
 
-    public static final int IGT_AREA_NAME_LEN = (32 + 4);
+    int IGT_AREA_NAME_LEN = (32 + 4);
 
     // Add a single face.
     boolean IVS_PU_AddOneFace(ULONG ulIdentifyID, PU_FACE_INFO_ADD_S pstOneFaceInfo);
@@ -17399,10 +17468,26 @@ public interface HWPuSDK extends Library {
 
     // change destination module admin password
     // enDstModule -> C type:IPC_MODULE
+
+    /**
+     * 修改SDK或者WEB的Admin用户密码。
+     *
+     * @param ulIdentifyID
+     * @param pszOldPasswd
+     * @param pszNewPasswd
+     * @param enDstModule  修改密码目标模块  参考
+     * @return
+     */
     boolean IVS_PU_ChangeAdminPassword(NativeLong ulIdentifyID, String pszOldPasswd, String pszNewPasswd,
                                        int enDstModule);
 
-    // change device password
+    /**
+     * @param ulIdentifyID 输入参数 用户ID号，是IVS_PU_LogIn的返回值
+     * @param pszUserName  输入参数  登陆用户名  一般是 admin
+     * @param pszOldPasswd 输入参数  登陆旧密码
+     * @param pszNewPasswd 输入参数  登陆新密码
+     * @return
+     */
     boolean IVS_PU_ChangeDevicePassword(NativeLong ulIdentifyID, String pszUserName, String pszOldPasswd,
                                         String pszNewPasswd);
 
@@ -17616,7 +17701,13 @@ public interface HWPuSDK extends Library {
     // device rsa secret key length
     boolean IVS_PU_GetDeviceRSASecretKeyLen(NativeLong ulIdentifyID, LongByReference pulSecretKeyLen);
 
-    // get device system status info
+    /**
+     * 获取设备状态信息
+     *
+     * @param ulIdentifyID     输入参数 用户ID  IVS_PU_LogIn的返回值
+     * @param pstSysStatusInfo 输出参数 设备状态信息结构体
+     * @return true  表示成功  false 表示失败
+     */
     boolean IVS_PU_GetDeviceStatusInfo(NativeLong ulIdentifyID, LPPU_SYS_STATUS_INFO_S pstSysStatusInfo);
 
     // device time
@@ -18187,7 +18278,12 @@ public interface HWPuSDK extends Library {
     // Obtain the setting of linking behavior analysis with intelligent tracking.
     boolean IVS_PU_GetVALinkAT(ULONG ulIdentifyID, PU_VA_LINK_AT pstVALinkAT);
 
-    // get device version info
+    /**
+     * 获得当前设备的版本号
+     *
+     * @param pulVersion 输出参数 传入ULONG类型的非空指针  SDK版本号,24~31为主版本号，16~23为子版本号，8~15为阶段版本号，0~7为修正版本号。
+     * @return true 表示成功   false 表示失败  此时应该调用IVS_PU_GetLastError获取错误信息
+     */
     boolean IVS_PU_GetVersion(NativeLong pulVersion);
 
     boolean IVS_PU_GetVerticalLimit(ULONG ulIdentifyID, PU_VERTICAL_LIMIT_S pstVerticalLimit);
@@ -18303,11 +18399,54 @@ public interface HWPuSDK extends Library {
     // version: V500R019C30 TR6 or later).
     boolean IVS_PU_ImportFaceLibEx(ULONG ulIdentifyID, PU_FACE_LIB_IMPORT_S pstFaceLibInfo);
 
-    // initialize sdk resources
+    /**
+     * initialize sdk resources
+     *
+     * @param ulLinkMode
+     * @param szLocalIP
+     * @param ulLocalPort
+     * @return
+     */
     public boolean IVS_PU_Init(NativeLong ulLinkMode, String szLocalIP, NativeLong ulLocalPort);
 
+    /**
+     * @param ulLinkMode      参考 {@link cn.edu.xust.iot.sdc.core.constraints.LinkModel}
+     * @param szLocalIP       非必选，运行SDK所在设备的IP地址，用来绑定网卡，如果对业务没有特殊要求可填NULL。
+     * @param ulLocalPort     非必选，SDK所在设备的端口号，在自动连接与混合连接模式下需要配置；在手动模式下可以忽略，自动模式下端口号必须为5050；混合模式下可设置，端口号默认值为6060或6061。
+     * @param ulLocalTlsPort  SDK所在设备的TLS通道端口号，该参数下需要配置， TLS监听端口可设置为5051。
+     * @param pstCertFilePath 需要包含CA证书路径和客户端证书路径和私钥证书路径。
+     * @return
+     */
     public boolean IVS_PU_InitEx(ULONG ulLinkMode, String szLocalIP, ULONG ulLocalPort, ULONG ulLocalTlsPort,
                                  PU_CERT_FILE_PATH_PARA_S pstCertFilePath);
+
+    /**
+     * 用户注册到前端设备
+     *
+     * @param pchLoginIP  摄像机IP
+     * @param ulLoginPort 摄像机登陆端口
+     * @param szUserName  登陆用户名  默认为 admin
+     * @param szPasswd    登陆密码  默认为 HuaWei123
+     * @return 成功，返回唯一的用户ID号，后续调用API对此设备进行的操作都需要携带此ID号作为入参。
+     */
+    public long IVS_PU_Login(String pchLoginIP, ULONG ulLoginPort, String szUserName, String szPasswd);
+
+    /**
+     * @param ulIdentifyID
+     * @param szUserName
+     * @param szPasswd
+     * @return
+     */
+    boolean IVS_PU_LoginByID(NativeLong ulIdentifyID, String szUserName, String szPasswd);
+
+
+    /**
+     * 退出登陆
+     *
+     * @param ulIdentifyID 登陆此相机时返回的用户ID
+     * @return
+     */
+    boolean IVS_PU_Logout(ULONG ulIdentifyID);
 
     boolean IVS_PU_InvokeTransparentCmd(ULONG ulIdentifyID, PU_TRANSPARENT_CMD pstTransparentCmdInfo);
 
@@ -18334,15 +18473,6 @@ public interface HWPuSDK extends Library {
 
     // key frame request
     boolean IVS_PU_KeyFrameRequest(ULONG ulIdentifyID, ULONG ulChannelId, ULONG ulStreamId);
-
-    // login to device
-    public long IVS_PU_Login(String pchLoginIP, ULONG ulLoginPort, String szUserName, String szPasswd);
-
-    // login to device
-    boolean IVS_PU_LoginByID(NativeLong ulIdentifyID, String szUserName, String szPasswd);
-
-    // logout from device
-    boolean IVS_PU_Logout(ULONG ulIdentifyID);
 
     // Manually triggered license plate snapshot.
     boolean IVS_PU_ManualLicensePlateCapture(ULONG ulIdentifyID, PU_MANUAL_LPR_CAPTURE_S pstManualLprCapture);
@@ -18421,7 +18551,24 @@ public interface HWPuSDK extends Library {
     // query hot map table
     boolean IVS_PU_QueryHotMapTable(ULONG ulIdentifyID, PU_HOTMAP_TABLE_PARA pstPara);
 
-    // real play
+    /**
+     * <h2>实况播放</h2>
+     * <p>
+     * Windows：支持视频显示，支持码流回调。
+     * 视频显示时，需要给pstRealPlayInfo参数中hPlayWnd字段传入有效的窗口句柄， fRealDataCallBack与pUsrData传NULL；
+     * 码流回调时，需要给pstRealPlayInfo参数中hPlayWnd字段传入NULL， fRealDataCallBack为用户自定义的不为NULL的码流回调函数。
+     * </p>
+     * <ul>
+     *     <li>1.在Windows操作系统下的视频显示可以用户实时监控</li>
+     *     <li>2.在Windows、Linux操作系统下的实时码流回调：用于需要对码流做特殊处理的场景，例如存储录像、智能分析等。</li>
+     * <ul/>
+     *
+     * @param ulIdentifyID      输入参数 用户ID  IVS_PU_LogIn返回的参数
+     * @param pstRealPlayInfo   输入参数 实时浏览结构体
+     * @param fRealDataCallBack 输入参数 实况视频流数据回调函数
+     * @param pUsrData          输入参数 用户数据
+     * @return 成功，返回实况句柄，此句柄具有唯一性。后续调用API进行停止语音流时需要传入此句柄作为入参
+     */
     public ULONG IVS_PU_RealPlay(ULONG ulIdentifyID, PU_REAL_PLAY_INFO_S pstRealPlayInfo,
                                  pfRealDataCallBack fRealDataCallBack, Pointer pUsrData);
 
@@ -19101,6 +19248,13 @@ public interface HWPuSDK extends Library {
 
     boolean IVS_PU_StopMulticast(ULONG ulIdentifyID, ULONG ulSessionId);
 
+    /**
+     * 停止实况播放
+     *
+     * @param ulIdentifyID
+     * @param ulRealPlayHnd
+     * @return
+     */
     public boolean IVS_PU_StopRealPlay(ULONG ulIdentifyID, ULONG ulRealPlayHnd);
 
     /*******************************************************************************************************************/

@@ -31,9 +31,9 @@ import javax.validation.Valid;
 public class LoginController {
 
     /**
-     * 管理员用户登录的最大有效时间  1小时
+     * 管理员用户登录的最大有效时间  3小时
      */
-    private static final long MAX_USER_LOGIN_STATUS_KEEP_TIME = 3600;
+    private static final long MAX_USER_LOGIN_STATUS_KEEP_TIME = 3600*3;
     @Autowired
     private IAdminUserService adminService;
 
@@ -58,7 +58,7 @@ public class LoginController {
             return CommonResponse.create(AppResponseCode.USER_NOT_FOUND,"管理员账号"+userModel.getUsername()+"未注册");
         }
         //用户登录token的key:当前毫秒时间戳+UUID
-        String userLoginToken = String.format(RedisKeyManager.USER_LOGIN_TOKEN, System.currentTimeMillis(), CommonUtils.getUUID());
+        String userLoginToken = String.format(RedisKeyManager.USER_LOGIN_TOKEN, System.currentTimeMillis(), CommonUtils.getRandomString());
         Boolean res = redisService.setnx(userLoginToken, JSON.toJSONString(userModel),  RedisService.RedisDataBaseSelector.DB_0);
         if (res == null) {
             return CommonResponse.create(AppResponseCode.USER_LOGIN_FAIL, "管理员登陆失败，请重试！");

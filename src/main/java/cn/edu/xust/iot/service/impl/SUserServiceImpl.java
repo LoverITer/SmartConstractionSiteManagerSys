@@ -44,7 +44,6 @@ public class SUserServiceImpl implements ISUserService {
             List<SUserModel> users = userMapper.selectAll();
             List<SUserVO> lists=new ArrayList<>();
             if(null!=users){
-
                 users.forEach(user->{
                     SUserVO sUserVO = user.convertUserModel2UserVO();
                     lists.add(sUserVO);

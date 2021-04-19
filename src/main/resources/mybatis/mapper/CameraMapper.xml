@@ -14,10 +14,11 @@
         <result column="model" jdbcType="VARCHAR" property="model"/>
         <result column="mac_address" jdbcType="VARCHAR" property="macAddress"/>
         <result column="sdc_version" jdbcType="VARCHAR" property="sdcVersion"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, device_name, device_status, region_id, algorithm, ip, port, user_name, password,
-    model, mac_address, sdc_version
+    model, mac_address, sdc_version,create_time
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -33,24 +34,40 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
+    <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List" >
+        delete from camera where id in
+        <foreach collection="deleteDeviceList" item="deviceId" open="(" separator="," close=")">
+            #{deviceId,jdbcType=INTEGER}
+        </foreach>
+    </delete>
+
     <select id="selectAll" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from camera;
+        select * from camera
     </select>
 
-    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.Camera">
+
+    <select id="selectCameraLoginParam" resultMap="BaseResultMap">
+        select ip, port, user_name, password from camera
+    </select>
+
+
+    <select id="countCameras" resultType="java.lang.Integer">
+        select count(*) from camera;
+    </select>
+
+    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.Camera" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into camera (device_name, device_status,
                             region_id, algorithm, ip,
                             port, user_name, password,
-                            model, mac_address, sdc_version)
+                            model, mac_address, sdc_version,create_time)
         values (#{deviceName,jdbcType=VARCHAR}, #{deviceStatus,jdbcType=CHAR},
                 #{regionId,jdbcType=INTEGER}, #{algorithm,jdbcType=CHAR}, #{ip,jdbcType=VARCHAR},
                 #{port,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-                #{model,jdbcType=VARCHAR}, #{macAddress,jdbcType=VARCHAR}, #{sdcVersion,jdbcType=VARCHAR})
+                #{model,jdbcType=VARCHAR}, #{macAddress,jdbcType=VARCHAR}, #{sdcVersion,jdbcType=VARCHAR},
+                #{createTime,jdbcType=TIMESTAMP})
     </insert>
 
-    <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.Camera">
+    <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.Camera" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into camera
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="deviceName != null">
@@ -86,6 +103,9 @@
             <if test="sdcVersion != null">
                 sdc_version,
             </if>
+            <if test="createTime != null">
+                create_time
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="deviceName != null">
@@ -120,6 +140,9 @@
             </if>
             <if test="sdcVersion != null">
                 #{sdcVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP}
             </if>
         </trim>
     </insert>
@@ -161,6 +184,9 @@
             <if test="sdcVersion != null">
                 sdc_version = #{sdcVersion,jdbcType=VARCHAR},
             </if>
+            <if test="createTime != null">
+                create_time=#{createTime,jdbcType=TIMESTAMP}
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -176,7 +202,8 @@
             password      = #{password,jdbcType=VARCHAR},
             model         = #{model,jdbcType=VARCHAR},
             mac_address   = #{macAddress,jdbcType=VARCHAR},
-            sdc_version   = #{sdcVersion,jdbcType=VARCHAR}
+            sdc_version   = #{sdcVersion,jdbcType=VARCHAR},
+            create_time   = #{createTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

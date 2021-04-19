@@ -5,7 +5,6 @@ import cn.edu.xust.iot.camera.data.CameraWorkerCache;
 import cn.edu.xust.iot.camera.handler.CameraThread;
 import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.model.CameraInfoModel;
-import cn.edu.xust.iot.model.CameraModel;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.entity.Camera;
 import cn.edu.xust.iot.model.vo.CameraVO;
@@ -184,7 +183,7 @@ public class CameraController {
     public CommonResponse<Map<String, Object>> getConfig() {
         // 获取当前时间
         long nowTime = new Date().getTime();
-        String upTime = CommonUtils.dateDiff(CameraWorkerCache.START_TIME, nowTime);
+        String upTime = CommonUtils.getDateDiff(CameraWorkerCache.START_TIME, nowTime);
         log.info("获取服务信息：" + config.toString() + ";服务运行时间：" + upTime);
         Map<String, Object> status = new HashMap<>();
         status.put("cameraRTSPToHttpFlvConfig", config);
@@ -193,30 +192,6 @@ public class CameraController {
     }
 
 
-    @ApiOperation(value = "添加新的摄像机信息",notes = "通过调用该接口可以添加新的摄像机到系统中")
-    @PostMapping(value = "/add")
-    public CommonResponse<String> addCameraChannel(@RequestBody @Valid CameraModel cameraModel, BindingResult result){
-        // 返回数据，除了msg和code  之外只需要返回打开推流相机的信息给前端即可
-        CommonResponse<String> response = CommonResponse.create(AppResponseCode.SUCCESS);
-        //首先处理数据校验结果，如果有错误直接不处理后续流程了
-        if (result.getErrorCount() > 0) {
-            StringBuilder builder = new StringBuilder("添加新摄像头失败，原因是：");
-            for (FieldError error : result.getFieldErrors()) {
-                builder.append(error.getField()).append(":").append(error.getDefaultMessage());
-            }
-            log.error(builder.toString());
-            response = CommonResponse.create(AppResponseCode.CAMERA_REQUEST_PARAMETER_VALID);
-            response.setData(builder.toString());
-        }
-        // ip格式校验
-        if (!CommonUtils.isCorrectIp(cameraModel.getIp())) {
-            return CommonResponse.create(AppResponseCode.CAMERA_REQUEST_PARAMETER_VALID);
-        }
-        //返回新数据的ID
-        int id = cameraService.addNewCamera(cameraModel);
-        response.setData(String.valueOf(id));
-        return response;
-    }
 
     @ApiOperation(value="获取系统所有摄像机信息",notes="查询数据库，获得所有摄像头数据")
     @GetMapping(value = "/all")
@@ -229,7 +204,7 @@ public class CameraController {
             cameraVO.setDeviceStatus(camera.getDeviceStatus());
             cameraVO.setIp(camera.getIp());
             cameraVO.setPassword(camera.getPassword());
-            cameraVO.setUsername(camera.getUserName());
+            cameraVO.setUserName(camera.getUserName());
             res.add(cameraVO);
         }
         return CommonResponse.create(AppResponseCode.SUCCESS,res);

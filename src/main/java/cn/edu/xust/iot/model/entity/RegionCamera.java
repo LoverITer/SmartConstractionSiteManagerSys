@@ -25,4 +25,8 @@ public class RegionCamera{
 	 */
 	private Integer regionId;
 
+	public RegionCamera(Integer cameraId, Integer regionId) {
+		this.cameraId = cameraId;
+		this.regionId = regionId;
+	}
 }

@@ -29,8 +29,11 @@
 <body>
 <div class="weadmin-nav">
 			<span class="layui-breadcrumb">
-				<a href="javascript:void(0);">首页</a> <a href="javascript:;">人员管理</a>
-				<a href="javascript:void(0);"> <cite>人员列表</cite></a>
+				<a href="javascript:void(0);">首页</a>
+                <a href="javascript:void(0);">人员管理</a>
+				<a href="javascript:void(0);">
+                    <cite>人员列表</cite>
+                </a>
 			</span>
     <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right"
        href="javascript:location.replace(location.href);" title="刷新">
@@ -136,7 +139,7 @@
                 "            <td><img style='max-width: 60px;min-height: 60px;' src='"+userAvatarUrl+"'/></td>\n" +
                 "            <td class=\"td-status\">"+ memo +"</td>\n" +
                 "            <td class=\"td-manage\">\n" +
-                "                <a title=\"编辑\" onclick=\"WeAdminEdit('编辑','./edit.html', "+userId+", 800, 520)\" href=\"javascript:;\">\n" +
+                "                <a title=\"编辑\" onclick=\"WeAdminEdit('编辑人员信息','./edit.html', "+userId+", 800, 520)\" href=\"javascript:;\">\n" +
                 "                    <i class=\"layui-icon layui-icon-edit\"></i>\n" +
                 "                </a>\n" +
                 "                <a title=\"删除\" onclick=\"member_del(this,"+userId+")\" href=\"javascript:;\">\n" +

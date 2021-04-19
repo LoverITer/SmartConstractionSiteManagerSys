@@ -58,7 +58,8 @@
         </foreach>
     </delete>
 
-    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.SUser">
+    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.SUser" useGeneratedKeys="true"
+            keyColumn="id" keyProperty="id">
         insert into s_user (id, face_lib_id, gender,
                             name, phone, birth,
                             address, certificate_type, certificate_no,

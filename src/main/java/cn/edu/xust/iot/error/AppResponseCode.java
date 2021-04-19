@@ -37,6 +37,7 @@ public enum AppResponseCode {
     CAMERA_REQUEST_IP_VALID(false,4052,"摄像机直播流ip格式输入错误"),
     CAMERA_REQUEST_START_TIME_VALID(false,4053,"摄像机直播流start time格式输入错误"),
     CAMERA_REQUEST_END_TIME_VALID(false,4054,"摄像机直播流end time格式输入错误"),
+    NOT_FOUND_NEW_CAMERA(false,406,"系统监测未发现摄像机"),
 
     /**
      * 程序处理异常，发生未知错误
@@ -46,7 +47,8 @@ public enum AppResponseCode {
     USER_LOGIN_REPEAT(false,502,"用户重复登录"),
     USER_LOGIN_FAIL(false,503,"用户登陆失败"),
     USER_NOT_FOUND(false,504,"用户还未注册"),
-    UPLOAD_FAIL(false,505,"上传失败");
+    UPLOAD_FAIL(false,505,"上传失败"),
+    INIT_SDK_FAIL(false,506,"初始化SDK失败");
 
     Boolean success;
     Integer code;

@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>监控摄像机管理-智慧工地后台管理系统 - v1.0</title>
+    <title>工程进度管理-智慧工地后台管理系统 - v1.0</title>
     <meta name="Description" content="基于layUI数据表格操作"/>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -40,9 +40,9 @@
 <div class="weadmin-nav">
 			<span class="layui-breadcrumb">
         <a href="javascript:void(0);">首页</a>
-        <a href="javascript:void(0);">设备管理</a>
+        <a href="javascript:void(0);">工程进度管理</a>
         <a href="javascript:void(0);">
-          <cite>监控摄像机管理</cite></a>
+          <cite>工程进度列表</cite></a>
       </span>
     <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right"
        href="javascript:location.replace(location.href);" title="刷新">
@@ -52,22 +52,7 @@
 <div class="weadmin-body">
     <div class="layui-row">
         <form class="layui-form layui-col-md12 we-search">
-            设备搜索：
-            <div class="layui-input-inline">
-                <select name="cateid">
-                    <option value="0">请选择设备区域</option>
-                    <option value="1">区域1</option>
-                    <option value="2">区域2</option>
-                    <option value="3">区域3</option>
-                    <option value="4">区域4</option>
-                    <option value="5">区域5</option>
-                    <option value="6">区域6</option>
-                    <option value="7">区域7</option>
-                    <option value="8">区域8</option>
-                    <option value="9">区域9</option>
-                    <option value="10">区域10</option>
-                </select>
-            </div>
+            工程进度搜索：
             <div class="layui-inline">
                 <input class="layui-input" placeholder="开始日" name="start" id="start">
             </div>
@@ -75,7 +60,7 @@
                 <input class="layui-input" placeholder="截止日" name="end" id="end">
             </div>
             <div class="layui-inline">
-                <input type="text" name="keyword" placeholder="请输入区域查询摄像机" autocomplete="off" class="layui-input">
+                <input type="text" name="keyword" placeholder="请输入工程名查询工程进度" autocomplete="off" class="layui-input">
             </div>
             <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -89,32 +74,6 @@
         <span class="fr" style="line-height:40px">共有数据：<span id="camera-total"></span> 条</span>
     </div>
     <table class="layui-table" id="camerasList" lay-filter="camerasList">
-
-        <thead>
-        <tr>
-            <th>
-                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary">
-                    <i class="layui-icon">&#xe605;</i>
-                </div>
-            </th>
-            <th>编号</th>
-            <th>设备名称</th>
-            <th>设备型号</th>
-            <th>IP地址</th>
-            <th>端口</th>
-            <th>物理地址</th>
-            <th>软件版本</th>
-            <th>架设区域</th>
-            <th>识别算法</th>
-            <th>用户名</th>
-            <th>密码</th>
-            <th>设备状态</th>
-            <th>创建时间</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody id="table-data">
-        </tbody>
 
     </table>
 

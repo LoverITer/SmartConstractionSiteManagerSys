@@ -6,9 +6,10 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="power_type" jdbcType="VARCHAR" property="powerType" />
   </resultMap>
   <sql id="Base_Column_List">
-    admin_id, username, password, user_id
+    admin_id, username, password, user_id,power_type
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -43,6 +44,9 @@
       <if test="userId != null">
         user_id,
       </if>
+      <if test="powerType != null">
+        power_type
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="adminId != null">
@@ -56,6 +60,9 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="powerType != null">
+        #{powerType,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>
@@ -71,6 +78,9 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
       </if>
+      <if test="powerType != null">
+        power_type=#{powerType,jdbcType=INTEGER}
+      </if>
     </set>
     where admin_id = #{adminId,jdbcType=INTEGER}
   </update>
@@ -78,7 +88,8 @@
     update admin_user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER}
+      user_id = #{userId,jdbcType=INTEGER},
+      power_type=#{powerType,jdbcType=INTEGER}
     where admin_id = #{adminId,jdbcType=INTEGER}
   </update>
 </mapper>
