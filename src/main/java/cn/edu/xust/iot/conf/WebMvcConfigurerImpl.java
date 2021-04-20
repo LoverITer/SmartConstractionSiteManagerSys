@@ -44,7 +44,7 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 		registry.addRedirectViewController("/api", "/swagger-ui.html");
 		registry.addRedirectViewController("/docs", "/doc.html");
 		registry.addViewController("/login.html").setViewName("login");
-		registry.addViewController("/register.html").setViewName("register");
+		/*registry.addViewController("/register.html").setViewName("register");*/
 		registry.addViewController("/welcome.html").setViewName("welcome");
 		registry.addViewController("/admin/member/list.html").setViewName("/member/list");
 		registry.addViewController("/admin/member/add.html").setViewName("/member/add");
@@ -53,6 +53,15 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 		registry.addViewController("/admin/device/add.html").setViewName("/device/add");
 		registry.addViewController("/admin/device/edit.html").setViewName("/device/edit");
 		registry.addViewController("/admin/administrator/list.html").setViewName("/administrator/list");
+		registry.addViewController("/admin/administrator/add.html").setViewName("/administrator/add");
+		registry.addViewController("/admin/administrator/edit.html").setViewName("/administrator/edit");
+		registry.addViewController("/admin/administrator/role.html").setViewName("/administrator/role");
+		registry.addViewController("/admin/administrator/role-add.html").setViewName("/administrator/role-add");
+		registry.addViewController("/admin/administrator/rule.html").setViewName("/administrator/rule");
+		registry.addViewController("/admin/administrator/power.html").setViewName("/administrator/power");
+		registry.addViewController("/admin/process/list.html").setViewName("/process/list");
+		registry.addViewController("/admin/estimate/list.html").setViewName("/estimate/list");
+
 	}
 
 }

@@ -70,6 +70,11 @@ public class SUserVO implements Serializable {
      */
     private String userAvatarUrl="NA";
 
+    /**
+     * 管理员用户的角色名
+     */
+    private String roleName;
+
 
     public boolean getIsManager(){
         return this.isManager;

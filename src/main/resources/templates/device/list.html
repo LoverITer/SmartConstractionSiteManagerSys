@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="../../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
     <script src="../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
     <script src="../../static/js/common.js" th:src="@{/static/js/common.js}"></script>
-    <!--<script src="list.js" th:src="@{/static/templates/device/list.js}" type="text/javascript" charset="utf-8"></script>-->
     <script src="../../static/js/eleDel.js" th:src="@{/static/js/eleDel.js}" type="text/javascript"
             charset="utf-8"></script>
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
@@ -32,6 +31,10 @@
 
         body {
             overflow-y: scroll;
+        }
+        th,td{
+            text-align: center !important;
+            vertical-align: middle;
         }
     </style>
 </head>

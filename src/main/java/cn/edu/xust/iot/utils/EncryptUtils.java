@@ -35,7 +35,7 @@ public class EncryptUtils {
      */
     private int keysizeAES = 128;
 
-    volatile private static EncryptUtils me;
+    volatile private static EncryptUtils INSTANCE;
 
     private EncryptUtils() {
         //单例
@@ -43,14 +43,14 @@ public class EncryptUtils {
 
     //DCL双检查锁
     public static EncryptUtils getInstance() {
-        if (me == null) {
+        if (INSTANCE == null) {
             synchronized (EncryptUtils.class) {
-                if (me == null) {
-                    me = new EncryptUtils();
+                if (INSTANCE == null) {
+                    INSTANCE = new EncryptUtils();
                 }
             }
         }
-        return me;
+        return INSTANCE;
     }
 
     /**
@@ -220,9 +220,9 @@ public class EncryptUtils {
      * @param key 秘钥
      * @return
      */
-    /*public String DESEncode(String info, String key) {
+    public String DESEncode(String info, String key) {
         return keyGeneratorES(info, DES, key, keysizeDES, true);
-    }*/
+    }
 
     /**
      * 对使用DES加密算法的密文进行解密（可逆）
@@ -318,9 +318,9 @@ public class EncryptUtils {
         return new String(Base64.decode(res));
     }
 
-  /*  public static void main(String[] args) {
-        System.out.println(EncryptUtil.getInstance().AESEncode("95162437hx$","user"));
-        System.out.println(EncryptUtil.getInstance().AESDecode("13535242520A4618494787903A47AC7B","user"));
-    }*/
+    public static void main(String[] args) {
+        System.out.println(EncryptUtils.getInstance().AESEncode("123456","839bea2f-c18f-4338-9b76-7f74e57aee1b"));
+        System.out.println(EncryptUtils.getInstance().AESDecode("0B46FB79A8A4607414229F9A22635AE0","839bea2f-c18f-4338-9b76-7f74e57aee1b"));
+    }
 
 }

@@ -14,6 +14,6 @@ public class AdminUser {
 
     private Integer userId;
 
-    private String powerType;
+    private Integer roleId;
 
 }

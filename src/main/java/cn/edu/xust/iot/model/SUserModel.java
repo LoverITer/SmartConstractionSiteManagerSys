@@ -1,5 +1,6 @@
 package cn.edu.xust.iot.model;
 
+import cn.edu.xust.iot.model.constration.AdminUserType;
 import cn.edu.xust.iot.model.entity.SUser;
 import cn.edu.xust.iot.model.vo.SUserVO;
 import io.swagger.annotations.Api;
@@ -86,6 +87,11 @@ public class SUserModel implements Serializable {
     private String userAvatarUrl = "NA";
 
     /**
+     * 管理员用户的权限
+     */
+    private AdminUserType powerType;
+
+    /**
      * 将UserModel对象转换成UserVO对象并返回
      *
      * @return
@@ -109,6 +115,9 @@ public class SUserModel implements Serializable {
         userVO.setUserAvatarUrl(this.getUserAvatarUrl());
         userVO.setJob(this.getJob());
         userVO.setMemo(this.getMemo());
+        if(this.getPowerType()!=null) {
+            userVO.setRoleName(this.getPowerType().getType());
+        }
         return userVO;
     }
 
@@ -125,7 +134,6 @@ public class SUserModel implements Serializable {
         sUser.setJob(this.getJob());
         sUser.setMemo(this.getMemo());
         sUser.setPhone(this.getPhone());
-
         return sUser;
     }
 

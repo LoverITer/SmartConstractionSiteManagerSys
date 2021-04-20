@@ -31,7 +31,7 @@ import javax.validation.Valid;
 public class LoginController {
 
     /**
-     * 管理员用户登录的最大有效时间  3小时
+     * 管理员用户登录会话的最大有效时间  3小时
      */
     private static final long MAX_USER_LOGIN_STATUS_KEEP_TIME = 3600*3;
     @Autowired
@@ -59,7 +59,7 @@ public class LoginController {
         }
         //用户登录token的key:当前毫秒时间戳+UUID
         String userLoginToken = String.format(RedisKeyManager.USER_LOGIN_TOKEN, System.currentTimeMillis(), CommonUtils.getRandomString());
-        Boolean res = redisService.setnx(userLoginToken, JSON.toJSONString(userModel),  RedisService.RedisDataBaseSelector.DB_0);
+        Boolean res = redisService.setnx(userLoginToken, JSON.toJSONString(adminUser),  RedisService.RedisDataBaseSelector.DB_0);
         if (res == null) {
             return CommonResponse.create(AppResponseCode.USER_LOGIN_FAIL, "管理员登陆失败，请重试！");
         } else if (!res) {
@@ -71,6 +71,7 @@ public class LoginController {
     }
 
 
+/*    @Deprecated
     @ApiOperation(value = "管理员用户注册接口")
     @ResponseBody
     @PostMapping(value = "/register")
@@ -85,10 +86,10 @@ public class LoginController {
         }
         //检查用户名密码
         return adminService.addNewAdminUser(userModel);
-    }
+    }*/
 
 
-    @ApiOperation(value = "logout", notes = "管理员退出接口")
+    @ApiOperation(value = "管理员退出接口", notes = "管理员退出接口")
     @GetMapping(value = "/logout")
     public String logout(@RequestParam(value = "token") String token){
         if(CommonUtils.isNull(token)){
@@ -100,18 +101,21 @@ public class LoginController {
         }
         return "login";
     }
-    @ApiOperation(value = "getAdminUserInfo",notes = "获取登陆用户的信息")
+
+
+    @ApiOperation(value = "获取登陆用户的信息",notes = "获取登陆用户的信息")
     @ResponseBody
     @GetMapping(value = "/info")
-    public CommonResponse<AdminUserModel> getAdminUserInfo(@RequestParam(value = "token") String token){
+    public CommonResponse<AdminUser> getAdminUserInfo(@RequestParam(value = "token") String token){
         if(CommonUtils.isNull(token)){
             return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
         }
-        AdminUserModel userModel = JSON.parseObject((String) redisService.get(token, RedisService.RedisDataBaseSelector.DB_0), AdminUserModel.class);
-        if(null==userModel){
+        AdminUser adminUser = JSON.parseObject((String) redisService.get(token, RedisService.RedisDataBaseSelector.DB_0), AdminUser.class);
+
+        if(null==adminUser){
             return CommonResponse.create(AppResponseCode.FAIL);
         }
-        return CommonResponse.create(AppResponseCode.SUCCESS,userModel);
+        return CommonResponse.create(AppResponseCode.SUCCESS,adminUser);
     }
 
 

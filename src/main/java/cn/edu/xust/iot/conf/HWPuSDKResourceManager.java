@@ -61,8 +61,8 @@ public class HWPuSDKResourceManager implements ApplicationRunner, DisposableBean
     public void destroy() throws Exception {
         Map<String, Long> loginMap = HWPuSDKServiceImpl.CAMERAS_LOGIN_MAP;
         Set<String> ipSet = loginMap.keySet();
-        hwPuSDKService.close();
         ipSet.forEach(ip-> hwPuSDKService.logout(ip));
+        hwPuSDKService.close();
     }
 
 

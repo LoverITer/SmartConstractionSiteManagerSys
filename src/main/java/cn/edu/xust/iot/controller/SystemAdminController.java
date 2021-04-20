@@ -2,11 +2,13 @@ package cn.edu.xust.iot.controller;
 
 import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.mapper.pagehelper.PageParam;
+import cn.edu.xust.iot.model.AdminUserModel;
 import cn.edu.xust.iot.model.CameraModel;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.SUserModel;
 import cn.edu.xust.iot.model.vo.CameraVO;
 import cn.edu.xust.iot.model.vo.SUserVO;
+import cn.edu.xust.iot.service.IAdminUserService;
 import cn.edu.xust.iot.service.ICameraService;
 import cn.edu.xust.iot.service.ISUserService;
 import cn.edu.xust.iot.utils.CommonUtils;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +46,9 @@ public class SystemAdminController {
 
     @Autowired
     private ICameraService cameraService;
+
+    @Autowired
+    private IAdminUserService adminUserService;
 
     @ApiOperation(value = "后台管理系统首页", notes = "后台管理系统首页")
     @GetMapping(value = "/index")
@@ -135,7 +141,8 @@ public class SystemAdminController {
     @ApiOperation(value = "获取系统监控摄像机的信息", notes = "获取系统监控摄像机的信息，如果查询到数据响应码是200，否者响应码一律都是500")
     @ResponseBody
     @GetMapping(value = "/cameras/list")
-    public CommonResponse<PageInfo<CameraVO>> getAllCameras(@RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "5") int pageSize) {
+    public CommonResponse<PageInfo<CameraVO>> getAllCameras(@RequestParam(required = false, defaultValue = "1") int page,
+                                                            @RequestParam(required = false, defaultValue = "5") int pageSize) {
         if (-1 == pageSize) {
             //查询全部的数据
             pageSize = cameraService.getAllCamerasSize().getData();
@@ -204,6 +211,83 @@ public class SystemAdminController {
                 .map(s -> Integer.parseInt(s.trim()))
                 .collect(Collectors.toList());
         return cameraService.removeCameraBatch(cameraIdList);
+    }
+
+    @ApiOperation(value = "获取系统所有管理人员数据接口", notes = "获取系统所有管理人员数据接口")
+    @ResponseBody
+    @GetMapping(value = "/administrator/list")
+    public CommonResponse<PageInfo<AdminUserModel>> getAllAdministratorList(@RequestParam(required = false, defaultValue = "1") int page,
+                                                                            @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        if (-1 == pageSize) {
+            //查询全部的数据
+            pageSize = adminUserService.getAllAdminUserSize().getData();
+        }
+        PageInfo<AdminUserModel> allAdminUserList = adminUserService.getAllAdminUserList(PageParam.create(page, pageSize));
+        if (null == allAdminUserList) {
+            return CommonResponse.create(AppResponseCode.FAIL);
+        }
+        return CommonResponse.create(AppResponseCode.SUCCESS, allAdminUserList);
+    }
+
+
+    @ApiOperation(value = "获取系统所有管理人员数据接口", notes = "获取系统所有管理人员数据接口")
+    @ResponseBody
+    @GetMapping(value = "/administrator/count")
+    public CommonResponse<Integer> getAllAdministratorSize() {
+        return adminUserService.getAllAdminUserSize();
+    }
+
+    @ApiOperation(value = "添加新的管理员接口", notes = "添加新的管理员")
+    @ResponseBody
+    @PostMapping(value = "/administrator/add")
+    public CommonResponse<String> addNewAdminUser(@RequestBody @Valid AdminUserModel userModel,BindingResult result) {
+        if (result.getErrorCount() > 0) {
+            StringBuilder builder = new StringBuilder("添加新管理员接口 添加失败，原因是：");
+            for (FieldError error : result.getFieldErrors()) {
+                builder.append(error.getField()).append(":").append(error.getDefaultMessage());
+            }
+            log.error(builder.toString());
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID, builder.toString());
+        }
+        String password = userModel.getPassword();
+        String[] pass = password.split(",");
+        if(pass[0].equals(pass[1])){
+            userModel.setPassword(pass[0]);
+            if(null==userModel.getCreateTime()){
+                userModel.setCreateTime(new Date());
+            }
+            return adminUserService.addNewAdminUser(userModel);
+        }
+        return CommonResponse.create(AppResponseCode.INCONSISTENT_PASSWORDS);
+    }
+
+    @ApiOperation(value = "添加新的管理员接口", notes = "添加新的管理员")
+    @ResponseBody
+    @PostMapping(value = "/administrator/edit")
+    public CommonResponse<String> editAdminUser(@RequestBody @Valid AdminUserModel userModel,BindingResult result) {
+        if (result.getErrorCount() > 0) {
+            StringBuilder builder = new StringBuilder("修改管理员信息接口 修改摄像机信息失败，原因是：");
+            for (FieldError error : result.getFieldErrors()) {
+                builder.append(error.getField()).append(":").append(error.getDefaultMessage());
+            }
+            log.error(builder.toString());
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID, builder.toString());
+        }
+        return adminUserService.editAdminUser(userModel);
+    }
+
+    @ApiOperation(value = "添加新的管理员接口", notes = "添加新的管理员")
+    @ResponseBody
+    @GetMapping(value = "/administrator/remove")
+    public CommonResponse<String> removeAdminUser(@RequestParam String adminUserIds) {
+        if (CommonUtils.isNull(adminUserIds)) {
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
+        }
+        //需要删除的监控摄像机id列表
+        List<Integer> cameraIdList = Arrays.stream(adminUserIds.split(","))
+                .map(s -> Integer.parseInt(s.trim()))
+                .collect(Collectors.toList());
+        return adminUserService.removeAdminUser(cameraIdList);
     }
 
 

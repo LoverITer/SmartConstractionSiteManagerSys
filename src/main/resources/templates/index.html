@@ -9,7 +9,6 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="shortcut icon" href="./favicon.ico" th:src="@{/favicon.ico}" type="image/x-icon"/>
     <link rel="stylesheet" href="../static/css/font.css" th:src="@{/static/css/font.css}">
     <link rel="stylesheet" href="../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
     <script src="../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
@@ -24,7 +23,6 @@
     <div class="left_open">
         <!-- <i title="展开左侧栏" class="iconfont">&#xe699;</i> -->
         <i title="展开左侧栏" class="layui-icon layui-icon-shrink-right"></i>
-
     </div>
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
@@ -32,13 +30,13 @@
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
-                    <a th:href="@{/admin/about}" onclick="WeAdminShow('个人信息','http://www.baidu.com')">个人信息</a>
+                    <a th:href="@{/admin/about(token=${token})}" onclick="WeAdminShow('个人信息','http://www.baidu.com')">个人信息</a>
                 </dd>
                 <dd>
-                    <a th:href="@{/user/logout}" onclick="WeAdminShow('切换帐号','./login.html')">切换帐号</a>
+                    <a th:href="@{/user/logout(token=${token})}" onclick="WeAdminShow('切换帐号','./login.html')">切换帐号</a>
                 </dd>
                 <dd>
-                    <a class="loginout" th:href="@{/user/logout}" href="./login.html">退出</a>
+                    <a class="loginout" th:href="@{/user/logout(token=${token})}" href="./login.html">退出</a>
                 </dd>
             </dl>
         </li>
@@ -70,27 +68,28 @@
             <li id="menu3"><a _href=""><i class="layui-icon layui-icon-util"></i><cite>管理员权限</cite><i
                     class="iconfont nav_right"></i></a>
                 <ul class="sub-menu" style="">
-                    <li id="menu3-1"><a _href="./administrator/list.html"><i class="iconfont"></i><cite>管理员列表</cite></a>
+                    <li id="menu3-1"><a _href="./administrator/list.html"><i
+                            class="iconfont"></i><cite>管理员列表</cite></a>
                     </li>
                     <li id="menu3-2"><a _href="./administrator/role.html"><i class="iconfont"></i><cite>角色管理</cite></a>
                     </li>
-                    <li id="menu3-3"><a _href="./administrator/cate.html"><i class="iconfont"></i><cite>权限分类</cite></a>
-                    </li>
-                    <li id="menu3-4"><a _href="./administrator/rule.html"><i class="iconfont"></i><cite>权限管理</cite></a>
+                    <li id="menu3-3"><a _href="./administrator/rule.html"><i class="iconfont"></i><cite>权限管理</cite></a>
                     </li>
                 </ul>
             </li>
             <li id="menu4"><a _href=""><i class="layui-icon layui-icon-form"></i><cite>工程进度管理</cite><i
                     class="iconfont nav_right"></i></a>
                 <ul class="sub-menu" style="">
-                    <li id="menu4-1"><a _href="./administrator/list.html"><i class="iconfont"></i><cite>工程进度列表</cite></a>
+                    <li id="menu4-1"><a _href="./administrator/list.html"><i
+                            class="iconfont"></i><cite>工程进度列表</cite></a>
                     </li>
                 </ul>
             </li>
             <li id="menu5"><a _href=""><i class="layui-icon layui-icon-chart"></i><cite>工程预算管理</cite><i
                     class="iconfont nav_right"></i></a>
                 <ul class="sub-menu" style="">
-                    <li id="menu5-1"><a _href="./administrator/list.html"><i class="iconfont"></i><cite>工程预算列表</cite></a>
+                    <li id="menu5-1"><a _href="./administrator/list.html"><i
+                            class="iconfont"></i><cite>工程预算列表</cite></a>
                     </li>
                 </ul>
             </li>
@@ -101,7 +100,7 @@
                     </li>
                     <li id="menu6-2"><a _href="./administrator/role.html"><i class="iconfont"></i><cite>角色管理</cite></a>
                     </li>
-                    <li id="menu6-3"><a _href="./administrator/cate.html"><i class="iconfont"></i><cite>权限分类</cite></a>
+                    <li id="menu6-3"><a _href="./administrator/power.html"><i class="iconfont"></i><cite>权限分类</cite></a>
                     </li>
                     <li id="menu6-4"><a _href="./administrator/rule.html"><i class="iconfont"></i><cite>权限管理</cite></a>
                     </li>
@@ -135,7 +134,7 @@
 <!-- 底部结束 -->
 <script type="text/javascript">
 
-    var TOKEN=localStorage.getItem(USER_LOGIN_TOKEN);
+    var TOKEN = localStorage.getItem(USER_LOGIN_TOKEN);
 
     layui.config({
         base: '../static/js/'
@@ -150,6 +149,39 @@
             menu = layui.menu;
 
 
+        function powerCtrl(role_id) {
+            if (undefined === role_id || role_id === "") {
+                layer.msg("用户权限参数有误，权限功能将异常", {icon: 2});
+            }
+            if (1 === role_id || 2 === role_id) {
+                //系统管理员 或者是 项目经理登陆之后具有全部的权限，这里直接返回即可
+                //do nothing
+            } else if (3 === role_id) {
+                //总工程师 没有管理员管理权限
+                $('#menu3').remove();
+            } else if (4 === role_id) {
+                //安全员只对安全管理以及安全设备管理有权限
+                $('#menu1').remove();
+                $('#menu3').remove();
+                $('#menu4').remove();
+                $('#menu5').remove();
+            } else if (5 === role_id) {
+                //施工员只对工程进度管理有权限
+                $('#menu1').remove();
+                $('#menu2').remove();
+                $('#menu3').remove();
+                $('#menu5').remove();
+            } else if (6 === role_id) {
+                //造价员只对工程预算管理有权限
+                $('#menu1').remove();
+                $('#menu2').remove();
+                $('#menu3').remove();
+                $('#menu4').remove();
+            }else{
+                $('#nav').remove();
+            }
+        }
+
         //页面加载之后需要干的事情
         $(function () {
             $.ajax({
@@ -157,11 +189,13 @@
                 method: "get",
                 contentType: "application/json",
                 sync: false,
-                data: {"token":TOKEN},
+                data: {"token": TOKEN},
                 success: function (response) {
                     if (response.code == 200) {
-                       $('#username').html(response.data.username+"<span class=\"layui-nav-more\"></span>");
-                    }else{
+                        console.log(response.data);
+                        powerCtrl(response.data.roleId);
+                        $('#username').html(response.data.username + "<span class=\"layui-nav-more\"></span>");
+                    } else {
                         layer.msg(response.msg);
                     }
                 },

@@ -48,7 +48,9 @@ public enum AppResponseCode {
     USER_LOGIN_FAIL(false,503,"用户登陆失败"),
     USER_NOT_FOUND(false,504,"用户还未注册"),
     UPLOAD_FAIL(false,505,"上传失败"),
-    INIT_SDK_FAIL(false,506,"初始化SDK失败");
+    INIT_SDK_FAIL(false,506,"初始化SDK失败"),
+    ADMIN_USER_EXIST(false,507,"管理员用户名重复"),
+    INCONSISTENT_PASSWORDS(false,508,"两次密码不一致");
 
     Boolean success;
     Integer code;
