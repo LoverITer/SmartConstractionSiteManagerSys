@@ -55,6 +55,14 @@ public interface SUserMapper {
      */
     SUser selectByPrimaryKey(Integer id);
 
+    /**
+     * 根据用户ID批量查询人脸库ID
+     *
+     * @param ids
+     * @return
+     */
+    List<Integer> selectFaceLibIdBatch(@Param(value = "ids") List<Integer> ids);
+
 
     /**
      * 查询所有人员的信息

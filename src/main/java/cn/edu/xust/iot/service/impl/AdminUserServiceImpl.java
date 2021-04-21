@@ -124,6 +124,7 @@ public class AdminUserServiceImpl implements IAdminUserService {
         return CommonResponse.create(AppResponseCode.FAIL, camerasSize);
     }
 
+
     @Transactional(rollbackFor = Exception.class, isolation = Isolation.REPEATABLE_READ)
     @Override
     public CommonResponse<String> editAdminUser(AdminUserModel userModel) {
@@ -155,10 +156,8 @@ public class AdminUserServiceImpl implements IAdminUserService {
     @Override
     public CommonResponse<String> removeAdminUser(List<Integer> adminUserIds) {
         try {
-            adminUserIds.forEach(adminUserId -> {
-                AdminUser adminUser = adminUserMapper.selectByPrimaryKey(adminUserId);
-                normalUserMapper.deleteByPrimaryKey(adminUser.getUserId());
-            });
+            List<Integer> userIds= adminUserMapper.selectUserIdByPrimaryKeyBatch(adminUserIds);
+            normalUserMapper.batchDeleteByPrimaryKey(userIds);
             int rows = adminUserMapper.batchDeleteByPrimaryKey(adminUserIds);
             if (rows <= 0) {
                 log.error("删除管理员信息时发生错误");

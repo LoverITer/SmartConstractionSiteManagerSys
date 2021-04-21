@@ -20,6 +20,14 @@
     delete from face_lib
     where id = #{id,jdbcType=BIGINT}
   </delete>
+
+  <delete id="deleteByPrimaryKeyBatch" parameterType="java.lang.Long">
+    delete from face_lib where  id in
+    <foreach collection="faceLibIds" item="faceId" open="(" separator="," close=")">
+      #{faceId}
+    </foreach>
+  </delete>
+
   <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.FaceLib" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
     insert into face_lib (id, face_pic, create_time, 
       memo)

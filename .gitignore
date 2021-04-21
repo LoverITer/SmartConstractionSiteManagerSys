@@ -15,12 +15,14 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+.mvn
+.
+smart_security_monitoring_and_early_warning_platform.iml
+D:\JavaProject\smart_security_monitoring_and_early_warning_platform\src\main\resources\ffmpeg\*
 *.iws
 *.iml
 *.ipr
-*/ffmpeg/
 .log
-
 
 
 ### NetBeans ###

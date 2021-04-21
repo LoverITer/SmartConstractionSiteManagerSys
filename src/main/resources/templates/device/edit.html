@@ -216,6 +216,15 @@
                     var userName = tdArr.eq(10).text(); //手机
                     var password = tdArr.eq(11).text(); //地址
                     var deviceStatus= tdArr.eq(12).text();
+                    if(deviceStatus==="离线"){
+                        deviceStatus="0";
+                    }else if(deviceStatus==="在线"){
+                        deviceStatus="1"
+                    }else if(deviceStatus==="告警"){
+                        deviceStatus="2";
+                    }else{
+                        deviceStatus="3";
+                    }
                     var createTime= tdArr.eq(10).text(); //工种
 
                     $('input[name="device_name"]').val(deviceName);
@@ -225,9 +234,9 @@
                     $('input[name="password"]').val(password);
                     $('input[name="device_region"]').val(regionName);
                     $('input[name="create_time"]').val(createTime);
-                    console.log($("#device_status").find("option[text="+deviceStatus+"]"));
-                    $("#device_status").find("option[text="+deviceStatus+"]").prop("selected",true);
-                    $("#device_model").find("option[text="+model+"]").prop("selected",true);
+                    $('#device_status').siblings("div.layui-form-select").find('dl').find('dd[lay-value=' + deviceStatus + ']').click();
+                    $('#device_model').siblings("div.layui-form-select").find('dl').find('dd[lay-value=' + model+ ']').click();
+
 
                     form.render();
                 }

@@ -42,7 +42,7 @@ public enum AppResponseCode {
     /**
      * 程序处理异常，发生未知错误
      */
-    FAIL(false, 500, "错误"),
+    FAIL(false, 500, "服务器错误"),
     CAMERA_OPEN_VIDEO_STREAM_FAIL(false,501,"打开视频流失败"),
     USER_LOGIN_REPEAT(false,502,"用户重复登录"),
     USER_LOGIN_FAIL(false,503,"用户登陆失败"),

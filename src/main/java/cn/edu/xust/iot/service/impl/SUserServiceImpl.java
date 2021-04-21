@@ -97,10 +97,30 @@ public class SUserServiceImpl implements ISUserService {
         }
     }
 
+    @Transactional(isolation= Isolation.REPEATABLE_READ,rollbackFor = Exception.class)
     @Override
     public CommonResponse<String> editMemberInfo(SUserModel userModel) {
         try{
             SUser sUser = userModel.convertUserModel2SUser();
+            Integer userId = userModel.getUserId();
+            SUser user = userMapper.selectByPrimaryKey(userId);
+            if(null==user){
+                return CommonResponse.create(AppResponseCode.FAIL);
+            }
+            //处理管理员人脸库后来修改的那种情况
+            if(user.getFaceLibId()==null){
+                FaceLib faceLib = new FaceLib(userModel.getUserAvatarUrl(), new Date());
+                int rows = faceLibMapper.insert(faceLib);
+                if(rows>0){
+                    sUser.setFaceLibId(faceLib.getId());
+                }
+            }else {
+                //同步更新人脸库
+                FaceLib faceLib = new FaceLib();
+                faceLib.setId(user.getFaceLibId());
+                faceLib.setFacePic(userModel.getUserAvatarUrl());
+                faceLibMapper.updateByPrimaryKeySelective(faceLib);
+            }
             int rows = userMapper.updateByPrimaryKeySelective(sUser);
             if(rows<=0){
                 return CommonResponse.create(AppResponseCode.FAIL);
@@ -113,9 +133,12 @@ public class SUserServiceImpl implements ISUserService {
         }
     }
 
+    @Transactional(isolation= Isolation.REPEATABLE_READ,rollbackFor = Exception.class)
     @Override
     public CommonResponse<String> removeMemberBatch(List<Integer> userIdList) {
         try{
+            List<Integer> faceLibIds = userMapper.selectFaceLibIdBatch(userIdList);
+            faceLibMapper.deleteByPrimaryKeyBatch(faceLibIds);
             int rows = userMapper.batchDeleteByPrimaryKey(userIdList);
             if(rows<=0){
                 log.error("删除人员信息时发生错误");

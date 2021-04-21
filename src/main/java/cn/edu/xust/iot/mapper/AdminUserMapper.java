@@ -11,6 +11,8 @@ public interface AdminUserMapper {
 
     int batchDeleteByPrimaryKey(@Param("adminUserIds") List<Integer> adminUserIds);
 
+    List<Integer> selectUserIdByPrimaryKeyBatch(@Param("adminUserIds") List<Integer> adminUserIds);
+
     int insert(AdminUser record);
 
     int insertSelective(AdminUser record);

@@ -32,6 +32,13 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <select id="selectFaceLibIdBatch" parameterType="java.util.List" resultType="java.lang.Integer">
+        select face_lib_id from s_user where id in
+        <foreach collection="ids" item="userId" open="("  separator="," close=")">
+            #{userId}
+        </foreach>
+    </select>
+
     <select id="selectAll" resultType="cn.edu.xust.iot.model.SUserModel">
         SELECT
         <include refid="User_VO_List"/>

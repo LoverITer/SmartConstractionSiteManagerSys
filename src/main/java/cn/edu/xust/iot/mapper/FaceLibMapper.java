@@ -1,8 +1,10 @@
 package cn.edu.xust.iot.mapper;
 
 import cn.edu.xust.iot.model.entity.FaceLib;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 
 
 /**
@@ -20,6 +22,8 @@ public interface FaceLibMapper {
 	 * @return 受影响的行数 1 表示删除成功 ， 0 表示删除失败
 	 */
 	int deleteByPrimaryKey(Long id);
+
+	int deleteByPrimaryKeyBatch(@Param(value = "faceLibIds") List<Integer> faceLibIds);
 
 	/**
 	 * 向人脸库表中新增一条记录

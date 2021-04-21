@@ -54,6 +54,15 @@
         from admin_user
         where username = #{username}
     </select>
+
+    <select id="selectUserIdByPrimaryKeyBatch" parameterType="java.util.List" resultType="java.lang.Integer">
+        select user_id from admin_user where admin_id in
+        <foreach item="adminUserId" collection="adminUserIds" open="(" separator="," close=")">
+            #{adminUserId}
+        </foreach>
+    </select>
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from admin_user
