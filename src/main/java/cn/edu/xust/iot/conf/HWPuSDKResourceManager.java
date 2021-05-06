@@ -40,7 +40,12 @@ public class HWPuSDKResourceManager implements ApplicationRunner, DisposableBean
             return;
         }
         for (Camera camera : cameras) {
+            Set<String> keySet = HWPuSDKServiceImpl.CAMERAS_LOGIN_MAP.keySet();
             String ip = camera.getIp();
+            if(keySet.contains(ip)){
+                //测试环境中会有很多重复的ip，这里为了避免重复登陆摄像机需要判断一下是够已经登陆
+                continue;
+            }
             int port = camera.getPort();
             String username = camera.getUserName();
             String password = camera.getPassword();

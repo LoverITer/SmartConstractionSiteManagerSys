@@ -47,51 +47,9 @@ public class Attendance {
 	 */
 	private Integer afterWorkDeviceId;
 
-	public Integer getAfterWorkDeviceId() {
-		return afterWorkDeviceId;
-	}
+	/**
+	 * 是否迟到
+	 */
+	private String late;
 
-	public Date getAfterWorkTime() {
-		return afterWorkTime;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public Integer getStarkWorkDeviceId() {
-		return starkWorkDeviceId;
-	}
-
-	public Date getStarkWorkTime() {
-		return starkWorkTime;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setAfterWorkDeviceId(Integer afterWorkDeviceId) {
-		this.afterWorkDeviceId = afterWorkDeviceId;
-	}
-
-	public void setAfterWorkTime(Date afterWorkTime) {
-		this.afterWorkTime = afterWorkTime;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public void setStarkWorkDeviceId(Integer starkWorkDeviceId) {
-		this.starkWorkDeviceId = starkWorkDeviceId;
-	}
-
-	public void setStarkWorkTime(Date starkWorkTime) {
-		this.starkWorkTime = starkWorkTime;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
 }

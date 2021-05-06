@@ -3,6 +3,7 @@ package cn.edu.xust.iot.mapper;
 import cn.edu.xust.iot.model.entity.Camera;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -62,6 +63,13 @@ public interface CameraMapper {
      * @return
      */
     List<Camera> selectCameraLoginParam();
+
+    /**
+     * 根据区域查询摄像机
+     *
+     * @return
+     */
+    List<Camera> selectCameraByRegionName(@RequestParam(value = "regionName") String regionName);
 
     /**
      * 统计数量

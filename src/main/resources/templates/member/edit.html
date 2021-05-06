@@ -88,8 +88,8 @@
             <div class="layui-input-inline">
                 <select name="is_manager" id="is_manager">
                     <option value="-1">请选择</option>
+                    <option value="0">否</option>
                     <option value="1">是</option>
-                    <option value="2">否</option>
                 </select>
             </div>
         </div>
@@ -98,7 +98,31 @@
                 <span class="we-red">*</span>职位/工种
             </label>
             <div class="layui-input-inline">
+<!--
                 <input type="text" id="job" name="job" autocomplete="off" class="layui-input">
+-->
+                <select name="job" id="job">
+                    <option value="0">请选择</option>
+                    <option value="系统管理员">系统管理员</option>
+                    <option value="项目经理">项目经理</option>
+                    <option value="副项目经理">副项目经理</option>
+                    <option value="总工程师">总工程师</option>
+                    <option value="施工员">施工员</option>
+                    <option value="造价员">造价员</option>
+                    <option value="安全员">安全员</option>
+                    <option value="木工">木工</option>
+                    <option value="钢筋工">钢筋工</option>
+                    <option value="混凝土工">混凝土工</option>
+                    <option value="砖瓦工">砖瓦工</option>
+                    <option value="抹灰工">抹灰工</option>
+                    <option value="涂料工">涂料工</option>
+                    <option value="装修工">装修工</option>
+                    <option value="电工">电工</option>
+                    <option value="水暖工">水暖工</option>
+                    <option value="杂工">杂工</option>
+                    <option value="机修工">机修工</option>
+                    <option value="机械司">机械司</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -222,7 +246,7 @@
                     var address = tdArr.eq(6).text(); //地址
                     var create_time=tdArr.eq(7).text(); //加入时间
                     var cert_no= tdArr.eq(8).text(); //证件号
-                    var isManager= tdArr.eq(9).text()=="是"?1:2; //是否管理层
+                    var isManager= tdArr.eq(9).text()=="是"?1:0; //是否管理层
                     var job= tdArr.eq(10).text(); //工种
                     var face_pic= tdArr.eq(11).children('img')[0].src; //人脸头像
                     var memo= tdArr.eq(12).text(); //备忘录
@@ -232,16 +256,17 @@
                     $('input[name="phone"]').val(phone);
                     $('input[name="birth"]').val(birth);
                     $('input[name="cert_no"]').val(cert_no);
-                    $('input[name="job"]').val(job);
+                    /*$('input[name="job"]').val(job);*/
                     $('input[name="address"]').val(address);
                     $('input[name="create_time"]').val(create_time);
-                    $("#is_manager").each(function(){
-                        $(this).find("option").eq(isManager).prop("selected",true)
-                    });
+                    $('#is_manager').siblings("div.layui-form-select").find('dl').find('dd[lay-value=' + isManager + ']').click();
+
+                    $('#job').siblings("div.layui-form-select").find('dl').find('dd[lay-value=' + job + ']').click();
+
                     $('input[name="face_pic"]').val(face_pic);
                     $('#face_pic_show').text(face_pic);
                     $('#face_pic_show').attr('href', face_pic);
-                    $('#memo').val(" "+memo);
+                    $('#memo').val(memo);
                     form.render();
                 }
             });

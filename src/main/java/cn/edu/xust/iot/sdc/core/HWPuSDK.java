@@ -1084,6 +1084,7 @@ public interface HWPuSDK extends Library {
     }
 
     public interface LAYER_THREE_TYPE_E {
+        int MATCH_TYPE = 0x01000004; //人脸匹配结果
         int PTS = 0x09000001; // Timestamp.
         int ITGT_TYPE = 0x07000011; // Intelligent type.
         int IMG_WIDTH = 0x07000100; // Image width.
@@ -1111,6 +1112,7 @@ public interface HWPuSDK extends Library {
         int HUMAN_RECT = 0x0B000013; // Person position (real-time frame position).
         int HUMAN_RECT_POSITION = 0x0B000014; // Position of the frame for person cutout.
         int FACE_MATCH = 0x0A000014; // Matching image in the face library.
+        int VISITOR_TYPE=0x0200007C;  //访客类型 0 : 社区居民 1:访客
         int FACELIB_RECORDID = 0x07000017; // Face ID in the face library, which is used to maintain
         // the consistency of feature records.
         int FACE_MATCHRATE = 0x07000020; // Face match rate.
@@ -1118,6 +1120,7 @@ public interface HWPuSDK extends Library {
         // database.
         int FACE_LIB_TYPE = 0x07000022; // Face library type.
         int FACE_LIB_NAME = 0x0A000015; // Face library name.
+        int FACE_CAP_FEATURE=0x0A000020;  //人脸抓拍特征值
         int TARGET_TYPE = 0x07000023; // Object type, which is used to differentiate face cutout,
         // facial recognition, and facial recognition in
         // multi-camera collaboration mode.
@@ -1130,6 +1133,9 @@ public interface HWPuSDK extends Library {
         int MMC_FACE_WARNING_RECALL_RATE_MIN = 0x07000027; // Multi-camera collaboration algorithm
         // parameter (minimum face alarm recall
         // rate).
+        int SNAPFACENUM=0x07000103;  //当前相机抓拍人数统计
+        int TOTALSNAPNUM=0x07000104;  //整个服务抓拍人数
+        int SNAP_MATCHRATE_MILLION=0x07000105;  //发送给元数据网关的匹配率，6位有效数字
         int OBJ_ID = 0x07000021; // Object ID.
         int OBJ_STATUS = 0x06000022; // Object status.
         int OBJ_POS = 0x0B000023; // Object position.
@@ -1155,6 +1161,8 @@ public interface HWPuSDK extends Library {
         int PLATE_POS = 0x0B000007; // License plate position.
         int PLATE_CHAR = 0x0A000008; // License plate characters.
         int PLATE_PIC = 0x0A000009; // License plate cutout.
+        int FACEPIC_UUID=0x0A00007A; //图片UUID
+        int ID_CARDMD5=0x0A00007B;   //身份证MD5
         int PLATE_CONFIDENCE = 0x07000061; // License plate confidence.
         int PLATE_COLOR = 0x07000062; // License plate color.
         int PLATE_CHAR_POS = 0x0B000063; // License plate character position.
@@ -1855,6 +1863,7 @@ public interface HWPuSDK extends Library {
     }
 
     // sdk event callback function type
+    @FunctionalInterface
     public interface pfGetEventInfoCallBack extends StdCallCallback {
         long eventStatus(Pointer arg);
     }
@@ -3168,6 +3177,47 @@ public interface HWPuSDK extends Library {
         int DRIVING = 3; // Driver's license.
         int OTHERS = 4; // Others.
         int MAX = 5;
+    }
+
+    //TARGET目标类型
+    interface ITGT_TARGET_TYPE_E {
+        int TARGET_FACE_HUMAN_RECT = 0x00; // 人脸人体检测框
+        int TARGET_FACE_DT_PROCESS = 0x01; // 人脸后处理数据，发送抠图
+        int TARGET_FACE_RECOGNITION = 0x02; // 人脸识别
+        int TARGET_MMC_FACE_PRE_PROCESS = 0x03; // 多机协同人脸检测到的抠图和算法配置参数 对内使用
+        int TARGET_MMC_FACE_RECOG = 0x04; // 多机协同人脸识别对内使用
+        int TARGET_IBALL_VEHICLE_DT = 0x05; // 违停球车辆检测
+        int TARGET_HUMANBODY = 0x06; // 机非人业务人体信息
+        int TARGET_VHD_VEHICLE = 0x07; // 机非人业务机动车信息
+        int TARGET_VHD_NOMOTOR = 0x08; // 机非人非机动车信息
+        int TARGET_VEHICLE_RECT = 0x09; // 车检测框
+        int TARGET_NOMOTOR_RECT = 0x0a; // 非机动车检测框
+        int TARGET_HOTMAP = 0x0b; // 热度图
+        int TARGET_CROWD_DENSITY = 0x0c; // 人群密度
+        int TARGET_QUEUING_LENGTH = 0x0d; // 排队长度
+        int TARGET_BEHAVIOR = 0x0e; // 行为分析
+        int TARGET_HUMANCOUNT = 0x0f; // 过线计数
+        int TARGET_AUTOTRACK = 0x10; //自动跟踪
+        int TARGET_CARDETECTION = 0x11; //停车侦测
+        int TARGET_MSL_AUTO_CALIBRATION = 0x12; //枪球联动自动标定点显示
+        int TARGET_HBA = 0x13; // 复杂行为分析
+        int TARGET_ITS_PROCESS = 0x30; // ITS
+        int TARGET_ITS_STATISTICS = 0x31; // ITS车流量统计
+        int TARGET_ITS_OBJ_DT = 0x32; // ITS目标检测框
+        int TARGET_VLPR_PROCESS = 0x33; // 微卡口
+        int TARGET_VLPR_STATISTICS = 0x34; // 微卡口车流量统计
+        int TARGET_VHD_HUMAN_ON_NOMOTOR = 0x35; // 混行业务 非机动车上人脸人体
+        int TARGET_ITS_PEDRUNRED = 0x36; // ITS行人闯红灯业务
+        int TARGET_ITS_HOLOCAMERA = 0x37; //ITS电警全息相机
+        int TARGET_ITS_TRRFICLIGHT = 0x38; //ITS 信号灯状态
+        int TARGET_ITS_LINKAGE_DATA = 0x39; // 鞍山不礼让行人联动数据上传
+        int TARGET_TEMPERATURE_ALARM = 0x40; // 热成像测温告警
+        int TARGET_FIRE_RESULT = 0x41; // 火点检测结果
+        int TARGET_ITS_NOMOTOR = 0x42; // ITS非机动车
+        int TARGET_ITS_HUMAN = 0x43; // ITS行人
+        int TARGET_TDOME_ILLEGAL_PARKING_ALARM = 0x44; //违停球镜头第一次拉近抓拍告警
+        int TARGET_RECT = 0x60; // 目标框信息，用于实时显示
+        int TARGET_KEEPALIVE = 0x80; // 元数据保活
     }
 
     // Certificate validity period parameters.
@@ -5221,7 +5271,7 @@ public interface HWPuSDK extends Library {
         }
     }
 
-    public static class PU_FACE_LIB_GET_S extends Structure {
+    class PU_FACE_LIB_GET_S extends Structure {
         public ULONG ulChannelId; // Channel ID.
 
         public ULONG ulFaceLibNum; // Total number of libraries.
@@ -6657,6 +6707,82 @@ public interface HWPuSDK extends Library {
         }
     }
 
+
+    /**
+     * 人头计数参数结构体
+     */
+    class PU_HUMANCOUNT_PARAM_S extends Structure{
+        public ULONG ulChannelId; // Channel ID.
+        /**
+         * 人头计数算法参数
+         */
+        public PU_HUMANCOUNT_ALG_PARAM_S stAlgParams;
+        /**
+         * 人头计数区域设置
+         */
+        public PU_IGT_AERADTC_LIST_S stGuardAreaList;
+        /**
+         * 人头计数布防计划
+         */
+        public PU_ALARM_TIME_LIST_S stHCGuardPlan;
+        /**
+         * 预留
+         */
+        public byte[] szReserved = new byte[PU_RESERVE_LEN];
+
+        public PU_HUMANCOUNT_PARAM_S() {
+            this.setAlignType(ALIGN_NONE);
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("ulChannelId", "stAlgParams", "stGuardAreaList", "stHCGuardPlan", "szReserved");
+        }
+    }
+
+    /**
+     * 人头计数算法参数
+     */
+    class PU_HUMANCOUNT_ALG_PARAM_S extends Structure{
+        public BOOL enHCEnable;   //人头计算算法使能
+        public BOOL enOSDEnable;  //OSD叠加使能
+        public BOOL enCleaAtZero;  //零点清除使能
+        public PU_POINT_S stOSDLocation;  //OSD叠加区域
+        public ULONG ulSensitivty;       //灵敏度 0~100
+        public ULONG ulAlarmTime;        //告警上报间隔 1~256秒
+        public ULONG ulAlarmHumanNum;    //告警人数
+        public ULONG ulMinHeadSize;      //人头最小尺寸
+        public PU_HC_LINE_S stRefLine;   //进出参考线，推荐配置在画面中央, 线段接近水平或垂直
+        public PU_TRIPWIRE_DIR_E enInDir;  //进入方向
+        public byte[] szReserved = new byte[PU_RESERVE_LEN];
+
+        public PU_HUMANCOUNT_ALG_PARAM_S() {
+            this.setAlignType(ALIGN_NONE);
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("enHCEnable", "enOSDEnable","enCleaAtZero",
+                    "stOSDLocation","ulSensitivty","ulAlarmTime","ulAlarmHumanNum","ulMinHeadSize"
+                    ,"stRefLine","enInDir","szReserved");
+        }
+    }
+
+    class PU_HC_LINE_S extends Structure{
+        public PU_POINT_S stPtS;   //线段起始点
+        public PU_POINT_S stPtE;   //线段终点
+
+        public PU_HC_LINE_S() {
+            this.setAlignType(ALIGN_NONE);
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("stPtS", "stPtE");
+        }
+
+    }
+
     public static class PU_HUMANCOUNT_TABLE extends Structure {
         public ULONG ulChannelId; // Channel ID.
 
@@ -6949,6 +7075,12 @@ public interface HWPuSDK extends Library {
 
         public PU_IGT_POINT_S() {
             this.setAlignType(ALIGN_NONE);
+        }
+
+        public PU_IGT_POINT_S(short usPointPosX,short usPointPosY){
+            this.setAlignType(ALIGN_NONE);
+            this.usPointPosY=usPointPosY;
+            this.usPointPosX=usPointPosX;
         }
 
         @Override
@@ -8105,6 +8237,97 @@ public interface HWPuSDK extends Library {
         protected List<String> getFieldOrder() {
             return Arrays.asList("ulChannelID", "bEnable", "ulSensitivity", "ulAlarmTime", "ulMaxTraceTime",
                     "stAreaList", "stAlarmTimeList", "objItem", "szReserved");
+        }
+    }
+
+
+    class PU_ITGT_CROWD_DENSITY_DETECT_PARAM_S extends Structure{
+
+        public ULONG ulChannelID;  //通道ID
+        public PU_ITGT_CROWD_DENSITY_DETECT_ALG_PARAM_S stAlgParams;   //人群密度算法参数
+        public PU_IGT_AERADTC_LIST stAreaList;//人群密度检测区域
+        public PU_ALARM_TIME_LIST_S stGuardPlan;//布防计划
+        public byte[] szReserve=new byte[PU_RESERVE_LEN];
+
+        public PU_ITGT_CROWD_DENSITY_DETECT_PARAM_S(){
+            this.setAlignType(ALIGN_NONE);
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("ulChannelID", "stAlgParams", "stAreaList", "stGuardPlan", "szReserved");
+        }
+    }
+
+    class PU_IGT_AERADTC_LIST extends Structure{
+        public ULONG ulAreaNum;
+        public PU_IGT_AREA_S[] stArea=new PU_IGT_AREA_S[PU_IGT_AREA_NUM];
+
+        public PU_IGT_AERADTC_LIST(){
+            this.setAlignType(ALIGN_NONE);
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("ulAreaNum", "stArea");
+        }
+    }
+
+    class PU_IGT_AREA_S extends Structure{
+
+        public UINT uPointNum;
+        public PU_IGT_POINT_S[] stPoint=new PU_IGT_POINT_S[PU_IGT_AREA_POINTS_NUM];
+        public ULONG ulAreaIndex;
+        public BOOL bEnable;
+        public byte[]  szAreaName=new byte[PU_IGT_AREA_NAME_LEN];
+        public PU_PTZ_CURRENT_LOCATION_S stLocation;
+
+        public PU_IGT_AREA_S(){
+            this.setAlignType(ALIGN_NONE);
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("uPointNum", "stPoint", "ulAreaIndex", "bEnable", "szAreaName","stLocation");
+        }
+    }
+
+    class PU_PTZ_CURRENT_LOCATION_S extends Structure{
+        public WinDef.LONG IPTZHorDegree;
+        public WinDef.LONG IPTZVerDegree;
+        public ULONG ulLenMultiple;
+        public ULONG ulDotLenMultiple;
+        public ULONG ulZoomRatio;
+        public ULONG ulDotZoomRatio;
+        public WinDef.LONG lPTZDotHorDegree;
+        public WinDef.LONG IPTZDotVerDegree;
+        public byte[] szReserved=new byte[PU_RESERVE_LEN];
+
+        public PU_PTZ_CURRENT_LOCATION_S(){
+            this.setAlignType(ALIGN_NONE);
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("IPTZHorDegree", "IPTZVerDegree", "ulLenMultiple", "ulDotLenMultiple",
+                    "ulZoomRatio","ulDotZoomRatio","lPTZDotHorDegree","IPTZDotVerDegree","szReserved");
+        }
+    }
+
+    class PU_ITGT_CROWD_DENSITY_DETECT_ALG_PARAM_S extends Structure{
+        public int enEnable;//算法使能 PU_ENABLE_TYPE_E
+        public ULONG fPeopleNumThreshold;//人数上限阈值
+        public ULONG ulAlarmTime;//告警上报间隔
+        public ULONG ulSensitivity;//检测阈值(1-5)
+        public byte[] szReserve=new byte[PU_RESERVE_LEN];
+
+        public PU_ITGT_CROWD_DENSITY_DETECT_ALG_PARAM_S(){
+            this.setAlignType(ALIGN_NONE);
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("ulChannelID", "stAlgParams", "stAreaList", "stGuardPlan", "szReserved");
         }
     }
 
@@ -9605,7 +9828,7 @@ public interface HWPuSDK extends Library {
              * Point-based locating parameter.<br>
              * C type : PU_POINT_S
              */
-            public PU_POINT stPointLocate;
+            public PU_POINT_S stPointLocate;
 
             /**
              * Frame-based locating parameter.<br>
@@ -9625,10 +9848,10 @@ public interface HWPuSDK extends Library {
              * @param stPointLocate Point-based locating parameter.<br>
              *                      C type : PU_POINT_S
              */
-            public config_union(PU_POINT stPointLocate) {
+            public config_union(PU_POINT_S stPointLocate) {
                 super();
                 this.stPointLocate = stPointLocate;
-                setType(PU_POINT.class);
+                setType(PU_POINT_S.class);
             }
 
             /**
@@ -9937,6 +10160,7 @@ public interface HWPuSDK extends Library {
         }
     }
 
+    //元数据获取相关参数
     public static class PU_META_DATA extends Structure {
         public USHORT usCapacity;
 
@@ -10425,7 +10649,7 @@ public interface HWPuSDK extends Library {
         public byte[] szOSDIName = new byte[PU_OSD_STRING_LEN]; // OSDI name.
         public PU_OSDI_POINT_INFO stLowerLeftPoint; // Coordinate of the lower-left corner of the OSDI area.
         public PU_OSDI_POINT_INFO stUpperRightPoint; // Coordinate of the lower-right corner of the OSDI area.
-        public PU_POINT stOSDITopLeftPos; // Coordinate of the upper-left corner of the OSDI area.
+        public PU_POINT_S stOSDITopLeftPos; // Coordinate of the upper-left corner of the OSDI area.
 
         public PU_OSDI_AREA_CFG_PARA_V20() {
             this.setAlignType(ALIGN_NONE);
@@ -10503,7 +10727,7 @@ public interface HWPuSDK extends Library {
     public static class PU_OSDI_POSITION extends Structure {
         public ULONG ulChnID; // Channel ID.
         public ULONG ulOSDIIndex; // OSDI index.
-        public PU_POINT stOSDITopLeftPos; // Coordinate of the upper-left corner of the OSDI area.
+        public PU_POINT_S stOSDITopLeftPos; // Coordinate of the upper-left corner of the OSDI area.
 
         public PU_OSDI_POSITION() {
             this.setAlignType(ALIGN_NONE);
@@ -11081,11 +11305,14 @@ public interface HWPuSDK extends Library {
         int PU_PLATFORM_TYPE_MAX = 8;
     }
 
-    public static class PU_POINT extends Structure {
+    /**
+     * 点坐标
+     */
+    public static class PU_POINT_S extends Structure {
         public USHORT usPosX; // X coordinate (0-352).
         public USHORT usPosY; // Y coordinate (0-288).
 
-        public PU_POINT() {
+        public PU_POINT_S() {
             this.setAlignType(ALIGN_NONE);
         }
 
@@ -11838,12 +12065,13 @@ public interface HWPuSDK extends Library {
     /**
      * 实时浏览参数
      */
-    public static class PU_REAL_PLAY_INFO_S extends Structure {
+    class PU_REAL_PLAY_INFO_S extends Structure {
         public static class ByReference extends PU_REAL_PLAY_INFO_S implements Structure.ByReference {
         }
 
         public static class ByValue extends PU_REAL_PLAY_INFO_S implements Structure.ByValue {
         }
+
         //通道ID
         public ULONG ulChannelId; // Channel ID.
         //播放窗口
@@ -14857,7 +15085,7 @@ public interface HWPuSDK extends Library {
     }
 
     // Tripwire crossing direction.
-    public interface PU_TRIPWIRE_DIR {
+    public interface PU_TRIPWIRE_DIR_E {
         int PU_TRIPWIRE_CLOCKWISE = 0; // Clockwise tripwire crossing.
         int PU_TRIPWIRE_ANTICLOCKWISE = 1; // Counterclockwise tripwire crossing.
         int PU_TRIPWIRE_MAX = 2;
@@ -15148,7 +15376,7 @@ public interface HWPuSDK extends Library {
         int PU_USER_TYPE_MAX = 3;
     }
 
-    public static class PU_UserData extends Structure {
+    class PU_UserData extends Structure {
         public static class ByReference extends PU_UserData implements Structure.ByReference {
         }
 
@@ -15172,153 +15400,121 @@ public interface HWPuSDK extends Library {
         @Override
         public void read() {
             super.read();
-            switch (eType) // Set the association type according to the value of eType.
+            switch (eType)       //Set the association type according to the value of eType.
             {
-                case LAYER_THREE_TYPE_E.VEHICLE_SPEED: { // 速度
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS: { // =0x070000A0,//车流量统计参数
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_LANE_COUNT: { // =0x070000A1,//微卡口车流量统计车道数量
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_LANE_INDEX: { // =0x070000A2,//微卡口车流量统计当前车道
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_COUNT: { // =0x070000A3,//车辆计数
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_AVG_SPEED: { // =0x070000A4,//平均速度
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_LANE_TIME_USED_RATIO: { // =0x070000A5,//车道时间占有率
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_DENSITY: { // =0x070000A6,//车流密度
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_HEAD_INTERVAL: { // =0x070000A7,//车头时间间隔
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_HEAD_SPACE_INTERVAL: { // =0x070000A8,//车头间隔
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_CONGESTION_DEGREE: { // =0x070000A9,//交通状态
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_TYPE1_COUNT: { // = 0x070000AA,//大型车数量
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_TYPE2_COUNT: { // = 0x070000AB,//中型车数量
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_VEHICLE_TYPE3_COUNT: { // = 0x070000AC,//小型车数量
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_QUEUE_LENGTH: { // =0x070000AD,//排队长度
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.MICRO_PORT_TRAFFIC_STATISTICS_LANE_SPACE_USED_RATIO: { // = 0x070000AE,//车道空间占有率
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.ITS_TRAFFIC_SNAP_TIME: { // = 0x070000B3, //its车流量统计抓拍时间
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.REGULATION_TYPE: { // 违章类型
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.PLATE_PIC: {
-                    unMetaData.setType(unMetaData.stBinay.getClass());
-                    unMetaData.read();
-                }
-                break;
-                case LAYER_THREE_TYPE_E.PLATE_CHAR:
-                    unMetaData.setType(unMetaData.stBinay.getClass());
-                    unMetaData.read();
-                    break;
-                case LAYER_THREE_TYPE_E.VEHICLE_PIC:
-                    unMetaData.setType(unMetaData.stBinay.getClass());
-                    unMetaData.read();
-                    break;
-                case LAYER_THREE_TYPE_E.CAR_YEAR_BRAND:
-                    unMetaData.setType(unMetaData.stBinay.getClass());
-                    unMetaData.read();
-                    break;
-                case LAYER_THREE_TYPE_E.CAR_SUB_BRAND:
-                    unMetaData.setType(unMetaData.stBinay.getClass());
-                    unMetaData.read();
-                    break;
-                case LAYER_THREE_TYPE_E.CAR_PRE_BRAND:
-                    unMetaData.setType(unMetaData.stBinay.getClass());
-                    unMetaData.read();
-                    break;
+
                 case LAYER_THREE_TYPE_E.PANORAMA_PIC:
                     unMetaData.setType(unMetaData.stBinay.getClass());
                     unMetaData.read();
                     break;
-                case LAYER_THREE_TYPE_E.PIC_SNAPSHOT_TIME:
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
+                case LAYER_THREE_TYPE_E.HUMAN_FEATURE:
+                    unMetaData.setType(unMetaData.stHuamanAttr.getClass());
+                    unMetaData.read();
+                case LAYER_THREE_TYPE_E.FACE_PIC:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
                     unMetaData.read();
                     break;
-                case LAYER_THREE_TYPE_E.PLATE_TYPE:
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
+                case LAYER_THREE_TYPE_E.FACE_INFO:
+                    unMetaData.setType(unMetaData.stFaceInfo.getClass());
                     unMetaData.read();
                     break;
-                case LAYER_THREE_TYPE_E.PLATE_COLOR:
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
+                case LAYER_THREE_TYPE_E.FACE_FEATURE:
+                    unMetaData.setType(unMetaData.stFaceAttr.getClass());
                     unMetaData.read();
                     break;
-                case LAYER_THREE_TYPE_E.VEHICLE_DIRECTION:
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
+                case LAYER_THREE_TYPE_E.FACE_PANORAMA:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
                     unMetaData.read();
                     break;
-                case LAYER_THREE_TYPE_E.VEHICLE_TYPE:
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
+                case LAYER_THREE_TYPE_E.PTS:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
                     unMetaData.read();
                     break;
-                case LAYER_THREE_TYPE_E.VEHICLE_COLOR:
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
+                case LAYER_THREE_TYPE_E.CHANNEL_ID:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
                     unMetaData.read();
                     break;
-                case LAYER_THREE_TYPE_E.LANE_ID:
-                    unMetaData.setType(unMetaData.uIntValue.getClass());
+                case LAYER_THREE_TYPE_E.HUMAN_RECT:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case LAYER_THREE_TYPE_E.TARGET_TYPE:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case HWPuSDK.LAYER_THREE_TYPE_E.VISITOR_TYPE:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case HWPuSDK.LAYER_THREE_TYPE_E.FACE_ID:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case HWPuSDK.LAYER_THREE_TYPE_E.FACELIB_RECORDID:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case HWPuSDK.LAYER_THREE_TYPE_E.FACE_MATCHRATE:
+                    //人脸比对成功
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case HWPuSDK.LAYER_THREE_TYPE_E.FACE_LIB_TYPE:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case HWPuSDK.LAYER_THREE_TYPE_E.PIC_SNAPSHOT_TIME:
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case HWPuSDK.LAYER_THREE_TYPE_E.SNAPFACENUM:
+                    //抓拍人数统计
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case LAYER_THREE_TYPE_E.TOTALSNAPNUM:
+                    //抓拍人数统计
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case LAYER_THREE_TYPE_E.SNAP_MATCHRATE_MILLION:
+                    //抓拍人数统计
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case LAYER_THREE_TYPE_E.FACE_LIB_NAME:
+                    //人脸库名称
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case LAYER_THREE_TYPE_E.FACE_CAP_FEATURE:
+                    //人脸抓拍特征值
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case LAYER_THREE_TYPE_E.FACE_MATCH:
+                    //人脸数据库中匹配图片
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case LAYER_THREE_TYPE_E.MATCH_TYPE:
+                    //人脸匹配结果
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case LAYER_THREE_TYPE_E.FACEPIC_UUID:
+                    //图片UUID
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case LAYER_THREE_TYPE_E.ID_CARDMD5:
+                    //身份证MD5
+                    unMetaData.setType(unMetaData.stBinay.getClass());
+                    unMetaData.read();
+                    break;
+                case LAYER_THREE_TYPE_E.FACE_PIC_POSITION:
+                    //人脸抠图小框位置（万分比）
+                    unMetaData.setType(unMetaData.stBinay.getClass());
                     unMetaData.read();
                     break;
                 default:
@@ -16394,7 +16590,7 @@ public interface HWPuSDK extends Library {
     }
 
     // Color.
-    public static class ST_BINARY extends Structure {
+    class ST_BINARY extends Structure {
         public int ulBinaryLenth;
 
         public Pointer pBinaryData;// UCHAR
@@ -17588,6 +17784,14 @@ public interface HWPuSDK extends Library {
     // Obtain the alarm linkage priority.
     boolean IVS_PU_GetAlarmLinkPriority(ULONG ulIdentifyID, PU_ALARM_LINK_PRIORITY_PARA pstAlarmLinkPriority);
 
+    /**
+     * 获取预警参数
+     *
+     * @param ulIdentifyID 输入参数   用户登陆ID
+     * @param enAlarmType  输入参数   告警类型   参考PU_ALARM_TYPE
+     * @param arg          输入参数   告警参数结构体  根据不同类型的告警 传入不同的告警结构体
+     * @return
+     */
     boolean IVS_PU_GetAlarmPara(ULONG ulIdentifyID, int enAlarmType, Pointer arg);
 
     boolean IVS_PU_GetAlarmRecInfoList(ULONG ulIdentifyID, PU_ALARM_REC_INQ_REQ pstAlarmRecInqReq,
@@ -17821,13 +18025,25 @@ public interface HWPuSDK extends Library {
     // hot map guard plan
     boolean IVS_PU_GetHotMapPlan(ULONG ulIdentifyID, PU_HOTMAP_GUARD_PLAN_PARA_S pstPara);
 
-    // Obtain the head counting report.
+    /**
+     * 获取人头计数报表
+     *
+     * @param ulIdentifyID 输入参数  用户登陆ID
+     * @param pstHCTable   输出参数  人头报表参数
+     * @return
+     */
     boolean IVS_PU_GetHumanCountTable(ULONG ulIdentifyID, PU_HUMANCOUNT_TABLE_S pstHCTable);
 
     boolean IVS_PU_GetHVAlarmPara(ULONG ulIdentifyID, PU_HV_ALARM_PARA_S pstAlarmPara);
 
-    // device intelligent area detection alarm params
-    // enAlarmAeraType C Type is PU_IGT_AREA_ALARM_TYPE
+    /**
+     * 获取区域告警参数
+     *
+     * @param ulIdentifyID           输入参数  用户登陆ID
+     * @param enAlarmAeraType        输入参数   告警类型
+     * @param pstIgtAreaDtcAlarmPara 输出参数  区域监测告警信息
+     * @return
+     */
     boolean IVS_PU_GetIgtAreaDtcAlarmPara(ULONG ulIdentifyID, int enAlarmAeraType,
                                           PU_IGT_AEREDTC_ALARM_PARA pstIgtAreaDtcAlarmPara);
 
@@ -17835,7 +18051,13 @@ public interface HWPuSDK extends Library {
      * Intelligent Parameters Functions
      ******************************/
 
-    // device intelligent switch params
+    /**
+     * 获取告警参数
+     *
+     * @param ulIdentifyID    输入参数，用户登陆ID
+     * @param pstIgtAlarmPara 输出参数，智能告警参数结构体
+     * @return
+     */
     boolean IVS_PU_GetIgtPara(ULONG ulIdentifyID, PU_IGT_ALARM_PARA pstIgtAlarmPara);
 
     // device intelligent tripwire alarm params
@@ -17872,7 +18094,13 @@ public interface HWPuSDK extends Library {
 
     boolean IVS_PU_GetITGEMode(ULONG ulIdentifyID, PU_ITGT_MODE_S pstPara);
 
-    // Obtain the intelligent algorithm information.
+    /**
+     * 获取智能算法的信息
+     *
+     * @param ulIdentifyID     输入参数 用户登陆ID
+     * @param pstItgtAlthmInfo 输入参数  智能算法信息
+     * @return
+     */
     boolean IVS_PU_GetItgtAlthmInfo(ULONG ulIdentifyID, PU_ITGT_ALTHM_INFO pstItgtAlthmInfo);
 
     // Obtain extended intelligent algorithm information.
@@ -18602,10 +18830,24 @@ public interface HWPuSDK extends Library {
 
     boolean IVS_PU_RotatePTZLocation(ULONG ulIdentifyID, PU_PTZ_CURRENT_LOCATION pstDstLocation);
 
-    // save local snapshot picture
+    /**
+     * 保存抓拍的图片到本地
+     *
+     * @param ulIdentifyID       输入参数   用户登陆ID
+     * @param ulRealHandle       输入参数   实况句柄（实时播放返回的ID）
+     * @param pstSavePictureInfo 输入参数  保存图片参数
+     * @return
+     */
     boolean IVS_PU_SavePicture(ULONG ulIdentifyID, ULONG ulRealHandle, PU_SAVE_PICTURE_INFO pstSavePictureInfo);
 
-    // save real play data
+    /**
+     * 保存实时视频数据
+     *
+     * @param ulIdentifyID        输入参数 用户ID
+     * @param ulRealHandle        输入参数 实况句柄（实时播放返回的ID）
+     * @param pstSaveRealDataInfo 输入参数 保存实况视频的参数
+     * @return
+     */
     boolean IVS_PU_SaveRealData(ULONG ulIdentifyID, ULONG ulRealHandle, PU_SAVE_REALDATA_INFO pstSaveRealDataInfo);
 
     // Set and obtain the 1+N enabling parameter.
@@ -18613,13 +18855,6 @@ public interface HWPuSDK extends Library {
     public boolean IVS_PU_Set1TNEnable(ULONG ulIdentifyID, PU_1TN_ENABLE_S pstPara);
 
     public boolean IVS_PU_Set1TNSpptMode(ULONG ulIdentifyID, PU_1TN_SUPPORT_MODE_SWITCH_S pstPara);
-
-    boolean IVS_PU_Set3559FaceAttribute(ULONG ulIdentifyID, PU_ATTRI_DL_PARAMETER_S pstFaceAttribute);
-
-    // Set the third-party algorithm app.
-    boolean IVS_PU_Set3RdAppAlthmOptInfo(ULONG ulIdentifyID, PU_VW_OPERATE_3RD_APP pst3RdAppOperateInfo);
-
-    boolean IVS_PU_Set802Dot1xConfig(ULONG ulIdentifyID, PU_DOT1X_CONFIG_INFO pstDot1xInfo);
 
     // Enable auto focus for an ABF camera.
     boolean IVS_PU_SetABFAutoBackFocus(ULONG ulIdentifyID, ULONG ulChannelId);
@@ -18646,9 +18881,14 @@ public interface HWPuSDK extends Library {
     // Set the alarm linkage priority.
     boolean IVS_PU_SetAlarmLinkPriority(ULONG ulIdentifyID, PU_ALARM_LINK_PRIORITY_PARA pstAlarmLinkPriority);
 
-    // device alarm params, include: temperature alarm, motion detection alarm, hide
-    // alarm
-    // enAlarmType Type : PU_ALARM_TYPE
+    /**
+     * 设置告警参数（支持温度、开关量、移动侦测、视频遮挡、音频检测、音频陡升、音频陡降， 人头计数，人脸人体检测，排队长度，人群密度等告警）。
+     *
+     * @param ulIdentifyID 输入参数 用户登陆ID
+     * @param enAlarmType  输入参数  告警类型  参考PU_ALARM_TYPE
+     * @param arg          输入参数   告警结构体指针  根据不同的告警类型窜入不同的告警结构体类型
+     * @return
+     */
     boolean IVS_PU_SetAlarmPara(ULONG ulIdentifyID, int enAlarmType, Pointer arg);
 
     boolean IVS_PU_SetAreaCropPara(ULONG ulIdentifyID, AREA_CROP_PARA pstAreaCropPara);
@@ -18812,14 +19052,34 @@ public interface HWPuSDK extends Library {
     // Create an HTTPS certificate.
     boolean IVS_PU_SetHttpsCertificate(ULONG ulIdentifyID, PU_CREATE_HTTPS_CERT stHttpsCert);
 
-    // Clear the head counting statistics.
+    /**
+     * 设置清除人头报表
+     *
+     * @param ulIdentifyID 输入参数  用户登陆ID
+     * @return
+     */
     boolean IVS_PU_SetHumanCountClear(ULONG ulIdentifyID);
 
     boolean IVS_PU_SetHVAlarmPara(ULONG ulIdentifyID, PU_HV_ALARM_PARA_S stAlarmPara);
 
+    /**
+     * 设置区域告警参数
+     *
+     * @param ulIdentifyID           输入参数  用户登陆ID
+     * @param enAlarmAeraType        输入参数 告警类型
+     * @param pstIgtAreaDtcAlarmPara 输入参数  监测告警参数
+     * @return
+     */
     boolean IVS_PU_SetIgtAreaDtcAlarmPara(ULONG ulIdentifyID, int enAlarmAeraType,
                                           PU_IGT_AEREDTC_ALARM_PARA pstIgtAreaDtcAlarmPara);
 
+    /**
+     * 设置智能告警参数
+     *
+     * @param ulIdentifyID    输入参数 用户登陆ID
+     * @param pstIgtAlarmPara 输入参数 智能告警参数结构体
+     * @return
+     */
     boolean IVS_PU_SetIgtPara(ULONG ulIdentifyID, PU_IGT_ALARM_PARA pstIgtAlarmPara);
 
     boolean IVS_PU_SetIgtTripwireAlarmPara(ULONG ulIdentifyID, PU_TW_ALARM_PARA pstIgtTwAlarmPara);
@@ -19231,9 +19491,16 @@ public interface HWPuSDK extends Library {
     // Start Multicast
     public ULONG IVS_PU_StartMulticast(ULONG ulIdentifyID, String szLocalIP, ULONG ulVideoPort);
 
-    // device snapshot
-    // enSnapType -> c type:PU_SNAPSHOT_TYPE
-    // enErrorCode -> c Type:PU_ERROR_CODE_E
+    /**
+     * 开始抓拍
+     *
+     * @param ulIdentifyID   输入参数  用户登陆ID
+     * @param ulChannelId    输入参数  实时播放通道号 一般为101
+     * @param ulSnapCount    输入参数   抓拍张数  0~10张
+     * @param ulSnapInterval 输入参数   抓拍间隔  500~1000ms
+     * @param enSnapType     输入参数  抓拍类型  参考PU_SNAPSHOT_TYPE接口定义
+     * @return
+     */
     boolean IVS_PU_StartSnapShot(ULONG ulIdentifyID, ULONG ulChannelId, ULONG ulSnapCount, ULONG ulSnapInterval,
                                  int enSnapType);
 

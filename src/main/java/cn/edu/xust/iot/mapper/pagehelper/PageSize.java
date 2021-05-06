@@ -50,19 +50,19 @@ public enum PageSize {
     public static PageSize getPageSize(int size){
         if(size<0){
             return ALL;
-        }else if(size==5){
+        }else if(size<=5){
             return SIZE_FIVE;
-        }else if(size==10){
+        }else if(size<=10){
             return SIZE_TEN;
-        }else if(size==15){
+        }else if(size<=15){
             return DEFAULT_PAGE_SIZE;
-        }else if(size==20){
+        }else if(size<=20){
             return SIZE_TWENTY;
-        }else if(size==30){
+        }else if(size<=30){
             return SIZE_THIRTY;
-        }else if(size==50){
+        }else if(size<=50){
             return SIZE_FIFTY;
-        }else if(size==100){
+        }else if(size<=100){
             return SIZE_ONE_HUNDRED;
         }else{
             throw new IllegalArgumentException("非法分页大小参数，请检查分页大小参数是否传递合法");

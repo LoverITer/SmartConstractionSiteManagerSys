@@ -93,7 +93,7 @@
 
     $('.play_btn').click(function () {
         $.ajax({
-            url: "/cameras/live",
+            url: "/camera/live",
             method: "POST",
             contentType: "application/json",
             sync: false,
@@ -123,7 +123,7 @@
     $('.stop_btn').click(function () {
         var token = $('.video1_token').attr("value");
         $.ajax({
-            url: "/cameras/close/" + token,
+            url: "/camera/close/" + token,
             method: "GET",
             sync: false,
             dataType: "json",

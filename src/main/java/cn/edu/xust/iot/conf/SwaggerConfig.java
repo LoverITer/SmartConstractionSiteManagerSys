@@ -36,7 +36,7 @@ public class SwaggerConfig {
 	 */
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("Smart Constraction Site Monitor&Manager System API Doc")
+                .title("建筑施工人员不安全行为监测预警子系统API")
                 .description("This is a RESTful API document of Smart Constraction Site Monitor&Manager System.")
                 .version("1.0")
                 .build();

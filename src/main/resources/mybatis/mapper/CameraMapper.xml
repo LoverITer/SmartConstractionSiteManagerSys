@@ -34,7 +34,7 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
-    <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List" >
+    <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
         delete from camera where id in
         <foreach collection="deleteDeviceList" item="deviceId" open="(" separator="," close=")">
             #{deviceId,jdbcType=INTEGER}
@@ -42,12 +42,23 @@
     </delete>
 
     <select id="selectAll" resultMap="BaseResultMap">
-        select * from camera
+        select *
+        from camera
     </select>
 
 
     <select id="selectCameraLoginParam" resultMap="BaseResultMap">
-        select ip, port, user_name, password from camera
+        select ip, port, user_name, password
+        from camera
+    </select>
+
+    <select id="selectCameraByRegionName" resultMap="BaseResultMap">
+        SELECT *
+        FROM camera
+        WHERE id IN (SELECT camera_id
+                     FROM region_camera
+                                  left join region on region.id = region_camera.region_id
+                     where region_name = #{regionName})
     </select>
 
 
@@ -55,11 +66,12 @@
         select count(*) from camera;
     </select>
 
-    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.Camera" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.Camera" useGeneratedKeys="true" keyColumn="id"
+            keyProperty="id">
         insert into camera (device_name, device_status,
                             region_id, algorithm, ip,
                             port, user_name, password,
-                            model, mac_address, sdc_version,create_time)
+                            model, mac_address, sdc_version, create_time)
         values (#{deviceName,jdbcType=VARCHAR}, #{deviceStatus,jdbcType=CHAR},
                 #{regionId,jdbcType=INTEGER}, #{algorithm,jdbcType=CHAR}, #{ip,jdbcType=VARCHAR},
                 #{port,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
@@ -67,10 +79,11 @@
                 #{createTime,jdbcType=TIMESTAMP})
     </insert>
 
-    <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.Camera" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.Camera" useGeneratedKeys="true"
+            keyColumn="id" keyProperty="id">
         insert into camera
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="deviceName != null">
+            <if test="deviceName!= null">
                 device_name,
             </if>
             <if test="deviceStatus != null">
@@ -82,28 +95,28 @@
             <if test="algorithm != null">
                 algorithm,
             </if>
-            <if test="ip != null">
+            <if test="ip!=null">
                 ip,
             </if>
-            <if test="port != null">
+            <if test="port!=null">
                 port,
             </if>
-            <if test="userName != null">
+            <if test="userName!=null">
                 user_name,
             </if>
-            <if test="password != null">
+            <if test="password!=null">
                 password,
             </if>
-            <if test="model != null">
+            <if test="model!=null">
                 model,
             </if>
-            <if test="macAddress != null">
+            <if test="macAddress!=null">
                 mac_address,
             </if>
-            <if test="sdcVersion != null">
+            <if test="sdcVersion!=null">
                 sdc_version,
             </if>
-            <if test="createTime != null">
+            <if test="createTime!=null">
                 create_time
             </if>
         </trim>

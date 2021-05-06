@@ -6,6 +6,7 @@ import cn.edu.xust.iot.mapper.SUserMapper;
 import cn.edu.xust.iot.mapper.pagehelper.PageParam;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.SUserModel;
+import cn.edu.xust.iot.model.WorkerNumModel;
 import cn.edu.xust.iot.model.entity.FaceLib;
 import cn.edu.xust.iot.model.entity.SUser;
 import cn.edu.xust.iot.model.vo.SUserVO;
@@ -66,6 +67,17 @@ public class SUserServiceImpl implements ISUserService {
             e.printStackTrace();
             log.error("获取人员数量发生错误,信息错误：{}",e.getMessage());
             return CommonResponse.create(AppResponseCode.FAIL,0);
+        }
+    }
+
+    @Override
+    public CommonResponse<WorkerNumModel> getWorkerNums(){
+        try{
+            return CommonResponse.create(AppResponseCode.SUCCESS,userMapper.countWorkerNum());
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("获取人员数量发生错误,信息错误：{}",e.getMessage());
+            return CommonResponse.create(AppResponseCode.FAIL);
         }
     }
 

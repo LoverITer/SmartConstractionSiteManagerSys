@@ -4,12 +4,13 @@ import cn.edu.xust.iot.camera.conf.CameraRTSPToHttpFlvConfig;
 import cn.edu.xust.iot.camera.data.CameraWorkerCache;
 import cn.edu.xust.iot.camera.handler.CameraThread;
 import cn.edu.xust.iot.error.AppResponseCode;
+import cn.edu.xust.iot.mapper.pagehelper.PageParam;
 import cn.edu.xust.iot.model.CameraInfoModel;
 import cn.edu.xust.iot.model.CommonResponse;
-import cn.edu.xust.iot.model.entity.Camera;
 import cn.edu.xust.iot.model.vo.CameraVO;
 import cn.edu.xust.iot.service.ICameraService;
 import cn.edu.xust.iot.utils.CommonUtils;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -34,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @RequestMapping(value = "/camera")
-@Api(tags = "摄像机控制接口")
+@Api(tags = "摄像机控制接口—实时监控页面所需接口")
 @RestController
 public class CameraController {
 
@@ -193,22 +197,29 @@ public class CameraController {
 
 
 
-    @ApiOperation(value="获取系统所有摄像机信息",notes="查询数据库，获得所有摄像头数据")
+    @ApiOperation(value="获取系统所有摄像机信息",notes="不用传入任何参数，直接请求就可以获得系统所有设置监控摄像机")
     @GetMapping(value = "/all")
     public CommonResponse<List<CameraVO>> getAllCameras(){
-        List<Camera> allCameras = cameraService.getAllCamera();
-        List<CameraVO> res = new ArrayList<>();
-        for(Camera camera:allCameras){
-            CameraVO cameraVO = new CameraVO();
-            cameraVO.setDeviceName(camera.getDeviceName());
-            cameraVO.setDeviceStatus(camera.getDeviceStatus());
-            cameraVO.setIp(camera.getIp());
-            cameraVO.setPassword(camera.getPassword());
-            cameraVO.setUserName(camera.getUserName());
-            res.add(cameraVO);
-        }
-        return CommonResponse.create(AppResponseCode.SUCCESS,res);
+        int cameraSize = cameraService.getAllCamerasSize().getData();
+        PageInfo<CameraVO> cameraList = cameraService.getCameraList(PageParam.create(1, cameraSize));
+        return CommonResponse.create(AppResponseCode.SUCCESS,cameraList.getList());
     }
 
+
+    @ApiOperation(value="获取系统所有摄像机的数量",notes="不用任何参数，直接请求接口皆可以获得系统中所有摄镜头的数量")
+    @GetMapping(value = "/size")
+    public CommonResponse<Integer> getAllCameraNum(){
+        return CommonResponse.create(AppResponseCode.SUCCESS,cameraService.getAllCamerasSize().getData());
+    }
+
+
+    @ApiOperation(value="搜索区域内的摄像机",notes="根据区域名搜素区域内的摄像机，需要传入地区参数`regionName`表示查询的区域名")
+    @GetMapping(value = "/search")
+    public CommonResponse<List<CameraVO>>  searchCameraByRegionName(@RequestParam(value = "regionName") String regionName){
+        if(CommonUtils.isNull(regionName)){
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
+        }
+        return cameraService.getCameraListByRegionName(regionName);
+    }
 
 }

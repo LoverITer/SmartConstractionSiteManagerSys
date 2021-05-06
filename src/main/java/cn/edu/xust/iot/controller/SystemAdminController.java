@@ -54,7 +54,7 @@ public class SystemAdminController {
     @GetMapping(value = "/index")
     public String index(@RequestParam(value = "token") String token, ModelMap model) {
         model.addAttribute("token", token);
-        return "index";
+        return "admin_index";
     }
 
 
@@ -249,6 +249,7 @@ public class SystemAdminController {
             log.error(builder.toString());
             return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID, builder.toString());
         }
+        //验证两次输入的密码是否一致
         String password = userModel.getPassword();
         String[] pass = password.split(",");
         if(pass[0].equals(pass[1])){

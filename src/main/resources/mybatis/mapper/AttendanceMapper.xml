@@ -1,109 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.xust.iot.mapper.AttendanceMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.xust.iot.model.entity.Attendance">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="stark_work_time" jdbcType="TIMESTAMP" property="starkWorkTime" />
-    <result column="after_work_time" jdbcType="TIMESTAMP" property="afterWorkTime" />
-    <result column="stark_work_device_id" jdbcType="INTEGER" property="starkWorkDeviceId" />
-    <result column="after_work_device_id" jdbcType="INTEGER" property="afterWorkDeviceId" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, user_id, stark_work_time, after_work_time, stark_work_device_id, after_work_device_id
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from attendance
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from attendance
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.Attendance">
-    insert into attendance (id, user_id, stark_work_time, 
-      after_work_time, stark_work_device_id, after_work_device_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{starkWorkTime,jdbcType=TIMESTAMP}, 
-      #{afterWorkTime,jdbcType=TIMESTAMP}, #{starkWorkDeviceId,jdbcType=INTEGER}, #{afterWorkDeviceId,jdbcType=INTEGER}
-      )
-  </insert>
+    <resultMap id="BaseResultMap" type="cn.edu.xust.iot.model.entity.Attendance">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="stark_work_time" jdbcType="TIMESTAMP" property="starkWorkTime"/>
+        <result column="after_work_time" jdbcType="TIMESTAMP" property="afterWorkTime"/>
+        <result column="stark_work_device_id" jdbcType="INTEGER" property="starkWorkDeviceId"/>
+        <result column="after_work_device_id" jdbcType="INTEGER" property="afterWorkDeviceId"/>
+        <result column="late" jdbcType="VARCHAR" property="late"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_id, stark_work_time, after_work_time, stark_work_device_id, after_work_device_id,late
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from attendance
+        where id = #{id,jdbcType=INTEGER}
+    </select>
 
-  <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.Attendance">
-    insert into attendance
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="starkWorkTime != null">
-        stark_work_time,
-      </if>
-      <if test="afterWorkTime != null">
-        after_work_time,
-      </if>
-      <if test="starkWorkDeviceId != null">
-        stark_work_device_id,
-      </if>
-      <if test="afterWorkDeviceId != null">
-        after_work_device_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="starkWorkTime != null">
-        #{starkWorkTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="afterWorkTime != null">
-        #{afterWorkTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="starkWorkDeviceId != null">
-        #{starkWorkDeviceId,jdbcType=INTEGER},
-      </if>
-      <if test="afterWorkDeviceId != null">
-        #{afterWorkDeviceId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+    <select id="countAllClockInUser" resultType="int">
+        SELECT COUNT(*)
+        FROM attendance
+        WHERE DATE_FORMAT(stark_work_time, '%Y-%m-%d %H:%i:%s') BETWEEN DATE_FORMAT(CURDATE(), '%Y-%m-%d %H:%i:%s')
+                      AND DATE_FORMAT(NOW(), '%Y-%m-%d HH:mm:ss')
+    </select>
 
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.model.entity.Attendance">
-    update attendance
-    <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="starkWorkTime != null">
-        stark_work_time = #{starkWorkTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="afterWorkTime != null">
-        after_work_time = #{afterWorkTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="starkWorkDeviceId != null">
-        stark_work_device_id = #{starkWorkDeviceId,jdbcType=INTEGER},
-      </if>
-      <if test="afterWorkDeviceId != null">
-        after_work_device_id = #{afterWorkDeviceId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <select id="countAllClockInManager" resultType="int">
+        SELECT COUNT(*)
+        FROM attendance,
+             s_user
+        WHERE s_user.id = attendance.user_id
+          AND s_user.is_manager = '1'
+          AND DATE_FORMAT(stark_work_time, '%Y-%m-%d %H:%i:%s') BETWEEN DATE_FORMAT(CURDATE(), '%Y-%m-%d %H:%i:%s')
+                AND DATE_FORMAT(NOW(), '%Y-%m-%d HH:mm:ss')
+    </select>
 
-  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.model.entity.Attendance">
-    update attendance
-    set user_id = #{userId,jdbcType=INTEGER},
-      stark_work_time = #{starkWorkTime,jdbcType=TIMESTAMP},
-      after_work_time = #{afterWorkTime,jdbcType=TIMESTAMP},
-      stark_work_device_id = #{starkWorkDeviceId,jdbcType=INTEGER},
-      after_work_device_id = #{afterWorkDeviceId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <select id="countAllClockInWorker" resultType="int">
+        SELECT COUNT(*)
+        FROM attendance,
+             s_user
+        WHERE s_user.id = attendance.user_id
+          AND s_user.is_manager != '1'
+          AND DATE_FORMAT(stark_work_time, '%Y-%m-%d %H:%i:%s') BETWEEN DATE_FORMAT(CURDATE(), '%Y-%m-%d %H:%i:%s')
+                AND DATE_FORMAT(NOW(), '%Y-%m-%d HH:mm:ss')
+    </select>
+
+    <select id="selectTodayClockInManager" resultType="cn.edu.xust.iot.model.vo.ManagerClockInVO">
+        SELECT s_user.`name`,
+               s_user.`job`,
+               face_lib.face_pic,
+               attendance.stark_work_time,
+               attendance.after_work_time
+        FROM attendance,
+             s_user,
+             face_lib
+        WHERE s_user.id = attendance.user_id
+          AND s_user.is_manager = '1'
+          AND face_lib.id = s_user.face_lib_id
+          AND DATE_FORMAT(stark_work_time, '%Y-%m-%d %H:%i:%s') BETWEEN DATE_FORMAT(CURDATE(), '%Y-%m-%d %H:%i:%s')
+                AND DATE_FORMAT(NOW(), '%Y-%m-%d HH:mm:ss')
+    </select>
+
+    <select id="countPastSevenDaysClockIn" resultType="cn.edu.xust.iot.model.vo.SevenDaysClockIn">
+        SELECT
+        a.date_time,
+        IFNULL( b.total, 0 ) AS total
+        FROM
+        (
+        SELECT
+        DATE_SUB( CURDATE( ), INTERVAL 6 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE( ), INTERVAL 5 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE( ), INTERVAL 4 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE( ), INTERVAL 3 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE( ), INTERVAL 2 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE( ), INTERVAL 1 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE( ), INTERVAL 0 DAY ) AS date_time) a
+        LEFT JOIN (
+        SELECT
+        DATE_FORMAT( stark_work_time, '%Y-%m-%d' ) AS date_time,
+        count(*) AS total
+        FROM
+        attendance
+        WHERE
+        stark_work_time &lt; DATE_ADD( CURDATE(), INTERVAL 1 DAY ) AND stark_work_time >= DATE_SUB( CURDATE(), INTERVAL 7 DAY )
+        GROUP BY DATE_FORMAT( stark_work_time, '%Y-%m-%d' )
+        ) b ON a.date_time = b.date_time
+        ORDER BY
+        a.date_time ASC
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from attendance
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.Attendance">
+        insert into attendance (id, user_id, stark_work_time,
+                                after_work_time, stark_work_device_id, after_work_device_id, late)
+        values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{starkWorkTime,jdbcType=TIMESTAMP},
+                #{afterWorkTime,jdbcType=TIMESTAMP}, #{starkWorkDeviceId,jdbcType=INTEGER},
+                #{afterWorkDeviceId,jdbcType=INTEGER},
+                #{late,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.Attendance" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into attendance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="starkWorkTime != null">
+                stark_work_time,
+            </if>
+            <if test="afterWorkTime != null">
+                after_work_time,
+            </if>
+            <if test="starkWorkDeviceId != null">
+                stark_work_device_id,
+            </if>
+            <if test="afterWorkDeviceId != null">
+                after_work_device_id,
+            </if>
+            <if test="late != null">
+                late
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="starkWorkTime != null">
+                #{starkWorkTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="afterWorkTime != null">
+                #{afterWorkTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="starkWorkDeviceId != null">
+                #{starkWorkDeviceId,jdbcType=INTEGER},
+            </if>
+            <if test="afterWorkDeviceId != null">
+                #{afterWorkDeviceId,jdbcType=INTEGER},
+            </if>
+            <if test="late != null">
+                #{late,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.model.entity.Attendance">
+        update attendance
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="starkWorkTime != null">
+                stark_work_time = #{starkWorkTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="afterWorkTime != null">
+                after_work_time = #{afterWorkTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="starkWorkDeviceId != null">
+                stark_work_device_id = #{starkWorkDeviceId,jdbcType=INTEGER},
+            </if>
+            <if test="afterWorkDeviceId != null">
+                after_work_device_id = #{afterWorkDeviceId,jdbcType=INTEGER},
+            </if>
+            <if test="late != null">
+                #{late,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.model.entity.Attendance">
+        update attendance
+        set user_id              = #{userId,jdbcType=INTEGER},
+            stark_work_time      = #{starkWorkTime,jdbcType=TIMESTAMP},
+            after_work_time      = #{afterWorkTime,jdbcType=TIMESTAMP},
+            stark_work_device_id = #{starkWorkDeviceId,jdbcType=INTEGER},
+            after_work_device_id = #{afterWorkDeviceId,jdbcType=INTEGER},
+            late=#{late,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

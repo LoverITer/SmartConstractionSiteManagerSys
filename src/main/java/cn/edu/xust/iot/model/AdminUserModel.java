@@ -22,7 +22,12 @@ public class AdminUserModel implements Serializable {
     Integer adminId;
 
     /**
-     * 管理员用户名
+     * 管理员登陆姓名
+     */
+    private String name;
+
+    /**
+     * 管理员登陆用户名
      */
     @NotEmpty(message = "登陆用户名不能为空")
     private String username;
@@ -54,7 +59,7 @@ public class AdminUserModel implements Serializable {
     private String phone;
 
 
-    public AdminUser convertAdminUserModel2AdminUser(){
+    public AdminUser convertAdminUserModel2AdminUser() {
         AdminUser adminUser = new AdminUser();
         adminUser.setAdminId(this.getAdminId());
         adminUser.setUsername(this.getUsername());

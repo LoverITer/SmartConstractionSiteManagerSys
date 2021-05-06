@@ -1,25 +1,24 @@
-### 毕设系统——智慧工地监控管理系统
+毕设系统——智慧工地监控管理系统
+===
 
-#### 项目简介
+### 1、项目简介
 
 建筑施工场所环境复杂，工作条件艰苦，工人在施工过程中对安全规则的遵守程度普遍较低，由此产生的不安全行为在施工期间埋下潜在的安全隐患。本系统基于华为软件定义相机本生的智能业务，利用SDK接口实现人员身份识别、安全设备佩戴检测、危险区域入侵检测等不安全行为的检测，并在后台构建预警系统，对不安全行为数据进行记录。
 
-#### 系统需求分析
+### 2、系统需求分析
 
 * （1）基于SDK智能分析类接口，调用相机本身的人脸识别业务、行为识别功能
 * （2）监管模块：调用相机第三方APP智能元数据，实现检测结果预览功能
 * （3）预警模块：存储检测后的违规数据（视频、图像、用户信息等），并显示预警结果。
 
-#### 系统架构
+### 3、系统架构
+
+<img src="https://camo.githubusercontent.com/1d6a6f31d4eec326ad11c2b7b5d0b39378e8e207515fe2a1abcf96ddc89b0b39/687474703a2f2f696d6167652e65617379626c6f672e746f702f3136313639333936343130333336643638363632652d333365662d343031652d396463392d6261636663313031326133302e6a7067" alt="" data-canonical-src="http://image.easyblog.top/16169396410336d68662e-33ef-401e-9dc9-bacfc1012a30.jpg" style="width: 60%;max-width: 60%;">
 
 
+### 4、项目重难点技术栈
 
-<img src="https://camo.githubusercontent.com/1d6a6f31d4eec326ad11c2b7b5d0b39378e8e207515fe2a1abcf96ddc89b0b39/687474703a2f2f696d6167652e65617379626c6f672e746f702f3136313639333936343130333336643638363632652d333365662d343031652d396463392d6261636663313031326133302e6a7067" alt="" data-canonical-src="http://image.easyblog.top/16169396410336d68662e-33ef-401e-9dc9-bacfc1012a30.jpg" style="width: 60%;max;max-width: 60%;width: 100px">
-
-
-##### 项目使用到的技术
-
-**（1）流媒体技术**
+#### 4.1 流媒体技术
 
 流媒体就是指采用流式传输技术在网络上连续实时播放的媒体格式，如音频、视频或多媒体文件。流媒体技术也称流式媒体技术.
 所谓流媒体技术就是把连续的影像和声音信息经过压缩处理后放上网站服务器,由视频服务器向用户计算机顺序或实时地传送各个压缩包，
@@ -78,20 +77,9 @@ HLS 协议特点：
 格式的流数据（需要FLASH支持），从而实现实时监控的目的
 
 
-**（4）JavaCV**
+**（4）FFmpeg**
 
-JavaCV 提供了在计算机视觉领域的封装库，包括：OpenCV、ARToolKitPlus、libdc1394 2.x 、PGR FlyCapture和FFmpeg。
-此外，该工具可以很容易地使用Java平台的功能。
-
-JavaCV 还带有硬件加速的全屏幕图像显示（CanvasFrame），易于在多个内核中执行并行代码（并行），用户友好的几何和色彩的
-相机和投影仪校准（GeometricCalibrator，ProCamGeometricCalibrator，ProCamColorCalibrator ），
-检测和特征点（ObjectFinder），一类是实现投影，摄像系统（直接图像对齐设置匹配主要GNImageAligner，
-ProjectiveTransformer，ProjectiveGainBiasTransformer，ProCamTransformer 和ReflectanceInitializer），
-以及在 JavaCV 类杂项功能。
-
-**（5）FFmpeg**
-
-FFmpeg官方：http://www.ffmpeg.org/ffmpeg.html
+FFmpeg官方地址：http://www.ffmpeg.org/ffmpeg.html
 
 FFmpeg是一套可以用来记录、转换数字音频、视频，并能将其转化为流的开源计算机程序。采用LGPL或GPL许可证。它提供了录制、转换以及流化音视频的完整解决方案。它包含了非常先进的音频/视频编解码库libavcodec，为了保证高可移植性和编解码质量，libavcodec里很多code都是从头开发的。
 FFmpeg在Linux平台下开发，但它同样也可以在其它操作系统环境中编译运行，包括Windows、Mac OS X等。这个项目最早由Fabrice Bellard发起，2004年至2015年间由Michael Niedermayer主要负责维护。许多FFmpeg的开发人员都来自MPlayer项目，而且当前FFmpeg也是放在MPlayer项目组的服务器上。项目的名称来自MPEG视频编码标准，前面的"FF"代表"Fast Forward"。 [1]  FFmpeg编码库可以使用GPU加速
@@ -120,12 +108,50 @@ ffmpeg调用libavFormat库(包含演示程序)来读取输入文件，并从其�
 
 然后将编码的数据包传递给解码器(除非为流选择了流拷贝，请参阅进一步的描述)。解码器产生未压缩帧(原始视频/PCM音频/.)可以通过过滤进一步处理(请参阅下一节)。过滤后，帧被传递给编码器，编码器对它们进行编码并输出编码的数据包。最后，这些文件被传递给muxer，它将编码的数据包写入输出文件。
 
-####   数据库表设计
+
+#### 4.2 Nginx 和 Nginx-rtmp-module
+
+**Nginx**
+
+(engine x)是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP/POP3/SMTP服务。其特点是占有内存少，并发能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好，中国大陆使用nginx网站用户有：百度、京东、新浪、网易、腾讯、淘宝等。
+Nginx专为性能优化而开发，性能是器最重要的考量，实现上非常注重效率，能经受高负载的考验，据报告能支持高达50,000个并发连接数。
+Nginx不仅能做反向代理，实现负载均衡；还能可以作正向代理来进行上网等功能。
+
+
+**Nginx-rtmp-module**
+
+Nginx-rtmp-module是俄罗斯人开发的一款NGINX的流媒体插件，除了直播发布音视频流之外具备流媒体服务器的常见功能
+
+* 比如推拉流媒体资源
+* 基于HTTP的FLV/MP4 VOD点播
+* HLS (HTTP Live Streaming) M3U8的支持
+* 基于http的操作（发布、播放、录制）
+* 可以很好的协同现有的流媒体服务器以及播放器一起工作
+* 在线调用ffmpeg对流媒体进行转码
+* H264/AAC音视频编码格式的支持
+* linux/BSD/MAC系统的支持
+
+
+
+#### 4.3 JNA(Java Native Access)框架
+
+
+Java开发过程中，有时候会需要和C，C++等交互，这时候我们就想起了经典技术JNI，但是JNI的使用过程十分繁琐，而且容易出现各种问题，还得封装而且问题不好定位。假如我们有一个.so文件，如果使用JNI去调用，我们需要另外用C语音写一个.so的共享文件，并且得使用SUN规定的数据结构去替代C语言的数据结构，至此才能调用so文件里面公布的函数。作为JAVA的程序员这个过程是令人头疼的。
+
+相比之下，使用JNA就简单多了，只需要依赖一个jar包，就像调用一个java方法一样简单。JNA全称Java Native Access，是一个建立在JNI技术之上的Java开源框架。JNA提供一组Java工具类用于在运行期动态访问系统本地库（native library：如Window的dll，Linux的so）而不需要编写任何Native/JNI代码。开发人员只要在一个java接口中描述目标native library的函数与结构，JNA将自动实现Java接口到native function的映射。
+
+dll和so是C函数的集合和容器，这与Java中的接口概念吻合，所以JNA把dll文件和so文件看成一个个接口。在JNA中定义一个接口就是相当于了定义一个DLL/SO文件的描述文件，该接口代表了动态链接库中发布的所有函数。而且，对于程序不需要的函数，可以不在接口中声明。JNA provides Java programs easy access to native shared libraries without writing anything but Java code - no JNI or native code is required.
+
+JNA定义的接口一般继承`com.sun.jna.Library`接口，如果dll文件中的函数是以stdcall方式输出函数，那么，该接口就应该继承com.sun.jna.win32.StdCallLibrary接口。Jna难点：编程语言之间的数据类型不一致。
+
+
+
+###   数据库表设计
 
 ![](https://image.easyblog.top/%E6%99%BA%E8%83%BD%E5%AE%89%E5%85%A8%E7%9B%91%E7%AE%A1%E5%B9%B3%E5%8F%B0E-R%E5%9B%BE.jpg)
 
 
-#### 工程构建
+### 工程构建
 
 ##### 设置项目使用的JDK版本,我这里使用的jdk8 32位的
 
@@ -169,6 +195,6 @@ dll，但是JNA在加载的时候只会从系统或项目定义的类路径下�
 * 2021年4月13      增加后台管理界面以及实现了管理员用户的注册和登陆（分布式Session登陆）
 * 2021年4月16      后台管理系统——完成人员管理模块的前后端代码的编写以及调试
 * 2021年4月17      后台管理系统——引入PageHelper分页插件，实现完成人员管理模块的分页功能
-* 2021年4月18      整合并完善之前`BusinessRealPlayServiceImpl`和`BusinessUserServiceImpl`两个服务中的逻辑代码统一到IHWPuSDKService接口中，并在新接口中获取相机信息的方法
-* 2021年4月20      后端管理系统——完成管理员权限管理模块的前后端代码的编写和调试
-* 2021年4月21      修复后端管理系统中若干已知BUG
+* 2021年4月18      整合并完善之前`BusinessRealPlayServiceImpl`和`BusinessUserServiceImpl`两个服务中的逻辑代码，将其统一到IHWPuSDKService接口中，并在新接口中新增获取相机信息的方法：`getDeviceInfo()`
+* 2021年4月20      后端管理系统——完成管理员权限管理模块的前后端代码的编写和调试，取消了管理员注册功能
+* 2021年4月21      后台管理系统——修复后端管理系统中若干已知BUG

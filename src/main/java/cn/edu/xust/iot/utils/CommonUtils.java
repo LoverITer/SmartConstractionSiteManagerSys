@@ -4,8 +4,7 @@ package cn.edu.xust.iot.utils;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -261,6 +260,32 @@ public class CommonUtils {
             e.printStackTrace();
         }
         return s;
+    }
+
+
+    /**
+     * 保存图片到本地文件系统
+     *
+     * @param fileName 图片名
+     * @param bytes    图片字节数组
+     * @param length   图片字节数组长度
+     * @return 写入成功返回 true ,写入失败 返回false
+     */
+    public static boolean savePicture(String fileName, byte[] bytes, int length) throws IOException {
+        File file = new File(fileName);
+        if (!file.getParentFile().exists()) {
+            boolean mkdirs = file.getParentFile().mkdirs();
+            if (!mkdirs) {
+                log.error("Failed to create folder, unable to save picture {}", fileName);
+                return false;
+            }
+        }
+        FileOutputStream fos = new FileOutputStream(file);
+        try (BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+            bos.write(bytes, 0, length);
+            bos.flush();
+            return true;
+        }
     }
 
 }

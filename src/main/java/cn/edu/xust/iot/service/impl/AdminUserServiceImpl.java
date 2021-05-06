@@ -69,10 +69,10 @@ public class AdminUserServiceImpl implements IAdminUserService {
                 return CommonResponse.create(AppResponseCode.ADMIN_USER_EXIST);
             }
             SUser sUser = new SUser();
-            sUser.setName("Admin");  //管理员的普通用户名就默认是Admin
+            sUser.setName(userModel.getName());
             sUser.setPhone(userModel.getPhone());
             sUser.setCreateTime(userModel.getCreateTime());
-            sUser.setIsManager("1");
+            sUser.setIsManager("1");    //标记为管理员
             sUser.setJob(AdminUserType.getRoleByDataBaseId(Integer.parseInt(userModel.getRoleName())));
             int rows = normalUserMapper.insertSelective(sUser);
             if (rows > 0) {
@@ -131,6 +131,7 @@ public class AdminUserServiceImpl implements IAdminUserService {
         try {
             AdminUser adminUser = adminUserMapper.selectByPrimaryKey(userModel.getAdminId());
             SUser sUser = new SUser();
+            sUser.setName(userModel.getName());
             sUser.setPhone(userModel.getPhone());
             sUser.setCreateTime(userModel.getCreateTime());
             sUser.setId(adminUser.getUserId());

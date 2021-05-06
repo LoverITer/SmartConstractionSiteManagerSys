@@ -49,7 +49,7 @@
 
 
 		<!-- 指定数据库表 ，设置是否要生成Exemple方法 -->
-		<table tableName="admin_user" schema=""
+		<table tableName="crowd_density_statistics" schema=""
 			enableCountByExample="false" enableDeleteByExample="false"
 			enableUpdateByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">

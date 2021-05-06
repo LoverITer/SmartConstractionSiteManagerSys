@@ -50,7 +50,7 @@ public class LoginController {
                 builder.append(error.getField()).append(":").append(error.getDefaultMessage());
             }
             log.error(builder.toString());
-            return CommonResponse.create(AppResponseCode.CAMERA_REQUEST_PARAMETER_VALID,builder.toString());
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID.getCode(),builder.toString(),null);
         }
         //检查用户名密码
         AdminUser adminUser = adminService.checkUser(userModel);

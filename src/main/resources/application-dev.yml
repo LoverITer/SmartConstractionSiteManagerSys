@@ -1,5 +1,5 @@
 #开发环境配置
-linux-host: 192.168.124.135
+linux-host: 47.99.161.205
 server:
   port: 9090
   tomcat:
@@ -22,12 +22,25 @@ spring:
   config:
     activate:
       on-profile: dev
+  thymeleaf:
+    enabled: true
+    #默认是classpath:/templates/
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: off
   mvc:
     hiddenmethod:
       filter:
         enabled: on
-  thymeleaf:
-    cache: off
+  servlet:
+    multipart:
+      enabled: on
+      max-request-size: 200MB
+      max-file-size: 200MB
   #热启动
   devtools:
     livereload:
@@ -76,7 +89,7 @@ spring:
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   redis:
     host: ${linux-host}
-    port: 6379
+    port: 63790
     database: 0
     timeout: 10000
     #springBoot 2.x建议配置lettuce作为Redis客户端  Spring1.x配置jedis
@@ -107,7 +120,7 @@ camera:
 ffmpeg:
   config:
     #ffmpeg执行路径，一般为ffmpeg的安装目录，该路径只能是目录，不能为具体文件路径，否则会报错
-    path: D://JavaProject\smart_security_monitoring_and_early_warning_platform\src\main\resources\ffmpeg\bin\
+    path: D://JavaProject//smart_security_monitoring_and_early_warning_platform//src//main//resources//ffmpeg//
     #存放任务的默认Map的初始化大小
     size: 10
     #事件回调通知接口地址

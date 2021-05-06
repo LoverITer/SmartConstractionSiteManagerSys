@@ -1,26 +1,25 @@
 package cn.edu.xust.iot.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 
-@Getter
-@Setter
+@Data
 @ToString
 public class Region {
 
 
-	/**
-	 * 区域ID
-	 */
-	private Integer id;
+    /**
+     * 区域ID
+     */
+    private Integer id;
 
-	/**
-	 * 区域名（编号）
-	 */
-	private String regionName;
+    /**
+     * 区域名（编号）
+     */
+    private String regionName;
 
-	public Region(String regionName) {
-		this.regionName = regionName;
-	}
+
+    public Region(String regionName) {
+        this.regionName = regionName;
+    }
 }

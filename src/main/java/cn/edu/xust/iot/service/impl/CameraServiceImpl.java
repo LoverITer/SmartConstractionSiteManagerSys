@@ -292,6 +292,42 @@ public class CameraServiceImpl implements ICameraService {
         return null;
     }
 
+    @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
+    @Override
+    public CommonResponse<List<CameraVO>> getCameraListByRegionName(String regionName) {
+       try{
+           List<Camera> cameras = cameraMapper.selectCameraByRegionName(regionName);
+           List<CameraVO> list = new ArrayList<>();
+           for (Camera camera : cameras) {
+               CameraVO cameraVO = camera.conventCamera2CameraVO();
+               if (checkSDKLogin(camera)) {
+                   CameraModel deviceInfo = hwPuSDKService.getDeviceInfo(camera.getIp());
+                   if (deviceInfo != null) {
+                       cameraVO.setSdcVersion(deviceInfo.getSdcVersion());
+                       cameraVO.setModel(deviceInfo.getModel());
+                       cameraVO.setMacAddress(deviceInfo.getMacAddress());
+                       cameraVO.setDeviceStatus("在线");
+                   }
+               } else {
+                   log.error("登陆摄像机 {} 发生错误", camera.getIp() + ":" + camera.getPort());
+                   cameraVO.setDeviceStatus("离线");
+               }
+               cameraVO.setRegionName("NA");
+               Region region = regionMapper.selectByPrimaryKey(camera.getRegionId());
+               if (null != region) {
+                   cameraVO.setRegionName(region.getRegionName());
+               }
+               list.add(cameraVO);
+           }
+           return CommonResponse.create(AppResponseCode.SUCCESS,list);
+       }catch (Exception e){
+           e.printStackTrace();
+           log.error("查询摄像机信息发生错误：{}",e.getMessage());
+           return CommonResponse.create(AppResponseCode.FAIL);
+       }
+    }
+
+
     @Override
     public CommonResponse<Integer> getAllCamerasSize() {
         int camerasSize = 0;
@@ -303,6 +339,7 @@ public class CameraServiceImpl implements ICameraService {
         }
         return CommonResponse.create(AppResponseCode.FAIL, camerasSize);
     }
+
 
     @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
     @Override

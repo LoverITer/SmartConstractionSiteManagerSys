@@ -37,6 +37,15 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label for="name" class="layui-form-label">
+                <span class="we-red">*</span>真实姓名
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name" required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label for="createTime" class="layui-form-label">
                 加入时间
             </label>
@@ -127,8 +136,8 @@
 
         //监听提交
         form.on('submit(add)', function (data) {
-            var formDate = data.field;
-            console.log(formDate);
+            var formData = data.field;
+            console.log(formData);
             $.ajax({
                 //请求获得所有的工人数据
                 url: "/admin/administrator/add",
@@ -137,11 +146,12 @@
                 sync: false,
                 data: JSON.stringify({
                     "token": localStorage.getItem(USER_LOGIN_TOKEN),
-                    "username": formDate.username,
-                    "password": formDate.password + "," + formDate.repassword,
-                    "roleName": formDate.roleName,
-                    "createTime": formDate.createTime,
-                    "phone": formDate.phone
+                    "name": formData.name,
+                    "username": formData.username,
+                    "password": formData.password + "," + formData.repassword,
+                    "roleName": formData.roleName,
+                    "createTime": formData.createTime,
+                    "phone": formData.phone
                 }),
                 success: function (response) {
                     if (response.code === 200) {

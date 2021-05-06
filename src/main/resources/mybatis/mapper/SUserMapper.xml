@@ -47,8 +47,32 @@
         ON s_user.face_lib_id = face_lib.id
     </select>
 
+    <select id="selectByIDCard" parameterType="java.lang.String" resultType="java.lang.Integer" >
+        select id from s_user where certificate_type=#{cardType} and certificate_no=#{cardID}
+    </select>
+
     <select id="countMembers" resultType="java.lang.Integer">
         select count(*) from s_user left join face_lib on s_user.face_lib_id = face_lib.id
+    </select>
+
+    <select id="countWorkerNum" resultType="cn.edu.xust.iot.model.WorkerNumModel">
+        SELECT count(*)                                               AS total,
+               count(CASE WHEN is_manager = '1' THEN 1 END)           AS admin_user_num,
+               count(CASE WHEN is_manager = '0' THEN 1 END)           AS worker_num,
+               count(CASE WHEN certificate_no IS NOT NULL THEN 1 END) AS real_name_num,
+               count(CASE WHEN job = "木工" THEN 1 END)                 AS wood_worker_num,
+               count(CASE WHEN job = "钢筋工" THEN 1 END)                AS steel_worker_num,
+               count(CASE WHEN job = "混凝土工" THEN 1 END)               AS concrete_worker_num,
+               count(CASE WHEN job = "砖瓦工" THEN 1 END)                AS bricklayer_worker_num,
+               count(CASE WHEN job = "抹灰工" THEN 1 END)                AS plasterer_worker_num,
+               count(CASE WHEN job = "涂料工" THEN 1 END)                AS coater_worker_num,
+               count(CASE WHEN job = "装修工" THEN 1 END)                AS decoration_wWorker_num,
+               count(CASE WHEN job = "电工" THEN 1 END)                 AS electrician_worker_num,
+               count(CASE WHEN job = "水暖工" THEN 1 END)                AS plumber_worker_num,
+               count(CASE WHEN job = "杂工" THEN 1 END)                 AS assistant_worker_num,
+               count(CASE WHEN job = "机修工" THEN 1 END)                AS mechanic_worker_num,
+               count(CASE WHEN job = "机械司" THEN 1 END)                AS machinery_department_worker_num
+        FROM s_user
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

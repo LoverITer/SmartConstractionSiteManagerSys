@@ -82,4 +82,7 @@ public interface ICameraService {
      * @return
      */
     List<Camera> getAllCamera();
+
+
+    CommonResponse<List<CameraVO>>  getCameraListByRegionName(String regionName);
 }

@@ -3,6 +3,7 @@ package cn.edu.xust.iot.service;
 import cn.edu.xust.iot.mapper.pagehelper.PageParam;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.SUserModel;
+import cn.edu.xust.iot.model.WorkerNumModel;
 import cn.edu.xust.iot.model.vo.SUserVO;
 import com.github.pagehelper.PageInfo;
 
@@ -30,6 +31,13 @@ public interface ISUserService {
      * @return
      */
     CommonResponse<Integer> getAllMembersSize();
+
+    /**
+     * 获取系统各种人员的数量
+     *
+     * @return
+     */
+    CommonResponse<WorkerNumModel> getWorkerNums();
 
     /**
      * 添加新成员（工人）
