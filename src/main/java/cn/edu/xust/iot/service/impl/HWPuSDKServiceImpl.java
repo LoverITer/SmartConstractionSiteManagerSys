@@ -1,11 +1,13 @@
 package cn.edu.xust.iot.service.impl;
 
 import cn.edu.xust.iot.model.CameraModel;
+import cn.edu.xust.iot.model.entity.Camera;
 import cn.edu.xust.iot.sdc.HWPuSDKResourceConfig;
 import cn.edu.xust.iot.sdc.core.FaceRecognitionCallbackImpl;
 import cn.edu.xust.iot.sdc.core.HWPuSDK;
 import cn.edu.xust.iot.sdc.core.RegionHumanCountCallBackImpl;
 import cn.edu.xust.iot.sdc.core.SnapShotParam;
+import cn.edu.xust.iot.sdc.core.constraints.CameraStatus;
 import cn.edu.xust.iot.sdc.core.constraints.LinkModel;
 import cn.edu.xust.iot.sdc.core.constraints.PlayType;
 import cn.edu.xust.iot.service.IHWPuSDKService;
@@ -338,7 +340,7 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                log.debug("IVS_PU_GetDeviceInfo 获取摄像机 {} 信息失败", chDeviceIP);
+                log.error("IVS_PU_GetDeviceInfo 获取摄像机 {} 信息失败", chDeviceIP);
                 return null;
             }
             CAMERA_INFO_MAP.put(chDeviceIP, deviceInfo);
@@ -361,7 +363,7 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
         log.debug("IVS_PU_GetDeviceInfo 设备型号：" + szDeviceModel);
 
         CameraModel cameraModel = new CameraModel();
-        cameraModel.setDeviceStatus("1");
+        cameraModel.setDeviceStatus(CameraStatus.ONLINE.getStatus());
         cameraModel.setModel(szDeviceModel);
         cameraModel.setMacAddress(szHardAddress);
         cameraModel.setSdcVersion(szVerSoftware);
@@ -417,6 +419,25 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
         }
 
         return isOK;
+    }
+
+
+    /**
+     * 检查是都已经登陆了摄像机
+     *
+     * @param camera
+     * @return
+     */
+    public boolean checkSDKLogin(Camera camera) {
+        if(camera==null||camera.getIp()==null){
+            throw new NullPointerException("参数camera不能为null");
+        }
+        Long login = CAMERAS_LOGIN_MAP.get(camera.getIp());
+        if (null == login || login <= 0) {
+            //相机未登陆需要登陆
+            login = login(camera.getIp(), camera.getPort(), camera.getUserName(), camera.getPassword());
+        }
+        return login > 0;
     }
 
     @Override

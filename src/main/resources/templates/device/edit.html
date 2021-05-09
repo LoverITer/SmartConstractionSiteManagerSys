@@ -75,19 +75,11 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="create_time" class="layui-form-label">
-                <span class="we-red">*</span>创建时间
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="create_time" name="create_time" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label for="device_status" class="layui-form-label">
                 摄像机状态
             </label>
             <div class="layui-input-inline">
-                <select name="device_status" id="device_status">
+                <select name="device_status" id="device_status" >
                     <option value="-1">请选择</option>
                     <option value="0">离线</option>
                     <option value="1">在线</option>
@@ -209,10 +201,7 @@
                     var model= tdArr.eq(3).text(); //证件号
                     var ip = tdArr.eq(4).text(); //性别
                     var port = tdArr.eq(5).text(); //出生日期
-                    //var macAddress=tdArr.eq(6).text();
-                    //var sdcVersion=tdArr.eq(7).text();
                     var regionName=tdArr.eq(8).text(); //加入时间
-                    //var algorithm=tdArr.eq(9).text();
                     var userName = tdArr.eq(10).text(); //手机
                     var password = tdArr.eq(11).text(); //地址
                     var deviceStatus= tdArr.eq(12).text();
@@ -222,8 +211,10 @@
                         deviceStatus="1"
                     }else if(deviceStatus==="告警"){
                         deviceStatus="2";
-                    }else{
+                    }else if(deviceStatus==="故障"){
                         deviceStatus="3";
+                    }else{
+                        deviceStatus="";
                     }
                     var createTime= tdArr.eq(10).text(); //工种
 

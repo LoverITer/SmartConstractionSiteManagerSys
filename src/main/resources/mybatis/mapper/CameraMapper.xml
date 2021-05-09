@@ -46,8 +46,7 @@
     </delete>
 
     <select id="selectAll" resultMap="BaseResultMap">
-        select *
-        from camera
+        select * from camera
     </select>
 
 

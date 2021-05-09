@@ -1,6 +1,10 @@
 package cn.edu.xust.iot.service;
 
+import cn.edu.xust.iot.model.CommonResponse;
+import cn.edu.xust.iot.model.entity.RegionHumanCount;
+
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * 人流量统计服务接口
@@ -44,5 +48,12 @@ public interface IRegionHumanCountService {
      * @param allHumanOutCount
      */
     void addRegionAllHumanCountOutRecord(Integer regionId, Integer allHumanOutCount);
+
+    /**
+     * 获取当前小时段内的所有监控区域的人流量
+     *
+     * @return
+     */
+    CommonResponse<List<RegionHumanCount>> getRegionHumanCountHourly();
 
 }

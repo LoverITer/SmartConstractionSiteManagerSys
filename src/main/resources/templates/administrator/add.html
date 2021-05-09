@@ -66,9 +66,9 @@
         <div class="layui-form-item">
             <label for="roleName" class="layui-form-label"><span class="we-red">*</span>角色</label>
             <div class="layui-input-inline">
-                <select name="roleName" id="roleName">
+                <select name="roleName" id="roleName" required="" lay-verify="roleName">
                     <option value="0">请选择</option>
-                    <option value="1">超级管理员</option>
+                    <option value="1">系统管理员</option>
                     <option value="2">项目经理</option>
                     <option value="3">总工程师</option>
                     <option value="4">安全员</option>
@@ -128,8 +128,16 @@
         form.verify({
              password: [/(.+){6,12}$/, '密码必须6到12位']
             , repassword: function (value) {
-                if ($('#password').val() != $('#repassword').val()) {
+                 if(undefined===value||""===value){
+                     return "请再次输入密码"
+                 }
+                if ($('#password').val() !== value) {
                     return '两次密码不一致';
+                }
+            }
+            ,roleName: function (value) {
+                if(undefined===value||"0"===value){
+                    return '请选择管理员角色';
                 }
             }
         });

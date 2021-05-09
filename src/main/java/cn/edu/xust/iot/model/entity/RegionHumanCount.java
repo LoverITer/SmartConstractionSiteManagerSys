@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @ToString
 @NoArgsConstructor
-public class RegionHumanCount {
+public class RegionHumanCount implements Comparable<RegionHumanCount>{
     private Integer id;
 
     private Integer regionId;
@@ -36,4 +36,16 @@ public class RegionHumanCount {
         this.createDate = new Date();
     }
 
+
+    @Override
+    public int compareTo(RegionHumanCount regionHumanCount) {
+        int cnt1=this.humanIn=this.humanOut;
+        int cnt2=regionHumanCount.humanIn+regionHumanCount.humanOut;
+        if(cnt1-cnt2<0){
+            return -1;
+        }else if(cnt1-cnt2>0){
+            return 1;
+        }
+        return 0;
+    }
 }

@@ -146,7 +146,18 @@
             var algorithmName = this.algorithmName;
             var userName = this.userName;
             var password = this.password;
-            var deviceStatus = this.deviceStatus;
+            var deviceStatus = "";
+            if(this.deviceStatus==="0"){
+                deviceStatus="离线"
+            }else if(this.deviceStatus==="1"){
+                deviceStatus="在线";
+            }else if(this.deviceStatus==="2"){
+                deviceStatus="告警";
+            }else if(this.deviceStatus==="3"){
+                deviceStatus="故障";
+            }else{
+                deviceStatus="未知";
+            }
             var createTime = this.createTime;
 
             $('#table-data').append("<tr data-id="+deviceId+">\n" +

@@ -26,6 +26,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,7 @@ public class CameraServiceImpl implements ICameraService {
     @Autowired
     private CameraRTSPToHttpFlvConfig config;// 配置文件bean
 
+    @Qualifier("cameraMapper")
     @Autowired
     private CameraMapper cameraMapper;
 
@@ -222,7 +224,7 @@ public class CameraServiceImpl implements ICameraService {
             }
             camera.setRegionId(region.getId());
 
-            if (checkSDKLogin(camera)) {
+            if (hwPuSDKService.checkSDKLogin(camera)) {
                 //调用SDK获取摄像机当前状态
                 deviceInfo = hwPuSDKService.getDeviceInfo(cameraModel.getIp());
                 if (deviceInfo == null) {
@@ -264,19 +266,6 @@ public class CameraServiceImpl implements ICameraService {
             List<CameraVO> list = new ArrayList<>();
             for (Camera camera : cameras) {
                 CameraVO cameraVO = camera.conventCamera2CameraVO();
-                if (checkSDKLogin(camera)) {
-                    CameraModel deviceInfo = hwPuSDKService.getDeviceInfo(camera.getIp());
-                    if (deviceInfo != null) {
-                        cameraVO.setSdcVersion(deviceInfo.getSdcVersion());
-                        cameraVO.setModel(deviceInfo.getModel());
-                        cameraVO.setMacAddress(deviceInfo.getMacAddress());
-                        cameraVO.setDeviceStatus("在线");
-                    }
-                } else {
-                    log.error("登陆摄像机 {} 发生错误", camera.getIp() + ":" + camera.getPort());
-                    cameraVO.setDeviceStatus("离线");
-                }
-                cameraVO.setRegionName("NA");
                 Region region = regionMapper.selectByPrimaryKey(camera.getRegionId());
                 if (null != region) {
                     cameraVO.setRegionName(region.getRegionName());
@@ -295,36 +284,23 @@ public class CameraServiceImpl implements ICameraService {
     @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
     @Override
     public CommonResponse<List<CameraVO>> getCameraListByRegionName(String regionName) {
-       try{
-           List<Camera> cameras = cameraMapper.selectCameraByRegionName(regionName);
-           List<CameraVO> list = new ArrayList<>();
-           for (Camera camera : cameras) {
-               CameraVO cameraVO = camera.conventCamera2CameraVO();
-               if (checkSDKLogin(camera)) {
-                   CameraModel deviceInfo = hwPuSDKService.getDeviceInfo(camera.getIp());
-                   if (deviceInfo != null) {
-                       cameraVO.setSdcVersion(deviceInfo.getSdcVersion());
-                       cameraVO.setModel(deviceInfo.getModel());
-                       cameraVO.setMacAddress(deviceInfo.getMacAddress());
-                       cameraVO.setDeviceStatus("在线");
-                   }
-               } else {
-                   log.error("登陆摄像机 {} 发生错误", camera.getIp() + ":" + camera.getPort());
-                   cameraVO.setDeviceStatus("离线");
-               }
-               cameraVO.setRegionName("NA");
-               Region region = regionMapper.selectByPrimaryKey(camera.getRegionId());
-               if (null != region) {
-                   cameraVO.setRegionName(region.getRegionName());
-               }
-               list.add(cameraVO);
-           }
-           return CommonResponse.create(AppResponseCode.SUCCESS,list);
-       }catch (Exception e){
-           e.printStackTrace();
-           log.error("查询摄像机信息发生错误：{}",e.getMessage());
-           return CommonResponse.create(AppResponseCode.FAIL);
-       }
+        try {
+            List<Camera> cameras = cameraMapper.selectCameraByRegionName(regionName);
+            List<CameraVO> list = new ArrayList<>();
+            for (Camera camera : cameras) {
+                CameraVO cameraVO = camera.conventCamera2CameraVO();
+                Region region = regionMapper.selectByPrimaryKey(camera.getRegionId());
+                if (null != region) {
+                    cameraVO.setRegionName(region.getRegionName());
+                }
+                list.add(cameraVO);
+            }
+            return CommonResponse.create(AppResponseCode.SUCCESS, list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("查询摄像机信息发生错误：{}", e.getMessage());
+            return CommonResponse.create(AppResponseCode.FAIL);
+        }
     }
 
 
@@ -358,63 +334,39 @@ public class CameraServiceImpl implements ICameraService {
             }
             //设置RegionId
             camera.setRegionId(region.getId());
-            if (checkSDKLogin(camera)) {
-                CameraModel deviceInfo = hwPuSDKService.getDeviceInfo(camera.getIp());
-                if (deviceInfo != null) {
-                    camera.setSdcVersion(deviceInfo.getSdcVersion());
-                    camera.setModel(deviceInfo.getModel());
-                    camera.setMacAddress(deviceInfo.getMacAddress());
-                    camera.setDeviceStatus("1");
-                }
-            }
             int rows = cameraMapper.updateByPrimaryKeySelective(camera);
             if (rows > 0) {
+                log.info("摄像机信息更新成功");
                 return CommonResponse.create(AppResponseCode.SUCCESS);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("修改监控摄像机 修改监控摄像的信息发生错误：{}", e.getMessage());
         }
         log.error("修改监控摄像机 更新摄像机信息失败");
         return CommonResponse.create(AppResponseCode.FAIL);
     }
 
+
+
     @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
     @Override
     public CommonResponse<String> removeCameraBatch(List<Integer> userIdList) {
-        try{
+        try {
             for (Integer cameraId : userIdList) {
                 regionMapper.deleteByCameraId(cameraId);
             }
             int rows = cameraMapper.batchDeleteByPrimaryKey(userIdList);
-            if(rows<=0){
+            if (rows <= 0) {
                 log.error("删除监控摄像机时发生错误");
                 return CommonResponse.create(AppResponseCode.FAIL);
             }
             return CommonResponse.create(AppResponseCode.SUCCESS);
-        }catch (Exception e){
-            log.error("删除监控摄像机时发生错误，详细：{}",e.getMessage());
+        } catch (Exception e) {
+            log.error("删除监控摄像机时发生错误，详细：{}", e.getMessage());
             return CommonResponse.create(AppResponseCode.FAIL);
         }
     }
 
 
-
-    /**
-     * 检查是都已经登陆了摄像机
-     *
-     * @param camera
-     * @return
-     */
-    private boolean checkSDKLogin(Camera camera) {
-        if(camera==null||camera.getIp()==null){
-            throw new NullPointerException("参数camera不能为null");
-        }
-        Map<String, Long> loginMap = HWPuSDKServiceImpl.CAMERAS_LOGIN_MAP;
-        Long login = loginMap.get(camera.getIp());
-        if (null == login || login <= 0) {
-            //相机未登陆需要登陆
-            login = hwPuSDKService.login(camera.getIp(), camera.getPort(), camera.getUserName(), camera.getPassword());
-        }
-        return login > 0;
-    }
 }

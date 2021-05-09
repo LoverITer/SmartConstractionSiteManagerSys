@@ -17,7 +17,7 @@ package cn.edu.xust.iot.model.constration;
 public enum AdminUserType {
 
     /**
-     * Admin 系统超级管理员 具有对系统管理的最高权限
+     * Admin 系统管理员 具有对系统管理的最高权限
      */
     ADMIN("Admin"),
 
@@ -75,7 +75,7 @@ public enum AdminUserType {
 
     public static String getRoleByDataBaseId(Integer id){
         switch (id){
-            case 1: return "超级管理员";
+            case 1: return "系统管理员";
             case 2: return "项目经理";
             case 3: return "总工程师";
             case 4: return "安全员";
@@ -87,7 +87,7 @@ public enum AdminUserType {
 
     public static String getRoleByRoleType(String type){
         switch (type){
-            case "Admin": return "超级管理员";
+            case "Admin": return "系统管理员";
             case "PM": return "项目经理";
             case "CE": return "总工程师";
             case "SO": return "安全员";

@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.PreDestroy;
@@ -21,6 +22,7 @@ import java.util.Set;
 
 @Slf4j
 @EnableAspectJAutoProxy
+@EnableScheduling
 @EnableTransactionManagement
 @MapperScan("cn.edu.xust.iot.mapper")
 @ServletComponentScan(basePackages = "cn.edu.xust.iot.conf.http")

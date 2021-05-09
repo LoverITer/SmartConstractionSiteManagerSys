@@ -7,6 +7,7 @@ import cn.edu.xust.iot.service.impl.HWPuSDKServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ import java.util.Set;
 @Component
 public class HWPuSDKResourceManager implements ApplicationRunner, DisposableBean {
 
+    @Qualifier("cameraMapper")
     @Autowired
     private CameraMapper cameraMapper;
 

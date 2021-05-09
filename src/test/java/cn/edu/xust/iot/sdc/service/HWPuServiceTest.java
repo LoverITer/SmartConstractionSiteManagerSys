@@ -82,7 +82,7 @@ public class HWPuServiceTest {
     }
 
     @Test
-    public void testAddOneFace() throws InterruptedException, IOException {
+    public void testAddOneFace() throws IOException {
         HWPuSDK.PU_FACE_RECORD_S.ByValue faceRecord = new HWPuSDK.PU_FACE_RECORD_S.ByValue();
         faceRecord.ulFaceId = new WinDef.ULONG(idWorker.nextId());
         faceRecord.szName = "孙京华".getBytes();

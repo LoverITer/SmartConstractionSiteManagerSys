@@ -1,6 +1,7 @@
 package cn.edu.xust.iot.service;
 
 import cn.edu.xust.iot.model.CameraModel;
+import cn.edu.xust.iot.model.entity.Camera;
 import cn.edu.xust.iot.sdc.core.HWPuSDK;
 import cn.edu.xust.iot.sdc.core.SnapShotParam;
 import cn.edu.xust.iot.sdc.core.constraints.PlayType;
@@ -44,6 +45,16 @@ public interface IHWPuSDKService {
      * @return
      */
     long login(String chDeviceIP, Integer lDevicePort, String chLoginUserName, String chLoginPwd);
+
+
+    /**
+     * 检查相机是否已经登陆，如果没有登陆就尝试登陆
+     *
+     * @param camera   摄像机信息
+     * @return  已经登录或未登录但是根据提供的信息登陆成功返回true，否则一律返回false
+     */
+    boolean checkSDKLogin(Camera camera);
+
 
     /**
      * 退出监控摄像机
@@ -135,7 +146,7 @@ public interface IHWPuSDKService {
      *
      * @return
      */
-    boolean setCrowdDensityParam(String chDeviceIP,String regionName);
+    boolean setCrowdDensityParam(String chDeviceIP, String regionName);
 
     /**
      * 保存抓怕的照片到本地  IVS_PU_SavePicture
