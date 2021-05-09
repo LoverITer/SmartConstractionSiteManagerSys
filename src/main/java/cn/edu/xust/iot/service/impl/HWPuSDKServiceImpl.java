@@ -4,13 +4,16 @@ import cn.edu.xust.iot.model.CameraModel;
 import cn.edu.xust.iot.sdc.HWPuSDKResourceConfig;
 import cn.edu.xust.iot.sdc.core.FaceRecognitionCallbackImpl;
 import cn.edu.xust.iot.sdc.core.HWPuSDK;
+import cn.edu.xust.iot.sdc.core.RegionHumanCountCallBackImpl;
 import cn.edu.xust.iot.sdc.core.SnapShotParam;
 import cn.edu.xust.iot.sdc.core.constraints.LinkModel;
+import cn.edu.xust.iot.sdc.core.constraints.PlayType;
 import cn.edu.xust.iot.service.IHWPuSDKService;
 import cn.edu.xust.iot.utils.CommonUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.jna.Memory;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Platform;
 import com.sun.jna.Pointer;
@@ -26,6 +29,8 @@ import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static cn.edu.xust.iot.sdc.core.HWPuSDK.IPV4_ADDR_LEN;
+
 /**
  * 华为摄像机服务接口实现
  *
@@ -33,7 +38,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2021/4/18 0:55
  */
 @Slf4j
-@Service
+@Service(value = "hwPuSDKService")
 public class HWPuSDKServiceImpl implements IHWPuSDKService {
 
     //SDK实例
@@ -68,6 +73,10 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
     private static final Map<String, HWPuSDK.LPPU_DEVICEINFO_S> CAMERA_INFO_MAP = new ConcurrentHashMap<>(16);
     //提供给回调接口的用于区分多路相机的参数：设备IP
     private static List<Pointer> pointerArrayList = new ArrayList<>();
+    //实时播放回调
+    private static final Map<Integer,HWPuSDK.pfRealDataCallBack> REAL_DATA_CALLBACK_MAP=new ConcurrentHashMap<>(16);
+
+
 
     /**
      * 显示错误信息
@@ -185,7 +194,10 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
 
 
     @Override
-    public long startRealPlay(String chDeviceIP) {
+    public long startRealPlay(String chDeviceIP,PlayType playType) {
+        if(!CommonUtils.isCorrectIp(chDeviceIP)) {
+            throw new IllegalArgumentException("非法参数:ip");
+        }
         Long uid = CAMERAS_LOGIN_MAP.get(chDeviceIP);
         if (uid <= 0) {
             log.error("IVS_PU_RealPlay 摄像机 {} 还未登陆，请登录后再进行操作", chDeviceIP);
@@ -215,11 +227,22 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
             realPlayInfo.write();
 
 
-            //人脸识别回调
-            FaceRecognitionCallbackImpl callback = new FaceRecognitionCallbackImpl();
-            Pointer usrData = new Pointer(1);
+            HWPuSDK.pfRealDataCallBack callback=REAL_DATA_CALLBACK_MAP.get(playType.getType());
+            if(callback==null){
+                //如果Map中没有目标PlayType的回调方法就实例化对应的回调并且放到Map中不用多次初始化
+                if(PlayType.FACE_RECOGNITION_CALLBACK_IMPL.equals(playType)) {
+                    //人脸识别回调
+                    callback=new FaceRecognitionCallbackImpl();
+                    REAL_DATA_CALLBACK_MAP.put(PlayType.FACE_RECOGNITION_CALLBACK_IMPL.getType(),callback);
+                }else if(PlayType.REGION_CROWD_DENSITY_CALLBACK_IMPL.equals(playType)){
+                    //区域人数检测
+                    callback=new RegionHumanCountCallBackImpl();
+                    REAL_DATA_CALLBACK_MAP.put(PlayType.REGION_CROWD_DENSITY_CALLBACK_IMPL.getType(),callback);
+                }
+            }
+
+            Pointer usrData = new Memory(IPV4_ADDR_LEN +1);
             usrData.setString(0, chDeviceIP);
-            pointerArrayList.add(usrData);
             WinDef.ULONG winDef = hwPuSDKInstance.IVS_PU_RealPlay(new WinDef.ULONG(uid), realPlayInfo, callback, usrData);
             winDefId = winDef.longValue();
             if (0 != winDefId) {
@@ -553,7 +576,7 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
         //人群密度算法参数设置
         HWPuSDK.PU_ITGT_CROWD_DENSITY_DETECT_ALG_PARAM_S crowdDensityDetectAlgParams = new HWPuSDK.PU_ITGT_CROWD_DENSITY_DETECT_ALG_PARAM_S();
         //算法使能
-        crowdDensityDetectAlgParams.enEnable = HWPuSDK.PU_ENABLE_TYPE_E.PU_ENABLE_MAX;
+        crowdDensityDetectAlgParams.enEnable = HWPuSDK.PU_ENABLE_TYPE_E.PU_ENABLE_TRUE;
         //人数上限阈值
         crowdDensityDetectAlgParams.fPeopleNumThreshold = new WinDef.ULONG(1);
         //告警上报间隔

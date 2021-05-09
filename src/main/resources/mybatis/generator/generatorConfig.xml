@@ -14,7 +14,7 @@
 		</commentGenerator>
 		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-			connectionURL="jdbc:mysql://192.168.124.135:3306/security_monitoring_sys?useSSL=false"
+			connectionURL="jdbc:mysql://47.99.161.205:3306/security_monitoring_sys?useSSL=false"
 			userId="root" password="95162437hx$">
 		</jdbcConnection>
 		<!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 

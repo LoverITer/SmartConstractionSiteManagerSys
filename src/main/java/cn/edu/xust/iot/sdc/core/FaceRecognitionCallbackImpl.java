@@ -1,7 +1,9 @@
 package cn.edu.xust.iot.sdc.core;
 
+import cn.edu.xust.iot.conf.ApplicationContextHolder;
 import cn.edu.xust.iot.service.IClockInService;
 import cn.edu.xust.iot.service.IHWPuSDKService;
+import cn.edu.xust.iot.service.impl.ClockInServiceImpl;
 import cn.edu.xust.iot.service.impl.HWPuSDKServiceImpl;
 import cn.edu.xust.iot.utils.CommonUtils;
 import com.sun.jna.NativeLong;
@@ -10,8 +12,6 @@ import com.sun.jna.Structure;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.ptr.PointerByReference;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,44 +21,42 @@ import java.util.Date;
  * @since 2021/4/24 0:02
  */
 @Slf4j
-@Component
 public class FaceRecognitionCallbackImpl implements HWPuSDK.pfRealDataCallBack {
 
 
-    private IHWPuSDKService hwPuSDKService = new HWPuSDKServiceImpl();
     //各种元数据
     private HWPuSDK.PU_META_DATA targetMetaData = new HWPuSDK.PU_META_DATA();
     private PointerByReference targetMetaDataPointer = new PointerByReference(targetMetaData.getPointer());
     private static final SimpleDateFormat HALF_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    @Autowired
-    private IClockInService clockInService;
+    private IClockInService clockInService=null;
+
+    private IHWPuSDKService hwPuSDKService=null;
+
 
 
     @Override
-    public Pointer invoke(Pointer szBuffer, NativeLong lSize, String pUsrData) {
+    public Pointer invoke(Pointer szBuffer, NativeLong lSize, Pointer pUsrData) {
         if (szBuffer == null) {
             log.error("FaceRecognitionCallbackImpl: szBuffer is null");
             return null;
         }
 
-        //getMetaDataByLayerTwoType(szBuffer, lSize, HWPuSDK.LAYER_TWO_TYPE.COMMON, commonMetaDataPointer);
-        getMetaDataByLayerTwoType(szBuffer, lSize, HWPuSDK.LAYER_TWO_TYPE.TARGET, targetMetaDataPointer);
-        /*getMetaDataByLayerTwoType(szBuffer, lSize, HWPuSDK.LAYER_TWO_TYPE.RULE,   ruleMetaDataPointer);
-        getMetaDataByLayerTwoType(szBuffer, lSize, HWPuSDK.LAYER_TWO_TYPE.TALARM, alarmMetaDataPointer);*/
-
-        return null;
-    }
-
-    private void getMetaDataByLayerTwoType(Pointer szBuffer, NativeLong lSize, int type, PointerByReference reference) {
+        if(clockInService==null){
+            clockInService=ApplicationContextHolder.getBean("clockInService");
+        }
+        if(hwPuSDKService==null){
+            hwPuSDKService=ApplicationContextHolder.getBean("hwPuSDKService");
+        }
+        //获取元数据
         boolean isOk = hwPuSDKService.getMetaData(szBuffer, new WinDef.ULONG(lSize.longValue()),
-                type, reference);
+                HWPuSDK.LAYER_TWO_TYPE.TARGET, targetMetaDataPointer);
 
         if (isOk) {
             try {
                 //获取智能元数据
-                HWPuSDK.PU_META_DATA data = Structure.newInstance(HWPuSDK.PU_META_DATA.class, reference.getValue());
+                HWPuSDK.PU_META_DATA data = Structure.newInstance(HWPuSDK.PU_META_DATA.class, targetMetaDataPointer.getValue());
                 data.read();
                 procMetaData(data); // Resolving metadata
 
@@ -68,10 +66,11 @@ public class FaceRecognitionCallbackImpl implements HWPuSDK.pfRealDataCallBack {
                 log.error("解析智能元数据发生异常：{}", e.getMessage());
             } finally {
                 //这里必须释放元数据，不然会导致内存泄漏
-                hwPuSDKService.freeMetaData(reference);
+                hwPuSDKService.freeMetaData(targetMetaDataPointer);
             }
 
         }
+        return null;
     }
 
 
@@ -140,6 +139,9 @@ public class FaceRecognitionCallbackImpl implements HWPuSDK.pfRealDataCallBack {
 
                     //如果目标是人脸并且人脸匹配 就说明打卡成功
                     if (HWPuSDK.ITGT_TARGET_TYPE_E.TARGET_FACE_RECOGNITION == target && matchRes == 1) {
+                        if(clockInService==null){
+                            clockInService= ApplicationContextHolder.getBean(ClockInServiceImpl.class);
+                        }
                         clockInService.addClockInRecord(String.valueOf(cardType), cardId);
                     }
 

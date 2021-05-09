@@ -1134,6 +1134,10 @@ public interface HWPuSDK extends Library {
         // parameter (minimum face alarm recall
         // rate).
         int SNAPFACENUM=0x07000103;  //当前相机抓拍人数统计
+        int HUMAN_COUNT_IN=0x07000709;  //进入人数
+        int HUMAN_COUNT_OUT=0x0700070A;  //离开人数
+        int HUMANCOUNT_ALL_IN_NUM=0x07000900;  //过线计数进入总人数
+        int HUMANCOUNT_ALL_OUT_NUM=0x07000901; //过线计数进入总人数
         int TOTALSNAPNUM=0x07000104;  //整个服务抓拍人数
         int SNAP_MATCHRATE_MILLION=0x07000105;  //发送给元数据网关的匹配率，6位有效数字
         int OBJ_ID = 0x07000021; // Object ID.
@@ -1875,7 +1879,7 @@ public interface HWPuSDK extends Library {
     // real play callback function type
     @FunctionalInterface
     interface pfRealDataCallBack extends StdCallCallback {
-        Pointer invoke(Pointer szBuffer, NativeLong lSize, String pUsrData);
+        Pointer invoke(Pointer szBuffer, NativeLong lSize, Pointer pUsrData);
     }
 
     interface pfTransChnDataCallBack extends StdCallCallback {
@@ -8255,7 +8259,25 @@ public interface HWPuSDK extends Library {
 
         @Override
         protected List<String> getFieldOrder() {
-            return Arrays.asList("ulChannelID", "stAlgParams", "stAreaList", "stGuardPlan", "szReserved");
+            return Arrays.asList("ulChannelID", "stAlgParams", "stAreaList", "stGuardPlan", "szReserve");
+        }
+    }
+
+
+    class PU_ITGT_CROWD_DENSITY_DETECT_ALG_PARAM_S extends Structure{
+        public int enEnable;//算法使能 PU_ENABLE_TYPE_E
+        public ULONG fPeopleNumThreshold;//人数上限阈值
+        public ULONG ulAlarmTime;//告警上报间隔
+        public ULONG ulSensitivity;//检测阈值(1-5)
+        public byte[] szReserved=new byte[PU_RESERVE_LEN];
+
+        public PU_ITGT_CROWD_DENSITY_DETECT_ALG_PARAM_S(){
+            this.setAlignType(ALIGN_NONE);
+        }
+
+        @Override
+        protected List<String> getFieldOrder() {
+            return Arrays.asList("enEnable", "fPeopleNumThreshold", "ulAlarmTime", "ulSensitivity", "szReserved");
         }
     }
 
@@ -8311,23 +8333,6 @@ public interface HWPuSDK extends Library {
         protected List<String> getFieldOrder() {
             return Arrays.asList("IPTZHorDegree", "IPTZVerDegree", "ulLenMultiple", "ulDotLenMultiple",
                     "ulZoomRatio","ulDotZoomRatio","lPTZDotHorDegree","IPTZDotVerDegree","szReserved");
-        }
-    }
-
-    class PU_ITGT_CROWD_DENSITY_DETECT_ALG_PARAM_S extends Structure{
-        public int enEnable;//算法使能 PU_ENABLE_TYPE_E
-        public ULONG fPeopleNumThreshold;//人数上限阈值
-        public ULONG ulAlarmTime;//告警上报间隔
-        public ULONG ulSensitivity;//检测阈值(1-5)
-        public byte[] szReserve=new byte[PU_RESERVE_LEN];
-
-        public PU_ITGT_CROWD_DENSITY_DETECT_ALG_PARAM_S(){
-            this.setAlignType(ALIGN_NONE);
-        }
-
-        @Override
-        protected List<String> getFieldOrder() {
-            return Arrays.asList("ulChannelID", "stAlgParams", "stAreaList", "stGuardPlan", "szReserved");
         }
     }
 

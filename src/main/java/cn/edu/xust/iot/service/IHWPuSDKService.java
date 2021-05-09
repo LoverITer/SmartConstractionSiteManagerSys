@@ -3,6 +3,7 @@ package cn.edu.xust.iot.service;
 import cn.edu.xust.iot.model.CameraModel;
 import cn.edu.xust.iot.sdc.core.HWPuSDK;
 import cn.edu.xust.iot.sdc.core.SnapShotParam;
+import cn.edu.xust.iot.sdc.core.constraints.PlayType;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.ptr.PointerByReference;
@@ -66,7 +67,7 @@ public interface IHWPuSDKService {
      * @param chDeviceIP 相机IP
      * @return
      */
-    long startRealPlay(String chDeviceIP);
+    long startRealPlay(String chDeviceIP, PlayType playType);
 
 
     /**

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.xust.iot.mapper.RegionHumanCountMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.xust.iot.model.entity.RegionHumanCount">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="region_id" jdbcType="INTEGER" property="regionId"/>
+        <result column="human_in" jdbcType="INTEGER" property="humanIn"/>
+        <result column="human_out" jdbcType="INTEGER" property="humanOut"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, region_id, human_in, human_out,create_date
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from region_human_count
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByRegionIdHourly" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        region_human_count
+        WHERE
+        region_id = #{regionId,jdbcType=INTEGER}
+        AND DATE_FORMAT( NOW(), '%Y-%m-%d %H' ) = DATE_FORMAT(create_date,'%Y-%m-%d %H' )
+    </select>
+
+    <select id="selectHourPeriodHumanCount" resultMap="BaseResultMap">
+        select region_name,human_in,human_out from region_human_count as a,region as b where 	a.region_id=b.id and DATE_FORMAT(NOW(), '%Y-%m-%d %H') = DATE_FORMAT(create_date, '%Y-%m-%d %H')
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from region_human_count
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.RegionHumanCount">
+        insert into region_human_count (region_id, human_in, human_out,
+                                        create_date)
+        values (#{regionId,jdbcType=INTEGER}, #{humanIn,jdbcType=INTEGER}, #{humanOut,jdbcType=INTEGER},
+                #{createDate,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.RegionHumanCount">
+        insert into region_human_count
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="regionId != null">
+                region_id,
+            </if>
+            <if test="humanIn != null">
+                human_in,
+            </if>
+            <if test="humanOut != null">
+                human_out,
+            </if>
+            <if test="createDate != null">
+                create_date
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="regionId != null">
+                #{regionId,jdbcType=INTEGER},
+            </if>
+            <if test="humanIn != null">
+                #{humanIn,jdbcType=INTEGER},
+            </if>
+            <if test="humanOut != null">
+                #{humanOut,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.model.entity.RegionHumanCount">
+        update region_human_count
+        <set>
+            <if test="regionId != null">
+                region_id = #{regionId,jdbcType=INTEGER},
+            </if>
+            <if test="humanIn != null">
+                #{humanIn,jdbcType=INTEGER},
+            </if>
+            <if test="humanOut != null">
+                #{humanOut,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateHumanCountInByRegionIdAndTime" parameterType="int">
+        update region_human_count
+        set human_in = #{humanIn,jdbcType=INTEGER}
+        where region_id = #{regionId}
+          and DATE_FORMAT(NOW(), '%Y-%m-%d %H') = DATE_FORMAT(create_date, '%Y-%m-%d %H')
+    </update>
+
+    <update id="updateHumanCountOutByRegionIdAndTime" parameterType="int">
+        update region_human_count
+        set human_out = #{humanOut,jdbcType=INTEGER}
+        where region_id = #{regionId}
+          and DATE_FORMAT(NOW(), '%Y-%m-%d %H') = DATE_FORMAT(create_date, '%Y-%m-%d %H')
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.model.entity.RegionHumanCount">
+        update region_human_count
+        set region_id   = #{regionId,jdbcType=INTEGER},
+            human_in    = #{humanIn,jdbcType=INTEGER},
+            human_out   = #{humanOut,jdbcType=INTEGER},
+            create_date = #{createDate,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

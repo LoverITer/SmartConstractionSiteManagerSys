@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author HuangXin
  */
-@Repository
+@Repository(value = "cameraMapper")
 public interface CameraMapper {
 
     /**
@@ -49,6 +49,14 @@ public interface CameraMapper {
      * @return 摄像机信息
      */
     Camera selectByPrimaryKey(Integer id);
+
+    /**
+     * 根据相机IP查询相机信息
+     *
+     * @param ip
+     * @return
+     */
+    Camera selectByCameraIp(@Param("ip") String ip);
 
     /**
      * 查询所有的摄像头数据

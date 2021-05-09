@@ -24,9 +24,9 @@ import java.util.List;
  * @author HuangXin
  * @since 2021/4/30 17:36
  */
-@Service
+@Service("clockInService")
 @Slf4j
-public class IClockInServiceImpl implements IClockInService {
+public class ClockInServiceImpl implements IClockInService {
 
 
     @Autowired

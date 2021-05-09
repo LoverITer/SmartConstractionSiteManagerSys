@@ -28,6 +28,10 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <select id="selectByCameraIp" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from camera where ip=#{ip}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from camera
