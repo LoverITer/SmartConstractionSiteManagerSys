@@ -1,7 +1,8 @@
 package cn.edu.xust.iot.mapper;
 
 import cn.edu.xust.iot.model.SUserModel;
-import cn.edu.xust.iot.model.WorkerNumModel;
+import cn.edu.xust.iot.model.WorkerDetailNumModel;
+import cn.edu.xust.iot.model.WorkerOverviewNumModel;
 import cn.edu.xust.iot.model.entity.SUser;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -67,11 +68,12 @@ public interface SUserMapper {
 
     /**
      * 根据人员的证件类型和证件ID查询
+     *
      * @param cardType
      * @param cardID
      * @return
      */
-    Integer selectByIDCard(@Param("cardType") String cardType,@Param("cardID") String cardID);
+    Integer selectByIDCard(@Param("cardType") String cardType, @Param("cardID") String cardID);
 
     /**
      * 查询所有人员的信息
@@ -88,11 +90,18 @@ public interface SUserMapper {
     int countMembers();
 
     /**
-     * 统计系统中不同类型的人员的数量
+     * 统计系统中人数概况
      *
      * @return
      */
-    WorkerNumModel countWorkerNum();
+    WorkerOverviewNumModel countWorkerOverviewNum();
+
+    /**
+     * 工人数据详细
+     *
+     * @return
+     */
+    List<WorkerDetailNumModel> countWorkerDetailNum();
 
     /**
      * 更新传入对象中某条人员信息记录

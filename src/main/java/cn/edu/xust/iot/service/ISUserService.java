@@ -3,11 +3,12 @@ package cn.edu.xust.iot.service;
 import cn.edu.xust.iot.mapper.pagehelper.PageParam;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.SUserModel;
-import cn.edu.xust.iot.model.WorkerNumModel;
+import cn.edu.xust.iot.model.WorkerOverviewNumModel;
 import cn.edu.xust.iot.model.vo.SUserVO;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 成员管理服务接口
@@ -33,11 +34,18 @@ public interface ISUserService {
     CommonResponse<Integer> getAllMembersSize();
 
     /**
-     * 获取系统各种人员的数量
+     * 获取系统各种人员的数量概况
      *
      * @return
      */
-    CommonResponse<WorkerNumModel> getWorkerNums();
+    CommonResponse<WorkerOverviewNumModel> getWorkerOverviewNums();
+
+    /**
+     * 获取系统各种人员的数量详细数据
+     *
+     * @return
+     */
+    CommonResponse<Map<String,List<String>>> getWorkerDetailNums();
 
     /**
      * 添加新成员（工人）

@@ -6,7 +6,8 @@ import cn.edu.xust.iot.mapper.SUserMapper;
 import cn.edu.xust.iot.mapper.pagehelper.PageParam;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.SUserModel;
-import cn.edu.xust.iot.model.WorkerNumModel;
+import cn.edu.xust.iot.model.WorkerDetailNumModel;
+import cn.edu.xust.iot.model.WorkerOverviewNumModel;
 import cn.edu.xust.iot.model.entity.FaceLib;
 import cn.edu.xust.iot.model.entity.SUser;
 import cn.edu.xust.iot.model.vo.SUserVO;
@@ -19,9 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author HuangXin
@@ -71,12 +70,37 @@ public class SUserServiceImpl implements ISUserService {
     }
 
     @Override
-    public CommonResponse<WorkerNumModel> getWorkerNums(){
+    public CommonResponse<WorkerOverviewNumModel> getWorkerOverviewNums(){
         try{
-            return CommonResponse.create(AppResponseCode.SUCCESS,userMapper.countWorkerNum());
+            WorkerOverviewNumModel workerNum = userMapper.countWorkerOverviewNum();
+            return CommonResponse.create(AppResponseCode.SUCCESS,workerNum);
         }catch (Exception e){
             e.printStackTrace();
             log.error("获取人员数量发生错误,信息错误：{}",e.getMessage());
+            return CommonResponse.create(AppResponseCode.FAIL);
+        }
+    }
+
+
+    @Override
+    public CommonResponse<Map<String,List<String>>> getWorkerDetailNums(){
+        try{
+            Map<String,List<String>> workerDetailNumMap=new HashMap<>();
+            List<WorkerDetailNumModel> workDetailNumModel = userMapper.countWorkerDetailNum();
+            List<String> jobNameList=new ArrayList<>();
+            List<String> workerNumList=new ArrayList<>();
+            if(null!=workDetailNumModel){
+                workDetailNumModel.forEach(workerDetail->{
+                    jobNameList.add(workerDetail.getJob());
+                    workerNumList.add(String.valueOf(workerDetail.getNum()));
+                });
+            }
+            workerDetailNumMap.put("jobNameList",jobNameList);
+            workerDetailNumMap.put("workerNumList",workerNumList);
+            return CommonResponse.create(AppResponseCode.SUCCESS,workerDetailNumMap);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("获取人员数量详细数据发生错误,信息错误：{}",e.getMessage());
             return CommonResponse.create(AppResponseCode.FAIL);
         }
     }

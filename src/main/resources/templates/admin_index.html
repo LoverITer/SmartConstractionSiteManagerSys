@@ -95,19 +95,6 @@
                     </li>
                 </ul>
             </li>
-            <!--<li id="menu6"><a _href=""><i class="layui-icon layui-icon-util"></i><cite>工程预算管理</cite><i
-                    class="iconfont nav_right"></i></a>
-                <ul class="sub-menu" style="">
-                    <li id="menu6-1"><a _href="./administrator/list.html"><i class="iconfont"></i><cite>管理员列表</cite></a>
-                    </li>
-                    <li id="menu6-2"><a _href="./administrator/role.html"><i class="iconfont"></i><cite>角色管理</cite></a>
-                    </li>
-                    <li id="menu6-3"><a _href="./administrator/power.html"><i class="iconfont"></i><cite>权限分类</cite></a>
-                    </li>
-                    <li id="menu6-4"><a _href="./administrator/rule.html"><i class="iconfont"></i><cite>权限管理</cite></a>
-                    </li>
-                </ul>
-            </li>-->
         </ul>
     </div>
 </div>
@@ -145,11 +132,44 @@
         admin: 'admin'
         , menu: 'menu'
     });
-    layui.use(['jquery', 'admin', 'menu'], function () {
+    layui.use(['jquery', 'admin', 'menu',"layer"], function () {
         var $ = layui.jquery,
             admin = layui.admin,
-            menu = layui.menu;
+            menu = layui.menu,
+            layer=layui.layer;
 
+        /**
+         * 判断用户会话是否过期
+         */
+        function isUserSessionExpire() {
+            $.ajax({
+                url: "/user/session_status",
+                method: "get",
+                contentType: "application/json",
+                sync: false,
+                data: {"token": TOKEN},
+                success: function (response) {
+                    if (response.code === 200) {
+                        if(!response.data){
+                            layer.confirm('会话过期?', {icon: 3, title:'系统提示'}, function(index){
+                                //do something
+
+                                layer.close(index);
+                            });
+                        }
+                    } else {
+                        layer.msg(response.msg);
+                    }
+                },
+                error: function (response) {
+                    layer.open({
+                        type: 1,
+                        title: '出错啦！',
+                        content: response.msg,
+                    });
+                }
+            });
+        }
 
         function powerCtrl(role_id) {
             if (undefined === role_id || role_id === "") {
@@ -192,8 +212,8 @@
                 sync: false,
                 data: {"token": TOKEN},
                 success: function (response) {
-                    if (response.code == 200) {
-                        console.log(response.data);
+                    if (response.code === 200) {
+                        //console.log(response.data);
                         powerCtrl(response.data.roleId);
                         $('#username').html(response.data.username + "<span class=\"layui-nav-more\"></span>");
                     } else {
@@ -213,6 +233,27 @@
         //页面加载之后需要干的事情
         $(function () {
            getUserInfo();
+           setInterval(function () {
+               $.ajax({
+                   url: "/user/session_status",
+                   method: "get",
+                   contentType: "application/json",
+                   sync: false,
+                   data: {"token": TOKEN},
+                   success: function (response) {
+                       if (response.code === 200) {
+                           if(!response.data){
+                               layer.confirm('您已经登陆超时，需要重新登陆。', {
+                                   btn: ['确定'],icon: 3, title:'会话超时'
+                               }, function(index){
+                                   window.location.href = '/login.html';
+                                   layer.close(index);
+                               });
+                           }
+                       }
+                   }
+               });
+           },60*1000);
         });
 
     });

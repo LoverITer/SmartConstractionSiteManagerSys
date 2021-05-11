@@ -2,7 +2,7 @@ package cn.edu.xust.iot.controller;
 
 import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.model.CommonResponse;
-import cn.edu.xust.iot.model.WorkerNumModel;
+import cn.edu.xust.iot.model.WorkerOverviewNumModel;
 import cn.edu.xust.iot.model.vo.ManagerClockInVO;
 import cn.edu.xust.iot.model.vo.SevenDaysClockIn;
 import cn.edu.xust.iot.service.IClockInService;
@@ -38,10 +38,16 @@ public class PersonnelManagementController {
     private IClockInService clockInService;
 
 
-    @ApiOperation(value = "获取不同工作人员的数量", notes = "无参数,直接请求接口就可以获得系统所有工人的数量")
-    @GetMapping(value = "/num")
-    public CommonResponse<WorkerNumModel> getWorkerNums() {
-        return userService.getWorkerNums();
+    @ApiOperation(value = "获取不同工作人员的数量概况数据", notes = "无参数,直接请求接口就可以获得系统所有工人的数量概况数据")
+    @GetMapping(value = "/num/overview")
+    public CommonResponse<WorkerOverviewNumModel> getWorkerOverviewNums() {
+        return userService.getWorkerOverviewNums();
+    }
+
+    @ApiOperation(value = "获取不同工作人员的数量详细数据", notes = "无参数,直接请求接口就可以获得系统所有工人的数量详细数据")
+    @GetMapping(value = "/num/detail")
+    public CommonResponse<Map<String,List<String>>> getWorkerDetailsNums() {
+        return userService.getWorkerDetailNums();
     }
 
     @ApiOperation(value = "实时获取当天工作人员的签到打卡情况",
@@ -49,12 +55,18 @@ public class PersonnelManagementController {
                     "今日出勤管理人员总数(allClockInManagerNum)、出勤率(clockRate)")
     @GetMapping(value = "/clockInNum")
     public CommonResponse<Map<String, String>> getClockInWorkerNum() {
+        //获取当天工人打卡数据
         Integer allClockInWorkerNum = clockInService.getAllClockInWorkerNum();
+        //获取当天管理人员打卡数据
         Integer allClockInManagerNum = clockInService.getAllClockInManagerNum();
+        //今日总的打卡人数
         Integer clockInUserNum = clockInService.getClockInUserNum();
+        //获取系统所有人员数量
         CommonResponse<Integer> allMembersSize = userService.getAllMembersSize();
         Integer allUserNum = allMembersSize.getData();
-        double clockRate = new BigDecimal((float) clockInUserNum / allUserNum).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double clockRate = new BigDecimal((float) clockInUserNum / allUserNum)
+                .setScale(4, BigDecimal.ROUND_HALF_UP)
+                .multiply(BigDecimal.valueOf(100)).doubleValue();
         Map<String, String> modelMap = new HashMap<String, String>() {{
             put("allClockInWorkerNum", String.valueOf(allClockInWorkerNum));
             put("allClockInManagerNum", String.valueOf(allClockInManagerNum));

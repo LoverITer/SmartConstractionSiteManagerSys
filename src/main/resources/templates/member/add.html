@@ -87,8 +87,8 @@
                 <span class="we-red">*</span>是否管理层
             </label>
             <div class="layui-input-inline">
-                <select name="is_manager" id="is_manager">
-                    <option value="0">请选择</option>
+                <select name="is_manager" id="is_manager" lay-verify="required|isManager">
+                    <option value="-1">请选择</option>
                     <option value="0">否</option>
                     <option value="1">是</option>
                 </select>
@@ -99,9 +99,8 @@
                 <span class="we-red">*</span>职位/工种
             </label>
             <div class="layui-input-inline">
-               <!-- <input type="text" id="job" name="job" autocomplete="off" class="layui-input">-->
-                <select name="job" id="job">
-                    <option value="0">请选择</option>
+                <select name="job" id="job" lay-verify="required|jobName">
+                    <option value="-1">请选择</option>
                     <option value="木工">木工</option>
                     <option value="钢筋工">钢筋工</option>
                     <option value="混凝土工">混凝土工</option>
@@ -158,6 +157,19 @@
 
         $(function () {
             $('.layui-input-inline').css('width', '280px');
+        });
+
+        form.verify({
+            isManager:function (value) {
+                 if(undefined===value||"-1"===value){
+                     return "请选择是否是管理人员";
+                 }
+            },
+            jobName:function (value) {
+                if(undefined===value||"-1"===value){
+                    return "请选择人员工种";
+                }
+            }
         });
 
         //执行实例

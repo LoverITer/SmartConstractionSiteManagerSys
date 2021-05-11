@@ -70,23 +70,16 @@ public class LoginController {
         return CommonResponse.create(AppResponseCode.USER_LOGIN_SUCCESS, userLoginToken);
     }
 
-
-/*    @Deprecated
-    @ApiOperation(value = "管理员用户注册接口")
+    @ApiOperation(value = "获取管理员用户的会话信息")
     @ResponseBody
-    @PostMapping(value = "/register")
-    public CommonResponse<String> register(@RequestBody @Valid AdminUserModel userModel, BindingResult result){
-        if (result.getErrorCount() > 0) {
-            StringBuilder builder = new StringBuilder("用户提交的注册参数校验不合法，原因是：");
-            for (FieldError error : result.getFieldErrors()) {
-                builder.append(error.getField()).append(":").append(error.getDefaultMessage());
-            }
-            log.error(builder.toString());
-            return CommonResponse.create(AppResponseCode.CAMERA_REQUEST_PARAMETER_VALID,builder.toString());
+    @GetMapping(value = "/session_status")
+    public CommonResponse<Boolean> getUserSessionStatus(String token){
+        Object o = redisService.get(token, RedisService.RedisDataBaseSelector.DB_0);
+        if(null!=o){
+            return CommonResponse.create(AppResponseCode.SUCCESS,true);
         }
-        //检查用户名密码
-        return adminService.addNewAdminUser(userModel);
-    }*/
+        return CommonResponse.create(AppResponseCode.SUCCESS,false);
+    }
 
 
     @ApiOperation(value = "管理员退出接口", notes = "管理员退出接口")

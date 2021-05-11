@@ -50,6 +50,7 @@ public class SystemAdminController {
     @Autowired
     private IAdminUserService adminUserService;
 
+
     @ApiOperation(value = "后台管理系统首页", notes = "后台管理系统首页")
     @GetMapping(value = "/index")
     public String index(@RequestParam(value = "token") String token, ModelMap model) {
