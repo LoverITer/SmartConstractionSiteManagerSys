@@ -19,6 +19,15 @@ import java.util.Map;
 public interface ISUserService {
 
     /**
+     * 根据用户ID查询用户信息
+     *
+     * @param id
+     * @return
+     */
+    CommonResponse<SUserVO> getMemberByID(Integer id);
+
+
+    /**
      * 获得所有的成员（工人）
      *
      * @return
@@ -45,7 +54,7 @@ public interface ISUserService {
      *
      * @return
      */
-    CommonResponse<Map<String,List<String>>> getWorkerDetailNums();
+    CommonResponse<Map<String, List<String>>> getWorkerDetailNums();
 
     /**
      * 添加新成员（工人）

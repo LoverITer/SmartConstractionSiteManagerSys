@@ -3,13 +3,14 @@ package cn.edu.xust.iot.service.impl;
 import cn.edu.xust.iot.model.CameraModel;
 import cn.edu.xust.iot.model.entity.Camera;
 import cn.edu.xust.iot.sdc.HWPuSDKResourceConfig;
-import cn.edu.xust.iot.sdc.core.FaceRecognitionCallbackImpl;
 import cn.edu.xust.iot.sdc.core.HWPuSDK;
-import cn.edu.xust.iot.sdc.core.RegionHumanCountCallBackImpl;
 import cn.edu.xust.iot.sdc.core.SnapShotParam;
 import cn.edu.xust.iot.sdc.core.constraints.CameraStatus;
 import cn.edu.xust.iot.sdc.core.constraints.LinkModel;
 import cn.edu.xust.iot.sdc.core.constraints.PlayType;
+import cn.edu.xust.iot.sdc.core.impl.DangerousBehaviorWarningCallBackImpl;
+import cn.edu.xust.iot.sdc.core.impl.FaceRecognitionCallbackImpl;
+import cn.edu.xust.iot.sdc.core.impl.RegionHumanCountCallBackImpl;
 import cn.edu.xust.iot.service.IHWPuSDKService;
 import cn.edu.xust.iot.utils.CommonUtils;
 import com.alibaba.fastjson.JSON;
@@ -73,11 +74,10 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
     public static final Map<Long, WinDef.ULONG> CAMERA_LOGIN_PLAYING_MAP = Collections.synchronizedMap(new LinkedHashMap<>(16));
     //摄像机设备信息map：key->相机IP  value->设备信息
     private static final Map<String, HWPuSDK.LPPU_DEVICEINFO_S> CAMERA_INFO_MAP = new ConcurrentHashMap<>(16);
-    //提供给回调接口的用于区分多路相机的参数：设备IP
-    private static List<Pointer> pointerArrayList = new ArrayList<>();
     //实时播放回调
-    private static final Map<Integer,HWPuSDK.pfRealDataCallBack> REAL_DATA_CALLBACK_MAP=new ConcurrentHashMap<>(16);
-
+    private static final Map<Integer, HWPuSDK.pfRealDataCallBack> REAL_DATA_CALLBACK_MAP = new ConcurrentHashMap<>(16);
+    //用户数据，防止被GC，会在关闭视频流的时候清除
+    public static final Map<String, Pointer> pUsrData = new ConcurrentHashMap<>(16);
 
 
     /**
@@ -88,7 +88,9 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
         String errMsg = "error code : " + errorCode +
                 ", error message : " +
                 HWPuSDK.INSTANCE.IVS_PU_GetErrorMsg(errorCode);
-        log.error(errMsg);
+        if(errorCode!=0) {
+            log.error(errMsg);
+        }
     }
 
     @Override
@@ -196,8 +198,8 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
 
 
     @Override
-    public long startRealPlay(String chDeviceIP,PlayType playType) {
-        if(!CommonUtils.isCorrectIp(chDeviceIP)) {
+    public long startRealPlay(String chDeviceIP, PlayType playType) {
+        if (!CommonUtils.isCorrectIp(chDeviceIP)) {
             throw new IllegalArgumentException("非法参数:ip");
         }
         Long uid = CAMERAS_LOGIN_MAP.get(chDeviceIP);
@@ -229,22 +231,27 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
             realPlayInfo.write();
 
 
-            HWPuSDK.pfRealDataCallBack callback=REAL_DATA_CALLBACK_MAP.get(playType.getType());
-            if(callback==null){
+            HWPuSDK.pfRealDataCallBack callback = REAL_DATA_CALLBACK_MAP.get(playType.getType());
+            if (callback == null) {
                 //如果Map中没有目标PlayType的回调方法就实例化对应的回调并且放到Map中不用多次初始化
-                if(PlayType.FACE_RECOGNITION_CALLBACK_IMPL.equals(playType)) {
+                if (PlayType.FACE_RECOGNITION_CALLBACK_IMPL.equals(playType)) {
                     //人脸识别回调
-                    callback=new FaceRecognitionCallbackImpl();
-                    REAL_DATA_CALLBACK_MAP.put(PlayType.FACE_RECOGNITION_CALLBACK_IMPL.getType(),callback);
-                }else if(PlayType.REGION_CROWD_DENSITY_CALLBACK_IMPL.equals(playType)){
+                    callback = new FaceRecognitionCallbackImpl();
+                    REAL_DATA_CALLBACK_MAP.put(PlayType.FACE_RECOGNITION_CALLBACK_IMPL.getType(), callback);
+                } else if (PlayType.REGION_CROWD_DENSITY_CALLBACK_IMPL.equals(playType)) {
                     //区域人数检测
-                    callback=new RegionHumanCountCallBackImpl();
-                    REAL_DATA_CALLBACK_MAP.put(PlayType.REGION_CROWD_DENSITY_CALLBACK_IMPL.getType(),callback);
+                    callback = new RegionHumanCountCallBackImpl();
+                    REAL_DATA_CALLBACK_MAP.put(PlayType.REGION_CROWD_DENSITY_CALLBACK_IMPL.getType(), callback);
+                } else if (PlayType.DANGEROUS_BEHAVIOR_WARNING_CALLBACK_IMPL.equals(playType)) {
+                    //危险行为检测
+                    callback = new DangerousBehaviorWarningCallBackImpl();
+                    REAL_DATA_CALLBACK_MAP.put(PlayType.DANGEROUS_BEHAVIOR_WARNING_CALLBACK_IMPL.getType(), callback);
                 }
             }
 
-            Pointer usrData = new Memory(IPV4_ADDR_LEN +1);
+            Pointer usrData = new Memory(IPV4_ADDR_LEN + 1);
             usrData.setString(0, chDeviceIP);
+            pUsrData.put(chDeviceIP,usrData);
             WinDef.ULONG winDef = hwPuSDKInstance.IVS_PU_RealPlay(new WinDef.ULONG(uid), realPlayInfo, callback, usrData);
             winDefId = winDef.longValue();
             if (0 != winDefId) {
@@ -276,7 +283,8 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
             //停止实时播放并且停止执行回调函数
             boolean res = hwPuSDKInstance.IVS_PU_StopRealPlay(new WinDef.ULONG(uid), ulRealPlayHnd);
             if (res) {
-                CAMERA_PLAYING_MAP.put(chDeviceIP, null);
+                CAMERA_PLAYING_MAP.remove(chDeviceIP);
+                pUsrData.remove(chDeviceIP);
                 log.debug("IVS_PU_StopRealPlay 停止码流回调成功![DeviceIP={}]", chDeviceIP);
             } else {
                 log.error("IVS_PU_StopRealPlay 停止码流回调失败![DeviceIP={}]", chDeviceIP);
@@ -302,6 +310,8 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
             }
             res = HWPuSDK.INSTANCE.IVS_PU_StopAllRealPlay(new WinDef.ULONG(uid));
             if (res) {
+                CAMERA_PLAYING_MAP.clear();
+                pUsrData.clear();
                 log.debug("IVS_PU_StopAllRealPlay 停止所有码流回调成功![DeviceIP={}]", chDeviceIP);
             } else {
                 log.error("IVS_PU_StopAllRealPlay 停止所有码流回调失败![DeviceIP={}]", chDeviceIP);
@@ -350,7 +360,7 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
         //设备内核版本
         byte[] szVerKernel = stDeviceVersion.szVerKernel;
         String deviceKernelVersion = CommonUtils.byteToString(szVerKernel);
-        log.debug("IVS_PU_GetDeviceInfo 内核版本：" + deviceKernelVersion);
+        log.debug("IVS_PU_GetDeviceInfo 内核版本：{}", deviceKernelVersion);
         //设备物理地址
         //前24个字节是摄像机的MAC地址
         String szHardAddress = CommonUtils.byteToString(Arrays.copyOf(stDeviceVersion.szReserved, 24));
@@ -429,7 +439,7 @@ public class HWPuSDKServiceImpl implements IHWPuSDKService {
      * @return
      */
     public boolean checkSDKLogin(Camera camera) {
-        if(camera==null||camera.getIp()==null){
+        if (camera == null || camera.getIp() == null) {
             throw new NullPointerException("参数camera不能为null");
         }
         Long login = CAMERAS_LOGIN_MAP.get(camera.getIp());

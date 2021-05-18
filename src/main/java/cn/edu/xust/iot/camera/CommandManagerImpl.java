@@ -260,12 +260,12 @@ public class CommandManagerImpl implements CommandManager {
                 res[0]=-1;
                 //如果通过API关闭失败，就强制使用cmd命令关闭打开的推流服务，避免占用系统资源
                 if(ExecUtil.findProcess("ffmpeg.exe")) {
-                    log.error("销毁推流服务ffmpeg服务失败,尝试使用命令行强制杀死进程'ffmpeg.exe' ");
+                    log.error("销毁推流服务ffmpeg服务失败,尝试使用命令行强制结束进程'ffmpeg.exe' ");
                     try {
                         ExecUtil.killProc("ffmpeg.exe");
                         res[0]=0;
                     } catch (IOException ex) {
-                        log.error("强制杀死进程失败,{}", ex.getMessage());
+                        log.error("强制结束进程失败,{}", ex.getMessage());
                     }
                 }
             }

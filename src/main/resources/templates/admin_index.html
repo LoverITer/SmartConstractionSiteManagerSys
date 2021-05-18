@@ -63,8 +63,8 @@
                 <ul class="sub-menu" style="">
                     <li id="menu2-1"><a _href="./device/list.html"><i class="iconfont"></i><cite>监控摄像机管理</cite></a>
                     </li>
-                    <li id="menu2-2"><a _href="./device/list.html"><i class="iconfont"></i><cite>传感器管理</cite></a>
-                    </li>
+                   <!-- <li id="menu2-2"><a _href="./device/list.html"><i class="iconfont"></i><cite>传感器管理</cite></a>
+                    </li>-->
                 </ul>
             </li>
             <li id="menu3"><a _href=""><i class="layui-icon layui-icon-util"></i><cite>管理员权限</cite><i
@@ -138,10 +138,15 @@
             menu = layui.menu,
             layer=layui.layer;
 
+        //标记用户登陆是否过期
+        let is_session_expire=false;
         /**
          * 判断用户会话是否过期
          */
         function isUserSessionExpire() {
+            if(is_session_expire){
+                return;
+            }
             $.ajax({
                 url: "/user/session_status",
                 method: "get",
@@ -151,22 +156,15 @@
                 success: function (response) {
                     if (response.code === 200) {
                         if(!response.data){
-                            layer.confirm('会话过期?', {icon: 3, title:'系统提示'}, function(index){
-                                //do something
-
+                            is_session_expire=true;
+                            layer.confirm('您已经登陆超时，需要重新登陆。', {
+                                btn: ['确定'],icon: 3, title:'会话过期'
+                            }, function(index){
+                                window.location.href = '/login.html';
                                 layer.close(index);
                             });
                         }
-                    } else {
-                        layer.msg(response.msg);
                     }
-                },
-                error: function (response) {
-                    layer.open({
-                        type: 1,
-                        title: '出错啦！',
-                        content: response.msg,
-                    });
                 }
             });
         }
@@ -216,8 +214,6 @@
                         //console.log(response.data);
                         powerCtrl(response.data.roleId);
                         $('#username').html(response.data.username + "<span class=\"layui-nav-more\"></span>");
-                    } else {
-                        layer.msg(response.msg);
                     }
                 },
                 error: function (response) {
@@ -232,28 +228,10 @@
 
         //页面加载之后需要干的事情
         $(function () {
-           getUserInfo();
-           setInterval(function () {
-               $.ajax({
-                   url: "/user/session_status",
-                   method: "get",
-                   contentType: "application/json",
-                   sync: false,
-                   data: {"token": TOKEN},
-                   success: function (response) {
-                       if (response.code === 200) {
-                           if(!response.data){
-                               layer.confirm('您已经登陆超时，需要重新登陆。', {
-                                   btn: ['确定'],icon: 3, title:'会话超时'
-                               }, function(index){
-                                   window.location.href = '/login.html';
-                                   layer.close(index);
-                               });
-                           }
-                       }
-                   }
-               });
-           },60*1000);
+            getUserInfo();
+            setInterval(function () {
+                isUserSessionExpire();
+            }, 60 * 1000);
         });
 
     });

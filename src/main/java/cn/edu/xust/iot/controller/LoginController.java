@@ -31,7 +31,7 @@ import javax.validation.Valid;
 public class LoginController {
 
     /**
-     * 管理员用户登录会话的最大有效时间  3小时
+     * 管理员用户登录会话的最大有效时间  3小时 3600*3
      */
     private static final long MAX_USER_LOGIN_STATUS_KEEP_TIME = 3600*3;
     @Autowired

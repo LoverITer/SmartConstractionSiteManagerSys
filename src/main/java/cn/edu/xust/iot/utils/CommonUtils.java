@@ -181,6 +181,11 @@ public class CommonUtils {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
+    public static void main(String[] args) {
+        System.out.println(getRandomString());
+        System.out.println(getRandomString());
+        System.out.println(getRandomString());
+    }
 
     /**
      * 是否为空

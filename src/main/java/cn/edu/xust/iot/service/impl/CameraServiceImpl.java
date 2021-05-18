@@ -12,6 +12,7 @@ import cn.edu.xust.iot.mapper.CameraMapper;
 import cn.edu.xust.iot.mapper.RegionCameraMapper;
 import cn.edu.xust.iot.mapper.RegionMapper;
 import cn.edu.xust.iot.mapper.pagehelper.PageParam;
+import cn.edu.xust.iot.model.CameraAISettingModel;
 import cn.edu.xust.iot.model.CameraInfoModel;
 import cn.edu.xust.iot.model.CameraModel;
 import cn.edu.xust.iot.model.CommonResponse;
@@ -34,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 提供摄像机的相关操作，比如打开视频实时监控，关闭视频实时监控，管理摄像机设备等功能
@@ -61,6 +63,10 @@ public class CameraServiceImpl implements ICameraService {
 
     @Autowired
     private IHWPuSDKService hwPuSDKService;
+
+    //摄像机智能业务开启状态 key是相机IP
+    private static final Map<String, CameraAISettingModel> AI_SERVICE_ENABLE_MAPPING = new ConcurrentHashMap<>(16);
+
 
     @Override
     public CommonResponse<Object> openCamera(CameraInfoModel cameraInfoModel) {
@@ -281,6 +287,22 @@ public class CameraServiceImpl implements ICameraService {
         return null;
     }
 
+    @Override
+    public CommonResponse<CameraVO> getCameraByID(Integer id) {
+        try {
+            Camera camera = cameraMapper.selectByPrimaryKey(id);
+            CameraVO cameraVO = camera.conventCamera2CameraVO();
+            Region region = regionMapper.selectByPrimaryKey(camera.getRegionId());
+            if (null != region) {
+                cameraVO.setRegionName(region.getRegionName());
+            }
+            return CommonResponse.create(AppResponseCode.SUCCESS, cameraVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CommonResponse.create(AppResponseCode.FAIL);
+    }
+
     @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
     @Override
     public CommonResponse<List<CameraVO>> getCameraListByRegionName(String regionName) {
@@ -348,7 +370,6 @@ public class CameraServiceImpl implements ICameraService {
     }
 
 
-
     @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
     @Override
     public CommonResponse<String> removeCameraBatch(List<Integer> userIdList) {
@@ -366,6 +387,67 @@ public class CameraServiceImpl implements ICameraService {
             log.error("删除监控摄像机时发生错误，详细：{}", e.getMessage());
             return CommonResponse.create(AppResponseCode.FAIL);
         }
+    }
+
+
+    @Override
+    public CommonResponse<CameraAISettingModel> getCameraAIEnableState(String ip) {
+        if (CommonUtils.isNull(ip) || !CommonUtils.isCorrectIp(ip)) {
+            //请求参数不合法
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
+        }
+        CameraAISettingModel cameraAISetting = AI_SERVICE_ENABLE_MAPPING.get(ip);
+        if (cameraAISetting == null) {
+            cameraAISetting = new CameraAISettingModel();
+        }
+        return CommonResponse.create(AppResponseCode.SUCCESS, cameraAISetting);
+    }
+
+    @Override
+    public CommonResponse<Boolean> enableCameraAISetting(String ip, String AIServiceTypeId) {
+        if (CommonUtils.isNull(ip) || !CommonUtils.isCorrectIp(ip) || CommonUtils.isNull(AIServiceTypeId)) {
+            //请求参数不合法
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
+        }
+        CameraAISettingModel cameraAISetting = AI_SERVICE_ENABLE_MAPPING.get(ip);
+        if (null == cameraAISetting) {
+            cameraAISetting = new CameraAISettingModel();
+        }
+
+        if (!cameraAISetting.isConflict()) {
+            cameraAISetting = cameraAISetting.open(ip, AIServiceTypeId);
+            if (null == cameraAISetting) {
+                //开启失败
+                return CommonResponse.create(AppResponseCode.FAIL, false);
+            }
+            AI_SERVICE_ENABLE_MAPPING.put(ip, cameraAISetting);
+            return CommonResponse.create(AppResponseCode.SUCCESS, true);
+        }
+        //冲突了，直接返回
+        return CommonResponse.create(AppResponseCode.AI_SERVICE_CONFLICT, false);
+
+    }
+
+
+    @Override
+    public CommonResponse<Boolean> closeCameraAISetting(String ip, String AIServiceTypeId) {
+        if (CommonUtils.isNull(ip) || !CommonUtils.isCorrectIp(ip) || CommonUtils.isNull(AIServiceTypeId)) {
+            //请求参数不合法
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
+        }
+        CameraAISettingModel cameraAISetting = AI_SERVICE_ENABLE_MAPPING.get(ip);
+        if (null == cameraAISetting) {
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
+        }
+        //存在相关设置：从map中取出之前的设置，然后根据关闭之
+        cameraAISetting = cameraAISetting.close(ip, AIServiceTypeId);
+        if (null == cameraAISetting) {
+            //关闭失败
+            return CommonResponse.create(AppResponseCode.FAIL, false);
+        }
+        AI_SERVICE_ENABLE_MAPPING.put(ip, cameraAISetting);
+        return CommonResponse.create(AppResponseCode.SUCCESS, true);
+
     }
 
 

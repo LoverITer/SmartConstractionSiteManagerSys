@@ -58,6 +58,13 @@ public interface SUserMapper {
     SUser selectByPrimaryKey(Integer id);
 
     /**
+     * 根据主键查询
+     * @param id
+     * @return
+     */
+    SUserModel selectByPrimaryKeyV2(Integer id);
+
+    /**
      * 根据用户ID批量查询人脸库ID
      *
      * @param ids

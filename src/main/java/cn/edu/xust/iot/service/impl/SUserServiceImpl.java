@@ -36,6 +36,19 @@ public class SUserServiceImpl implements ISUserService {
     @Autowired
     private FaceLibMapper faceLibMapper;
 
+
+    @Override
+    public CommonResponse<SUserVO> getMemberByID(Integer id) {
+       try{
+           SUserModel userModel = userMapper.selectByPrimaryKeyV2(id);
+           SUserVO sUserVO = userModel.convertUserModel2UserVO();
+           return CommonResponse.create(AppResponseCode.SUCCESS,sUserVO);
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+       return CommonResponse.create(AppResponseCode.FAIL);
+    }
+
     @Override
     public PageInfo<SUserVO> getAllMembers(PageParam pageParam) {
         PageInfo<SUserVO> pages=null;

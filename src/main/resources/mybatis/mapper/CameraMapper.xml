@@ -16,6 +16,7 @@
         <result column="sdc_version" jdbcType="VARCHAR" property="sdcVersion"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
+
     <sql id="Base_Column_List">
         id, device_name, device_status, region_id, algorithm, ip, port, user_name, password,
     model, mac_address, sdc_version,create_time

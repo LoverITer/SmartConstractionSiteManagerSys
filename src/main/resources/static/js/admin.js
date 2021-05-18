@@ -326,18 +326,18 @@ layui.define(['jquery', 'form', 'layer', 'element'], function(exports) {
 	};
 	/*弹出层+传递ID参数*/
 	window.WeAdminEdit = function(title, url, id, w, h) {
-		if(title == null || title == '') {
+		if(title == null || title === '') {
 			title = false;
-		};
-		if(url == null || url == '') {
+		}
+		if(url == null || url === '') {
 			url = "404.html";
-		};
-		if(w == null || w == '') {
+		}
+		if(w == null || w === '') {
 			w = ($(window).width() * 0.9);
-		};
-		if(h == null || h == '') {
+		}
+		if(h == null || h === '') {
 			h = ($(window).height() - 50);
-		};
+		}
 		layer.open({
 			type: 2,
 			area: [w + 'px', h + 'px'],

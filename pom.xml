@@ -172,18 +172,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- javacv1.5.1 -->
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>javacv</artifactId>
-            <version>1.5.1</version>
-        </dependency>
-        <!--FFmpeg 音视屏处理工具-->
-        <dependency>
-            <groupId>org.bytedeco</groupId>
-            <artifactId>ffmpeg-platform</artifactId>
-            <version>4.1.3-1.5.1</version>
-        </dependency>
         <!--JSON字符串转换工具-->
         <dependency>
             <groupId>com.alibaba</groupId>

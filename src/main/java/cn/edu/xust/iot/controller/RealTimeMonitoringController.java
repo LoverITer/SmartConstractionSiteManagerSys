@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RealTimeMonitoringController {
 
     @ApiOperation(value = "",notes = "查询数据（摄像机数据）并跳转到实时监控页面")
-    @GetMapping(value = "/index")
+    @GetMapping(value = "/")
     public String realPlay(){
 
         return "video";

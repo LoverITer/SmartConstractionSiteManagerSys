@@ -36,6 +36,23 @@
             text-align: center !important;
             vertical-align: middle;
         }
+        ul.sub {
+            position: absolute;
+            left: 0;
+            top: 60px;
+            z-index: 9;
+            width: 150%;
+            line-height: 36px;
+            opacity: 0;
+            transition: all .5s;
+            box-shadow: 0 5px 9px 1px rgba(144,161,180,0.2);
+        }
+        ul.sub li {
+            width: 100%;
+            background: #fff;
+            float: left;
+            font-size: 15px;
+        }
     </style>
 </head>
 
@@ -105,12 +122,9 @@
             <th>设备型号</th>
             <th>IP地址</th>
             <th>端口</th>
-            <th>物理地址</th>
-            <th>软件版本</th>
-            <th>架设区域</th>
-            <th>识别算法</th>
             <th>用户名</th>
             <th>密码</th>
+            <th>架设区域</th>
             <th>设备状态</th>
             <th>创建时间</th>
             <th>操作</th>
@@ -140,10 +154,7 @@
             var model = this.model;
             var ip = this.ip;
             var port =this.port;
-            var macAddress = this.macAddress;
-            var sdcVersion = this.sdcVersion;
             var regionName = this.regionName;
-            var algorithmName = this.algorithmName;
             var userName = this.userName;
             var password = this.password;
             var deviceStatus = "";
@@ -171,20 +182,23 @@
                 "            <td>" + model + "</td>\n" +
                 "            <td>" + ip + "</td>\n" +
                 "            <td>" + port + "</td>\n" +
-                "            <td>" + macAddress + "</td>\n" +
-                "            <td>" + sdcVersion + "</td>\n" +
-                "            <td>" + regionName + "</td>\n" +
-                "            <td>" + algorithmName + "</td>\n" +
                 "            <td>" + userName + "</td>\n" +
                 "            <td>" + password + "</td>\n" +
+                "            <td>" + regionName + "</td>\n" +
                 "            <td>" + deviceStatus + "</td>\n" +
                 "            <td>" + createTime + "</td>\n" +
                 "            <td class=\"td-manage\">\n" +
-                "                <a title=\"编辑\" onclick=\"WeAdminEdit('编辑监控摄像机','./edit.html', "+deviceId+", 800, 520)\" href=\"javascript:;\">\n" +
-                "                    <i class=\"layui-icon layui-icon-edit\"></i>\n" +
+                "                <a style='color: #00aae7' onclick=\"WeAdminEdit('摄像机详细信息','./detail_info.html', '"+deviceId+"', 800, 520)\" href=\"javascript:;\">\n" +
+                "                    详请\n" +
                 "                </a>\n" +
-                "                <a title=\"删除\" onclick=\"device_del(this,"+deviceId+")\" href=\"javascript:;\">\n" +
-                "                    <i class=\"layui-icon layui-icon-delete\"></i>\n" +
+                "                <a style='color: #00aae7' onclick=\"WeAdminEdit('编辑摄像机','./edit.html', '"+deviceId+"', 800, 520)\" href=\"javascript:;\">\n" +
+                "                    编辑\n" +
+                "                </a>\n" +
+                "                <a style='color: #DB2828' onclick=\"device_del(this,'"+deviceId+"')\" href=\"javascript:;\">\n" +
+                "                    删除\n" +
+                "                </a>\n" +
+                "                <a style='color: #00aae7' onclick=\"WeAdminEdit('设置摄像机','./setting.html', '"+ip+"', 800, 520)\" href=\"javascript:;\">\n" +
+                "                    更多\n" +
                 "                </a>\n" +
                 "            </td>\n" +
                 "        </tr>")
@@ -207,7 +221,7 @@
             contentType: "application/json",
             sync: false,
             success: function (response) {
-                if (response.code == 200) {
+                if (response.code === 200) {
                     console.log(response.data);
                     var pageInfo=response.data;
                     var dataArr=pageInfo.list;
@@ -231,7 +245,7 @@
             contentType: "application/json",
             sync: false,
             success: function (response) {
-                if (response.code == 200) {
+                if (response.code === 200) {
                     layer.msg('删除成功!', {icon: 1});
                     //重新加载table
                     loadTable();
@@ -292,7 +306,7 @@
                 contentType: "application/json",
                 async: false,
                 success: function (response) {
-                    if (response.code == 200) {
+                    if (response.code === 200) {
                         if(undefined!=response.data) {
                             count = response.data;
                         }

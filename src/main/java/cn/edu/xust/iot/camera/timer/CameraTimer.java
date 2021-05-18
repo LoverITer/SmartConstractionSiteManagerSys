@@ -52,14 +52,14 @@ public class CameraTimer implements CommandLineRunner {
 
 							// 如果通道使用人数为0，则关闭推流
 							if (CameraWorkerCache.START_MAP.get(key).getCount() == 0) {
-								log.info("定时任务 当前设备使用人数为0结束推流 设备信息：[ip：" + CameraWorkerCache.START_MAP.get(key).getIp()
+								log.info("定时任务 当前设备使用人数为0 结束推流 设备信息：[ip：" + CameraWorkerCache.START_MAP.get(key).getIp()
 										+ " channel:" + CameraWorkerCache.START_MAP.get(key).getChannel() + " stream:"
 										+ CameraWorkerCache.START_MAP.get(key).getStream() + " startTime:"
 										+ CameraWorkerCache.START_MAP.get(key).getStartTime() + " endTime:"
 										+ CameraWorkerCache.START_MAP.get(key).getEndTime() + " rtsp:"
 										+ CameraWorkerCache.START_MAP.get(key).getRtsp() + " url:"
 										+ CameraWorkerCache.START_MAP.get(key).getUrl() + "]");
-								//当使用人数为的时候停止推送
+								//当使用人数为0的时候停止推送
 								CameraWorkerCache.PUSH_MAP.get(key).stopPublish();
 							} else if (-1!=Integer.parseInt(config.getKeepalive())&&
 									null == CameraWorkerCache.START_MAP.get(key).getStartTime() &&

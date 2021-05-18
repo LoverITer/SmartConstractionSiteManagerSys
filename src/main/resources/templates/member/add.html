@@ -268,7 +268,9 @@
                         //清空表格数据区的数据
                         //parent.$('#table-data').empty();
                         //关闭当前frame
-                        parent.layer.close(index);
+                        setTimeout(function () {
+                            parent.layer.close(index);
+                        },1000);
                         parent.loadTable();
                     } else {
                         layer.msg(response.msg,{icon:2})

@@ -86,8 +86,8 @@
             <th>证件号</th>
             <th>是否管理层</th>
             <th>职位/工种</th>
-            <th>人脸头像</th>
-            <th>备注信息</th>
+            <!--<th>人脸头像</th>
+            <th>备注信息</th>-->
             <th>操作</th>
         </tr>
         </thead>
@@ -136,14 +136,17 @@
                 "            <td>" + certificateNo + "</td>\n" +
                 "            <td>" + manager + "</td>\n" +
                 "            <td>" + job + "</td>\n" +
-                "            <td><img style='max-width: 60px;min-height: 60px;' src='"+userAvatarUrl+"'/></td>\n" +
-                "            <td class=\"td-status\">"+ memo +"</td>\n" +
+                /*"            <td><img style='max-width: 60px;min-height: 60px;' src='"+userAvatarUrl+"'/></td>\n" +*/
+                /*"            <td class=\"td-status\">"+ memo +"</td>\n" +*/
                 "            <td class=\"td-manage\">\n" +
-                "                <a title=\"编辑\" onclick=\"WeAdminEdit('编辑人员信息','./edit.html', "+userId+", 800, 520)\" href=\"javascript:;\">\n" +
-                "                    <i class=\"layui-icon layui-icon-edit\"></i>\n" +
+                "                <a style='color: #00aae7' onclick=\"WeAdminEdit('人员详细信息','./detail_info.html', "+userId+", 800, 520)\" href=\"javascript:;\">\n" +
+                "                    详请\n" +
                 "                </a>\n" +
-                "                <a title=\"删除\" onclick=\"member_del(this,"+userId+")\" href=\"javascript:;\">\n" +
-                "                    <i class=\"layui-icon layui-icon-delete\"></i>\n" +
+                "                <a style='color: #00aae7' onclick=\"WeAdminEdit('编辑人员信息','./edit.html', "+userId+", 800, 520)\" href=\"javascript:;\">\n" +
+                "                    编辑\n" +
+                "                </a>\n" +
+                "                <a style='color: #DB2828' onclick=\"member_del(this,"+userId+")\" href=\"javascript:;\">\n" +
+                "                    删除\n" +
                 "                </a>\n" +
                 "            </td>\n" +
                 "        </tr>")

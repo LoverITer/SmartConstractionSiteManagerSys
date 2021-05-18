@@ -25,11 +25,21 @@
         s_user.id as user_id,gender,name,phone,birth,address,certificate_no,job,is_manager,s_user.create_time,
    s_user.memo,face_pic as user_avatar_url
     </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from s_user
         where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByPrimaryKeyV2" parameterType="java.lang.Integer" resultType="cn.edu.xust.iot.model.SUserModel">
+        select
+        <include refid="User_VO_List"/>
+        from s_user
+        left join face_lib
+        on s_user.face_lib_id = face_lib.id
+        where s_user.id = #{id,jdbcType=INTEGER}
     </select>
 
     <select id="selectFaceLibIdBatch" parameterType="java.util.List" resultType="java.lang.Integer">

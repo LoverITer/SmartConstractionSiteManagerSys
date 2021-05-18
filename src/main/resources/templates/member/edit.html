@@ -88,8 +88,8 @@
             <div class="layui-input-inline">
                 <select name="is_manager" id="is_manager">
                     <option value="-1">请选择</option>
-                    <option value="0">否</option>
-                    <option value="1">是</option>
+                    <option value="是">是</option>
+                    <option value="否">否</option>
                 </select>
             </div>
         </div>
@@ -98,9 +98,6 @@
                 <span class="we-red">*</span>职位/工种
             </label>
             <div class="layui-input-inline">
-<!--
-                <input type="text" id="job" name="job" autocomplete="off" class="layui-input">
--->
                 <select name="job" id="job">
                     <option value="0">请选择</option>
                     <option value="系统管理员">系统管理员</option>
@@ -235,39 +232,52 @@
 
         function frameVal() {
             var dataId = $('input[name="dataId"]').val();
-            parent.layui.jquery("#memberList tr").each(function () {
-                if ($(this).attr('data-id') == dataId) {
-                    var tdArr = $(this).children('td');
-                    console.log(tdArr);
-                    var username = tdArr.eq(2).text(); //姓名
-                    var sex = tdArr.eq(3).text(); //性别
-                    var birth = tdArr.eq(4).text(); //出生日期
-                    var phone = tdArr.eq(5).text(); //手机
-                    var address = tdArr.eq(6).text(); //地址
-                    var create_time=tdArr.eq(7).text(); //加入时间
-                    var cert_no= tdArr.eq(8).text(); //证件号
-                    var isManager= tdArr.eq(9).text()=="是"?1:0; //是否管理层
-                    var job= tdArr.eq(10).text(); //工种
-                    var face_pic= tdArr.eq(11).children('img')[0].src; //人脸头像
-                    var memo= tdArr.eq(12).text(); //备忘录
+            $.ajax({
+                //请求获得所有的工人数据
+                url: "/admin/members/"+dataId+"?token="+localStorage.getItem(USER_LOGIN_TOKEN),
+                method: "get",
+                contentType: "application/json",
+                sync: false,
+                success: function (response) {
+                    if (response.code === 200) {
+                        let userInfo=response.data;
+                        var username = userInfo.name; //姓名
+                        var sex = userInfo.gender; //性别
+                        var birth = userInfo.birth; //出生日期
+                        var phone = userInfo.phone; //手机
+                        var address = userInfo.address; //地址
+                        var create_time=userInfo.createTime; //加入时间
+                        var cert_no= userInfo.certificateNo; //证件号
+                        let isManager="否";
+                        if(userInfo.isManager===true){//是否管理层
+                            isManager="是";
+                        }
+                        var job= userInfo.job; //工种
+                        var userAvatarUrl= userInfo.userAvatarUrl; //人脸头像
+                        var memo= userInfo.memo; //备忘录
 
-                    $('input[name="username"]').val(username);
-                    $('input[name="sex"][value="' + sex + '"]').attr("checked", true);
-                    $('input[name="phone"]').val(phone);
-                    $('input[name="birth"]').val(birth);
-                    $('input[name="cert_no"]').val(cert_no);
-                    /*$('input[name="job"]').val(job);*/
-                    $('input[name="address"]').val(address);
-                    $('input[name="create_time"]').val(create_time);
-                    $('#is_manager').siblings("div.layui-form-select").find('dl').find('dd[lay-value=' + isManager + ']').click();
+                        $('input[name="username"]').val(username);
+                        $('input[name="sex"][value="' + sex + '"]').attr("checked", true);
+                        $('input[name="phone"]').val(phone);
+                        $('input[name="birth"]').val(birth);
+                        $('input[name="cert_no"]').val(cert_no);
+                        $('input[name="address"]').val(address);
+                        $('input[name="create_time"]').val(create_time);
+                        $('#is_manager').siblings("div.layui-form-select").find('dl').find('dd[lay-value=' + isManager + ']').click();
 
-                    $('#job').siblings("div.layui-form-select").find('dl').find('dd[lay-value=' + job + ']').click();
+                        $('#job').siblings("div.layui-form-select").find('dl').find('dd[lay-value=' + job + ']').click();
 
-                    $('input[name="face_pic"]').val(face_pic);
-                    $('#face_pic_show').text(face_pic);
-                    $('#face_pic_show').attr('href', face_pic);
-                    $('#memo').val(memo);
-                    form.render();
+                        $('input[name="face_pic"]').val(userAvatarUrl);
+                        $('#face_pic_show').text(userAvatarUrl);
+                        $('#face_pic_show').attr('href', userAvatarUrl);
+                        $('#memo').val(memo);
+                        form.render();
+                    } else {
+                        layer.msg(response.msg,{icon:2})
+                    }
+                },
+                error: function (response) {
+                    layer.msg("获取人员信息发生错误",{icon:2})
                 }
             });
         }
@@ -276,7 +286,7 @@
         form.on('submit(edit)', function (data) {
             var formDate = data.field;
             var userId=$('input[name="dataId"]').val();
-            console.log(formDate);
+            let isManager=formDate.is_manager==="是"?"1":"0";
             $.ajax({
                 //请求获得所有的工人数据
                 url: "/admin/members/edit",
@@ -293,20 +303,23 @@
                     "birth": formDate.birth,
                     "address": formDate.address,
                     "certificateNo": formDate.cert_no,
-                    "isManager": formDate.is_manager,
+                    "isManager": isManager,
                     "createTime": formDate.create_time,
                     "memo": formDate.memo,
                     "userAvatarUrl":formDate.face_pic
                 }),
                 success: function (response) {
-                    if (response.code == 200) {
+                    if (response.code === 200) {
                         layer.msg("修改成功",{icon:1});
                         // 获得frame索引
                         var index = parent.layer.getFrameIndex(window.name);
                         parent.$('#table-data').empty();
                         //关闭当前frame
-                        parent.layer.close(index);
+                        setTimeout(function () {
+                            parent.layer.close(index);
+                        },1000);
                         parent.loadTable();
+
                     } else {
                         layer.msg(response.msg,{icon:2});
                     }

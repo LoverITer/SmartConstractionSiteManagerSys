@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>摄像机详细信息-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../static/css/font.css" th:src="@{/static/css/font.css}">
+    <link rel="stylesheet" href="../../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
+    <script src="../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script src="../../static/js/common.js" th:src="@{/static/js/common.js}"></script>
+    <script src="../../static/js/eleDel.js" th:src="@{/static/js/eleDel.js}" type="text/javascript" charset="utf-8"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .label{
+            display: inline-block;
+            width: 60px;
+            font-size: 14px;
+            color: #262626;
+            margin-right: 10px;
+            text-align-last:justify;
+            text-align:justify;
+            text-justify:distribute-all-lines;
+        }
+        .content{
+            color: #8c8c8c;
+        }
+        .user_header_img{
+            display: block;
+            max-width: 50%;
+            max-height: 210px;
+            padding: 15px 0 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="weadmin-body">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <span class="label">设备名称</span>
+            <span id="device_name" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">型号</span>
+            <span id="device_model" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">架设区域</span>
+            <span id="device_region" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">创建时间</span>
+            <span id="create_time" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">状态</span>
+            <span id="device_status" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">用户名</span>
+            <span id="username" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">密码</span>
+            <span id="password" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">设备IP</span>
+            <span id="device_ip" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">设备端口</span>
+            <span id="device_port" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">物理地址</span>
+            <span id="mac_address" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">SDC版本</span>
+            <span id="sdc_version" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">识别算法</span>
+            <span id="algorithm_name" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <label for="dataId" class="layui-form-label"></label>
+            <button class="layui-btn" lay-filter="close" lay-submit="">关闭</button>
+            <input type="hidden" name="dataId" id="dataId" value=""/>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    layui.use(['form', 'jquery', 'admin', 'layer', 'laydate', 'layedit','upload'], function () {
+        var form = layui.form,
+            $ = layui.jquery,
+            admin = layui.admin,
+            layer = layui.layer;
+
+
+        //页面初始化加载
+        $(function () {
+            setTimeout(function () {
+                frameVal();
+            }, 100);
+        });
+
+        function frameVal() {
+            var dataId = $('input[name="dataId"]').val();
+            $.ajax({
+                //请求获得所有的工人数据
+                url: "/admin/cameras/"+dataId+"?token="+localStorage.getItem(USER_LOGIN_TOKEN),
+                method: "get",
+                contentType: "application/json",
+                sync: false,
+                success: function (response) {
+                    if (response.code === 200) {
+                        let cameraInfo=response.data;
+                        if(cameraInfo===undefined){
+                            return;
+                        }
+                        var deviceName = cameraInfo.deviceName; //姓名
+                        var model= cameraInfo.model; //证件号
+                        var ip = cameraInfo.ip; //性别
+                        var port = cameraInfo.port; //出生日期
+                        var regionName=cameraInfo.regionName; //加入时间
+                        var userName = cameraInfo.userName; //手机
+                        var password = cameraInfo.password; //地址
+                        var algorithmName=cameraInfo.algorithmName;
+                        var macAddress=cameraInfo.macAddress;
+                        var sdcVersion=cameraInfo.sdcVersion;
+                        var deviceStatus= "";
+                        if(cameraInfo.deviceStatus==="0"){
+                            deviceStatus="离线"
+                        }else if(cameraInfo.deviceStatus==="1"){
+                            deviceStatus="在线";
+                        }else if(cameraInfo.deviceStatus==="2"){
+                            deviceStatus="告警";
+                        }else if(cameraInfo.deviceStatus==="3"){
+                            deviceStatus="故障";
+                        }else{
+                            deviceStatus="未知";
+                        }
+                        var createTime= cameraInfo.createTime; //工种
+
+                        $("#device_name").text(deviceName);
+                        $("#device_model").text(model);
+                        $("#device_region").text(regionName);
+                        $("#device_status").text(deviceStatus);
+                        $("#username").text(userName);
+                        $("#password").text(password);
+                        $("#device_ip").text(ip);
+                        $("#device_port").text(port);
+                        $("#mac_address").text(macAddress);
+                        $("#sdc_version").text(sdcVersion);
+                        $("#algorithm_name").text(algorithmName);
+                        $("#create_time").text(createTime);
+                        form.render();
+                    } else {
+                        layer.msg(response.msg,{icon:2})
+                    }
+                },
+                error: function (response) {
+                    layer.msg("获取人员信息发生错误",{icon:2})
+                }
+            });
+        }
+
+        //监听提交
+        form.on('submit(close)', function (data) {
+            var index = parent.layer.getFrameIndex(window.name);
+            //关闭当前frame
+            parent.layer.close(index);
+            return false;
+        });
+
+    });
+</script>
+</body>
+
+</html>

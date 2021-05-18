@@ -102,7 +102,9 @@ public class CameraModel implements Serializable {
         camera.setAlgorithm(this.getAlgorithmName());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            camera.setCreateTime(sdf.parse(this.getCreateTime()));
+            if(this.getCreateTime()!=null) {
+                camera.setCreateTime(sdf.parse(this.getCreateTime()));
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }

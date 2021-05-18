@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>人员详细信息-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../static/css/font.css" th:src="@{/static/css/font.css}">
+    <link rel="stylesheet" href="../../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
+    <script src="../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script src="../../static/js/common.js" th:src="@{/static/js/common.js}"></script>
+    <script src="../../static/js/eleDel.js" th:src="@{/static/js/eleDel.js}" type="text/javascript" charset="utf-8"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .label{
+            display: inline-block;
+            width: 60px;
+            font-size: 14px;
+            color: #262626;
+            margin-right: 10px;
+            text-align-last:justify;
+            text-align:justify;
+            text-justify:distribute-all-lines;
+        }
+        .content{
+            color: #8c8c8c;
+        }
+        .user_header_img{
+            display: block;
+            max-width: 50%;
+            max-height: 210px;
+            padding: 15px 0 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="weadmin-body">
+    <form class="layui-form" >
+        <div class="layui-form-item">
+            <span class="label">人脸头像</span>
+            <img src="" id="face_pic" class="user_header_img"/>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">姓名</span>
+            <span id="username" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">性别</span>
+            <span id="sex" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">姓名</span>
+            <span id="birth" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">手机</span>
+            <span id="phone" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">地址</span>
+            <span id="address" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">加入时间</span>
+            <span id="create_time" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">证件号</span>
+            <span id="cert_no" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">是否管理层</span>
+            <span id="is_manager" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">职位/工种</span>
+            <span id="job" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <span class="label">备注</span>
+            <span id="memo" class="content"></span>
+        </div>
+        <div class="layui-form-item">
+            <label for="dataId" class="layui-form-label"></label>
+            <button class="layui-btn" lay-filter="close" lay-submit="">关闭</button>
+            <input type="hidden" name="dataId" id="dataId" value=""/>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    layui.use(['form', 'jquery', 'admin', 'layer', 'laydate', 'layedit','upload'], function () {
+        var form = layui.form,
+            $ = layui.jquery,
+            admin = layui.admin,
+            layer = layui.layer;
+
+        //页面初始化加载
+        $(function () {
+            setTimeout(function () {
+                frameVal();
+            }, 100);
+        });
+
+        function frameVal() {
+            //根据ID到后端请求数据
+            var dataId = $('input[name="dataId"]').val();
+            $.ajax({
+                //请求获得所有的工人数据
+                url: "/admin/members/"+dataId+"?token="+localStorage.getItem(USER_LOGIN_TOKEN),
+                method: "get",
+                contentType: "application/json",
+                sync: false,
+                success: function (response) {
+                    if (response.code === 200) {
+                        let userInfo=response.data;
+                        var username = userInfo.name; //姓名
+                        var sex = userInfo.gender; //性别
+                        var birth = userInfo.birth; //出生日期
+                        var phone = userInfo.phone; //手机
+                        var address = userInfo.address; //地址
+                        var create_time=userInfo.createTime; //加入时间
+                        var cert_no= userInfo.certificateNo; //证件号
+                        let isManager="否";
+                        if(userInfo.isManager===true){//是否管理层
+                            isManager="是";
+                        }
+                        var job= userInfo.job; //工种
+                        var userAvatarUrl= userInfo.userAvatarUrl; //人脸头像
+                        var memo= userInfo.memo; //备忘录
+
+                        $("#username").text(username);
+                        $("#sex").text(sex);
+                        $("#birth").text(birth);
+                        $("#phone").text(phone);
+                        $("#address").text(address);
+                        $("#create_time").text(create_time);
+                        $("#cert_no").text(cert_no);
+                        $("#is_manager").text(isManager);
+                        $("#job").text(job);
+                        $("#face_pic").attr("src", userAvatarUrl);
+                        $("#memo").text(memo);
+                        form.render();
+                    } else {
+                        layer.msg(response.msg,{icon:2})
+                    }
+                },
+                error: function (response) {
+                    layer.msg("获取人员信息发生错误",{icon:2})
+                }
+            });
+        }
+
+        //监听关闭按钮被按下
+        form.on('submit(close)', function (data) {
+            //关闭当前窗口
+            let index = parent.layer.getFrameIndex(window.name);
+            //关闭当前frame
+            parent.layer.close(index);
+        });
+
+    });
+</script>
+</body>
+
+</html>

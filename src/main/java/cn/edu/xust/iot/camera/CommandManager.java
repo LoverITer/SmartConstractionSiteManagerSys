@@ -18,7 +18,6 @@ import java.util.Map;
 public interface CommandManager {
 
 
-
     /**
      * 注入自己实现的持久层
      *

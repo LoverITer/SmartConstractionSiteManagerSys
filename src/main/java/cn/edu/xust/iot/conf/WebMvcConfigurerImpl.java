@@ -49,9 +49,12 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
         registry.addViewController("/admin/member/list.html").setViewName("/member/list");
         registry.addViewController("/admin/member/add.html").setViewName("/member/add");
         registry.addViewController("/admin/member/edit.html").setViewName("/member/edit");
+        registry.addViewController("/admin/member/detail_info.html").setViewName("/member/detail_info");
         registry.addViewController("/admin/device/list.html").setViewName("/device/list");
         registry.addViewController("/admin/device/add.html").setViewName("/device/add");
         registry.addViewController("/admin/device/edit.html").setViewName("/device/edit");
+        registry.addViewController("/admin/device/detail_info.html").setViewName("/device/detail_info");
+        registry.addViewController("/admin/device/setting.html").setViewName("/device/setting");
         registry.addViewController("/admin/administrator/list.html").setViewName("/administrator/list");
         registry.addViewController("/admin/administrator/add.html").setViewName("/administrator/add");
         registry.addViewController("/admin/administrator/edit.html").setViewName("/administrator/edit");

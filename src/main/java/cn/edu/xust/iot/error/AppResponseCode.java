@@ -38,6 +38,7 @@ public enum AppResponseCode {
     CAMERA_REQUEST_START_TIME_VALID(false,4053,"摄像机直播流start time格式输入错误"),
     CAMERA_REQUEST_END_TIME_VALID(false,4054,"摄像机直播流end time格式输入错误"),
     NOT_FOUND_NEW_CAMERA(false,406,"系统监测未发现摄像机"),
+    AI_SERVICE_CONFLICT(false,407,"智能业务冲突"),
 
     /**
      * 程序处理异常，发生未知错误

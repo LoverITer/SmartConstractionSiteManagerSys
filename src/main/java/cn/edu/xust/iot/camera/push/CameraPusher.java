@@ -6,8 +6,6 @@ import cn.edu.xust.iot.camera.builder.CommandBuilderFactory;
 import cn.edu.xust.iot.camera.conf.CameraRTSPToHttpFlvConfig;
 import cn.edu.xust.iot.model.CameraInfoModel;
 import lombok.extern.slf4j.Slf4j;
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -31,14 +29,6 @@ public class CameraPusher {
      * 设备信息
      */
     private CameraInfoModel cameraInfoModel;
-    /**
-     * 解码器
-     */
-    private FFmpegFrameRecorder recorder;
-    /**
-     * 采集器
-     */
-    private FFmpegFrameGrabber grabber;
 
 
     public CameraPusher(CameraInfoModel cameraInfoModel) {

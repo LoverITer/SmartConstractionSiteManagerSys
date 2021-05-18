@@ -2,10 +2,7 @@ package cn.edu.xust.iot.controller;
 
 import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.mapper.pagehelper.PageParam;
-import cn.edu.xust.iot.model.AdminUserModel;
-import cn.edu.xust.iot.model.CameraModel;
-import cn.edu.xust.iot.model.CommonResponse;
-import cn.edu.xust.iot.model.SUserModel;
+import cn.edu.xust.iot.model.*;
 import cn.edu.xust.iot.model.vo.CameraVO;
 import cn.edu.xust.iot.model.vo.SUserVO;
 import cn.edu.xust.iot.service.IAdminUserService;
@@ -77,6 +74,17 @@ public class SystemAdminController {
             return CommonResponse.create(AppResponseCode.FAIL);
         }
         return CommonResponse.create(AppResponseCode.SUCCESS, allMembers);
+    }
+
+
+    @ApiOperation(value = "获得人员的个人信息", notes = "根据ID获取人员信息")
+    @ResponseBody
+    @GetMapping(value = "/members/{userId}")
+    public CommonResponse<SUserVO> getMemberInfoById(@PathVariable(value = "userId") Integer userId) {
+        if (userId <= 0) {
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
+        }
+        return userService.getMemberByID(userId);
     }
 
     @ApiOperation(value = "获得所有人员的个人信息")
@@ -155,11 +163,46 @@ public class SystemAdminController {
         return CommonResponse.create(AppResponseCode.SUCCESS, allCameras);
     }
 
+
+    @ApiOperation(value = "根据ID获取监控摄像机的信息", notes = "获取系统监控摄像机的信息，如果查询到数据响应码是200，否者响应码一律都是500")
+    @ResponseBody
+    @GetMapping(value = "/cameras/{id}")
+    public CommonResponse<CameraVO> getCameraByID(@PathVariable(value = "id") Integer id) {
+        if (id <= 0) {
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
+        }
+        return cameraService.getCameraByID(id);
+    }
+
     @ApiOperation(value = "获取系统监控摄像机的数量")
     @ResponseBody
     @GetMapping(value = "/cameras/count")
     public CommonResponse<Integer> getAllCamerasSize() {
         return cameraService.getAllCamerasSize();
+    }
+
+
+    @ApiOperation(value = "设置打开相机的智能业务功能")
+    @ResponseBody
+    @GetMapping(value = "/cameras/setting")
+    public CommonResponse<Boolean> cameraSetting(@RequestParam(value = "ip") String ip,
+                                                 @RequestParam(value = "typeId") String typeId) {
+        return cameraService.enableCameraAISetting(ip,typeId);
+    }
+
+    @ApiOperation(value = "设置关闭相机的智能业务功能")
+    @ResponseBody
+    @GetMapping(value = "/cameras/non_setting")
+    public CommonResponse<Boolean> cameraNonSetting(@RequestParam(value = "ip") String ip,
+                                                    @RequestParam(value = "typeId") String typeId) {
+        return cameraService.closeCameraAISetting(ip,typeId);
+    }
+
+    @ApiOperation(value = "获取相机的智能业务功能的开启/关闭状态")
+    @ResponseBody
+    @GetMapping(value = "/cameras/setting_status")
+    public CommonResponse<CameraAISettingModel> cameraAISetting(@RequestParam(value = "ip") String ip) {
+        return cameraService.getCameraAIEnableState(ip);
     }
 
 
@@ -177,6 +220,8 @@ public class SystemAdminController {
         }
         return cameraService.addNewCamera(cameraModel);
     }
+
+
 
     @ApiOperation(value = "修改监控摄像机信息接口")
     @ResponseBody
@@ -241,7 +286,7 @@ public class SystemAdminController {
     @ApiOperation(value = "添加新的管理员接口", notes = "添加新的管理员")
     @ResponseBody
     @PostMapping(value = "/administrator/add")
-    public CommonResponse<String> addNewAdminUser(@RequestBody @Valid AdminUserModel userModel,BindingResult result) {
+    public CommonResponse<String> addNewAdminUser(@RequestBody @Valid AdminUserModel userModel, BindingResult result) {
         if (result.getErrorCount() > 0) {
             StringBuilder builder = new StringBuilder("添加新管理员接口 添加失败，原因是：");
             for (FieldError error : result.getFieldErrors()) {
@@ -253,9 +298,9 @@ public class SystemAdminController {
         //验证两次输入的密码是否一致
         String password = userModel.getPassword();
         String[] pass = password.split(",");
-        if(pass[0].equals(pass[1])){
+        if (pass[0].equals(pass[1])) {
             userModel.setPassword(pass[0]);
-            if(null==userModel.getCreateTime()){
+            if (null == userModel.getCreateTime()) {
                 userModel.setCreateTime(new Date());
             }
             return adminUserService.addNewAdminUser(userModel);
@@ -266,7 +311,7 @@ public class SystemAdminController {
     @ApiOperation(value = "添加新的管理员接口", notes = "添加新的管理员")
     @ResponseBody
     @PostMapping(value = "/administrator/edit")
-    public CommonResponse<String> editAdminUser(@RequestBody @Valid AdminUserModel userModel,BindingResult result) {
+    public CommonResponse<String> editAdminUser(@RequestBody @Valid AdminUserModel userModel, BindingResult result) {
         if (result.getErrorCount() > 0) {
             StringBuilder builder = new StringBuilder("修改管理员信息接口 修改摄像机信息失败，原因是：");
             for (FieldError error : result.getFieldErrors()) {

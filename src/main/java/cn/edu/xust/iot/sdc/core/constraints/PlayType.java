@@ -8,7 +8,10 @@ package cn.edu.xust.iot.sdc.core.constraints;
 public enum PlayType {
 
     FACE_RECOGNITION_CALLBACK_IMPL(1),
-    REGION_CROWD_DENSITY_CALLBACK_IMPL(2);
+    REGION_CROWD_DENSITY_CALLBACK_IMPL(2),
+    DANGEROUS_BEHAVIOR_WARNING_CALLBACK_IMPL(3);
+
+
     private final int type;
 
     PlayType(int type) {
