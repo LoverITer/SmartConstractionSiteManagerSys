@@ -31,6 +31,15 @@
             line-height: 25px;
             margin: 0 0 0 15px;
         }
+
+        .date_label {
+            width: 85px !important;
+            padding: 9px 5px !important;
+        }
+        .date_input {
+            width: 190px !important;
+            margin-right: 0 !important;
+        }
     </style>
 </head>
 
@@ -41,17 +50,59 @@
         <h2 style="margin-bottom: 10px">更多设置</h2>
         <div class="layui-form-item">
             <h3>人脸打卡</h3>
-            <div class="layui-tab layui-tab-card">
+            <div class="layui-tab layui-tab-card" style="height: 220px">
                 <ul class="layui-tab-title">
                     <li class="layui-this">前提条件</li>
+                    <li>打卡时间设置</li>
                     <li>启用人脸打卡</li>
                 </ul>
-                <div class="layui-tab-content " style="height: 100px;">
+                <div class="layui-tab-content ">
                     <div class="layui-tab-item layui-show note">
                         <ul>
                             <li>本功能与以下功能互斥，无法同时生效：区域人流量统计、危险行为检测。启用本功能前，请确保上述功能未启用。</li>
                             <li>本功能开启之前请确保已经正确在华为SDC摄像机Web端配置好目标检测相关参数以及开启人脸识别功能。</li>
                         </ul>
+                    </div>
+                    <div class="layui-tab-item">
+                        <from class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label date_label">
+                                    上班打卡时间
+                                </label>
+                                <div class="layui-inline date_input">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="start_time_start" class="layui-input"
+                                               id="start_time_start" placeholder="开始时间">
+                                    </div>
+                                </div>
+                                <span style="font-weight: 700;">—</span>
+                                <div class="layui-inline date_input">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="start_time_end" class="layui-input" id="start_time_end"
+                                               placeholder="结束时间">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label date_label">
+                                    下班打卡时间
+                                </label>
+                                <div class="layui-inline date_input">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="after_time_start" class="layui-input"
+                                               id="after_time_start" placeholder="开始时间">
+                                    </div>
+                                </div>
+                                <span style="font-weight: 700;">—</span>
+                                <div class="layui-inline date_input">
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="after_time_end" class="layui-input" id="after_time_end"
+                                               placeholder="结束时间">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="layui-btn" id="clock_in_time_btn" lay-filter="clock_in_time_btn" lay-submit="">保存</button>
+                        </from>
                     </div>
                     <div class="layui-tab-item">
                         <label style="width: 84px;padding: 9px 15px 9px 5px;" class="layui-form-label">启用人脸打卡</label>
@@ -114,18 +165,27 @@
     </form>
 </div>
 <script type="text/javascript">
-    layui.use(['form', 'jquery', 'admin', 'layer'], function () {
+    layui.use(['form', 'jquery', 'admin', 'layer', 'laydate'], function () {
         var form = layui.form,
             $ = layui.jquery,
             admin = layui.admin,
-            layer = layui.layer;
+            layer = layui.layer,
+            laydate = layui.laydate;
+
+
+        let start_time_start_min;
+        let start_time_end_min=start_time_start_min;
+        let after_time_start_min=start_time_end_min;
+
+
 
 
         //页面初始化加载
         $(function () {
-            let ip=$('input[name="dataId"]').val();
+            let ip = $('input[name="dataId"]').val();
             enableOrDisableAISetting(ip);
             flushCameraAISettingState(ip);
+            flushDateSetting();
         });
 
         function flushCameraAISettingState(ip) {
@@ -144,7 +204,7 @@
                         if (resp === undefined) {
                             return;
                         }
-                        if(resp.isClockInEnable === 1||resp.isCrowdCountEnable === 1||resp.isDangerWarningEnable === 1) {
+                        if (resp.isClockInEnable === 1 || resp.isCrowdCountEnable === 1 || resp.isDangerWarningEnable === 1) {
                             if (resp.isClockInEnable === 1) {
                                 console.log("开启人脸打卡");
                                 $("input[name='clockInEnable']").prop('checked', true);
@@ -166,26 +226,26 @@
                                 $("input[name='crowdCountEnable']").attr("disabled", true);
                                 $("input[name='clockInEnable']").attr("disabled", true);
                             }
-                        }else{
-                            if(resp.isClockInEnable===0){
+                        } else {
+                            if (resp.isClockInEnable === 0) {
                                 console.log("关闭人脸打卡");
-                                $("input[name='clockInEnable']").prop('checked',false);
+                                $("input[name='clockInEnable']").prop('checked', false);
                                 //取消禁用互斥功能
                                 $("input[name='crowdCountEnable']").removeAttr("disabled");
                                 $("input[name='dangerWarningEnable']").removeAttr("disabled");
                             }
 
-                            if(resp.isCrowdCountEnable === 0){
+                            if (resp.isCrowdCountEnable === 0) {
                                 console.log("关闭人数统计");
-                                $("input[name='crowdCountEnable']").prop('checked',false);
+                                $("input[name='crowdCountEnable']").prop('checked', false);
                                 //取消禁用互斥功能
                                 $("input[name='clockInEnable']").removeAttr("disabled");
                                 $("input[name='dangerWarningEnable']").removeAttr("disabled");
                             }
 
-                            if(resp.isDangerWarningEnable === 0){
+                            if (resp.isDangerWarningEnable === 0) {
                                 console.log("关闭危险行为检测");
-                                $("input[name='dangerWarningEnable']").prop('checked',false);
+                                $("input[name='dangerWarningEnable']").prop('checked', false);
                                 //取消禁用互斥功能
                                 $("input[name='crowdCountEnable']").removeAttr("disabled");
                                 $("input[name='clockInEnable']").removeAttr("disabled");
@@ -199,6 +259,51 @@
                 },
                 error: function (response) {
                     layer.msg("获取人员信息发生错误", {icon: 2})
+                }
+            });
+        }
+
+        function flushDateSetting() {
+            $.ajax({
+                //请求获得所有的工人数据
+                url: "/admin/cameras/clockInTime_status?token=" + localStorage.getItem(USER_LOGIN_TOKEN),
+                method: "get",
+                contentType: "application/json",
+                sync: false,
+                success: function (response) {
+                    let date=response.data;
+                    console.log(date);
+                    if (response.code === 200) {
+
+                        laydate.render({
+                            elem: '#start_time_start',
+                            type: 'time',
+                            value: date.startWorkStartTime,
+                            btns: ['clear', 'confirm'],
+                        });
+
+                        laydate.render({
+                            elem: '#start_time_end',
+                            type: 'time',
+                            value: date.startWorkEndTime,
+                            btns: ['clear', 'confirm'],
+                        });
+
+                        laydate.render({
+                            elem: '#after_time_start',
+                            type: 'time',
+                            value: date.afterWorkStartTime,
+                        });
+
+                        laydate.render({
+                            elem: '#after_time_end',
+                            type: 'time',
+                            value: date.afterWorkEndTime,
+                        });
+                    }
+                },
+                error: function (response) {
+                    layer.msg("启用失败", {icon: 2})
                 }
             });
         }
@@ -256,6 +361,29 @@
             var index = parent.layer.getFrameIndex(window.name);
             //关闭当前frame
             parent.layer.close(index);
+            return false;
+        });
+
+        form.on('submit(clock_in_time_btn)', function (data) {
+            var formDate = data.field;
+            let startTime=formDate.start_time_start+"-"+formDate.start_time_end;
+            let endTime=formDate.after_time_start+"-"+formDate.after_time_end;
+            $.ajax({
+                url: "/admin/cameras/clockInTime?token=" + localStorage.getItem(USER_LOGIN_TOKEN)+"&startTime="+startTime+"&endTime="+endTime,
+                method: "get",
+                contentType: "application/json",
+                sync: false,
+                success: function (response) {
+                    if (response.code === 200 && response.data === true) {
+                        layer.msg("保存成功", {icon: 1});
+                    } else {
+                        layer.msg("保存失败", {icon: 2})
+                    }
+                },
+                error: function (response) {
+                    layer.msg("保存失败", {icon: 2})
+                }
+            });
             return false;
         });
 

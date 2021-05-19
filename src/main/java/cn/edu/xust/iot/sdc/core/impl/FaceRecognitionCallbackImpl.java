@@ -4,7 +4,6 @@ import cn.edu.xust.iot.conf.ApplicationContextHolder;
 import cn.edu.xust.iot.sdc.core.HWPuSDK;
 import cn.edu.xust.iot.service.IClockInService;
 import cn.edu.xust.iot.service.IHWPuSDKService;
-import cn.edu.xust.iot.service.impl.ClockInServiceImpl;
 import cn.edu.xust.iot.service.impl.HWPuSDKServiceImpl;
 import cn.edu.xust.iot.utils.CommonUtils;
 import com.sun.jna.NativeLong;
@@ -138,9 +137,6 @@ public class FaceRecognitionCallbackImpl implements HWPuSDK.pfRealDataCallBack {
 
                     //如果目标是人脸并且人脸匹配 就说明打卡成功
                     if (HWPuSDK.ITGT_TARGET_TYPE_E.TARGET_FACE_RECOGNITION == target && matchRes == 1) {
-                        if(clockInService==null){
-                            clockInService= ApplicationContextHolder.getBean(ClockInServiceImpl.class);
-                        }
                         clockInService.addClockInRecord(String.valueOf(cardType), cardId);
                     }
 

@@ -7,6 +7,7 @@ import cn.edu.xust.iot.model.vo.CameraVO;
 import cn.edu.xust.iot.model.vo.SUserVO;
 import cn.edu.xust.iot.service.IAdminUserService;
 import cn.edu.xust.iot.service.ICameraService;
+import cn.edu.xust.iot.service.IClockInService;
 import cn.edu.xust.iot.service.ISUserService;
 import cn.edu.xust.iot.utils.CommonUtils;
 import com.github.pagehelper.PageInfo;
@@ -21,9 +22,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -46,6 +49,9 @@ public class SystemAdminController {
 
     @Autowired
     private IAdminUserService adminUserService;
+
+    @Autowired
+    private IClockInService clockInService;
 
 
     @ApiOperation(value = "后台管理系统首页", notes = "后台管理系统首页")
@@ -187,15 +193,16 @@ public class SystemAdminController {
     @GetMapping(value = "/cameras/setting")
     public CommonResponse<Boolean> cameraSetting(@RequestParam(value = "ip") String ip,
                                                  @RequestParam(value = "typeId") String typeId) {
-        return cameraService.enableCameraAISetting(ip,typeId);
+        return cameraService.enableCameraAISetting(ip, typeId);
     }
+
 
     @ApiOperation(value = "设置关闭相机的智能业务功能")
     @ResponseBody
     @GetMapping(value = "/cameras/non_setting")
     public CommonResponse<Boolean> cameraNonSetting(@RequestParam(value = "ip") String ip,
                                                     @RequestParam(value = "typeId") String typeId) {
-        return cameraService.closeCameraAISetting(ip,typeId);
+        return cameraService.closeCameraAISetting(ip, typeId);
     }
 
     @ApiOperation(value = "获取相机的智能业务功能的开启/关闭状态")
@@ -203,6 +210,55 @@ public class SystemAdminController {
     @GetMapping(value = "/cameras/setting_status")
     public CommonResponse<CameraAISettingModel> cameraAISetting(@RequestParam(value = "ip") String ip) {
         return cameraService.getCameraAIEnableState(ip);
+    }
+
+    @ApiOperation(value = "获取相机的智能业务功能的开启/关闭状态")
+    @ResponseBody
+    @GetMapping(value = "/cameras/clockInTime_status")
+    public CommonResponse<Map<String,String>> getClockInState() {
+        Map<String,String> clockTimeState = clockInService.getClockTimeState();
+        if (null==clockTimeState) {
+            return CommonResponse.create(AppResponseCode.CLOCK_IN_TIME_NOT_SET, null);
+        }
+        return CommonResponse.create(AppResponseCode.SUCCESS, clockTimeState);
+    }
+
+    @ApiOperation(value = "设置上下班签到时间")
+    @ResponseBody
+    @GetMapping(value = "/cameras/clockInTime")
+    public CommonResponse<Boolean> setClockInTime(@RequestParam("startTime") String startTime,
+                                                  @RequestParam("endTime")String endTime) {
+        String[] startTimes = startTime.split("-");
+        String[] endTimes = endTime.split("-");
+
+        //上班打卡时间段
+        String[] startTimesSplits1 = startTimes[0].split(":");
+        String[] startTimesSplits2 = startTimes[1].split(":");
+        int startTimeStartHour=Integer.parseInt(startTimesSplits1[0]);
+        int startTimeStartHMin=Integer.parseInt(startTimesSplits1[1]);
+        int startTimeStartSecond=Integer.parseInt(startTimesSplits1[2]);
+        int startTimeEndHour=Integer.parseInt(startTimesSplits2[0]);
+        int startTimeEndHMin=Integer.parseInt(startTimesSplits2[1]);
+        int startTimeEndSecond=Integer.parseInt(startTimesSplits2[2]);
+
+        LocalTime startWorkStartTime = LocalTime.of(startTimeStartHour,startTimeStartHMin,startTimeStartSecond);
+        LocalTime startWorkEndTime = LocalTime.of(startTimeEndHour,startTimeEndHMin,startTimeEndSecond);
+
+        //下班打卡时间段
+        String[] endTimesSplits1 = endTimes[0].split(":");
+        String[] endTimesSplits2 = endTimes[1].split(":");
+        int afterTimeStartHour=Integer.parseInt(endTimesSplits1[0]);
+        int afterTimeStartHMin=Integer.parseInt(endTimesSplits1[1]);
+        int afterTimeStartSecond=Integer.parseInt(endTimesSplits1[2]);
+        int afterTimeEndHour=Integer.parseInt(endTimesSplits2[0]);
+        int afterTimeEndHMin=Integer.parseInt(endTimesSplits2[1]);
+        int afterTimeEndSecond=Integer.parseInt(endTimesSplits2[2]);
+        LocalTime afterWorkStartTime = LocalTime.of(afterTimeStartHour,afterTimeStartHMin,afterTimeStartSecond);
+        LocalTime afterWorkEndTime = LocalTime.of(afterTimeEndHour,afterTimeEndHMin,afterTimeEndSecond);
+
+        boolean res = clockInService.setStartWorkClockInTime(startWorkStartTime, startWorkEndTime) &&
+                clockInService.setEndWorkClockInTime(afterWorkStartTime, afterWorkEndTime);
+        return CommonResponse.create(AppResponseCode.SUCCESS, res);
     }
 
 
@@ -220,7 +276,6 @@ public class SystemAdminController {
         }
         return cameraService.addNewCamera(cameraModel);
     }
-
 
 
     @ApiOperation(value = "修改监控摄像机信息接口")

@@ -5,6 +5,7 @@ import cn.edu.xust.iot.model.vo.ManagerClockInVO;
 import cn.edu.xust.iot.model.vo.SevenDaysClockIn;
 
 import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,22 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public interface IClockInService {
 
-    /**
-     * 上班打卡开始时间  打卡时间 2小时 6~8点
-     */
-    int START_WORK_CLOCK_IN_START_TIME = 6;
-
-    int START_WORK_CLOCK_IN_END_TIME = START_WORK_CLOCK_IN_START_TIME + 2;
-
-    /**
-     * 下班打卡开始时间  打卡21点开始 次日 5点结束
-     */
-    int AFTER_WORK_CLOCK_OUT_START_TIME = 21;
-
-    /**
-     * 次日5点
-     */
-    int AFTER_WORK_CLOCK_OUT_END_TIME = 5;
 
     /**
      * 人员当前签到打卡记录  会在 每天的5:10清空打卡记录
@@ -45,6 +30,28 @@ public interface IClockInService {
      * @return
      */
     int isStartWorkOrAfterWork();
+
+    /**
+     * 获取上下班打卡时间的状态参数state
+     *
+     * @return
+     */
+    Map<String,String> getClockTimeState();
+
+
+    /**
+     * 设置系统上班打卡时间段
+     *
+     * @return
+     */
+    boolean setStartWorkClockInTime(LocalTime workClockInStart, LocalTime workClockInEnd);
+
+    /**
+     * 设置系统下班打卡时间段
+     *
+     * @return
+     */
+    boolean setEndWorkClockInTime(LocalTime workClockInStart, LocalTime workClockInEnd);
 
     /**
      * 增加或修改打卡记录
