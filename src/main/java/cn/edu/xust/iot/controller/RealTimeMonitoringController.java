@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping(value = "/realTime")
-@Api(tags="实时监控页面控制器接口—只用于内部测试")
+@Api(tags="实时监控页面控制器接口")
 public class RealTimeMonitoringController {
 
     @ApiOperation(value = "",notes = "查询数据（摄像机数据）并跳转到实时监控页面")

@@ -1,8 +1,8 @@
 package cn.edu.xust.iot.mapper;
 
 import cn.edu.xust.iot.model.entity.Attendance;
-import cn.edu.xust.iot.model.vo.ManagerClockInVO;
-import cn.edu.xust.iot.model.vo.SevenDaysClockIn;
+import cn.edu.xust.iot.model.vo.ClockInManagerVO;
+import cn.edu.xust.iot.model.vo.ClockInWeeklyAmountVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -74,14 +74,14 @@ public interface AttendanceMapper {
      *
      * @return
      */
-    List<SevenDaysClockIn> countPastSevenDaysClockIn();
+    List<ClockInWeeklyAmountVO> countPastSevenDaysClockIn();
 
     /**
      * 查询当天打卡的管理人员的详细信息
      *
      * @return
      */
-    List<ManagerClockInVO> selectTodayClockInManager();
+    List<ClockInManagerVO> selectTodayClockInManager();
 
 
     /**

@@ -6,6 +6,7 @@ import cn.edu.xust.iot.model.CameraInfoModel;
 import cn.edu.xust.iot.model.CameraModel;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.entity.Camera;
+import cn.edu.xust.iot.model.vo.CameraAmountVO;
 import cn.edu.xust.iot.model.vo.CameraVO;
 import com.github.pagehelper.PageInfo;
 
@@ -125,5 +126,11 @@ public interface ICameraService {
      */
     CommonResponse<Boolean> closeCameraAISetting(String ip, String AIServiceName);
 
+
+    /**
+     * 获取不同状态下的相机数量
+     * @return
+     */
+    CommonResponse<CameraAmountVO> getCameraAmountInDiffState();
 
 }

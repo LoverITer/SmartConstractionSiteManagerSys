@@ -105,9 +105,9 @@ camera:
     #直播推流时间（分钟）  -1 表示永久推流
     keepalive: -1
     #nginx推送地址
-    push_host: 127.0.0.1
+    push_host: 192.168.0.222
     #额外推送地址
-    host_extra: 127.0.0.1
+    host_extra: 192.168.0.222
     #nginx推送端口
     push_port: 1935
     #主码流最大码率

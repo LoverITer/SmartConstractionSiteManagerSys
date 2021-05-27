@@ -7,6 +7,7 @@ import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.mapper.pagehelper.PageParam;
 import cn.edu.xust.iot.model.CameraInfoModel;
 import cn.edu.xust.iot.model.CommonResponse;
+import cn.edu.xust.iot.model.vo.CameraAmountVO;
 import cn.edu.xust.iot.model.vo.CameraVO;
 import cn.edu.xust.iot.service.ICameraService;
 import cn.edu.xust.iot.utils.CommonUtils;
@@ -38,7 +39,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @RequestMapping(value = "/camera")
-@Api(tags = "摄像机控制接口—实时监控页面所需接口")
+@Api(tags = "摄像机控制接口")
 @RestController
 public class CameraController {
 
@@ -59,7 +60,7 @@ public class CameraController {
      * 如果找到，则该路视频的推流人数count+1，否则直接调用openStream()方法创建新的推流并将其放置到缓存中）。
      *
      * @param cameraInfoModel 表单传入的信息
-     * @param result     进行数据校验的结果
+     * @param result          进行数据校验的结果
      * @return Map<String, String>
      * @Title: openCamera
      * @Description: 开启视频流
@@ -83,7 +84,7 @@ public class CameraController {
                 builder.append(error.getField()).append(":").append(error.getDefaultMessage());
             }
             log.error(builder.toString());
-            return CommonResponse.create(AppResponseCode.CAMERA_REQUEST_PARAMETER_VALID,builder.toString());
+            return CommonResponse.create(AppResponseCode.CAMERA_REQUEST_PARAMETER_VALID, builder.toString());
         }
         // ip格式校验
         if (!CommonUtils.isCorrectIp(cameraInfoModel.getIp())) {
@@ -113,19 +114,19 @@ public class CameraController {
     @ApiImplicitParams({@ApiImplicitParam(name = "tokens", value = "需要关闭实时监控的摄像机唯一ID",
             required = true, dataTypeClass = String.class, paramType = "path")})
     @RequestMapping(value = "/close/{tokens}", method = RequestMethod.GET)
-    public CommonResponse<Map<String,String>> closeCamera(@PathVariable("tokens") String tokens) {
+    public CommonResponse<Map<String, String>> closeCamera(@PathVariable("tokens") String tokens) {
         if (null != tokens && !"".equals(tokens)) {
             String[] tokenArr = tokens.split(",");
             HashMap<String, String> resMap = new HashMap<>(16);
             for (String token : tokenArr) {
                 boolean closeRes = cameraService.closeCamera(token);
-                if(closeRes){
-                    resMap.put(token,"关闭token="+token+"的摄像机成功");
-                }else{
-                    resMap.put(token,"关闭token="+token+"的摄像机失败");
+                if (closeRes) {
+                    resMap.put(token, "关闭token=" + token + "的摄像机成功");
+                } else {
+                    resMap.put(token, "关闭token=" + token + "的摄像机失败");
                 }
             }
-            return CommonResponse.create(AppResponseCode.SUCCESS,resMap);
+            return CommonResponse.create(AppResponseCode.SUCCESS, resMap);
         }
         return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
     }
@@ -196,30 +197,37 @@ public class CameraController {
     }
 
 
-
-    @ApiOperation(value="获取系统所有摄像机信息",notes="不用传入任何参数，直接请求就可以获得系统所有设置监控摄像机")
+    @ApiOperation(value = "获取系统所有摄像机信息", notes = "不用传入任何参数，直接请求就可以获得系统所有设置监控摄像机")
     @GetMapping(value = "/all")
-    public CommonResponse<List<CameraVO>> getAllCameras(){
+    public CommonResponse<List<CameraVO>> getAllCameras() {
         int cameraSize = cameraService.getAllCamerasSize().getData();
         PageInfo<CameraVO> cameraList = cameraService.getCameraList(PageParam.create(1, cameraSize));
-        return CommonResponse.create(AppResponseCode.SUCCESS,cameraList.getList());
+        return CommonResponse.create(AppResponseCode.SUCCESS, cameraList.getList());
     }
 
 
-    @ApiOperation(value="获取系统所有摄像机的数量",notes="不用任何参数，直接请求接口皆可以获得系统中所有摄镜头的数量")
+    @ApiOperation(value = "获取系统所有摄像机的数量", notes = "不用任何参数，直接请求接口皆可以获得系统中所有摄镜头的数量")
     @GetMapping(value = "/size")
-    public CommonResponse<Integer> getAllCameraNum(){
-        return CommonResponse.create(AppResponseCode.SUCCESS,cameraService.getAllCamerasSize().getData());
+    public CommonResponse<Integer> getAllCameraNum() {
+        return CommonResponse.create(AppResponseCode.SUCCESS, cameraService.getAllCamerasSize().getData());
     }
 
 
-    @ApiOperation(value="搜索区域内的摄像机",notes="根据区域名搜素区域内的摄像机，需要传入地区参数`regionName`表示查询的区域名")
+    @ApiOperation(value = "搜索区域内的摄像机", notes = "根据区域名搜素区域内的摄像机，需要传入地区参数`regionName`表示查询的区域名")
     @GetMapping(value = "/search")
-    public CommonResponse<List<CameraVO>>  searchCameraByRegionName(@RequestParam(value = "regionName") String regionName){
-        if(CommonUtils.isNull(regionName)){
+    public CommonResponse<List<CameraVO>> searchCameraByRegionName(@RequestParam(value = "regionName") String regionName) {
+        if (CommonUtils.isNull(regionName)) {
             return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
         }
         return cameraService.getCameraListByRegionName(regionName);
+    }
+
+
+    @ApiOperation(value = "获取系统不同状态下的相机的数量",
+            notes = "可以获取系统不同状态下的相机的数量，包括：相机总数、在线相机数、离线相机数、总告警数、今日告警数以及算法总数")
+    @GetMapping(value = "/amount")
+    public CommonResponse<CameraAmountVO> getCameraAmount() {
+        return cameraService.getCameraAmountInDiffState();
     }
 
 }

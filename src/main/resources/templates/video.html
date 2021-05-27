@@ -32,7 +32,7 @@
 <body>
 
 <div style="margin-top: 100px; margin-left: 70px">
-
+    <iframe scrolling="no" src="https://tianqiapi.com/api.php?style=tg&skin=apple&color=007bff" frameborder="0" width="470" height="60" allowtransparency="true"></iframe>
     <h1>实时预览</h1>
     <video id="example_video_1" class="video-js vjs-default-skin" controls
            preload="auto" width="640px" height="480px" data-setup="{}"
@@ -86,8 +86,44 @@
     };
 
     //初始化video播放器
-    var myPlayer = videojs('example_video_1', options, function onPlayerReady() {
-        console.log('播放器已经准备好了!');
+    var myPlayer = videojs('example_video_1', options,function(){
+        console.log(this);
+        this.on('loadedmetadata',function(){
+            console.log('loadedmetadata');
+            //加载到元数据后开始播放视频
+            startVideo();
+        });
+        this.on('ended',function(){
+            console.log('ended')
+        });
+        this.on('firstplay',function(){
+            console.log('firstplay')
+        });
+        this.on('loadstart',function(){
+            //开始加载
+            console.log('loadstart')
+        });
+        this.on('loadeddata',function(){
+            console.log('loadeddata')
+        });
+        this.on('seeking',function(){
+            //正在去拿视频流的路上
+            console.log('seeking')
+        });
+        this.on('seeked',function(){
+            //已经拿到视频流,可以播放
+            console.log('seeked')
+        });
+        this.on('waiting',function(){
+            console.log('waiting')
+        });
+        this.on('pause',function(){
+            console.log('pause')
+        });
+        this.on('play',function(){
+            console.log('play')
+        });
+
     });
 
 
@@ -103,6 +139,7 @@
                 if (response.code == 201) {
                     console.log("设置新的rtmp播放地址："+response.data.rtmp);
                     $('.video1_token').attr("value", response.data.token);
+                    console.log(myPlayer);
                     //加载rtmp流，开始播放
                     myPlayer.src({
                         type: "rtmp/flv",

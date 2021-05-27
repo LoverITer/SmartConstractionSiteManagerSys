@@ -9,6 +9,7 @@ import cn.edu.xust.iot.camera.push.CameraPusher;
 import cn.edu.xust.iot.controller.CameraController;
 import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.mapper.CameraMapper;
+import cn.edu.xust.iot.mapper.DangerBehaviorMapper;
 import cn.edu.xust.iot.mapper.RegionCameraMapper;
 import cn.edu.xust.iot.mapper.RegionMapper;
 import cn.edu.xust.iot.mapper.pagehelper.PageParam;
@@ -19,6 +20,7 @@ import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.entity.Camera;
 import cn.edu.xust.iot.model.entity.Region;
 import cn.edu.xust.iot.model.entity.RegionCamera;
+import cn.edu.xust.iot.model.vo.CameraAmountVO;
 import cn.edu.xust.iot.model.vo.CameraVO;
 import cn.edu.xust.iot.service.ICameraService;
 import cn.edu.xust.iot.service.IHWPuSDKService;
@@ -64,6 +66,9 @@ public class CameraServiceImpl implements ICameraService {
     @Autowired
     private IHWPuSDKService hwPuSDKService;
 
+    @Autowired
+    private DangerBehaviorMapper dangerBehaviorMapper;
+
     //摄像机智能业务开启状态 key是相机IP
     private static final Map<String, CameraAISettingModel> AI_SERVICE_ENABLE_MAPPING = new ConcurrentHashMap<>(16);
 
@@ -71,12 +76,12 @@ public class CameraServiceImpl implements ICameraService {
     @Override
     public CommonResponse<Object> openCamera(CameraInfoModel cameraInfoModel) {
         CommonResponse<Object> response = CommonResponse.create(AppResponseCode.SUCCESS);
-        if (null != cameraInfoModel.getStartTime() || "".equals(cameraInfoModel.getStartTime())) {
+        if (!CommonUtils.isNull(cameraInfoModel.getStartTime())) {
             // 开始时间校验
             if (!CommonUtils.isTrueTime(cameraInfoModel.getStartTime())) {
                 return CommonResponse.create(AppResponseCode.CAMERA_REQUEST_PARAMETER_VALID);
             }
-            if (null != cameraInfoModel.getEndTime() || "".equals(cameraInfoModel.getEndTime())) {
+            if (!CommonUtils.isNull(cameraInfoModel.getEndTime())) {
                 if (!CommonUtils.isTrueTime(cameraInfoModel.getEndTime())) {
                     return CommonResponse.create(AppResponseCode.CAMERA_REQUEST_PARAMETER_VALID);
                 }
@@ -450,5 +455,27 @@ public class CameraServiceImpl implements ICameraService {
 
     }
 
-
+    @Override
+    public CommonResponse<CameraAmountVO> getCameraAmountInDiffState() {
+        try {
+            //获取到在线、离线以及总相机数
+            CameraAmountVO cameraAmountVO = cameraMapper.countCamerasByState();
+            if(null==cameraAmountVO){
+                cameraAmountVO=new CameraAmountVO();
+            }
+            int algorithmNum = cameraMapper.countCamerasByAlgorithm();
+            //获取总告警数
+            int totalDangerBehavior = dangerBehaviorMapper.countTotalDangerBehaviorNum();
+            //获取今日告警数
+            int todayDangerBehavior = dangerBehaviorMapper.countTodayDangerBehaviorNum();
+            cameraAmountVO.setAlgorithmNum(algorithmNum);
+            cameraAmountVO.setTotalWarningNum(totalDangerBehavior);
+            cameraAmountVO.setTodayWarningNum(todayDangerBehavior);
+            return CommonResponse.create(AppResponseCode.SUCCESS, cameraAmountVO);
+        } catch (Exception e) {
+            log.error("获取相机数量发生异常");
+            e.printStackTrace();
+        }
+        return CommonResponse.create(AppResponseCode.FAIL);
+    }
 }

@@ -29,8 +29,27 @@
         AND DATE_FORMAT( NOW(), '%Y-%m-%d %H' ) = DATE_FORMAT(create_date,'%Y-%m-%d %H' )
     </select>
 
-    <select id="selectHourPeriodHumanCount" resultMap="BaseResultMap">
-        select region_name,human_in,human_out from region_human_count as a,region as b where 	a.region_id=b.id and DATE_FORMAT(NOW(), '%Y-%m-%d %H') = DATE_FORMAT(create_date, '%Y-%m-%d %H')
+    <select id="selectHourPeriodHumanCount" resultType="cn.edu.xust.iot.model.vo.HumanAmountVO">
+        SELECT region_name,
+               human_in,
+               human_out
+        FROM region_human_count AS a,
+             region AS b
+        WHERE a.region_id = b.id
+          AND DATE_FORMAT(NOW(), '%Y-%m-%d %H') = DATE_FORMAT(create_date, '%Y-%m-%d %H')
+        ORDER BY human_in DESC
+        LIMIT 5
+    </select>
+
+    <select id="selectDayPeriodHumanCount" resultType="cn.edu.xust.iot.model.vo.HumanAmountVO">
+        SELECT region_name,
+               sum(human_in) as human_in,
+               sum(human_out) as human_out
+        FROM region_human_count AS a,
+             region AS b
+        WHERE a.region_id = b.id
+          AND DATE_FORMAT(NOW(), '%Y-%m-%d') = DATE_FORMAT(create_date,'%Y-%m-%d')
+        GROUP BY region_name
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

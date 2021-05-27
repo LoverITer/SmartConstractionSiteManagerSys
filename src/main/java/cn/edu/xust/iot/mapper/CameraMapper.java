@@ -1,6 +1,7 @@
 package cn.edu.xust.iot.mapper;
 
 import cn.edu.xust.iot.model.entity.Camera;
+import cn.edu.xust.iot.model.vo.CameraAmountVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,6 +86,20 @@ public interface CameraMapper {
      * @return
      */
     int countCameras();
+
+    /**
+     * 根据状态统计不同状态下的相机数量
+     *
+     * @return
+     */
+    CameraAmountVO countCamerasByState();
+
+    /**
+     * 统计不同算法的摄像机数量
+     *
+     * @return
+     */
+    Integer countCamerasByAlgorithm();
 
     /**
      * 更新传入对象中某条摄像机记录

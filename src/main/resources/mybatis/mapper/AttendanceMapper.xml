@@ -47,7 +47,7 @@
                 AND DATE_FORMAT(NOW(), '%Y-%m-%d HH:mm:ss')
     </select>
 
-    <select id="selectTodayClockInManager" resultType="cn.edu.xust.iot.model.vo.ManagerClockInVO">
+    <select id="selectTodayClockInManager" resultType="cn.edu.xust.iot.model.vo.ClockInManagerVO">
         SELECT s_user.`name`,
                s_user.`job`,
                face_lib.face_pic,
@@ -63,7 +63,7 @@
                 AND DATE_FORMAT(NOW(), '%Y-%m-%d HH:mm:ss')
     </select>
 
-    <select id="countPastSevenDaysClockIn" resultType="cn.edu.xust.iot.model.vo.SevenDaysClockIn">
+    <select id="countPastSevenDaysClockIn" resultType="cn.edu.xust.iot.model.vo.ClockInWeeklyAmountVO">
         SELECT
         a.date_time,
         IFNULL( b.total, 0 ) AS total

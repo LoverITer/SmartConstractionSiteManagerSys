@@ -16,7 +16,11 @@
     from danger
     where id = #{id,jdbcType=INTEGER}
   </select>
-  
+
+  <select id="selectAllDangerType" resultMap="BaseResultMap">
+    select danger_name from danger where id>100002
+  </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
      select 
         <include refid="Base_Column_List" />

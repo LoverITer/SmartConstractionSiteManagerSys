@@ -1,8 +1,8 @@
 package cn.edu.xust.iot.service;
 
 import cn.edu.xust.iot.model.CommonResponse;
-import cn.edu.xust.iot.model.vo.ManagerClockInVO;
-import cn.edu.xust.iot.model.vo.SevenDaysClockIn;
+import cn.edu.xust.iot.model.vo.ClockInManagerVO;
+import cn.edu.xust.iot.model.vo.ClockInWeeklyAmountVO;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -82,7 +82,7 @@ public interface IClockInService {
      *
      * @return
      */
-    CommonResponse<List<ManagerClockInVO>> getAllManagerClockRecord();
+    CommonResponse<List<ClockInManagerVO>> getAllManagerClockRecord();
 
 
     /**
@@ -90,6 +90,6 @@ public interface IClockInService {
      *
      * @return
      */
-    CommonResponse<List<SevenDaysClockIn>> getPast7DaysClockInNum();
+    CommonResponse<List<ClockInWeeklyAmountVO>> getPast7DaysClockInNum();
 
 }

@@ -2,6 +2,7 @@ package cn.edu.xust.iot.mapper;
 
 
 import cn.edu.xust.iot.model.entity.RegionHumanCount;
+import cn.edu.xust.iot.model.vo.HumanAmountVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +23,14 @@ public interface RegionHumanCountMapper {
      *
      * @return
      */
-    List<RegionHumanCount> selectHourPeriodHumanCount();
+    List<HumanAmountVO> selectHourPeriodHumanCount();
+
+    /**
+     * 查询每天所有区域的人数统计
+     *
+     * @return
+     */
+    List<HumanAmountVO> selectDayPeriodHumanCount();
 
     /**
      * 查询小时区间段内的某个区域的人流量记录

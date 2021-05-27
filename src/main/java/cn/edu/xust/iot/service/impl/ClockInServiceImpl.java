@@ -5,8 +5,8 @@ import cn.edu.xust.iot.mapper.AttendanceMapper;
 import cn.edu.xust.iot.mapper.SUserMapper;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.entity.Attendance;
-import cn.edu.xust.iot.model.vo.ManagerClockInVO;
-import cn.edu.xust.iot.model.vo.SevenDaysClockIn;
+import cn.edu.xust.iot.model.vo.ClockInManagerVO;
+import cn.edu.xust.iot.model.vo.ClockInWeeklyAmountVO;
 import cn.edu.xust.iot.service.IClockInService;
 import cn.edu.xust.iot.utils.AudioUtils;
 import cn.edu.xust.iot.utils.CommonUtils;
@@ -186,9 +186,9 @@ public class ClockInServiceImpl implements IClockInService {
     }
 
     @Override
-    public CommonResponse<List<ManagerClockInVO>> getAllManagerClockRecord() {
+    public CommonResponse<List<ClockInManagerVO>> getAllManagerClockRecord() {
         try {
-            List<ManagerClockInVO> clockInManagerList = attendanceMapper.selectTodayClockInManager();
+            List<ClockInManagerVO> clockInManagerList = attendanceMapper.selectTodayClockInManager();
             return CommonResponse.create(AppResponseCode.SUCCESS, clockInManagerList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -197,10 +197,10 @@ public class ClockInServiceImpl implements IClockInService {
     }
 
     @Override
-    public CommonResponse<List<SevenDaysClockIn>> getPast7DaysClockInNum() {
+    public CommonResponse<List<ClockInWeeklyAmountVO>> getPast7DaysClockInNum() {
         try {
-            List<SevenDaysClockIn> sevenDaysClockInList = attendanceMapper.countPastSevenDaysClockIn();
-            return CommonResponse.create(AppResponseCode.SUCCESS, sevenDaysClockInList);
+            List<ClockInWeeklyAmountVO> clockInWeeklyAmountVOList = attendanceMapper.countPastSevenDaysClockIn();
+            return CommonResponse.create(AppResponseCode.SUCCESS, clockInWeeklyAmountVOList);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -67,7 +67,20 @@
 
 
     <select id="countCameras" resultType="java.lang.Integer">
-        select count(*) from camera;
+        select count(*) from camera
+    </select>
+
+
+    <select id="countCamerasByState" resultType="cn.edu.xust.iot.model.vo.CameraAmountVO">
+        select  count(*) as total,
+                count(CASE WHEN device_status = '0' THEN 1 END)   AS offline_num,
+                count(CASE WHEN device_status = '1' THEN 1 END)   AS online_num
+        from camera
+    </select>
+
+    <select id="countCamerasByAlgorithm" resultType="int">
+        SELECT count(*)
+        FROM (SELECT DISTINCT algorithm FROM camera) AS algorithm_num
     </select>
 
     <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.Camera" useGeneratedKeys="true" keyColumn="id"

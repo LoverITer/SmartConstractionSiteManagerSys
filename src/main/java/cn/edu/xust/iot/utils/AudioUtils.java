@@ -36,7 +36,6 @@ public class AudioUtils {
             Dispatch.call(spVoice, "Speak", new Variant(text));
 
             // 下面是构建文件流把生成语音文件
-
             ax = new ActiveXComponent("Sapi.SpFileStream");
             Dispatch spFileStream = ax.getObject();
 

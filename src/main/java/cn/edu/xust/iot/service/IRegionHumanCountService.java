@@ -1,7 +1,7 @@
 package cn.edu.xust.iot.service;
 
 import cn.edu.xust.iot.model.CommonResponse;
-import cn.edu.xust.iot.model.entity.RegionHumanCount;
+import cn.edu.xust.iot.model.vo.HumanAmountVO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -54,6 +54,14 @@ public interface IRegionHumanCountService {
      *
      * @return
      */
-    CommonResponse<List<RegionHumanCount>> getRegionHumanCountHourly();
+    CommonResponse<List<HumanAmountVO>> getRegionHumanCountHourly();
+
+
+    /**
+     * 获取当前天的所有监控区域的人流量
+     *
+     * @return
+     */
+    CommonResponse<List<HumanAmountVO>> getRegionHumanCountDaily();
 
 }

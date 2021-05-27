@@ -37,4 +37,10 @@ public class DangerBehavior{
 	 */
 	private Integer regionId;
 
+	//处理状态
+	private String state;
+
+	//违规人员身份证
+	private String certNo;
+
 }

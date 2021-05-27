@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 @Data
 @ToString
-public class ManagerClockInVO  implements Serializable {
+public class ClockInManagerVO implements Serializable {
 
     /**
      * 姓名

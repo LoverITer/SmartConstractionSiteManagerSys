@@ -1,93 +1,328 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.xust.iot.mapper.DangerBehaviorMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.xust.iot.model.entity.DangerBehavior">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="behavior_pic" jdbcType="VARCHAR" property="behaviorPic" />
-    <result column="behavior_type" jdbcType="INTEGER" property="behaviorType" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="region_id" jdbcType="INTEGER" property="regionId" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, behavior_pic, behavior_type, create_time, region_id
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from danger_behavior
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from danger_behavior
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.DangerBehavior">
-    insert into danger_behavior (id, behavior_pic, behavior_type, 
-      create_time, region_id)
-    values (#{id,jdbcType=INTEGER}, #{behaviorPic,jdbcType=VARCHAR}, #{behaviorType,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{regionId,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.DangerBehavior">
-    insert into danger_behavior
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="behaviorPic != null">
-        behavior_pic,
-      </if>
-      <if test="behaviorType != null">
-        behavior_type,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="regionId != null">
-        region_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="behaviorPic != null">
-        #{behaviorPic,jdbcType=VARCHAR},
-      </if>
-      <if test="behaviorType != null">
-        #{behaviorType,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="regionId != null">
-        #{regionId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.model.entity.DangerBehavior">
-    update danger_behavior
-    <set>
-      <if test="behaviorPic != null">
-        behavior_pic = #{behaviorPic,jdbcType=VARCHAR},
-      </if>
-      <if test="behaviorType != null">
-        behavior_type = #{behaviorType,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="regionId != null">
-        region_id = #{regionId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.model.entity.DangerBehavior">
-    update danger_behavior
-    set behavior_pic = #{behaviorPic,jdbcType=VARCHAR},
-      behavior_type = #{behaviorType,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      region_id = #{regionId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="cn.edu.xust.iot.model.entity.DangerBehavior">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="behavior_pic" jdbcType="VARCHAR" property="behaviorPic"/>
+        <result column="behavior_type" jdbcType="INTEGER" property="behaviorType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="region_id" jdbcType="INTEGER" property="regionId"/>
+        <result column="state" jdbcType="VARCHAR" property="state"/>
+        <result column="cert_no" jdbcType="VARCHAR" property="certNo"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, behavior_pic, behavior_type, create_time, region_id ,cert_no,state
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from danger_behavior
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from danger_behavior
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+
+    <select id="countTotalDangerBehaviorNum" resultType="int">
+        select count(*) as total_warning_num
+        from danger_behavior
+    </select>
+
+    <select id="countTodayDangerBehaviorNum" resultType="int">
+        SELECT today_warning_num
+        FROM (SELECT count(*)                             AS today_warning_num,
+                     DATE_FORMAT(create_time, '%Y-%m-%d') AS date
+                     FROM danger_behavior
+                     GROUP BY date
+                     LIMIT 1) as a
+    </select>
+
+    <select id="countHalfMonthDangerBehaviorNum" resultType="cn.edu.xust.iot.model.vo.DangerBehaviorHalfMonthAmountVO">
+        SELECT a.date_time as date,
+               IFNULL(b.warning_num, 0) AS warning_num
+        FROM (
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 14 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 13 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 12 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 11 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 10 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 9 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 8 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 7 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 6 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 5 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 4 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 3 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 2 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 1 DAY) AS date_time
+                     UNION ALL
+                     SELECT DATE_SUB(CURDATE(), INTERVAL 0 DAY) AS date_time
+                     ) a
+                     LEFT JOIN (
+                SELECT count(*)                             AS warning_num,
+                       DATE_FORMAT(create_time, '%Y-%m-%d') AS date
+                FROM danger_behavior,
+                     danger
+                WHERE DATE_SUB(CURDATE(), INTERVAL 15 DAY) &lt;= DATE_FORMAT(create_time, '%Y-%m-%d')
+                  AND danger.parent_danger_name = 100002
+                  AND danger_behavior.behavior_type = danger.id
+                GROUP BY date
+                ) b ON a.date_time = b.date
+    </select>
+
+    <select id="countHalfMonthUnsafeBehaviorNum" resultType="cn.edu.xust.iot.model.vo.DangerBehaviorHalfMonthAmountVO">
+        SELECT
+        a.date_time as date,
+        IFNULL( b.warning_num, 0 ) AS warning_num
+        FROM
+        (
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 14 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 13 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 12 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 11 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 10 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 9 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 8 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 7 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 6 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 5 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 4 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 3 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 2 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 1 DAY ) AS date_time UNION ALL
+        SELECT
+        DATE_SUB( CURDATE(), INTERVAL 0 DAY ) AS date_time
+        ) a
+        LEFT JOIN (
+        SELECT
+        count(*) AS warning_num,
+        DATE_FORMAT( create_time, '%Y-%m-%d' ) AS date
+        FROM
+        danger_behavior,
+        danger
+        WHERE
+        DATE_SUB( CURDATE(), INTERVAL 15 DAY ) &lt;= DATE_FORMAT( create_time, '%Y-%m-%d' )
+        AND danger.parent_danger_name = 100000
+        AND danger_behavior.behavior_type = danger.id
+        GROUP BY
+        date
+        ) b ON a.date_time = b.date
+    </select>
+
+    <select id="countTodayUnsafeNumBehaviorByBehaviorType" parameterType="int" resultType="cn.edu.xust.iot.model.vo.UnSafeBehaviorAmountVO">
+        SELECT danger_name as unsafe_behavior_name,
+               count(*) AS num
+        FROM danger_behavior,
+             danger
+        WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+          AND danger.parent_danger_name =100000
+          AND danger_behavior.behavior_type = danger.id
+        GROUP BY behavior_type
+        <trim prefix="" suffix="" suffixOverrides="">
+            <if test="isOrder!=null">
+                ORDER BY num DESC LIMIT 5
+            </if>
+        </trim>
+    </select>
+
+
+    <select id="countTodayDangerNumBehaviorByBehaviorType" parameterType="int" resultType="cn.edu.xust.iot.model.vo.UnSafeBehaviorAmountVO">
+        SELECT danger_name as unsafe_behavior_name,
+        count(*) AS num
+        FROM danger_behavior,
+        danger
+        WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+        AND danger.parent_danger_name =100002
+        AND danger_behavior.behavior_type = danger.id
+        GROUP BY behavior_type
+        <trim prefix="" suffix="" suffixOverrides="">
+            <if test="isOrder!=null">
+                ORDER BY num DESC LIMIT 5
+            </if>
+        </trim>
+    </select>
+
+    <select id="countTodayAllDangerBehaviorNum" resultType="cn.edu.xust.iot.model.vo.DangerBehaviorTodayOverviewAmountVO">
+        SELECT count(CASE WHEN danger_behavior.behavior_type IN (SELECT id FROM danger WHERE parent_danger_name = 100000) THEN 1 END) AS unsafe_behavior_num,
+               count(CASE WHEN danger_behavior.behavior_type IN (SELECT id FROM danger WHERE parent_danger_name = 100001) THEN 1 END) AS danger_area_break_in_num,
+               count(CASE WHEN danger_behavior.behavior_type IN (SELECT id FROM danger WHERE parent_danger_name = 100002) THEN 1 END) AS high_warning_num
+        FROM danger,
+             danger_behavior
+        WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+          AND danger_behavior.behavior_type = danger.id
+    </select>
+
+    <select id="selectTodayDangerBehaviorByBehaviorType" resultType="cn.edu.xust.iot.model.vo.DangerBehaviorVO">
+        SELECT danger_behavior.id,
+               create_time,
+               danger_name as danger_behavior_name,
+               behavior_pic AS danger_behavior_pic,
+               region_name,
+               state
+        FROM danger_behavior,
+             danger,
+             region
+        WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+          AND danger_behavior.behavior_type = danger.id
+          AND danger_behavior.region_id=region.id
+    </select>
+
+
+    <select id="selectPersonnelDangerRecords" resultType="cn.edu.xust.iot.model.vo.DangerBehaviorPersonnelNoticeVO">
+        SELECT s_user.NAME,
+               job,
+               face_pic,
+               danger_behavior.create_time AS near_notice_time,
+               danger_name,
+               s_user.state                AS person_state
+        FROM s_user,
+             danger_behavior,
+             danger,
+             face_lib
+        WHERE danger.id = danger_behavior.behavior_type
+          AND s_user.face_lib_id=face_lib.id
+          AND danger_behavior.create_time = (
+                SELECT create_time
+                FROM danger_behavior
+                WHERE s_user.certificate_no = danger_behavior.cert_no
+                ORDER BY create_time DESC
+                LIMIT 1)
+    </select>
+
+    <select id="countAllTypeDangerBehaviorNum" resultType="cn.edu.xust.iot.model.vo.UnSafeBehaviorAmountVO">
+        SELECT danger_name as unsafe_behavior_name,
+               count(*) AS num
+        FROM danger_behavior,
+             danger
+        WHERE DATE_FORMAT(create_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+          AND danger_behavior.behavior_type = danger.id
+        GROUP BY behavior_type
+    </select>
+
+    <select id="countPersonnelAllDangerRecordsNum" resultType="cn.edu.xust.iot.model.vo.DangerBehaviorPersonnelAmountVO">
+        SELECT a.name,
+               count(*) as person_notice_time_sum
+        FROM (SELECT s_user.NAME
+              FROM s_user,danger_behavior
+              WHERE s_user.certificate_no = danger_behavior.cert_no) AS a
+        GROUP BY a.name
+    </select>
+
+
+    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.DangerBehavior">
+        insert into danger_behavior (id, behavior_pic, behavior_type,
+                                     create_time, region_id)
+        values (#{id,jdbcType=INTEGER}, #{behaviorPic,jdbcType=VARCHAR}, #{behaviorType,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP}, #{regionId,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.DangerBehavior">
+        insert into danger_behavior
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="behaviorPic != null">
+                behavior_pic,
+            </if>
+            <if test="behaviorType != null">
+                behavior_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="regionId != null">
+                region_id,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="certNo != null">
+                cert_no,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="behaviorPic != null">
+                #{behaviorPic,jdbcType=VARCHAR},
+            </if>
+            <if test="behaviorType != null">
+                #{behaviorType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="regionId != null">
+                #{regionId,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER}
+            </if>
+            <if test="certNo != null">
+                #{certNo,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.model.entity.DangerBehavior">
+        update danger_behavior
+        <set>
+            <if test="behaviorPic != null">
+                behavior_pic = #{behaviorPic,jdbcType=VARCHAR},
+            </if>
+            <if test="behaviorType != null">
+                behavior_type = #{behaviorType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="regionId != null">
+                region_id = #{regionId,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state= #{state,jdbcType=INTEGER},
+            </if>
+            <if test="certNo != null">
+                cert_no=#{certNo,jdbcType=INTEGER}
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.model.entity.DangerBehavior">
+        update danger_behavior
+        set behavior_pic  = #{behaviorPic,jdbcType=VARCHAR},
+            behavior_type = #{behaviorType,jdbcType=INTEGER},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            region_id     = #{regionId,jdbcType=INTEGER},
+            state=  #{state,jdbcType=INTEGER},
+            cert_no=#{certNo,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

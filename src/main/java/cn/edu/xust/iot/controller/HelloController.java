@@ -23,7 +23,7 @@ import java.util.Map;
  * @author HuangXin
  *
  */
-@Api(tags = "测试接口—只用于内部测试")
+@Api(tags = "测试接口")
 @Controller
 public class HelloController {
 

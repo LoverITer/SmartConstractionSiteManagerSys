@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 @Data
 @ToString
-public class SevenDaysClockIn implements Serializable {
+public class ClockInWeeklyAmountVO implements Serializable {
 
     /**
      * 统计日期

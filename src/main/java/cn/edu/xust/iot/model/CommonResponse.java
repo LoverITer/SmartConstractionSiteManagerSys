@@ -2,6 +2,9 @@ package cn.edu.xust.iot.model;
 
 
 import cn.edu.xust.iot.error.AppResponseCode;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 import java.util.Map;
@@ -12,56 +15,20 @@ import java.util.Map;
  * @param <T>
  * @author Administrator
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommonResponse<T> {
 
     private Integer code;
     private String msg;
-    private int size; //数据大小
     private T data;
+    private int size; //数据大小
 
     public CommonResponse(Integer code, String msg, T data){
         this.code = code;
         this.msg = msg;
         this.data = data;
-    }
-
-    public CommonResponse(Integer code, String msg, T data,int size) {
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
-        this.size=size;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public void setSize(int size){
-        this.size=size;
-    }
-
-    public int getSize(){
-        return this.size;
     }
 
     /**

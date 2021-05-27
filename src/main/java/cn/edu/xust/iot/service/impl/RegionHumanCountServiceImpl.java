@@ -4,13 +4,13 @@ import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.mapper.RegionHumanCountMapper;
 import cn.edu.xust.iot.model.CommonResponse;
 import cn.edu.xust.iot.model.entity.RegionHumanCount;
+import cn.edu.xust.iot.model.vo.HumanAmountVO;
 import cn.edu.xust.iot.service.IRegionHumanCountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -148,11 +148,23 @@ public class RegionHumanCountServiceImpl implements IRegionHumanCountService {
     }
 
     @Override
-    public CommonResponse<List<RegionHumanCount>> getRegionHumanCountHourly() {
-        List<RegionHumanCount> regionHumanCountList=null;
+    public CommonResponse<List<HumanAmountVO>> getRegionHumanCountHourly() {
+        List<HumanAmountVO> regionHumanCountList=null;
         try{
              regionHumanCountList = regionHumanCountMapper.selectHourPeriodHumanCount();
-            Collections.sort(regionHumanCountList);
+        }catch (Exception e){
+            log.error("获取区域人流量数据发生异常：");
+            e.printStackTrace();
+        }
+        return CommonResponse.create(AppResponseCode.SUCCESS,regionHumanCountList);
+    }
+
+
+    @Override
+    public CommonResponse<List<HumanAmountVO>> getRegionHumanCountDaily() {
+        List<HumanAmountVO> regionHumanCountList=null;
+        try{
+            regionHumanCountList = regionHumanCountMapper.selectDayPeriodHumanCount();
         }catch (Exception e){
             log.error("获取区域人流量数据发生异常：");
             e.printStackTrace();
