@@ -177,9 +177,6 @@
         let start_time_end_min=start_time_start_min;
         let after_time_start_min=start_time_end_min;
 
-
-
-
         //页面初始化加载
         $(function () {
             let ip = $('input[name="dataId"]').val();
@@ -318,7 +315,7 @@
                         url: "/admin/cameras/setting?token=" + localStorage.getItem(USER_LOGIN_TOKEN) + "&ip=" + ip + "&typeId=" + typeId,
                         method: "get",
                         contentType: "application/json",
-                        sync: false,
+                        sync: true,
                         success: function (response) {
                             if (response.code === 200 && response.data === true) {
                                 flushCameraAISettingState(ip);
@@ -337,7 +334,7 @@
                         url: "/admin/cameras/non_setting?token=" + localStorage.getItem(USER_LOGIN_TOKEN) + "&ip=" + ip + "&typeId=" + typeId,
                         method: "get",
                         contentType: "application/json",
-                        sync: false,
+                        sync: true,
                         success: function (response) {
                             if (response.code === 200 && response.data === true) {
                                 layer.msg("关闭成功", {icon: 1});

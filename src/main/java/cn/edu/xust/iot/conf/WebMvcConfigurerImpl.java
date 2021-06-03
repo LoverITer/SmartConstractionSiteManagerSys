@@ -25,9 +25,9 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
         //只对包含/admin路径的请求拦截
         registration.addPathPatterns("/admin/**");
         registration.excludePathPatterns("/admin/member/*");
+        registration.excludePathPatterns("/admin/static/**");
         registration.excludePathPatterns("/admin/device/*");
-        registration.excludePathPatterns("/admin/administrator/*");
-
+        registration.excludePathPatterns("/admin/administrator/**");
     }
 
     @Override
@@ -50,21 +50,27 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
         registry.addViewController("/admin/member/add.html").setViewName("/member/add");
         registry.addViewController("/admin/member/edit.html").setViewName("/member/edit");
         registry.addViewController("/admin/member/detail_info.html").setViewName("/member/detail_info");
+
         registry.addViewController("/admin/device/list.html").setViewName("/device/list");
         registry.addViewController("/admin/device/add.html").setViewName("/device/add");
         registry.addViewController("/admin/device/edit.html").setViewName("/device/edit");
         registry.addViewController("/admin/device/detail_info.html").setViewName("/device/detail_info");
         registry.addViewController("/admin/device/setting.html").setViewName("/device/setting");
+
         registry.addViewController("/admin/administrator/list.html").setViewName("/administrator/list");
         registry.addViewController("/admin/administrator/add.html").setViewName("/administrator/add");
         registry.addViewController("/admin/administrator/edit.html").setViewName("/administrator/edit");
-        registry.addViewController("/admin/administrator/role.html").setViewName("/administrator/role");
-        registry.addViewController("/admin/administrator/role-add.html").setViewName("/administrator/role-add");
-        registry.addViewController("/admin/administrator/rule.html").setViewName("/administrator/rule");
-        registry.addViewController("/admin/administrator/power.html").setViewName("/administrator/power");
+
+        registry.addViewController("/admin/administrator/role_list.html").setViewName("/administrator/role_list");
+        registry.addViewController("/admin/administrator/role_add.html").setViewName("/administrator/role_add");
+        registry.addViewController("/admin/administrator/role_edit.html").setViewName("/administrator/role_edit");
+
+        registry.addViewController("/admin/administrator/power_list.html").setViewName("/administrator/power_list");
+        registry.addViewController("/admin/administrator/power_add.html").setViewName("/administrator/power_add");
+        registry.addViewController("/admin/administrator/power_edit.html").setViewName("/administrator/power_edit");
+
         registry.addViewController("/admin/process/list.html").setViewName("/process/list");
         registry.addViewController("/admin/estimate/list.html").setViewName("/estimate/list");
-
     }
 
 

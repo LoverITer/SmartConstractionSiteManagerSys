@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>角色列表-智慧工地后台管理系统 - v1.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../static/css/font.css" th:src="@{/static/css/font.css}">
+    <link rel="stylesheet" href="../../static/css/weadmin.css" th:src="@{/static/css/weadmin.css}">
+    <script src="../../static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script src="../../static/js/common.js" th:src="@{/static/js/common.js}"></script>
+    <script src="../../static/js/eleDel.js" th:src="@{/static/js/eleDel.js}" type="text/javascript"
+            charset="utf-8"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        th, td {
+            text-align: center !important;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+<div class="weadmin-nav">
+			<span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">管理员管理</a>
+        <a>
+          <cite>角色管理</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-sm" style="margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon layui-icon-refresh"></i>
+    </a>
+</div>
+<div class="weadmin-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 we-search">
+            <div class="layui-inline">
+                <input type="text" name="username" placeholder="请输入角色名" autocomplete="off" class="layui-input">
+            </div>
+            <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+    </div>
+    <div class="weadmin-block">
+        <span class="fr" style="line-height:40px">共有数据：<span id="data-cols"></span> 条</span>
+    </div>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>
+                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary">
+                    <i class="layui-icon">&#xe605;</i>
+                </div>
+            </th>
+            <th>ID</th>
+            <th>角色名</th>
+            <th>拥有权限规则</th>
+            <th>描述</th>
+            <th>状态</th>
+            <th>操作</th>
+        </thead>
+        <tbody id="table-data">
+        </tbody>
+    </table>
+    <!--分页-->
+    <div id="page">
+
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+
+    //将数据填充到表格中
+    function appendData2Table(data) {
+        //清空初始化表格
+        $('#table-data').empty();
+        $.each(data, function () {
+            var id = this.id;
+            var roleName = this.roleName;
+            var powerName = this.powerName;
+            var description = this.description;
+            var status = this.status;
+            var statusDisable = false;
+            if (status === "1") {
+                status = "已启用"
+            } else {
+                statusDisable = true;
+                status = "已停用"
+            }
+
+            $('#table-data').append("<tr data-id=" + id + ">\n" +
+                "            <td>\n" +
+                "                <div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\" data-id=" + id + ">\n" +
+                "                    <i class=\"layui-icon\">&#xe605;</i>\n" +
+                "                </div>\n" +
+                "            </td>\n" +
+                "            <td>" + id + "</td>\n" +
+                "            <td>" + roleName + "</td>\n" +
+                "            <td>" + powerName + "</td>\n" +
+                "            <td>" + description + "</td>\n" +
+                "            <td class=\"td-status\"><span id='role_status_" + id + "' class=\"layui-btn layui-btn-normal layui-btn-xs\">" + status + "</span></td>" +
+                "            <td class=\"td-manage\">\n" +
+                "                <a id='role_btn_"+id+"' style='color: #00aae7' onclick=\"update_role_status(" + id + ")\" href=\"javascript:;\">\n" +
+                "                    启用\n" +
+                "                </a>\n" +
+                "            </td>\n" +
+                "        </tr>");
+            if (statusDisable) {
+                $("#role_status_" + id).addClass("layui-btn-disabled");
+                $("#role_btn_"+id).text("启用");
+            } else {
+                $("#role_status_" + id).removeClass("layui-btn-disabled");
+                $("#role_btn_"+id).text("停用");
+            }
+        });
+    }
+
+    function update_role_status(roleId) {
+        var status;
+        if ($("#role_btn_"+roleId).text() === "启用") {
+            status = 1;
+        } else {
+            status = 0;
+        }
+        $.ajax({
+            url: "/admin/administrator/role/" + roleId + "/" + status + "?token=" + localStorage.getItem(USER_LOGIN_TOKEN),
+            method: "get",
+            contentType: "application/json",
+            async: false,
+            success: function (response) {
+                if (response.code === 200) {
+                    window.location.reload();
+                } else {
+                    layer.msg(response.msg, {icon: 2});
+                }
+            },
+            error: function (response) {
+                layer.msg(response.msg, {icon: 2});
+            }
+        });
+    };
+
+
+    //加载表格数据
+    function loadTable(pageNo, pageSize) {
+        if (undefined === pageNo) {
+            pageNo = 1;
+        }
+        if (undefined === pageSize) {
+            pageSize = 5;
+        }
+        $.ajax({
+            //请求获得所有的管理人员数据
+            url: "/admin/administrator/role_list?page=" + pageNo + "&pageSize=" + pageSize + "&token=" + localStorage.getItem(USER_LOGIN_TOKEN),
+            method: "get",
+            contentType: "application/json",
+            async: false,
+            success: function (response) {
+                if (response.code === 200) {
+                    console.log(response.data);
+                    var pageInfo = response.data;
+                    var dataArr = pageInfo.list;
+                    appendData2Table(dataArr);
+                } else {
+                    layer.msg(response.msg, {icon: 2});
+                }
+            },
+            error: function (response) {
+                layer.msg(response.msg, {icon: 2});
+            }
+        });
+    }
+
+
+    layui.use(['form', 'layer', 'jquery', 'admin', 'laypage'], function () {
+        var layer = layui.layer;
+        var laypage = layui.laypage;
+
+        var total = 0;
+
+        //页面加载成功之后随即向后端服务器发送ajax请求，请求人员数据
+        $(function () {
+            total = getMembersNum();
+        });
+
+
+        //获取页面的
+        function getMembersNum() {
+            let count = 0;
+            $.ajax({
+                //请求获得所有的工人数据
+                url: "/admin/administrator/count_role?token=" + localStorage.getItem(USER_LOGIN_TOKEN),
+                method: "get",
+                contentType: "application/json",
+                async: false,
+                success: function (response) {
+                    if (response.code === 200) {
+                        if (undefined === response.data) {
+                            return;
+                        }
+                        count = response.data;
+                        $('#data-cols').text(count);
+                    } else {
+                        layer.msg(response.msg, {icon: 2});
+                    }
+                },
+                error: function (response) {
+                    layer.msg(response.msg, {icon: 2});
+                }
+            });
+            return count;
+        }
+
+        //执行一个laypage实例
+        laypage.render({
+            elem: 'page', //注意，这里的 test1 是 ID，不用加 # 号
+            count: total, //数据总数，从服务端得到
+            limit: 10, //每一页显示的数据量
+            limits: [5, 10, 15, 20, 50, 100, '全部'],
+            layout: ['prev', 'page', 'next', 'limit', 'skip'],
+            groups: 5,  //在屏幕上显示的页面个数
+            jump: function (obj, first) {
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
+                if (obj.limit === '全部') {
+                    obj.limit = -1; //后端会把他理解为全部查询
+                }
+                loadTable(obj.curr, obj.limit);
+            }
+        });
+    });
+</script>
+</html>

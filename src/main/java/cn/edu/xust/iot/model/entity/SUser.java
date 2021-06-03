@@ -1,13 +1,11 @@
 package cn.edu.xust.iot.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.ToString;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @ToString
 public class SUser  {
 

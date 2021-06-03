@@ -37,9 +37,10 @@ public enum AppResponseCode {
     CAMERA_REQUEST_IP_VALID(false,4052,"摄像机直播流ip格式输入错误"),
     CAMERA_REQUEST_START_TIME_VALID(false,4053,"摄像机直播流start time格式输入错误"),
     CAMERA_REQUEST_END_TIME_VALID(false,4054,"摄像机直播流end time格式输入错误"),
-    NOT_FOUND_NEW_CAMERA(false,406,"系统监测未发现摄像机"),
+    NEW_CAMERA_NOT_FOUND(false,406,"系统监测未发现摄像机"),
     AI_SERVICE_CONFLICT(false,407,"智能业务冲突"),
     CLOCK_IN_TIME_NOT_SET(false,408,"请检查是否设置上下班打卡时间段"),
+    POWER_RULE_NOT_FOUND(false,409,"请先创建对应的权限规则名"),
 
     /**
      * 程序处理异常，发生未知错误

@@ -25,7 +25,7 @@
 
 		<!-- targetProject:生成POJO类的位置 -->
 		<javaModelGenerator
-			targetPackage="cn.edu.xust.entity.po" targetProject="src/main/java">
+			targetPackage="cn.edu.xust.iot.model.entity" targetProject="src/main/java">
 			<!-- enableSubPackages:是否让schema作为包的后缀 -->
 			<property name="enableSubPackages" value="false" />
 			<!-- 从数据库返回的值被清理前后的空格 -->
@@ -42,14 +42,14 @@
 		
 		<!-- targetPackage：mapper接口生成的位置 -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="cn.edu.xust.mapper" targetProject="src/main/java">
+			targetPackage="cn.edu.xust.iot.mapper" targetProject="src/main/java">
 			<!-- enableSubPackages:是否让schema作为包的后缀 -->
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 
 
 		<!-- 指定数据库表 ，设置是否要生成Exemple方法 -->
-		<table tableName="crowd_density_statistics" schema=""
+		<table tableName="role" schema=""
 			enableCountByExample="false" enableDeleteByExample="false"
 			enableUpdateByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
@@ -58,76 +58,15 @@
 			<!--去除列字段前缀,注意严格控制大小写 -->
 			<columnRenamingRule searchString="^sys" replaceString="" />
 		</table>
-		<!--
-		<table tableName="face_lib" schema=""
-			enableCountByExample="false" enableDeleteByExample="false"
-			enableUpdateByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-			&lt;!&ndash;去除表明前缀tb_,注意严格控制大小写 &ndash;&gt;
+		<table tableName="power" schema=""
+			   enableCountByExample="false" enableDeleteByExample="false"
+			   enableUpdateByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false">
+			<!--去除表明前缀tb_,注意严格控制大小写 -->
 			<domainObjectRenamingRule searchString="^Tb" replaceString="" />
-			&lt;!&ndash;去除列字段前缀,注意严格控制大小写 &ndash;&gt;
+			<!--去除列字段前缀,注意严格控制大小写 -->
 			<columnRenamingRule searchString="^sys" replaceString="" />
 		</table>
-		
-		<table tableName="region" schema=""
-			enableCountByExample="false" enableDeleteByExample="false"
-			enableUpdateByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-			&lt;!&ndash;去除表明前缀tb_,注意严格控制大小写 &ndash;&gt;
-			<domainObjectRenamingRule searchString="^Tb" replaceString="" />
-			&lt;!&ndash;去除列字段前缀,注意严格控制大小写 &ndash;&gt;
-			<columnRenamingRule searchString="^sys" replaceString="" />
-		</table>
-		
-		<table tableName="region_camera" schema=""
-			enableCountByExample="false" enableDeleteByExample="false"
-			enableUpdateByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-			&lt;!&ndash;去除表明前缀tb_,注意严格控制大小写 &ndash;&gt;
-			<domainObjectRenamingRule searchString="^Tb" replaceString="" />
-			&lt;!&ndash;去除列字段前缀,注意严格控制大小写 &ndash;&gt;
-			<columnRenamingRule searchString="^sys" replaceString="" />
-		</table>
-		
-		<table tableName="camera" schema=""
-			enableCountByExample="false" enableDeleteByExample="false"
-			enableUpdateByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-			&lt;!&ndash;去除表明前缀tb_,注意严格控制大小写 &ndash;&gt;
-			<domainObjectRenamingRule searchString="^Tb" replaceString="" />
-			&lt;!&ndash;去除列字段前缀,注意严格控制大小写 &ndash;&gt;
-			<columnRenamingRule searchString="^sys" replaceString="" />
-		</table>
-		
-		<table tableName="danger" schema=""
-			enableCountByExample="false" enableDeleteByExample="false"
-			enableUpdateByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-			&lt;!&ndash;去除表明前缀tb_,注意严格控制大小写 &ndash;&gt;
-			<domainObjectRenamingRule searchString="^Tb" replaceString="" />
-			&lt;!&ndash;去除列字段前缀,注意严格控制大小写 &ndash;&gt;
-			<columnRenamingRule searchString="^sys" replaceString="" />
-		</table>
-		
-		<table tableName="danger_behavior" schema=""
-			enableCountByExample="false" enableDeleteByExample="false"
-			enableUpdateByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-			&lt;!&ndash;去除表明前缀tb_,注意严格控制大小写 &ndash;&gt;
-			<domainObjectRenamingRule searchString="^Tb" replaceString="" />
-			&lt;!&ndash;去除列字段前缀,注意严格控制大小写 &ndash;&gt;
-			<columnRenamingRule searchString="^sys" replaceString="" />
-		</table>
-		
-		<table tableName="attendance" schema=""
-			enableCountByExample="false" enableDeleteByExample="false"
-			enableUpdateByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-			&lt;!&ndash;去除表明前缀tb_,注意严格控制大小写 &ndash;&gt;
-			<domainObjectRenamingRule searchString="^Tb" replaceString="" />
-			&lt;!&ndash;去除列字段前缀,注意严格控制大小写 &ndash;&gt;
-			<columnRenamingRule searchString="^sys" replaceString="" />
-		</table>-->
 		
 	</context>
 </generatorConfiguration>

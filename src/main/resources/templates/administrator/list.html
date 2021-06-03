@@ -115,11 +115,11 @@
                 "            <td>" + roleName + "</td>\n" +
                 "            <td>" + createTime + "</td>\n" +
                 "            <td class=\"td-manage\">\n" +
-                "                <a title=\"编辑\" onclick=\"WeAdminEdit('编辑管理员','./edit.html', "+adminId+", 800, 520)\" href=\"javascript:;\">\n" +
-                "                    <i class=\"layui-icon layui-icon-edit\"></i>\n" +
+                "                <a style='color: #00aae7' onclick=\"WeAdminEdit('编辑管理员','./edit.html', "+adminId+", 800, 520)\" href=\"javascript:;\">\n" +
+                "                    编辑\n" +
                 "                </a>\n" +
-                "                <a title=\"删除\" onclick=\"admin_del(this,"+adminId+")\" href=\"javascript:;\">\n" +
-                "                    <i class=\"layui-icon layui-icon-delete\"></i>\n" +
+                "                <a style='color: #DB2828' onclick=\"admin_del(this,"+adminId+")\" href=\"javascript:;\">\n" +
+                "                    删除\n" +
                 "                </a>\n" +
                 "            </td>\n" +
                 "        </tr>")
@@ -181,12 +181,7 @@
 
 
     layui.use(['form', 'layer', 'jquery','admin','laypage'], function () {
-        var form = layui.form,
-            admin= layui.admin,
-            layer = layui.layer,
-            table=layui.table;
-
-
+        var layer = layui.layer;
         var laypage = layui.laypage;
 
         var total=0;
@@ -229,7 +224,7 @@
                 contentType: "application/json",
                 async: false,
                 success: function (response) {
-                    if (response.code == 200) {
+                    if (response.code === 200) {
                         if(undefined!=response.data) {
                             count = response.data;
                         }

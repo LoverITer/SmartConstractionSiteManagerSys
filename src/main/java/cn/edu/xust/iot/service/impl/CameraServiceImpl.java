@@ -240,7 +240,7 @@ public class CameraServiceImpl implements ICameraService {
                 deviceInfo = hwPuSDKService.getDeviceInfo(cameraModel.getIp());
                 if (deviceInfo == null) {
                     //表示调用SDK发生异常
-                    return CommonResponse.create(AppResponseCode.NOT_FOUND_NEW_CAMERA);
+                    return CommonResponse.create(AppResponseCode.NEW_CAMERA_NOT_FOUND);
                 }
                 //调动摄像机的SDK获取摄像机的软件版本
                 camera.setSdcVersion(deviceInfo.getSdcVersion());

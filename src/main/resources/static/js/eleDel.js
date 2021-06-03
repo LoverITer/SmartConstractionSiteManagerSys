@@ -96,7 +96,7 @@ layui.use(['laydate', 'jquery', 'admin','form'], function() {
 			sync: false,
 			data: JSON.stringify(data.field),
 			success: function (response) {
-				if (response.code == 202) {
+				if (response.code === 202) {
 					layer.msg("退出成功！", {icon: 2});
 					localStorage.setItem(USER_LOGIN_TOKEN, response.data);
 					window.location.href = '/admin/index?token=' + localStorage.getItem(USER_LOGIN_TOKEN);

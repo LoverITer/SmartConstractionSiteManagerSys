@@ -179,7 +179,7 @@
             , accept: 'images'
             , done: function (response) {
                 //上传完毕回调
-                if (response.code == 203) {
+                if (response.code === 203) {
                     layer.msg("上传成功");
                     $('input[name="face_pic"]').val(response.data);
                     $('#face_pic_show').text(response.data);
@@ -262,16 +262,15 @@
                 }),
                 success: function (response) {
                     if (response.code == 200) {
-                        layer.msg("添加成功",{icon:1});
-                        // 获得frame索引
-                        var index = parent.layer.getFrameIndex(window.name);
-                        //清空表格数据区的数据
-                        //parent.$('#table-data').empty();
-                        //关闭当前frame
-                        setTimeout(function () {
-                            parent.layer.close(index);
-                        },1000);
                         parent.loadTable();
+                        layer.alert("添加成功", {
+                            icon: 1
+                        }, function () {
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                        });
                     } else {
                         layer.msg(response.msg,{icon:2})
                     }

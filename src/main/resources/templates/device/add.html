@@ -216,13 +216,16 @@
                     "createTime": formDate.create_time,
                 }),
                 success: function (response) {
-                    if (response.code == 200) {
-                        layer.msg("添加成功",{icon:1});
-                        // 获得frame索引
-                        var index = parent.layer.getFrameIndex(window.name);
-                        //关闭当前frame
-                        parent.layer.close(index);
+                    if (response.code === 200) {
                         parent.loadTable();
+                        layer.alert("添加成功", {
+                            icon: 1
+                        }, function () {
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                        });
                     } else {
                         layer.msg(response.msg,{icon:2})
                     }

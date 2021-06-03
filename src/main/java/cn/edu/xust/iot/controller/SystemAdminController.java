@@ -3,12 +3,11 @@ package cn.edu.xust.iot.controller;
 import cn.edu.xust.iot.error.AppResponseCode;
 import cn.edu.xust.iot.mapper.pagehelper.PageParam;
 import cn.edu.xust.iot.model.*;
+import cn.edu.xust.iot.model.entity.Power;
 import cn.edu.xust.iot.model.vo.CameraVO;
+import cn.edu.xust.iot.model.vo.RoleVO;
 import cn.edu.xust.iot.model.vo.SUserVO;
-import cn.edu.xust.iot.service.IAdminUserService;
-import cn.edu.xust.iot.service.ICameraService;
-import cn.edu.xust.iot.service.IClockInService;
-import cn.edu.xust.iot.service.ISUserService;
+import cn.edu.xust.iot.service.*;
 import cn.edu.xust.iot.utils.CommonUtils;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -43,15 +42,14 @@ public class SystemAdminController {
 
     @Autowired
     private ISUserService userService;
-
     @Autowired
     private ICameraService cameraService;
-
     @Autowired
     private IAdminUserService adminUserService;
-
     @Autowired
     private IClockInService clockInService;
+    @Autowired
+    private IRolePowerService rolePowerService;
 
 
     @ApiOperation(value = "后台管理系统首页", notes = "后台管理系统首页")
@@ -378,7 +376,7 @@ public class SystemAdminController {
         return adminUserService.editAdminUser(userModel);
     }
 
-    @ApiOperation(value = "添加新的管理员接口", notes = "添加新的管理员")
+    @ApiOperation(value = "删除管理员", notes = "删除管理员，支持批量删除，多个管理员之间使用','分开")
     @ResponseBody
     @GetMapping(value = "/administrator/remove")
     public CommonResponse<String> removeAdminUser(@RequestParam String adminUserIds) {
@@ -392,5 +390,76 @@ public class SystemAdminController {
         return adminUserService.removeAdminUser(cameraIdList);
     }
 
+    @ApiOperation(value = "获取系统所有角色接口", notes = "获取系统所有角色接口")
+    @ResponseBody
+    @GetMapping(value = "/administrator/role_list")
+    public CommonResponse<PageInfo<RoleVO>> getAllAdministratorRoleList(@RequestParam(required = false, defaultValue = "1") int page,
+                                                                    @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        if (-1 == pageSize) {
+            //查询全部的数据
+            pageSize = rolePowerService.getAllRoleSize().getData();
+        }
+        PageInfo<RoleVO> allAdminUserList = rolePowerService.getRoleList(PageParam.create(page, pageSize));
+        if (null == allAdminUserList) {
+            return CommonResponse.create(AppResponseCode.FAIL);
+        }
+        return CommonResponse.create(AppResponseCode.SUCCESS, allAdminUserList);
+    }
+
+
+    @ApiOperation(value = "获取系统角色数量", notes = "获取系统角色数量")
+    @ResponseBody
+    @GetMapping(value = "/administrator/count_role")
+    public CommonResponse<Integer> getAllAdministratorRoleSize() {
+        return rolePowerService.getAllRoleSize();
+    }
+
+    @ApiOperation(value = "删除角色", notes = "删除角色，支持批量删除，多个角色之间使用','分开")
+    @ResponseBody
+    @GetMapping(value = "/administrator/remove_role")
+    public CommonResponse<String> removeAdminUserRole(@RequestParam String roleIds) {
+        if (CommonUtils.isNull(roleIds)) {
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
+        }
+        //需要删除的监控摄像机id列表
+        List<Integer> roleList = Arrays.stream(roleIds.split(","))
+                .map(s -> Integer.parseInt(s.trim()))
+                .collect(Collectors.toList());
+        return rolePowerService.removeRole(roleList);
+    }
+
+    @ApiOperation(value = "更新角色状态", notes = "更新角色状态")
+    @ResponseBody
+    @GetMapping(value = "/administrator/role/{roleId}/{status}")
+    public CommonResponse<String> updateRoleStatus(@PathVariable("status") String status,@PathVariable("roleId") Integer roleId){
+        if(CommonUtils.isNull(status)){
+            return CommonResponse.create(AppResponseCode.REQUEST_PARAMETER_VALID);
+        }
+        return rolePowerService.updateRoleStatus(status,roleId);
+    }
+
+    @ApiOperation(value = "获取系统所有权限规则", notes = "获取系统所有权限规则")
+    @ResponseBody
+    @GetMapping(value = "/administrator/power_list")
+    public CommonResponse<PageInfo<Power>> getAllAdministratorPowerList(@RequestParam(required = false, defaultValue = "1") int page,
+                                                                        @RequestParam(required = false, defaultValue = "5") int pageSize) {
+        if (-1 == pageSize) {
+            //查询全部的数据
+            pageSize = rolePowerService.getAllPowerSize().getData();
+        }
+        PageInfo<Power> powerList = rolePowerService.getPowerList(PageParam.create(page, pageSize));
+        if (null == powerList) {
+            return CommonResponse.create(AppResponseCode.FAIL);
+        }
+        return CommonResponse.create(AppResponseCode.SUCCESS, powerList);
+    }
+
+
+    @ApiOperation(value = "获取系统权限规则数量", notes = "获取系统权限规则数量")
+    @ResponseBody
+    @GetMapping(value = "/administrator/count_power")
+    public CommonResponse<Integer> getAllAdministratorPowerSize() {
+        return rolePowerService.getAllPowerSize();
+    }
 
 }

@@ -263,15 +263,15 @@
                 }),
                 success: function (response) {
                     if (response.code === 200) {
-                        layer.msg("修改成功",{icon:1});
-                        // 获得frame索引
-                        var index = parent.layer.getFrameIndex(window.name);
-                        parent.$('#table-data').empty();
-                        //关闭当前frame
-                        setTimeout(function () {
-                            parent.layer.close(index);
-                        },1000);
                         parent.loadTable();
+                        layer.alert("修改成功", {
+                            icon: 1
+                        }, function () {
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                        });
                     } else {
                         layer.msg(response.msg,{icon:2});
                     }

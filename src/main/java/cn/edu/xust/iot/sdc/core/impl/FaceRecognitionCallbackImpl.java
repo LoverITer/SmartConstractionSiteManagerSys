@@ -88,6 +88,7 @@ public class FaceRecognitionCallbackImpl implements HWPuSDK.pfRealDataCallBack {
         int target = 0;
         //人脸匹配结果  0：失败 ，1：成功
         int matchRes = -1;
+        double faceMatchRate =0.0;
         //处理智能元数据
         for (int i = 0; i < data.usValidNumber.intValue(); i++) {
             StringBuilder processLog = new StringBuilder("Processing metadata：current eType=>0x" + Integer.toHexString(userData[i].eType) + ". ");
@@ -98,10 +99,11 @@ public class FaceRecognitionCallbackImpl implements HWPuSDK.pfRealDataCallBack {
                     processLog.append("Get MATCH_TYPE=>match Result:{}");
                     log.debug(processLog.toString(), matchRes);
                     break;
-                case HWPuSDK.LAYER_THREE_TYPE_E.FACE_MATCH:
-                    //人脸数据库中匹配图片
+                case HWPuSDK.LAYER_THREE_TYPE_E.FACE_MATCHRATE:
+                    //人脸匹配率
                     int faceMatch = userData[i].unMetaData.IntValue;
-                    processLog.append("Get FACE_MATH=>faceMatch Result:{}");
+                    faceMatchRate=faceMatch/10000.0;
+                    processLog.append("Get FACE_MATH=>faceMatchRate Result:{}");
                     log.debug(processLog.toString(), faceMatch);
                     break;
                 case HWPuSDK.LAYER_THREE_TYPE_E.TARGET_TYPE:
@@ -135,8 +137,9 @@ public class FaceRecognitionCallbackImpl implements HWPuSDK.pfRealDataCallBack {
                     processLog.append("Get Face_INFO=>{name:{},gender:{},birth:{},province:{},city:{},cardType:{},cardId:{}}");
                     log.debug(processLog.toString(), name, gender, birth, province, city, cardType, cardId);
 
-                    //如果目标是人脸并且人脸匹配 就说明打卡成功
-                    if (HWPuSDK.ITGT_TARGET_TYPE_E.TARGET_FACE_RECOGNITION == target && matchRes == 1) {
+                    //如果目标是人脸并且人脸匹配并且人脸匹配度达到80% 就说明打卡成功
+                    if (HWPuSDK.ITGT_TARGET_TYPE_E.TARGET_FACE_RECOGNITION == target &&
+                            matchRes == 1 && faceMatchRate>=80.00) {
                         clockInService.addClockInRecord(String.valueOf(cardType), cardId);
                     }
 

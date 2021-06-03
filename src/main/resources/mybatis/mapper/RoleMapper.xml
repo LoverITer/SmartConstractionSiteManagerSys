@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.xust.iot.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="cn.edu.xust.iot.model.entity.Role">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="role_name" jdbcType="CHAR" property="roleName"/>
+        <result column="power_id" jdbcType="INTEGER" property="powerId"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, role_name, power_id, description, status
+    </sql>
+    <sql id="RoleVOList">
+        id, role_name, power_name, description, status
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from role
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectWithPowerName" resultType="cn.edu.xust.iot.model.vo.RoleVO">
+        SELECT role.id,
+               role_name,
+               power_name,
+               description,
+               STATUS
+        FROM role,
+             power
+        WHERE role.power_id = power.id
+    </select>
+
+    <select id="countRoleNum" resultType="int">
+        select count(*) from role
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from role
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByPrimaryKeyBatch" parameterType="list">
+        delete from role where id in
+        <foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+    </delete>
+
+    <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.Role">
+        insert into role (role_name, power_id,
+                          description, status)
+        values (#{roleName,jdbcType=CHAR}, #{powerId,jdbcType=INTEGER},
+                #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.edu.xust.iot.model.entity.Role">
+        insert into role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="powerId != null">
+                power_id,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=CHAR},
+            </if>
+            <if test="powerId != null">
+                #{powerId,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.edu.xust.iot.model.entity.Role">
+        update role
+        <set>
+            <if test="roleName != null">
+                role_name = #{roleName,jdbcType=CHAR},
+            </if>
+            <if test="powerId != null">
+                power_id = #{powerId,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.edu.xust.iot.model.entity.Role">
+        update role
+        set role_name   = #{roleName,jdbcType=CHAR},
+            power_id    = #{powerId,jdbcType=INTEGER},
+            description = #{description,jdbcType=VARCHAR},
+            status      = #{status,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -133,14 +133,14 @@
         function frameVal() {
             var dataId = $('input[name="dataId"]').val();
             parent.layui.jquery("#administrators-table tr").each(function () {
-                if ($(this).attr('data-id') == dataId) {
+                if ($(this).attr('data-id') === dataId) {
                     var tdArr = $(this).children('td');
                     var username = tdArr.eq(2).text(); //姓名
                     var password= tdArr.eq(3).text(); //证件号
                     var phone = tdArr.eq(4).text(); //性别
                     var roleName = tdArr.eq(5).text(); //出生日期
                     var roleId="0";
-                    if(roleName==="超级管理员"){
+                    if(roleName==="系统管理员"){
                         roleId="1";
                     }else if(roleName==="项目经理"){
                         roleId="2";
@@ -188,12 +188,16 @@
                 }),
                 success: function (response) {
                     if (response.code === 200) {
-                        layer.msg("添加成功", {icon: 1});
-                        // 获得frame索引
-                        var index = parent.layer.getFrameIndex(window.name);
-                        //关闭当前frame
-                        parent.layer.close(index);
+                        parent.$('#table-data').empty();
                         parent.loadTable();
+                        layer.alert("修改成功", {
+                            icon: 1
+                        }, function () {
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                        });
                     } else if (response.code === 507 || response.code === 508) {
                         layer.msg(response.msg, {icon: 3})
                     } else {

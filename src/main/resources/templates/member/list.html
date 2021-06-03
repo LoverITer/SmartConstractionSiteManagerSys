@@ -169,7 +169,7 @@
             contentType: "application/json",
             sync: false,
             success: function (response) {
-                if (response.code == 200) {
+                if (response.code === 200) {
                     console.log(response.data);
                     var pageInfo=response.data;
                     var dataArr=pageInfo.list;
