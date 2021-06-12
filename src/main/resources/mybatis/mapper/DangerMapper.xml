@@ -21,6 +21,10 @@
     select danger_name from danger where id>100002
   </select>
 
+  <select id="selectByDangerName" resultMap="BaseResultMap">
+    select id,parent_danger_name from danger where danger_name=#{dangerName}
+  </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
      select 
         <include refid="Base_Column_List" />
@@ -33,9 +37,8 @@
   </delete>
   
   <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.Danger">
-    insert into danger (id, danger_name, parent_danger_name
-      )
-    values (#{id,jdbcType=INTEGER}, #{dangerName,jdbcType=VARCHAR}, #{parentDangerName,jdbcType=VARCHAR}
+    insert into danger ( danger_name, parent_danger_name)
+    values #{dangerName,jdbcType=VARCHAR}, #{parentDangerName,jdbcType=VARCHAR}
       )
   </insert>
   

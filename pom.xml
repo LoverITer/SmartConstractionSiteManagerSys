@@ -9,9 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cn.edu.xust.iot</groupId>
-    <artifactId>smart_security_monitoring_and_early_warning_platform</artifactId>
+    <artifactId>smart_constrction_site</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>smart_security_monitoring_and_early_warning_platform</name>
+    <name>smart_constrction_site</name>
+    <packaging>jar</packaging>
     <description>建筑施工人员不安全行为监测预警系统子系统设计与实现</description>
     <properties>
         <java.version>1.8</java.version>

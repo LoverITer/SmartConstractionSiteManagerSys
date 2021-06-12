@@ -1,6 +1,7 @@
 package cn.edu.xust.iot.mapper;
 
 import cn.edu.xust.iot.model.entity.Danger;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -58,6 +59,14 @@ public interface DangerMapper {
      * @return
      */
     List<Danger> selectAllDangerType();
+
+    /**
+     * 根据危险行为名称查询记录
+     *
+     * @param dangerName
+     * @return
+     */
+    Danger selectByDangerName(@Param("dangerName") String dangerName);
 
     /**
      * 更新传入对象中某条危险类型记录

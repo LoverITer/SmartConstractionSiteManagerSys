@@ -1,6 +1,7 @@
 package cn.edu.xust.iot.model;
 
 import cn.edu.xust.iot.model.entity.Camera;
+import cn.edu.xust.iot.utils.CommonUtils;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -107,6 +108,28 @@ public class CameraModel implements Serializable {
             }
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+        if(CommonUtils.isNull(this.getSdcVersion())) {
+            camera.setSdcVersion("未知");
+        }else{
+            camera.setSdcVersion(this.getSdcVersion());
+        }
+        if(CommonUtils.isNull(this.getMacAddress())) {
+            //调用摄像机SDK获取摄像的物理地址
+            camera.setMacAddress("未知");
+        }else{
+            camera.setMacAddress(this.getMacAddress());
+        }
+        if(CommonUtils.isNull(this.getModel())) {
+            //调用摄像机SDK获取摄像的型号
+            camera.setModel("未知");
+        }else{
+            camera.setModel(this.getModel());
+        }
+        if(CommonUtils.isNull(this.getDeviceStatus())) {
+            camera.setDeviceStatus("0");
+        }else{
+            camera.setDeviceStatus(this.getDeviceStatus());
         }
         return camera;
     }

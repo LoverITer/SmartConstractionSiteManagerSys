@@ -19,6 +19,14 @@
     delete from region_camera
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <delete id="deleteByCameraId" parameterType="java.lang.Integer">
+    delete from region_camera where camera_id in
+    <foreach collection="cameraIdList" item="cameraId" open="(" separator="," close=")">
+      #{cameraId}
+    </foreach>
+  </delete>
+
   <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.RegionCamera">
     insert into region_camera (camera_id, region_id)
     values ( #{cameraId,jdbcType=INTEGER}, #{regionId,jdbcType=INTEGER})

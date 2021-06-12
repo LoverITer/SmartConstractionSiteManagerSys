@@ -377,12 +377,10 @@ public class CameraServiceImpl implements ICameraService {
 
     @Transactional(isolation = Isolation.REPEATABLE_READ, rollbackFor = Exception.class)
     @Override
-    public CommonResponse<String> removeCameraBatch(List<Integer> userIdList) {
+    public CommonResponse<String> removeCameraBatch(List<Integer> cameraIdList) {
         try {
-            for (Integer cameraId : userIdList) {
-                regionMapper.deleteByCameraId(cameraId);
-            }
-            int rows = cameraMapper.batchDeleteByPrimaryKey(userIdList);
+            regionCameraMapper.deleteByCameraId(cameraIdList);
+            int rows = cameraMapper.batchDeleteByPrimaryKey(cameraIdList);
             if (rows <= 0) {
                 log.error("删除监控摄像机时发生错误");
                 return CommonResponse.create(AppResponseCode.FAIL);

@@ -85,6 +85,14 @@ public interface AttendanceMapper {
 
 
     /**
+     * 根据用户ID查询用户今日打卡记录
+     *
+     * @param userId
+     * @return
+     */
+    Attendance selectTodayRecordByUserId(Integer userId);
+
+    /**
      * 更新传入对象中某条考勤记录
      *
      * @param record Attendance对象

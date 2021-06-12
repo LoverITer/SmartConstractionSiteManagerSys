@@ -17112,6 +17112,7 @@ public interface HWPuSDK extends Library {
         }
     }
 
+
     public static class unMetaData extends Union {
         public BOOL bBoolValue;
 

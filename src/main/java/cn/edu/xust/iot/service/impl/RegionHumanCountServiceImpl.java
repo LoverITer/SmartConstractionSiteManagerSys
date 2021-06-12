@@ -34,7 +34,7 @@ public class RegionHumanCountServiceImpl implements IRegionHumanCountService {
         RegionHumanCount humanCounter = regionHumanCountMapper.selectByRegionIdHourly(regionId);
         if (null == humanCounter) {
             //数据库中没有该时间段的人群数量记录，直接插入新记录
-            humanCounter = new RegionHumanCount(regionId, humanCountIn,null);
+            humanCounter = new RegionHumanCount(regionId, humanCountIn,0);
             addNewHumanCountRecord(humanCounter);
         } else {
             //数据库中有该时间段(比如10:00-11:00)的人群数量记录，尝试更新
@@ -61,7 +61,7 @@ public class RegionHumanCountServiceImpl implements IRegionHumanCountService {
         RegionHumanCount humanCounter = regionHumanCountMapper.selectByRegionIdHourly(regionId);
         if (null == humanCounter) {
             //数据库中没有该时间段的人群数量记录，直接插入新记录
-            humanCounter = new RegionHumanCount(regionId,null, humanCountOut);
+            humanCounter = new RegionHumanCount(regionId,0, humanCountOut);
             addNewHumanCountRecord(humanCounter);
         } else {
             //数据库中有该时间段(比如10:00-11:00)的人群数量记录，尝试更新
@@ -104,7 +104,7 @@ public class RegionHumanCountServiceImpl implements IRegionHumanCountService {
         }
         RegionHumanCount humanCounter = regionHumanCountMapper.selectByRegionIdHourly(regionId);
         if(null==humanCounter){
-            humanCounter = new RegionHumanCount(regionId,allHumanInCount, null);
+            humanCounter = new RegionHumanCount(regionId,allHumanInCount, 0);
             addNewHumanCountRecord(humanCounter);
         }else{
             if(!humanCounter.getHumanIn().equals(allHumanInCount)){
@@ -129,7 +129,7 @@ public class RegionHumanCountServiceImpl implements IRegionHumanCountService {
         }
         RegionHumanCount humanCounter = regionHumanCountMapper.selectByRegionIdHourly(regionId);
         if(null==humanCounter){
-            humanCounter = new RegionHumanCount(regionId,null, allHumanOutCount);
+            humanCounter = new RegionHumanCount(regionId,0, allHumanOutCount);
             addNewHumanCountRecord(humanCounter);
         }else{
             if(!humanCounter.getHumanOut().equals(allHumanOutCount)){

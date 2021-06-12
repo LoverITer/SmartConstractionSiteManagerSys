@@ -242,9 +242,9 @@
 
 
     <insert id="insert" parameterType="cn.edu.xust.iot.model.entity.DangerBehavior">
-        insert into danger_behavior (id, behavior_pic, behavior_type,
+        insert into danger_behavior ( behavior_pic, behavior_type,
                                      create_time, region_id)
-        values (#{id,jdbcType=INTEGER}, #{behaviorPic,jdbcType=VARCHAR}, #{behaviorType,jdbcType=INTEGER},
+        values (#{behaviorPic,jdbcType=VARCHAR}, #{behaviorType,jdbcType=INTEGER},
                 #{createTime,jdbcType=TIMESTAMP}, #{regionId,jdbcType=INTEGER})
     </insert>
 

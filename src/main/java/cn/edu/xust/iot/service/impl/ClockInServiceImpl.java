@@ -35,19 +35,19 @@ public class ClockInServiceImpl implements IClockInService {
     /**
      * 上班打卡开始时间  打卡时间 2小时 6~8点
      */
-    private static LocalTime START_WORK_CLOCK_IN_START_TIME = LocalTime.of(6,30,0);
+    private static LocalTime START_WORK_CLOCK_IN_START_TIME = LocalTime.of(6, 30, 0);
 
-    private static LocalTime START_WORK_CLOCK_IN_END_TIME = LocalTime.of(9,0,0);
+    private static LocalTime START_WORK_CLOCK_IN_END_TIME = LocalTime.of(9, 0, 0);
 
     /**
      * 下班打卡开始时间  打卡21点开始 次日 5点结束
      */
-    private static LocalTime AFTER_WORK_CLOCK_OUT_START_TIME = LocalTime.of(17,0,0);
+    private static LocalTime AFTER_WORK_CLOCK_OUT_START_TIME = LocalTime.of(17, 0, 0);
 
     /**
      * 次日5点
      */
-    private static LocalTime AFTER_WORK_CLOCK_OUT_END_TIME = LocalTime.of(22,0,0);
+    private static LocalTime AFTER_WORK_CLOCK_OUT_END_TIME = LocalTime.of(22, 0, 0);
 
     public static final String TIME_PATTERN = "HH:mm:ss";
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
@@ -61,7 +61,7 @@ public class ClockInServiceImpl implements IClockInService {
     /**
      * 判断当前时间是否在打卡时间内
      *
-     * @return  返回 0表示上班打卡   返回 1 表示下班打卡
+     * @return 返回 0表示上班打卡   返回 1 表示下班打卡
      */
     @Override
     public int isStartWorkOrAfterWork() {
@@ -93,12 +93,12 @@ public class ClockInServiceImpl implements IClockInService {
     }
 
     @Override
-    public Map<String,String> getClockTimeState() {
-        Map<String,String> clockTime=new HashMap<>(16);
-        clockTime.put("startWorkStartTime",TIME_FORMATTER.format(START_WORK_CLOCK_IN_START_TIME));
-        clockTime.put("startWorkEndTime",TIME_FORMATTER.format(START_WORK_CLOCK_IN_END_TIME));
-        clockTime.put("afterWorkStartTime",TIME_FORMATTER.format(AFTER_WORK_CLOCK_OUT_START_TIME));
-        clockTime.put("afterWorkEndTime",TIME_FORMATTER.format(AFTER_WORK_CLOCK_OUT_END_TIME));
+    public Map<String, String> getClockTimeState() {
+        Map<String, String> clockTime = new HashMap<>(16);
+        clockTime.put("startWorkStartTime", TIME_FORMATTER.format(START_WORK_CLOCK_IN_START_TIME));
+        clockTime.put("startWorkEndTime", TIME_FORMATTER.format(START_WORK_CLOCK_IN_END_TIME));
+        clockTime.put("afterWorkStartTime", TIME_FORMATTER.format(AFTER_WORK_CLOCK_OUT_START_TIME));
+        clockTime.put("afterWorkEndTime", TIME_FORMATTER.format(AFTER_WORK_CLOCK_OUT_END_TIME));
 
         return clockTime;
     }
@@ -110,14 +110,15 @@ public class ClockInServiceImpl implements IClockInService {
         }
         Integer userId = userMapper.selectByIDCard(cardType, cardId);
         //打卡记录key(证件类型::证件ID)
-        String clockRecordKey = String.format("%s::%s", cardType, cardId);
-        Integer attendanceId = IClockInService.CLOCK_RECORDS.get(clockRecordKey);
+        /*String clockRecordKey = String.format("%s::%s", cardType, cardId);
+        Integer attendanceId = IClockInService.CLOCK_RECORDS.get(clockRecordKey);*/
+        Attendance attendance = attendanceMapper.selectTodayRecordByUserId(userId);
         int startWorkOrAfterWork = isStartWorkOrAfterWork();
         if (startWorkOrAfterWork == 0) {
             //上班打卡 只有在规定时间内打卡才有效，超过时间不予打卡
             //打卡时间多次打卡 后面的打卡记录并保存
-            if ((attendanceId == null || attendanceId <= 0) && null != userId && userId > 0) {
-                Attendance attendance = new Attendance();
+            if (attendance == null) {
+                attendance = new Attendance();
                 attendance.setStarkWorkTime(new Date());
                 attendance.setLate("0");
                 attendance.setUserId(userId);
@@ -127,19 +128,18 @@ public class ClockInServiceImpl implements IClockInService {
                     throw new SQLException("Clock in failure：Failed to insert punch record into database！");
                 }
                 //保存当天打卡人员的数据库打卡记录ID保存Map中
-                IClockInService.CLOCK_RECORDS.put(clockRecordKey, attendance.getId());
+                //IClockInService.CLOCK_RECORDS.put(clockRecordKey, attendance.getId());
                 AudioUtils.textToSpeech("打卡成功");
                 log.debug("Clock in Successful！");
+            } else {
+                AudioUtils.textToSpeech("已打卡，请勿重复打卡");
             }
         } else if (startWorkOrAfterWork == 1) {
             //下班打卡  正常打卡
-            if (attendanceId != null && attendanceId > 0) {
-                Attendance attendance = attendanceMapper.selectByPrimaryKey(attendanceId);
-                if (attendance != null) {
-                    attendance.setAfterWorkTime(new Date());
-                }
+            if (attendance != null) {
+                attendance.setAfterWorkTime(new Date());
                 int rows = attendanceMapper.updateByPrimaryKey(attendance);
-                if(rows<=0){
+                if (rows <= 0) {
                     AudioUtils.textToSpeech("打卡失败");
                 }
                 AudioUtils.textToSpeech("打卡成功");
@@ -148,7 +148,7 @@ public class ClockInServiceImpl implements IClockInService {
                 AudioUtils.textToSpeech("打卡失败");
                 log.error("编号为 {} 的员工缺勤", userId);
             }
-        }else{
+        } else {
             AudioUtils.textToSpeech("不在打卡时间");
         }
         return true;

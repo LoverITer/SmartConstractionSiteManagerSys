@@ -53,6 +53,15 @@
             float: left;
             font-size: 15px;
         }
+
+        .disabled {
+            pointer-events: none !important;
+            filter: alpha(opacity=50) !important;
+            -moz-opacity: 0.5 !important;
+            opacity: 0.5 !important;
+            cursor: grabbing !important;
+            color: #2f2f2f !important;
+        }
     </style>
 </head>
 
@@ -158,16 +167,20 @@
             var userName = this.userName;
             var password = this.password;
             var deviceStatus = "";
+            var enableSettingBtn=true;
             if(this.deviceStatus==="0"){
                 deviceStatus="离线"
+                enableSettingBtn=false;
             }else if(this.deviceStatus==="1"){
                 deviceStatus="在线";
             }else if(this.deviceStatus==="2"){
                 deviceStatus="告警";
             }else if(this.deviceStatus==="3"){
                 deviceStatus="故障";
+                enableSettingBtn=false;
             }else{
                 deviceStatus="未知";
+                enableSettingBtn=false;
             }
             var createTime = this.createTime;
 
@@ -197,12 +210,16 @@
                 "                <a style='color: #DB2828' onclick=\"device_del(this,'"+deviceId+"')\" href=\"javascript:;\">\n" +
                 "                    删除\n" +
                 "                </a>\n" +
-                "                <a style='color: #00aae7' onclick=\"WeAdminEdit('设置摄像机','./setting.html', '"+ip+"', 800, 520)\" href=\"javascript:;\">\n" +
+                "                <a id='setting_btn_"+deviceId+"' style='color: #00aae7' onclick=\"WeAdminEdit('设置摄像机','./setting.html', '"+ip+"', 800, 520)\" href=\"javascript:;\">\n" +
                 "                    更多\n" +
                 "                </a>\n" +
                 "            </td>\n" +
                 "        </tr>")
-
+                if(!enableSettingBtn){
+                    $("#setting_btn_"+deviceId).addClass("disabled");
+                }else{
+                    $("#setting_btn_"+deviceId).removeClass("disabled");
+                }
         });
     }
 

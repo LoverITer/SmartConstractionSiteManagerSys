@@ -50,7 +50,7 @@
                 加入时间
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="createTime" name="createTime" required=""
+                <input type="text" id="createTime" name="createTime"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -109,6 +109,7 @@
 
     layui.use(['form', 'layer', 'admin', 'laydate'], function () {
         var form = layui.form,
+            $ = layui.jquery,
             admin = layui.admin,
             layer = layui.layer,
             date = layui.laydate;

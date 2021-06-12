@@ -20,13 +20,6 @@ public interface RegionMapper {
      */
     int deleteByPrimaryKey(@Param(value = "id") Integer id);
 
-    /**
-     * 根据摄像机ID删除记录
-     *
-     * @param cameraId
-     * @return
-     */
-    int deleteByCameraId(@Param(value = "cameraId") Integer cameraId);
 
     /**
      * 向区域信息表中新增一条记录

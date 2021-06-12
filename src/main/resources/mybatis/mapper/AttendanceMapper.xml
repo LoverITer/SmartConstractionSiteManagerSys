@@ -63,6 +63,13 @@
                 AND DATE_FORMAT(NOW(), '%Y-%m-%d HH:mm:ss')
     </select>
 
+    <select id="selectTodayRecordByUserId" resultMap="BaseResultMap">
+        SELECT *
+        FROM attendance
+        WHERE user_id = 1000000
+          AND DATE_FORMAT(stark_work_time, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+    </select>
+
     <select id="countPastSevenDaysClockIn" resultType="cn.edu.xust.iot.model.vo.ClockInWeeklyAmountVO">
         SELECT
         a.date_time,

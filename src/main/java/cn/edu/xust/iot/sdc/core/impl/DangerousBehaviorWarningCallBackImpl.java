@@ -1,6 +1,13 @@
 package cn.edu.xust.iot.sdc.core.impl;
 
 import cn.edu.xust.iot.conf.ApplicationContextHolder;
+import cn.edu.xust.iot.conf.qiniu.QiNiuCloudService;
+import cn.edu.xust.iot.mapper.DangerBehaviorMapper;
+import cn.edu.xust.iot.mapper.DangerMapper;
+import cn.edu.xust.iot.mapper.RegionMapper;
+import cn.edu.xust.iot.model.entity.Danger;
+import cn.edu.xust.iot.model.entity.DangerBehavior;
+import cn.edu.xust.iot.model.entity.Region;
 import cn.edu.xust.iot.sdc.core.HWPuSDK;
 import cn.edu.xust.iot.service.IHWPuSDKService;
 import cn.edu.xust.iot.service.impl.HWPuSDKServiceImpl;
@@ -27,14 +34,17 @@ public class DangerousBehaviorWarningCallBackImpl implements HWPuSDK.pfRealDataC
     private HWPuSDK.PU_META_DATA targetMetaData = new HWPuSDK.PU_META_DATA();
     private PointerByReference targetMetaDataPointer = new PointerByReference(targetMetaData.getPointer());
     private static final SimpleDateFormat HALF_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-    private static final SimpleDateFormat FULL_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private IHWPuSDKService hwPuSDKService = ApplicationContextHolder.getBean("hwPuSDKService");
+    private QiNiuCloudService qiNiuCloudService=ApplicationContextHolder.getBean("qiNiuCloudService");
+    private DangerBehaviorMapper dangerBehaviorMapper=ApplicationContextHolder.getBean("dangerBehaviorMapper");
+    private RegionMapper regionMapper=ApplicationContextHolder.getBean("regionMapper");
+    private DangerMapper dangerMapper=ApplicationContextHolder.getBean("dangerMapper");
 
     @Override
     public Pointer invoke(Pointer szBuffer, NativeLong lSize, Pointer pUsrData) {
         if (szBuffer == null) {
-            log.error("FaceRecognitionCallbackImpl: szBuffer is null");
+            log.error("DangerousBehaviorWarningCallBackImpl: szBuffer is null");
             return null;
         }
         //获取元数据
@@ -42,13 +52,13 @@ public class DangerousBehaviorWarningCallBackImpl implements HWPuSDK.pfRealDataC
                 HWPuSDK.LAYER_TWO_TYPE.TARGET, targetMetaDataPointer);
 
         if (isOk) {
-            boolean isProcessed=false;
+            boolean isProcessed = false;
             try {
                 //获取智能元数据
                 HWPuSDK.PU_META_DATA data = Structure.newInstance(HWPuSDK.PU_META_DATA.class, targetMetaDataPointer.getValue());
-                if(data!=null) {
+                if (data != null) {
                     data.read();
-                    isProcessed=procMetaData(data); // Resolving metadata
+                    isProcessed = procMetaData(data); // Resolving metadata
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -56,7 +66,7 @@ public class DangerousBehaviorWarningCallBackImpl implements HWPuSDK.pfRealDataC
                 log.error("解析智能元数据发生异常：{}", e.getMessage());
             } finally {
                 //这里必须释放元数据，不然会导致内存泄漏
-                if(isProcessed){
+                if (isProcessed) {
                     hwPuSDKService.freeMetaData(targetMetaDataPointer);
                 }
             }
@@ -75,25 +85,14 @@ public class DangerousBehaviorWarningCallBackImpl implements HWPuSDK.pfRealDataC
         }
         log.debug("Get smart metadata and start parsing the smart metadata");
 
-        int target = 0;
-        //人脸匹配结果  0：失败 ，1：成功
-        int matchRes = -1;
+        String[] IDCardInfo=new String[2];    //人员身份信息
+        String[] behaviorInfo=new String[2];  //不安全动作信息
+        int isWarning = 0;
         //处理智能元数据
         for (int i = 0; i < data.usValidNumber.intValue(); i++) {
             StringBuilder processLog = new StringBuilder("Processing metadata：current eType=>0x" + Integer.toHexString(userData[i].eType) + ". ");
             switch (userData[i].eType) {
                 case HWPuSDK.LAYER_THREE_TYPE_E.FACE_INFO: {
-                    /*人脸信息 0x12000001*/
-                    //姓名
-                    String name = CommonUtils.byteToString(userData[i].unMetaData.stFaceInfo.name);
-                    //年龄
-                    int gender = userData[i].unMetaData.stFaceInfo.iGender;
-                    //生日
-                    String birth = CommonUtils.byteToString(userData[i].unMetaData.stFaceInfo.birthday);
-                    //省份
-                    String province = CommonUtils.byteToString(userData[i].unMetaData.stFaceInfo.province);
-                    //城市
-                    String city = CommonUtils.byteToString(userData[i].unMetaData.stFaceInfo.city);
                     /*证件类型
                      * IDENTITY = 0, // 身份证
                      * PASSPORT = 1, // 护照
@@ -103,52 +102,57 @@ public class DangerousBehaviorWarningCallBackImpl implements HWPuSDK.pfRealDataC
                      * MAX = 512
                      */
                     int cardType = userData[i].unMetaData.stFaceInfo.iCardType;
-                    //证件ID   这里统一都是证件ID
+                    //根据人脸获取人员证件ID   这里统一都是身份证ID
                     String cardId = CommonUtils.byteToString(userData[i].unMetaData.stFaceInfo.cardID);
-                    processLog.append("Get Face_INFO=>{name:{},gender:{},birth:{},province:{},city:{},cardType:{},cardId:{}}");
-                    log.debug(processLog.toString(), name, gender, birth, province, city, cardType, cardId);
-
-                    //如果目标是人脸并且人脸匹配
-                    if (HWPuSDK.ITGT_TARGET_TYPE_E.TARGET_FACE_RECOGNITION == target && matchRes == 1) {
-
-                    }
-
-                }
-                break;
-                case HWPuSDK.LAYER_THREE_TYPE_E.FACE_PANORAMA: {
-                    String formatData = HALF_DATE_FORMAT.format(new Date());
-                    //处理全景图片
-                    StringBuilder fileName = new StringBuilder(HWPuSDKServiceImpl.DEFAULT_PICTURE_LOCAL_PATH).append(formatData)
-                            .append("\\panorama_pic\\")
-                            .append(CommonUtils.getRandomString()).append(".jpg");
-                    byte[] panoramaPicBytes = userData[i].unMetaData.stBinay.pBinaryData.getByteArray(0,
-                            userData[i].unMetaData.stBinay.ulBinaryLenth);
-                    //保存全景图片
-                    boolean saveOk = CommonUtils.savePicture(fileName.toString(), panoramaPicBytes, userData[i].unMetaData.stBinay.ulBinaryLenth);
-                    processLog.append("Get FACE_PANORAMA：{} to save panorama picture {} !");
-                    log.debug(processLog.toString(), saveOk ? "Success" : "Failed", fileName);
+                    processLog.append("Get Face_INFO=>{cardType:{},cardId:{}}");
+                    log.debug(processLog.toString(), cardType, cardId);
+                    IDCardInfo[0]=String.valueOf(cardType);
+                    IDCardInfo[1]=String.valueOf(cardId);
                 }
                 break;
                 case HWPuSDK.LAYER_THREE_TYPE_E.FACE_FEATURE: {
-                    /* 人脸特征
-                     * typedef struct _FACE_ATTRIBUTES
-                     * {
-                     *    BOOL isVaild;
-                     *    //INT 定义的属性 0 代表 未知，1-n依次代表后面的属性具体含义
-                     *    INT glasses; // 眼镜{无，有}
-                     *    INT gender; // 性别{女，男}
-                     *    INT age; // 年龄，具体的年龄值1~99
-                     *    INT32 mouthmask; //遮档 {无，是}
-                     *    INT32 expression; //人脸表情{微笑、愤怒、悲伤、正常、惊讶}
-                     * }FACE_ATTRIBUTES;
-                     */
-                    int isGlasses = userData[i].unMetaData.stFaceAttr.glasses;
-                    int gender = userData[i].unMetaData.stFaceAttr.gender;
-                    int mouthMask = userData[i].unMetaData.stFaceAttr.mouthmask;
-                    String age = String.valueOf(userData[i].unMetaData.stFaceAttr.age);
-                    int expression = userData[i].unMetaData.stFaceAttr.exspression;
-                    log.debug("Get FACE_FEATURE=>{isGlasses={},gender={},mouthMask={},age={},expression={}}",
-                            isGlasses, gender, mouthMask, age, expression);
+                    //触发危险行为 0表示没有危险行为  大于0表示有危险行为
+                    isWarning = userData[i].unMetaData.IntValue;
+                    if(isWarning>1){
+                        //元数据会将不安全行为的名称和区域传递过来
+                        //不安全行为发生区域名称
+                        behaviorInfo[0]=String.valueOf(userData[i].unMetaData.ucharValue);
+                        //不安全行为名称
+                        behaviorInfo[1]=userData[i].unMetaData.charValue;
+                    }
+                }
+                break;
+                case HWPuSDK.LAYER_THREE_TYPE_E.FACE_PANORAMA: {
+                    //触发了危险报警
+                    if(isWarning>0){
+                        String formatData = HALF_DATE_FORMAT.format(new Date());
+                        //处理全景图片
+                        byte[] panoramaPicBytes = userData[i].unMetaData.stBinay.pBinaryData.getByteArray(0,
+                                userData[i].unMetaData.stBinay.ulBinaryLenth);
+                        //保存全景图片
+                        String fileName = HWPuSDKServiceImpl.DEFAULT_PICTURE_LOCAL_PATH + formatData +
+                                "\\panorama_pic\\" +
+                                CommonUtils.getRandomString() + ".jpg";
+                        String fileUrl=qiNiuCloudService.uploadByByteArray(panoramaPicBytes, fileName);
+                        processLog.append("Get FACE_PANORAMA：{} to save panorama picture {} !");
+                        DangerBehavior dangerBehavior = new DangerBehavior();
+                        dangerBehavior.setState("0"); //未处理
+                        dangerBehavior.setBehaviorPic(fileUrl);  //抓拍图片
+                        dangerBehavior.setCertNo(IDCardInfo[1]); //身份证号
+                        //根据区域名称查询区域ID作为DangerBehavior的外键
+                        Region region = regionMapper.selectByRegionName(behaviorInfo[0]);
+                        dangerBehavior.setRegionId(region.getId());
+                        //根据危险名称查询危险ID作为DangerBehavior的外键
+                        Danger danger = dangerMapper.selectByDangerName(behaviorInfo[1]);
+                        dangerBehavior.setBehaviorType(danger.getId());
+                        //插入数据库
+                        int affectedRows = dangerBehaviorMapper.insertSelective(dangerBehavior);
+                        if(affectedRows>0){
+                            log.info("人员不安全行为记录成功!");
+                        }else{
+                            throw new RuntimeException("人员不安全行为记录失败!");
+                        }
+                    }
                 }
                 break;
                 default:

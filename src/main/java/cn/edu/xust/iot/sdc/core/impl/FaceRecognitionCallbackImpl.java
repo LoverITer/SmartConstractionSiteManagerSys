@@ -5,6 +5,7 @@ import cn.edu.xust.iot.sdc.core.HWPuSDK;
 import cn.edu.xust.iot.service.IClockInService;
 import cn.edu.xust.iot.service.IHWPuSDKService;
 import cn.edu.xust.iot.service.impl.HWPuSDKServiceImpl;
+import cn.edu.xust.iot.utils.AudioUtils;
 import cn.edu.xust.iot.utils.CommonUtils;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
@@ -104,7 +105,7 @@ public class FaceRecognitionCallbackImpl implements HWPuSDK.pfRealDataCallBack {
                     int faceMatch = userData[i].unMetaData.IntValue;
                     faceMatchRate=faceMatch/10000.0;
                     processLog.append("Get FACE_MATH=>faceMatchRate Result:{}");
-                    log.debug(processLog.toString(), faceMatch);
+                    log.debug(processLog.toString(), faceMatchRate);
                     break;
                 case HWPuSDK.LAYER_THREE_TYPE_E.TARGET_TYPE:
                     target = userData[i].unMetaData.IntValue;
@@ -139,8 +140,10 @@ public class FaceRecognitionCallbackImpl implements HWPuSDK.pfRealDataCallBack {
 
                     //如果目标是人脸并且人脸匹配并且人脸匹配度达到80% 就说明打卡成功
                     if (HWPuSDK.ITGT_TARGET_TYPE_E.TARGET_FACE_RECOGNITION == target &&
-                            matchRes == 1 && faceMatchRate>=80.00) {
+                            matchRes == 1 && faceMatchRate>=0.800000) {
                         clockInService.addClockInRecord(String.valueOf(cardType), cardId);
+                    }else{
+                        AudioUtils.textToSpeech("人脸库匹配不成功，打卡失败");
                     }
 
                 }
