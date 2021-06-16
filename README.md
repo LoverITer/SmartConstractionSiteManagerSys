@@ -181,8 +181,14 @@ dll和so是C函数的集合和容器，这与Java中的接口概念吻合，所�
 
 ### 6、项目效果展示
 
-<video src="C:\Users\Administrator\Desktop\设计\系统运行截图及视频\前端预警监控大屏.mp4" controls="controls" width="500" height="300">您的浏览器不支持播放该视频！</video>
 
+<iframe 
+    width="800" 
+    height="450" 
+    src="https://v.miaopai.com/iframe?scid=SvyHaHOczsp7B6ftW86oqMMz62-h5ai6~Fwp8A__"
+    frameborder="0" 
+    allowfullscreen>
+</iframe>
 
 
 
