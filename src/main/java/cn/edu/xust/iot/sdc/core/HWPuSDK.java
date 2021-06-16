@@ -18803,8 +18803,8 @@ public interface HWPuSDK extends Library {
      * @param pUsrData          输入参数 用户数据
      * @return 成功，返回实况句柄，此句柄具有唯一性。后续调用API进行停止语音流时需要传入此句柄作为入参
      */
-    public ULONG IVS_PU_RealPlay(ULONG ulIdentifyID, PU_REAL_PLAY_INFO_S pstRealPlayInfo,
-                                 pfRealDataCallBack fRealDataCallBack, Pointer pUsrData);
+    ULONG IVS_PU_RealPlay(ULONG ulIdentifyID, PU_REAL_PLAY_INFO_S pstRealPlayInfo,
+                          pfRealDataCallBack fRealDataCallBack, Pointer pUsrData);
 
     public int IVS_PU_RealPlay_V20(ULONG ulIdentifyID, PU_REAL_PLAY_INFO_V20.ByReference pstRealPlayInfo,
                                    PU_MEDIA_ENC_PARA_S.ByReference pstMediaEncPara, pfRealDataCallBack fRealDataCallBack, Pointer pUsrData);

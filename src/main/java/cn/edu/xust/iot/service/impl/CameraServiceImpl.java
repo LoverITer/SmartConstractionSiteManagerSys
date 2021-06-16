@@ -25,6 +25,7 @@ import cn.edu.xust.iot.model.vo.CameraVO;
 import cn.edu.xust.iot.service.ICameraService;
 import cn.edu.xust.iot.service.IHWPuSDKService;
 import cn.edu.xust.iot.utils.CommonUtils;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -68,6 +69,9 @@ public class CameraServiceImpl implements ICameraService {
 
     @Autowired
     private DangerBehaviorMapper dangerBehaviorMapper;
+
+    @Autowired
+    private RedisService redisService;
 
     //摄像机智能业务开启状态 key是相机IP
     private static final Map<String, CameraAISettingModel> AI_SERVICE_ENABLE_MAPPING = new ConcurrentHashMap<>(16);
@@ -271,25 +275,34 @@ public class CameraServiceImpl implements ICameraService {
     @Override
     public PageInfo<CameraVO> getCameraList(PageParam pageParam) {
         PageInfo<CameraVO> pages = null;
-        try {
+        String jsonStr = (String)redisService.get("DEVICE::CAMERA_LIST", RedisService.RedisDataBaseSelector.DB_0);
+        List<CameraVO> list = null;
+        if(jsonStr!=null){
+              list=JSON.parseArray(jsonStr,CameraVO.class);
+        }else {
+            list=new ArrayList<>();
             PageHelper.startPage(pageParam.getPage(), pageParam.getPageSize());
-            List<Camera> cameras = cameraMapper.selectAll();
-            List<CameraVO> list = new ArrayList<>();
-            for (Camera camera : cameras) {
-                CameraVO cameraVO = camera.conventCamera2CameraVO();
-                Region region = regionMapper.selectByPrimaryKey(camera.getRegionId());
-                if (null != region) {
-                    cameraVO.setRegionName(region.getRegionName());
+            List<Camera> cameras=null;
+            try {
+                cameras = cameraMapper.selectAll();
+                if (cameras != null) {
+                    redisService.set("DEVICE::CAMERA_LIST", JSON.toJSONString(cameras), 1000 * 5, RedisService.RedisDataBaseSelector.DB_0);
+                    for (Camera camera : cameras) {
+                        CameraVO cameraVO = camera.conventCamera2CameraVO();
+                        Region region = regionMapper.selectByPrimaryKey(camera.getRegionId());
+                        if (null != region) {
+                            cameraVO.setRegionName(region.getRegionName());
+                        }
+                        list.add(cameraVO);
+                    }
                 }
-                list.add(cameraVO);
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.error(e.getMessage());
             }
-            pages = new PageInfo<>(list);
-            return pages;
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error(e.getMessage());
         }
-        return null;
+        pages = new PageInfo<>(list);
+        return pages;
     }
 
     @Override
